@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/hugo\/hugo%E8%A1%A5%E5%85%85\/"
-        },"genre": "posts","keywords": "hugo","wordcount":  1128 ,
+        },"genre": "posts","keywords": "hugo","wordcount":  1480 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/hugo\/hugo%E8%A1%A5%E5%85%85\/","datePublished": "2022-10-05T11:19:59+08:00","dateModified": "2022-10-05T11:19:59+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo-Hugo补充</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-05">2022-10-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1128 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-05">2022-10-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1480 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -122,7 +122,9 @@
     <li><a href="#4-代码高亮显示">4. 代码高亮显示</a></li>
     <li><a href="#5搜索引擎检索">5.搜索引擎检索</a></li>
     <li><a href="#6代码块设置">6.代码块设置</a></li>
-    <li><a href="#7引用站内文章">7.引用站内文章</a></li>
+    <li><a href="#7博文里面引用static中的图片">7.博文里面引用static中的图片</a></li>
+    <li><a href="#8引用站内文章">8.引用站内文章</a></li>
+    <li><a href="#9评论系统">9.评论系统</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://gohugo.io/getting-started/configuration/" target="_blank" rel="noopener noreffer ">Hugo 配置官网</a></p>
@@ -252,10 +254,70 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>tabWidth = 4<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="7引用站内文章">7.引用站内文章</h2>
+</div><h2 id="7博文里面引用static中的图片">7.博文里面引用static中的图片</h2>
+<p>将图片放到static目录里面，比如<code>image/1.png</code>，hugo会将static最终放到docs目录下，即直接放到静态文件的根目录下，所以我们引用的时候只需在md中写下：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span>![](/image/1.png)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意最开始有一个<code>/</code></p>
+<h2 id="8引用站内文章">8.引用站内文章</h2>
 <p>使用超链接，以根目录相对路径的形式写出目标url，比如文章<code>posts/golang/go-zero/教程/looklook.md</code>，我们的超链接地址写作<code>/posts/golang/go-zero/教程/looklook/</code>，甚至可以在后面添加url定位，比如加上<code>#项目架构图和业务架构图</code>。</p>
 <p>能这么做的原因是hugo的文章生成静态文件后content文件夹的内容直接生成到根目录。</p>
 <p>另外static文件夹直接放到根目录，所以static的文件也可以通过相对路径直接引用在md中。</p>
+<h2 id="9评论系统">9.评论系统</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/567587480" target="_blank" rel="noopener noreffer ">知乎 后端开发技术 Hugo添加Github评论踩坑指南</a></p>
+<p>这里使用的是gitalk，它使用github issue进行评论存储，使用loveit主题，如果不是用的这个主题你需要按照知乎大佬说的配置</p>
+<p>在github个人设置页面中，选择开发者设置</p>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e5%bc%80%e5%8f%91%e8%80%85%e8%ae%be%e7%bd%ae.png"
+        data-srcset="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e5%bc%80%e5%8f%91%e8%80%85%e8%ae%be%e7%bd%ae.png, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e5%bc%80%e5%8f%91%e8%80%85%e8%ae%be%e7%bd%ae.png 1.5x, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e5%bc%80%e5%8f%91%e8%80%85%e8%ae%be%e7%bd%ae.png 2x"
+        data-sizes="auto"
+        alt="/images/golang/hugo/hugo补充/开发者设置.png"
+        title="/images/golang/hugo/hugo补充/开发者设置.png" /></div>
+<p>注册OAuth应用程序并填写信息，点击注册应用</p>
+<div id="id-4"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e6%b3%a8%e5%86%8cOAuthApp.png"
+        data-srcset="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e6%b3%a8%e5%86%8cOAuthApp.png, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e6%b3%a8%e5%86%8cOAuthApp.png 1.5x, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e6%b3%a8%e5%86%8cOAuthApp.png 2x"
+        data-sizes="auto"
+        alt="/images/golang/hugo/hugo补充/注册OAuthApp.png"
+        title="/images/golang/hugo/hugo补充/注册OAuthApp.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e5%a1%ab%e5%86%99%e4%bf%a1%e6%81%af.png"
+        data-srcset="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e5%a1%ab%e5%86%99%e4%bf%a1%e6%81%af.png, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e5%a1%ab%e5%86%99%e4%bf%a1%e6%81%af.png 1.5x, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e5%a1%ab%e5%86%99%e4%bf%a1%e6%81%af.png 2x"
+        data-sizes="auto"
+        alt="/images/golang/hugo/hugo补充/填写信息.png"
+        title="/images/golang/hugo/hugo补充/填写信息.png" /></p>
+</div>
+<p>记录ClientID和secret并填写到toml配置里面</p>
+<div id="id-5"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/ClientID%e5%92%8cSecret.png"
+        data-srcset="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/ClientID%e5%92%8cSecret.png, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/ClientID%e5%92%8cSecret.png 1.5x, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/ClientID%e5%92%8cSecret.png 2x"
+        data-sizes="auto"
+        alt="/images/golang/hugo/hugo补充/ClientID和Secret.png"
+        title="/images/golang/hugo/hugo补充/ClientID和Secret.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e9%85%8d%e7%bd%aetoml.png"
+        data-srcset="/images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e9%85%8d%e7%bd%aetoml.png, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e9%85%8d%e7%bd%aetoml.png 1.5x, /images/golang/hugo/hugo%e8%a1%a5%e5%85%85/%e9%85%8d%e7%bd%aetoml.png 2x"
+        data-sizes="auto"
+        alt="/images/golang/hugo/hugo补充/配置toml.png"
+        title="/images/golang/hugo/hugo补充/配置toml.png" /></p>
+</div>
+<p>如果你用的loveit主题那么到这里就结束了，不过需要你用自己的github账户打开博文才能开启issue，否则别人不能评论</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -294,5 +356,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/c6e9f3.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-05T11:19:59+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"Hugo-Hugo补充"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/bd5125.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-05T11:19:59+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"Hugo-Hugo补充"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
