@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-2基础 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-2基础" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有&lt;script setup&gt;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/2%E5%9F%BA%E7%A1%80/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-15T17:18:24+08:00" />
+<meta property="article:modified_time" content="2022-12-15T17:18:24+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-2基础"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有&lt;script setup&gt;"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/2%E5%9F%BA%E7%A1%80/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/1%E5%BC%80%E5%A7%8B/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/%E6%9D%82%E8%AE%B0/js%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-2基础",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/2%E5%9F%BA%E7%A1%80\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  7108 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/2%E5%9F%BA%E7%A1%80\/","datePublished": "2022-12-15T17:18:24+08:00","dateModified": "2022-12-15T17:18:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-2基础</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-15">2022-12-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;7108 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;15 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#创建一个-vue-应用">创建一个 Vue 应用</a>
+      <ul>
+        <li><a href="#应用实例app">应用实例（APP）</a></li>
+        <li><a href="#根组件vue">根组件（vue）</a></li>
+        <li><a href="#挂载应用">挂载应用</a></li>
+        <li><a href="#dom-中的根组件模板">DOM 中的根组件模板</a></li>
+        <li><a href="#应用配置">应用配置</a></li>
+        <li><a href="#多个应用实例">多个应用实例</a></li>
+      </ul>
+    </li>
+    <li><a href="#模板语法">模板语法</a>
+      <ul>
+        <li><a href="#文本插值">文本插值</a></li>
+        <li><a href="#原始-html">原始 HTML</a></li>
+        <li><a href="#attribute-绑定">Attribute 绑定</a>
+          <ul>
+            <li><a href="#简写">简写：</a></li>
+            <li><a href="#布尔型-attribute">布尔型 Attribute：</a></li>
+            <li><a href="#动态绑定多个值">动态绑定多个值：</a></li>
+          </ul>
+        </li>
+        <li><a href="#使用-javascript-表达式">使用 JavaScript 表达式</a></li>
+        <li><a href="#指令-directives">指令 Directives</a></li>
+      </ul>
+    </li>
+    <li><a href="#响应式基础">响应式基础</a>
+      <ul>
+        <li><a href="#声明响应式状态">声明响应式状态</a></li>
+        <li><a href="#用-ref-定义响应式变量">用 ref() 定义响应式变量</a></li>
+      </ul>
+    </li>
+    <li><a href="#计算属性">计算属性</a>
+      <ul>
+        <li><a href="#计算属性缓存-vs-方法">计算属性缓存 vs 方法</a></li>
+        <li><a href="#可写计算属性">可写计算属性</a></li>
+        <li><a href="#最佳实践">最佳实践</a></li>
+      </ul>
+    </li>
+    <li><a href="#class-与-style-绑定">Class 与 Style 绑定</a>
+      <ul>
+        <li><a href="#绑定-html-class">绑定 HTML class</a>
+          <ul>
+            <li><a href="#绑定对象">绑定对象：</a></li>
+            <li><a href="#绑定数组">绑定数组</a></li>
+            <li><a href="#在组件上使用">在组件上使用</a></li>
+          </ul>
+        </li>
+        <li><a href="#绑定内联样式style">绑定内联样式(style)</a>
+          <ul>
+            <li><a href="#绑定对象-1">绑定对象</a></li>
+            <li><a href="#绑定数组-1">绑定数组</a></li>
+            <li><a href="#自动前缀">自动前缀</a></li>
+            <li><a href="#样式多值">样式多值</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#条件渲染">条件渲染</a>
+      <ul>
+        <li><a href="#v-if">v-if</a></li>
+        <li><a href="#v-else">v-else</a></li>
+        <li><a href="#v-else-if">v-else-if</a></li>
+        <li><a href="#template"><!-- raw HTML omitted --></a></li>
+        <li><a href="#v-show">v-show</a></li>
+        <li><a href="#v-if-vs-v-show">v-if vs. v-show</a></li>
+        <li><a href="#v-if-和-v-for">v-if 和 v-for</a></li>
+      </ul>
+    </li>
+    <li><a href="#列表渲染">列表渲染</a>
+      <ul>
+        <li><a href="#v-for">v-for</a></li>
+        <li><a href="#v-for-与对象">v-for 与对象</a></li>
+        <li><a href="#在-v-for-里使用范围值">在 v-for 里使用范围值</a></li>
+        <li><a href="#template-上的-v-for"><!-- raw HTML omitted --> 上的 v-for</a></li>
+        <li><a href="#通过-key-管理状态">通过 key 管理状态</a></li>
+        <li><a href="#组件上使用-v-for">组件上使用 v-for</a></li>
+        <li><a href="#数组变化侦测">数组变化侦测</a></li>
+        <li><a href="#展示过滤或排序后的结果">展示过滤或排序后的结果</a></li>
+      </ul>
+    </li>
+    <li><a href="#事件处理">事件处理</a>
+      <ul>
+        <li><a href="#监听事件">监听事件</a></li>
+        <li><a href="#内联事件处理器">内联事件处理器</a></li>
+        <li><a href="#方法事件处理器">方法事件处理器</a></li>
+        <li><a href="#在内联处理器中调用方法">在内联处理器中调用方法</a></li>
+        <li><a href="#在内联事件处理器中访问事件参数">在内联事件处理器中访问事件参数</a></li>
+        <li><a href="#事件修饰符">事件修饰符</a></li>
+        <li><a href="#按键修饰符">按键修饰符</a></li>
+        <li><a href="#鼠标按键修饰符">鼠标按键修饰符</a></li>
+      </ul>
+    </li>
+    <li><a href="#表单输入绑定">表单输入绑定</a>
+      <ul>
+        <li><a href="#基本用法">基本用法</a>
+          <ul>
+            <li><a href="#文本绑定字符串变量">文本：绑定字符串变量</a></li>
+            <li><a href="#复选框绑定bool或者数组">复选框:绑定bool或者数组</a></li>
+            <li><a href="#单选按钮绑定字符串变量">单选按钮:绑定字符串变量</a></li>
+            <li><a href="#选择器绑定字符串变量或数组">选择器：绑定字符串变量或数组</a></li>
+          </ul>
+        </li>
+        <li><a href="#值绑定">值绑定</a>
+          <ul>
+            <li><a href="#复选框">复选框</a></li>
+            <li><a href="#单选按钮">单选按钮</a></li>
+            <li><a href="#选择器选项">选择器选项</a></li>
+          </ul>
+        </li>
+        <li><a href="#修饰符">修饰符</a></li>
+      </ul>
+    </li>
+    <li><a href="#生命周期钩子">生命周期钩子</a></li>
+    <li><a href="#侦听器watch">侦听器(watch)</a>
+      <ul>
+        <li><a href="#基本示例">基本示例</a></li>
+        <li><a href="#深层侦听器">深层侦听器</a></li>
+        <li><a href="#watcheffect回调函数">watchEffect(回调函数)</a></li>
+        <li><a href="#回调的触发时机">回调的触发时机</a></li>
+        <li><a href="#停止侦听器">停止侦听器</a></li>
+      </ul>
+    </li>
+    <li><a href="#模板引用">模板引用</a>
+      <ul>
+        <li><a href="#访问模板引用">访问模板引用</a></li>
+        <li><a href="#v-for-中的模板引用">v-for 中的模板引用</a></li>
+        <li><a href="#函数模板引用">函数模板引用</a></li>
+        <li><a href="#组件上的-ref">组件上的 ref</a></li>
+      </ul>
+    </li>
+    <li><a href="#组件基础">组件基础</a>
+      <ul>
+        <li><a href="#定义一个组件">定义一个组件</a></li>
+        <li><a href="#使用组件">使用组件</a></li>
+        <li><a href="#传递-props">传递 props</a></li>
+        <li><a href="#监听事件-1">监听事件</a></li>
+        <li><a href="#通过插槽来分配内容">通过插槽来分配内容</a></li>
+        <li><a href="#动态组件">动态组件</a></li>
+        <li><a href="#dom-模板解析注意事项">DOM 模板解析注意事项</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有<code>&lt;script setup&gt;</code>组合式API。</p>
+<h2 id="创建一个-vue-应用">创建一个 Vue 应用</h2>
+<h3 id="应用实例app">应用实例（APP）</h3>
+<p>组件其实就是一个对象（后面会讲），可以从vue文件导出（这样的组件是可复用的），具有一些特定的属性和方法。</p>
+<p>通过一个组件来创建app</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { createApp } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> app = createApp({
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">/* 根组件选项 */</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="根组件vue">根组件（vue）</h3>
+<p>创建app的组件叫根组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> App from <span style="color:#a50">&#39;./App.vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> app = createApp(App)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="挂载应用">挂载应用</h3>
+<p>app.mount(&ldquo;xxx&rdquo;)将app挂载到index.html来渲染页面</p>
+<h3 id="dom-中的根组件模板">DOM 中的根组件模板</h3>
+<p>index.html</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">id</span>=<span style="color:#a50">&#34;app&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;count++&#34;</span>&gt;{{ count }}&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>main.js</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { createApp } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> app = createApp({
+</span></span><span style="display:flex;"><span>  data() {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> {
+</span></span><span style="display:flex;"><span>      count: <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app.mount(<span style="color:#a50">&#39;#app&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>当app的根组件没有 template 选项（组合式API也使用术语选项，但是其实表现为属性）时，Vue 将自动使用#app容器的 innerHTML 作为模板</p>
+</blockquote>
+<h3 id="应用配置">应用配置</h3>
+<p>app.config对象暴露对应用配置的API，详见<a href="https://cn.vuejs.org/api/application.html#app-config" target="_blank" rel="noopener noreffer ">官网</a></p>
+<p>app.component(&ldquo;注册名称&rdquo;.组件)方法注册应用范围组件：<code>app.component('TodoDeleteButton', TodoDeleteButton) </code></p>
+<h3 id="多个应用实例">多个应用实例</h3>
+<p>一个页面可以绑定多个app</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> app1 = createApp({
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">/* ... */</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>app1.mount(<span style="color:#a50">&#39;#container-1&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> app2 = createApp({
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">/* ... */</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>app2.mount(<span style="color:#a50">&#39;#container-2&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="模板语法">模板语法</h2>
+<h3 id="文本插值">文本插值</h3>
+<p>template是vue组件的一个选项（属性），和html写法一致</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">span</span>&gt;Message: {{ msg }}&lt;/<span style="color:#1e90ff;font-weight:bold">span</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>{{ msg }}</code>就是文本插值，会被替换为该组件实例的msg属性值，这种属性一般都是响应式的，js中修改这些属性值会触发页面重新渲染以同步修改</p>
+<h3 id="原始-html">原始 HTML</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">p</span>&gt;Using text interpolation: {{ rawHtml }}&lt;/<span style="color:#1e90ff;font-weight:bold">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">p</span>&gt;Using v-html directive: &lt;<span style="color:#1e90ff;font-weight:bold">span</span> <span style="color:#1e90ff">v-html</span>=<span style="color:#a50">&#34;rawHtml&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">span</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">p</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>指令（其实应该是template元素的属性）由 <code>v-</code> 作为前缀，表明它们是一些由 Vue 提供的特殊 attribute</p>
+<p>v-html指令在当前组件实例上，将此元素的 innerHTML 与 rawHtml 属性绑定</p>
+<p>不推荐使用v-html，容易造成XSS漏洞</p>
+<h3 id="attribute-绑定">Attribute 绑定</h3>
+<p>v-bind 指令：template元素属性值和组件属性值单向绑定（改变组件属性值会触发template元素属性值修改）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">v-bind:id</span>=<span style="color:#a50">&#34;dynamicId&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="简写">简写：</h4>
+<p><code>:</code></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">:id</span>=<span style="color:#a50">&#34;dynamicId&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="布尔型-attribute">布尔型 Attribute：</h4>
+<ul>
+<li>组件属性为真——template元素具有该属性</li>
+<li>组件属性为假——template元素没有该属性</li>
+</ul>
+<h4 id="动态绑定多个值">动态绑定多个值：</h4>
+<p>即通过&quot;v-bind&quot;（注意不是&quot;v-bind:xxx&quot;）属性给template（后面统称页面）元素绑定组件的一个对象属性，对象属性的每一对键值为页面元素的属性名和绑定值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">v-bind</span>=<span style="color:#a50">&#34;objectOfAttrs&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用-javascript-表达式">使用 JavaScript 表达式</h3>
+<p>js表达式可以应用于：</p>
+<ul>
+<li>在文本插值中 (双大括号)</li>
+<li>在任何 Vue 指令 (以 v- 开头的特殊 attribute) attribute 的值中</li>
+</ul>
+<p>仅支持单一表达式</p>
+<p>可以在表达式中调用函数</p>
+<p>仅能够访问到全局对象列表中的全局对象， app.config.globalProperties 可以添加对象到该列表以供其他组件使用</p>
+<h3 id="指令-directives">指令 Directives</h3>
+<p><code>v-</code>开头的特殊template元素属性。</p>
+<p>参数 Arguments：<code>指令:</code>后面的标识符</p>
+<p>动态参数：<code>[]</code>括起来的标识符，应该为组件的一个数据属性</p>
+<p>动态参数值应当是一个字符串，或者是 null（显式移除该绑定）</p>
+<p>不要使用复杂的动态参数，用计算数学代替</p>
+<p>修饰符 Modifiers 以点开头的指令后缀，表示特殊绑定，在执行绑定渲染之前先执行一些其他的任务。</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/directive.69c37117.png"
+        data-srcset="https://cn.vuejs.org/assets/directive.69c37117.png, https://cn.vuejs.org/assets/directive.69c37117.png 1.5x, https://cn.vuejs.org/assets/directive.69c37117.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/directive.69c37117.png"
+        title="https://cn.vuejs.org/assets/directive.69c37117.png" /></div>
+<h2 id="响应式基础">响应式基础</h2>
+<h3 id="声明响应式状态">声明响应式状态</h3>
+<p>reactive() 函数创建一个响应式对象或数组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { reactive } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> state = reactive({ count: <span style="color:#099">0</span> })
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>响应式对象其实是 JavaScript Proxy实现的</p>
+<p>在 setup() 函数中定义并返回响应式对象或者更新响应式状态的函数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { reactive } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">export</span> <span style="color:#00a">default</span> {
+</span></span><span style="display:flex;"><span>  setup() {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">const</span> state = reactive({ count: <span style="color:#099">0</span> })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">function</span> increment() {
+</span></span><span style="display:flex;"><span>      state.count++
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 不要忘记同时暴露 increment 函数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">return</span> {
+</span></span><span style="display:flex;"><span>      state,
+</span></span><span style="display:flex;"><span>      increment
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;increment&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ state.count }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>&lt;script setup&gt;</code>可以省略setup()函数暴露的过程，即js里面定义的响应式对象直接作为组件的属性。</p>
+<p>DOM 更新时机：响应式状态改变和DOM（渲染）更新不是同步的，会等到更新周期的“下个时机”更新DOM，在这期间的修改只取最后一次的结果</p>
+<p>nextTick()全局API可以让函数在更新完之后执行</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { nextTick } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">function</span> increment() {
+</span></span><span style="display:flex;"><span>  state.count++
+</span></span><span style="display:flex;"><span>  nextTick(() =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 访问更新后的 DOM
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  })
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>深层响应性:响应式状态内部的对象或数组改变也会更新。可以定义一个浅层响应式对象</p>
+<p>响应式代理 vs. 原始对象：</p>
+<ul>
+<li>reactive() 返回的是一个原始对象的 Proxy，并不相等。</li>
+<li>修改原始对象不能触发更新，仅使用reactive()的返回值</li>
+<li>对代理对象调用reactive()会返回它自己</li>
+<li>响应式对象内的对象仍然是代理</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> proxy = reactive({})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> raw = {}
+</span></span><span style="display:flex;"><span>proxy.nested = raw
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>console.log(proxy.nested === raw) <span style="color:#aaa;font-style:italic">// false
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>reactive() 的局限性</p>
+<ul>
+<li>仅对对象类型有效，对 string、number 和 boolean 这样的 原始类型 无效</li>
+<li>通过属性访问进行追踪，必须始终保持对该响应式对象的相同引用。随意地“替换”一个响应式对象将导致对初始引用的响应性连接丢失</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">let</span> state = reactive({ count: <span style="color:#099">0</span> })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 上面的引用 ({ count: 0 }) 将不再被追踪（响应性连接已丢失！）
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>state = reactive({ count: <span style="color:#099">1</span> })
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="用-ref-定义响应式变量">用 ref() 定义响应式变量</h3>
+<p>ref() 方法来允许我们创建可以使用任何值类型的响应式 ref：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { ref } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> count = ref(<span style="color:#099">0</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ref() 将传入参数的值包装为一个带 .value 属性的 ref 对象：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> count = ref(<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>console.log(count) <span style="color:#aaa;font-style:italic">// { value: 0 }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>console.log(count.value) <span style="color:#aaa;font-style:italic">// 0
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>count.value++
+</span></span><span style="display:flex;"><span>console.log(count.value) <span style="color:#aaa;font-style:italic">// 1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>ref 的 .value 属性也是响应式的，当值为对象类型时，会用 reactive() 自动转换它的 .value</p>
+<p>ref 可以响应式地替换整个对象，也可以赋值给本地变量</p>
+<p>ref 在模板中的解包：详见<a href="https://cn.vuejs.org/guide/essentials/reactivity-fundamentals.html#reactivity-transform" target="_blank" rel="noopener noreffer ">官网</a>，我个人认为解包这个语法糖会增加vue的学习难度，对于Ref尽量都不要自动解包</p>
+<h2 id="计算属性">计算属性</h2>
+<p>computed()方法接收一个箭头函数，返回值为一个计算属性 ref。计算属性可以用.value访问。计算属性和函数体中使用的属性会建立依赖，他们会同步更新</p>
+<h3 id="计算属性缓存-vs-方法">计算属性缓存 vs 方法</h3>
+<p>相比于在表达式中调用函数，计算属性值会基于其响应式依赖被缓存。一个计算属性仅会在其响应式依赖更新时才重新计算。方法调用总是会在重渲染发生时再次执行函数。</p>
+<h3 id="可写计算属性">可写计算属性</h3>
+<p>计算属性默认是只读的即只传递一个箭头函数。当传递一个具有getter 和 setter 的对象时为可写计算属性：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>&lt;script setup&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { ref, computed } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> firstName = ref(<span style="color:#a50">&#39;John&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> lastName = ref(<span style="color:#a50">&#39;Doe&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> fullName = computed({
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// getter
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  get() {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> firstName.value + <span style="color:#a50">&#39; &#39;</span> + lastName.value
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// setter
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  set(newValue) {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 注意：我们这里使用的是解构赋值语法
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    [firstName.value, lastName.value] = newValue.split(<span style="color:#a50">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/script&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当你再运行 fullName.value = &lsquo;John Doe&rsquo; 时，setter 会被调用而 firstName 和 lastName 会随之更新</p>
+<h3 id="最佳实践">最佳实践</h3>
+<p>不要在 getter 中做异步请求或者更改 DOM</p>
+<p>避免直接修改计算属性值</p>
+<p>尽量不要用可写计算属性</p>
+<h2 id="class-与-style-绑定">Class 与 Style 绑定</h2>
+<h3 id="绑定-html-class">绑定 HTML class</h3>
+<h4 id="绑定对象">绑定对象：</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">:class</span>=<span style="color:#a50">&#34;{ active: isActive }&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>值为bool的class对象属性和template属性绑定类似，即真为有该属性，假为没有该属性</p>
+<p>:class 指令可以和一般的 class attribute 共存</p>
+<p>:class 可以绑定一个返回对象的计算属性</p>
+<h4 id="绑定数组">绑定数组</h4>
+<p>可以给 :class 绑定一个数组来渲染多个 CSS class：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">:class</span>=<span style="color:#a50">&#34;[activeClass, errorClass]&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以使用三元表达式：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">:class</span>=<span style="color:#a50">&#34;[isActive ? activeClass : &#39;&#39;, errorClass]&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以在数组中嵌套对象</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">:class</span>=<span style="color:#a50">&#34;[{ active: isActive }, errorClass]&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="在组件上使用">在组件上使用</h4>
+<p>只有一个根元素的组件，根元素会继承组件上的class属性，并与该元素上已有的 class 合并</p>
+<p>如果组件有多个根元素，需要通过组件的 $attrs 属性指定哪个根元素来接收这个 class。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- MyComponent 模板使用 $attrs 时 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">p</span> <span style="color:#1e90ff">:class</span>=<span style="color:#a50">&#34;$attrs.class&#34;</span>&gt;Hi!&lt;/<span style="color:#1e90ff;font-weight:bold">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">span</span>&gt;This is a child component&lt;/<span style="color:#1e90ff;font-weight:bold">span</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="绑定内联样式style">绑定内联样式(style)</h3>
+<h4 id="绑定对象-1">绑定对象</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">:style</span>=<span style="color:#a50">&#34;{ color: activeColor, fontSize: fontSize + &#39;px&#39; }&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>支持 kebab-cased 和camelCase 形式的 CSS 属性 key，推荐使用 camelCase（html不区分大小写，编译器帮忙转换）</p>
+<p>可以使用返回样式对象的计算属性</p>
+<h4 id="绑定数组-1">绑定数组</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">:style</span>=<span style="color:#a50">&#34;[baseStyles, overridingStyles]&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="自动前缀">自动前缀</h4>
+<p>Vue 会为需要浏览器特殊前缀的CSS属性自动加上相应的浏览器前缀</p>
+<h4 id="样式多值">样式多值</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">:style</span>=<span style="color:#a50">&#34;{ display: [&#39;-webkit-box&#39;, &#39;-ms-flexbox&#39;, &#39;flex&#39;] }&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>数组仅会渲染浏览器支持的最后一个值。</p>
+<h2 id="条件渲染">条件渲染</h2>
+<h3 id="v-if">v-if</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">h1</span> <span style="color:#1e90ff">v-if</span>=<span style="color:#a50">&#34;awesome&#34;</span>&gt;Vue is awesome!&lt;/<span style="color:#1e90ff;font-weight:bold">h1</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="v-else">v-else</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;awesome = !awesome&#34;</span>&gt;Toggle&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">h1</span> <span style="color:#1e90ff">v-if</span>=<span style="color:#a50">&#34;awesome&#34;</span>&gt;Vue is awesome!&lt;/<span style="color:#1e90ff;font-weight:bold">h1</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">h1</span> <span style="color:#1e90ff">v-else</span>&gt;Oh no 😢&lt;/<span style="color:#1e90ff;font-weight:bold">h1</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>必须跟在一个 v-if 或者 v-else-if 元素后面，否则它将不会被识别</p>
+<h3 id="v-else-if">v-else-if</h3>
+<p>和 v-else 类似，必须紧跟在一个 v-if 或一个 v-else-if 元素后面。</p>
+<h3 id="template"><!-- raw HTML omitted --></h3>
+<p>可以将多个元素放到<code>&lt;template&gt;</code> 元素中使用该元素上的条件渲染属性统一进行条件渲染，<code>&lt;template&gt;</code>只是一个不可见的包装器元素，最后渲染的结果并不会包含这个 <code>&lt;template&gt;</code> 元素。</p>
+<h3 id="v-show">v-show</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">h1</span> <span style="color:#1e90ff">v-show</span>=<span style="color:#a50">&#34;ok&#34;</span>&gt;Hello!&lt;/<span style="color:#1e90ff;font-weight:bold">h1</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具有v-show为false的元素会保留在DOM中，v-if为false的元素不会出现在DOM中，v-show仅切换了display style属性</p>
+<p>v-show 不支持在 <code>&lt;template&gt;</code> 元素上使用，也不能和 v-else 搭配使用。</p>
+<h3 id="v-if-vs-v-show">v-if vs. v-show</h3>
+<p>v-if 是“真实的”按条件渲染，确保了在切换时，条件区块内的事件监听器和子组件都会被销毁或重建。</p>
+<p>v-if 也是惰性的：初次渲染时条件值为 false，不会做任何事。只有当条件首次变为 true 时才被渲染。</p>
+<p>v-show 简单许多，始终会被渲染，只有 CSS display 属性会被切换</p>
+<p>v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。需要频繁切换，则使用 v-show 较好；条件很少改变，则 v-if 会更合适</p>
+<h3 id="v-if-和-v-for">v-if 和 v-for</h3>
+<p>v-if 和 v-for 同时存在于一个元素上的时候，v-if 会首先被执行。</p>
+<h2 id="列表渲染">列表渲染</h2>
+<h3 id="v-for">v-for</h3>
+<p>v-for 指令的值需要使用 item in items 形式的特殊语法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;item in items&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ item.message }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>v-for 块中可以完整地访问父作用域内的属性和变量</p>
+<p>v-for 也支持使用可选的第二个参数表示当前项的位置索引</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;(item, index) in items&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ parentMessage }} - {{ index }} - {{ item.message }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以在定义 v-for 的变量别名时使用解构，和解构函数参数类似：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;{ message } in items&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ message }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 有 index 索引时 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;({ message }, index) in items&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ message }} {{ index }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>多层嵌套的 v-for，每个 v-for 作用域都可以访问到父级作用域：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;item in items&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">span</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;childItem in item.children&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    {{ item.message }} {{ childItem }}
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">span</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以用of代替in（不推荐，甚至在js里也不推荐，会增加语言学习难度）</p>
+<h3 id="v-for-与对象">v-for 与对象</h3>
+<p>可以使用 v-for 来遍历一个对象的所有属性（使用Object.keys()实现）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;value in myObject&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ value }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;(value, key) in myObject&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ key }}: {{ value }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;(value, key, index) in myObject&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ index }}. {{ key }}: {{ value }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在-v-for-里使用范围值">在 v-for 里使用范围值</h3>
+<p>类似range(n)，n从1开始迭代</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">span</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;n in 10&#34;</span>&gt;{{ n }}&lt;/<span style="color:#1e90ff;font-weight:bold">span</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="template-上的-v-for"><!-- raw HTML omitted --> 上的 v-for</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">ul</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">template</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;item in items&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">li</span>&gt;{{ item.msg }}&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">li</span> <span style="color:#1e90ff">class</span>=<span style="color:#a50">&#34;divider&#34;</span> <span style="color:#1e90ff">role</span>=<span style="color:#a50">&#34;presentation&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">li</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">ul</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="通过-key-管理状态">通过 key 管理状态</h3>
+<p>key 让 Vue 跟踪每个节点，从而重用和重新排序现有的元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;item in items&#34;</span> <span style="color:#1e90ff">:key</span>=<span style="color:#a50">&#34;item.id&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">&lt;!-- 内容 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>key 绑定基础类型。不要用对象。</p>
+<h3 id="组件上使用-v-for">组件上使用 v-for</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">MyComponent</span> <span style="color:#1e90ff">v-for</span>=<span style="color:#a50">&#34;item in items&#34;</span> <span style="color:#1e90ff">:key</span>=<span style="color:#a50">&#34;item.id&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="数组变化侦测">数组变化侦测</h3>
+<p>push()，pop()，shift()，unshift()，splice()，sort()，reverse()</p>
+<p>使用这些方法更新响应式数组</p>
+<h3 id="展示过滤或排序后的结果">展示过滤或排序后的结果</h3>
+<p>将数组排序后再给v-for，可以使用返回数组的计算属性或者函数</p>
+<p>注意，reverse() 和 sort()会修改原数组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>- <span style="color:#00a">return</span> numbers.reverse()
+</span></span><span style="display:flex;"><span>+ <span style="color:#00a">return</span> [...numbers].reverse()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="事件处理">事件处理</h2>
+<h3 id="监听事件">监听事件</h3>
+<p>v-on 指令 (简写为 @)</p>
+<ol>
+<li>内联事件处理器:内联 JavaScript 语句</li>
+<li>方法事件处理器:组件上定义的方法的属性名或是路径</li>
+</ol>
+<h3 id="内联事件处理器">内联事件处理器</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> count = ref(<span style="color:#099">0</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;count++&#34;</span>&gt;Add 1&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">p</span>&gt;Count is: {{ count }}&lt;/<span style="color:#1e90ff;font-weight:bold">p</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法事件处理器">方法事件处理器</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">function</span> greet(event) {
+</span></span><span style="display:flex;"><span>  alert(<span style="color:#a50">`Hello </span><span style="color:#a50">${</span>name.value<span style="color:#a50">}</span><span style="color:#a50">!`</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// `event` 是 DOM 原生事件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">if</span> (event) {
+</span></span><span style="display:flex;"><span>    alert(event.target.tagName)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- `greet` 是上面定义过的方法名 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;greet&#34;</span>&gt;Greet&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>方法事件处理器会自动接收原生 DOM 事件并触发执行</p>
+<h3 id="在内联处理器中调用方法">在内联处理器中调用方法</h3>
+<p>可以在内联事件处理器中调用方法，向方法传入自定义参数以代替原生事件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">function</span> say(message) {
+</span></span><span style="display:flex;"><span>  alert(message)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;say(&#39;hello&#39;)&#34;</span>&gt;Say hello&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;say(&#39;bye&#39;)&#34;</span>&gt;Say bye&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在内联事件处理器中访问事件参数">在内联事件处理器中访问事件参数</h3>
+<p>使用$event 变量在内联事件处理器中访问原生 DOM 事件， 或者使用箭头函数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 使用特殊的 $event 变量 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;warn(&#39;Form cannot be submitted yet.&#39;, $event)&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  Submit
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 使用内联箭头函数 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;(event) =&gt; warn(&#39;Form cannot be submitted yet.&#39;, event)&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  Submit
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">function</span> warn(message, event) {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 这里可以访问原生事件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">if</span> (event) {
+</span></span><span style="display:flex;"><span>    event.preventDefault()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  alert(message)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="事件修饰符">事件修饰符</h3>
+<ul>
+<li>.stop：停止传递</li>
+<li>.prevent：不重新加载页面</li>
+<li>.self：忽略来自子元素的事件</li>
+<li>.capture：使用 <code>capture</code> 捕获模式</li>
+<li>.once：最多被触发一次</li>
+<li>.passive：事件默认行为立即发生，不等待绑定函数执行完成</li>
+</ul>
+<p>可以链式调用，先调用的对后面的都有效</p>
+<h3 id="按键修饰符">按键修饰符</h3>
+<p>用于键盘事件，KeyboardEvent.key，key使用kebab-case</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 仅在 `key` 为 `Enter` 时调用 `submit` --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">keyup</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">enter</span>=<span style="color:#a50">&#34;submit&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>按键别名：</p>
+<p>.enter
+.tab
+.delete (捕获“Delete”和“Backspace”两个按键)
+.esc
+.space
+.up
+.down
+.left
+.right</p>
+<p>系统按键修饰符：</p>
+<p>.ctrl
+.alt
+.shift
+.meta</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- Alt + Enter --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">keyup</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">alt</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">enter</span>=<span style="color:#a50">&#34;clear&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- Ctrl + 点击 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">ctrl</span>=<span style="color:#a50">&#34;doSomething&#34;</span>&gt;Do something&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>.exact 修饰符:仅允许确定组合的事件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 当按下 Ctrl 时，即使同时按下 Alt 或 Shift 也会触发 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">ctrl</span>=<span style="color:#a50">&#34;onClick&#34;</span>&gt;A&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 仅当按下 Ctrl 且未按任何其他键时才会触发 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">ctrl</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">exact</span>=<span style="color:#a50">&#34;onCtrlClick&#34;</span>&gt;A&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 仅当没有按下任何系统按键时触发 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">exact</span>=<span style="color:#a50">&#34;onClick&#34;</span>&gt;A&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="鼠标按键修饰符">鼠标按键修饰符</h3>
+<ul>
+<li>.left</li>
+<li>.right</li>
+<li>.middle</li>
+</ul>
+<h2 id="表单输入绑定">表单输入绑定</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;text&#34;</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="基本用法">基本用法</h3>
+<h4 id="文本绑定字符串变量">文本：绑定字符串变量</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">p</span>&gt;Message is: {{ message }}&lt;/<span style="color:#1e90ff;font-weight:bold">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;message&#34;</span> <span style="color:#1e90ff">placeholder</span>=<span style="color:#a50">&#34;edit me&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>多行文本：绑定字符串变量</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">span</span>&gt;Multiline message is:&lt;/<span style="color:#1e90ff;font-weight:bold">span</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">p</span> <span style="color:#1e90ff">style</span>=<span style="color:#a50">&#34;white-space: pre-line;&#34;</span>&gt;{{ message }}&lt;/<span style="color:#1e90ff;font-weight:bold">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">textarea</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;message&#34;</span> <span style="color:#1e90ff">placeholder</span>=<span style="color:#a50">&#34;add multiple lines&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">textarea</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>&lt;textarea&gt;</code> 中是不支持插值表达式</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 错误 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">textarea</span>&gt;{{ text }}&lt;/<span style="color:#1e90ff;font-weight:bold">textarea</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- 正确 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">textarea</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;text&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">textarea</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="复选框绑定bool或者数组">复选框:绑定bool或者数组</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;checkbox&#34;</span> <span style="color:#1e90ff">id</span>=<span style="color:#a50">&#34;checkbox&#34;</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;checked&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">label</span> <span style="color:#1e90ff">for</span>=<span style="color:#a50">&#34;checkbox&#34;</span>&gt;{{ checked }}&lt;/<span style="color:#1e90ff;font-weight:bold">label</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将多个复选框绑定到同一个数组或集合的值：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> checkedNames = ref([])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span>&gt;Checked names: {{ checkedNames }}&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;checkbox&#34;</span> <span style="color:#1e90ff">id</span>=<span style="color:#a50">&#34;jack&#34;</span> <span style="color:#1e90ff">value</span>=<span style="color:#a50">&#34;Jack&#34;</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;checkedNames&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">label</span> <span style="color:#1e90ff">for</span>=<span style="color:#a50">&#34;jack&#34;</span>&gt;Jack&lt;/<span style="color:#1e90ff;font-weight:bold">label</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;checkbox&#34;</span> <span style="color:#1e90ff">id</span>=<span style="color:#a50">&#34;john&#34;</span> <span style="color:#1e90ff">value</span>=<span style="color:#a50">&#34;John&#34;</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;checkedNames&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">label</span> <span style="color:#1e90ff">for</span>=<span style="color:#a50">&#34;john&#34;</span>&gt;John&lt;/<span style="color:#1e90ff;font-weight:bold">label</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;checkbox&#34;</span> <span style="color:#1e90ff">id</span>=<span style="color:#a50">&#34;mike&#34;</span> <span style="color:#1e90ff">value</span>=<span style="color:#a50">&#34;Mike&#34;</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;checkedNames&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">label</span> <span style="color:#1e90ff">for</span>=<span style="color:#a50">&#34;mike&#34;</span>&gt;Mike&lt;/<span style="color:#1e90ff;font-weight:bold">label</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="单选按钮绑定字符串变量">单选按钮:绑定字符串变量</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span>&gt;Picked: {{ picked }}&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;radio&#34;</span> <span style="color:#1e90ff">id</span>=<span style="color:#a50">&#34;one&#34;</span> <span style="color:#1e90ff">value</span>=<span style="color:#a50">&#34;One&#34;</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;picked&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">label</span> <span style="color:#1e90ff">for</span>=<span style="color:#a50">&#34;one&#34;</span>&gt;One&lt;/<span style="color:#1e90ff;font-weight:bold">label</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;radio&#34;</span> <span style="color:#1e90ff">id</span>=<span style="color:#a50">&#34;two&#34;</span> <span style="color:#1e90ff">value</span>=<span style="color:#a50">&#34;Two&#34;</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;picked&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">label</span> <span style="color:#1e90ff">for</span>=<span style="color:#a50">&#34;two&#34;</span>&gt;Two&lt;/<span style="color:#1e90ff;font-weight:bold">label</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="选择器绑定字符串变量或数组">选择器：绑定字符串变量或数组</h4>
+<p>单选</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span>&gt;Selected: {{ selected }}&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">select</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;selected&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">option</span> <span style="color:#1e90ff">disabled</span> <span style="color:#1e90ff">value</span>=<span style="color:#a50">&#34;&#34;</span>&gt;Please select one&lt;/<span style="color:#1e90ff;font-weight:bold">option</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">option</span>&gt;A&lt;/<span style="color:#1e90ff;font-weight:bold">option</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">option</span>&gt;B&lt;/<span style="color:#1e90ff;font-weight:bold">option</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">option</span>&gt;C&lt;/<span style="color:#1e90ff;font-weight:bold">option</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">select</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>多选</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span>&gt;Selected: {{ selected }}&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">select</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;selected&#34;</span> <span style="color:#1e90ff">multiple</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">option</span>&gt;A&lt;/<span style="color:#1e90ff;font-weight:bold">option</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">option</span>&gt;B&lt;/<span style="color:#1e90ff;font-weight:bold">option</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">option</span>&gt;C&lt;/<span style="color:#1e90ff;font-weight:bold">option</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">select</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>option 可以用 v-for 动态渲染</p>
+<h3 id="值绑定">值绑定</h3>
+<p>v-model 绑定的值通常是静态的字符串 (或者对复选框是布尔值)</p>
+<p>v-bind 可以绑定为非字符串的数据类型，可以将之前绑定静态字符串的value等属性用v-bind绑定</p>
+<h4 id="复选框">复选框</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;checkbox&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;toggle&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">true-value</span>=<span style="color:#a50">&#34;yes&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">false-value</span>=<span style="color:#a50">&#34;no&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>true-value 和 false-value 是 Vue 特有的 attributes，仅支持和 v-model 配套使用</p>
+<p>可以通过 v-bind 将其绑定为其他动态值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;checkbox&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;toggle&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">:true-value</span>=<span style="color:#a50">&#34;dynamicTrueValue&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">:false-value</span>=<span style="color:#a50">&#34;dynamicFalseValue&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="单选按钮">单选按钮</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;radio&#34;</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;pick&#34;</span> <span style="color:#1e90ff">:value</span>=<span style="color:#a50">&#34;first&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">type</span>=<span style="color:#a50">&#34;radio&#34;</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;pick&#34;</span> <span style="color:#1e90ff">:value</span>=<span style="color:#a50">&#34;second&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="选择器选项">选择器选项</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">select</span> <span style="color:#1e90ff">v-model</span>=<span style="color:#a50">&#34;selected&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">&lt;!-- 内联对象字面量 --&gt;</span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">option</span> <span style="color:#1e90ff">:value</span>=<span style="color:#a50">&#34;{ number: 123 }&#34;</span>&gt;123&lt;/<span style="color:#1e90ff;font-weight:bold">option</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">select</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="修饰符">修饰符</h3>
+<p>.lazy：默认是input 事件后更新数据，该修饰符改为在每次 change 事件后更新数据</p>
+<p>.number：输入自动转换为数字，无法被 parseFloat() 处理时将返回原始值。number 修饰符会在输入框有 type=&ldquo;number&rdquo; 时自动启用</p>
+<p>.trim：自动去除用户输入内容中两端的空格</p>
+<h2 id="生命周期钩子">生命周期钩子</h2>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/lifecycle.16e4c08e.png"
+        data-srcset="https://cn.vuejs.org/assets/lifecycle.16e4c08e.png, https://cn.vuejs.org/assets/lifecycle.16e4c08e.png 1.5x, https://cn.vuejs.org/assets/lifecycle.16e4c08e.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/lifecycle.16e4c08e.png"
+        title="https://cn.vuejs.org/assets/lifecycle.16e4c08e.png" /></div>
+<p>直接使用全局API，通常是on+生命周期钩子名称（即图中的红色框），使用camelCase</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>&lt;script setup&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { onMounted } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>onMounted(() =&gt; {
+</span></span><span style="display:flex;"><span>  console.log(<span style="color:#a50">`the component is now mounted.`</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/script&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="侦听器watch">侦听器(watch)</h2>
+<h3 id="基本示例">基本示例</h3>
+<p>侦听数据源类型</p>
+<p>全局API watch(数据源，回调函数)</p>
+<p>数据源是一个 ref (包括计算属性)、一个响应式对象、一个 getter 函数、或多个数据源组成的数组：不能直接侦听响应式对象的属性值，可以用一个返回该属性的 getter 函数代替</p>
+<p>回调函数可以接收old值和new值。且通常是箭头函数。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 提供一个 getter 函数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>watch(
+</span></span><span style="display:flex;"><span>  () =&gt; obj.count,
+</span></span><span style="display:flex;"><span>  (count) =&gt; {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#a50">`count is: </span><span style="color:#a50">${</span>count<span style="color:#a50">}</span><span style="color:#a50">`</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="深层侦听器">深层侦听器</h3>
+<p>watch侦听响应式对象默认是深层侦听的，响应式对象属性发生改变也会触发回调</p>
+<p>侦听getter函数时返回不同的对象时才触发回调，可以显式使用deep选项转换为深层侦听</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>watch(
+</span></span><span style="display:flex;"><span>  () =&gt; state.someObject,
+</span></span><span style="display:flex;"><span>  (newValue, oldValue) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 注意：`newValue` 此处和 `oldValue` 是相等的
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// *除非* state.someObject 被整个替换了
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  },
+</span></span><span style="display:flex;"><span>  { deep: <span style="color:#00a">true</span> }
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="watcheffect回调函数">watchEffect(回调函数)</h3>
+<p>立即执行回调函数，并追踪函数体中的依赖关系分析出响应源。</p>
+<p>watch vs. watchEffect：主要区别是追踪响应式依赖的方式</p>
+<ul>
+<li>watch 只追踪明确侦听的数据源。懒加载，定义时不会执行。</li>
+<li>watchEffect 在副作用发生期间追踪依赖。定义时会执行。</li>
+</ul>
+<h3 id="回调的触发时机">回调的触发时机</h3>
+<p>Vue 组件更新之前。回调中访问的 DOM 将是被 Vue 更新之前的状态。</p>
+<p>flush: &lsquo;post&rsquo; 选项指明组件更新后执行</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>watch(source, callback, {
+</span></span><span style="display:flex;"><span>  flush: <span style="color:#a50">&#39;post&#39;</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>watchEffect(callback, {
+</span></span><span style="display:flex;"><span>  flush: <span style="color:#a50">&#39;post&#39;</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>watchPostEffect()集成了该选项</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { watchPostEffect } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>watchPostEffect(() =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">/* 在 Vue 更新后执行 */</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="停止侦听器">停止侦听器</h3>
+<p>用同步语句创建的侦听器会在宿主组件卸载时自动停止</p>
+<p>异步回调创建的侦听器不会绑定到当前组件上，必须手动停止它，以防内存泄漏</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>&lt;script setup&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { watchEffect } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 它会自动停止
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>watchEffect(() =&gt; {})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// ...这个则不会！
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>setTimeout(() =&gt; {
+</span></span><span style="display:flex;"><span>  watchEffect(() =&gt; {})
+</span></span><span style="display:flex;"><span>}, <span style="color:#099">100</span>)
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/script&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>调用 watch 或 watchEffect 返回的函数停止一个侦听器：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> unwatch = watchEffect(() =&gt; {})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// ...当该侦听器不再需要时
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>unwatch()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="模板引用">模板引用</h2>
+<p>通过 ref 属性获取底层 DOM 元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">ref</span>=<span style="color:#a50">&#34;input&#34;</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="访问模板引用">访问模板引用</h3>
+<p>声明一个同名的 ref</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>&lt;script setup&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { ref, onMounted } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 声明一个 ref 来存放该元素的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 必须和模板里的 ref 同名
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">const</span> input = ref(<span style="color:#00a">null</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>onMounted(() =&gt; {
+</span></span><span style="display:flex;"><span>  input.value.focus()
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/script&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;template&gt;
+</span></span><span style="display:flex;"><span>  &lt;input ref=<span style="color:#a50">&#34;input&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/template&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在组件挂载后才能访问模板引用，否则为null，编程时需要考虑 null 的情况：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>watchEffect(() =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> (input.value) {
+</span></span><span style="display:flex;"><span>    input.value.focus()
+</span></span><span style="display:flex;"><span>  } <span style="color:#00a">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 此时还未挂载，或此元素已经被卸载（例如通过 v-if 控制）
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  }
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="v-for-中的模板引用">v-for 中的模板引用</h3>
+<p>v-for元素ref attribute 使用数组ref绑定，ref数组不保证和html相同</p>
+<h3 id="函数模板引用">函数模板引用</h3>
+<p>ref attribute 绑定（使用v-bind或者<code>:</code>）为一个函数，组件更新时被调用，第一个参数为DOM元素引用</p>
+<h3 id="组件上的-ref">组件上的 ref</h3>
+<p>引用中获得的值是组件实例</p>
+<p><code>&lt;script setup&gt;</code> 的组件是默认私有的。一个父组件无法访问到一个使用了子组件中的任何东西，除非子组件在其中通过 defineExpose 宏显式暴露：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>&lt;script setup&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { ref } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> a = <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> b = ref(<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>defineExpose({
+</span></span><span style="display:flex;"><span>  a,
+</span></span><span style="display:flex;"><span>  b
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/script&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>尽量避免使用组件ref，减少组件间的耦合</p>
+<h2 id="组件基础">组件基础</h2>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/components.7fbb3771.png"
+        data-srcset="https://cn.vuejs.org/assets/components.7fbb3771.png, https://cn.vuejs.org/assets/components.7fbb3771.png 1.5x, https://cn.vuejs.org/assets/components.7fbb3771.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/components.7fbb3771.png"
+        title="https://cn.vuejs.org/assets/components.7fbb3771.png" /></div>
+<h3 id="定义一个组件">定义一个组件</h3>
+<p>.vue 文件：单文件组件 (简称 SFC)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>&lt;script setup&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { ref } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> count = ref(<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/script&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;template&gt;
+</span></span><span style="display:flex;"><span>  &lt;button <span style="color:#f00;background-color:#faa">@</span>click=<span style="color:#a50">&#34;count++&#34;</span>&gt;You clicked me {{ count }} times.&lt;<span style="color:#f00;background-color:#faa">/button&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/template&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用组件">使用组件</h3>
+<p><code>&lt;script setup&gt;</code>组件将会以默认导出的形式被暴露给外部，导入的组件都在模板中直接可用。</p>
+<p>全局地注册一个组件在当前应用中的任何组件上都可以使用</p>
+<p>组件可以被重用任意多次，每一个组件都维护着自己的状态</p>
+<h3 id="传递-props">传递 props</h3>
+<p>defineProps 宏：声明的 props 会自动暴露给模板</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!--</span> BlogPost.vue --&gt;
+</span></span><span style="display:flex;"><span>&lt;script setup&gt;
+</span></span><span style="display:flex;"><span>defineProps([<span style="color:#a50">&#39;title&#39;</span>])
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/script&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;template&gt;
+</span></span><span style="display:flex;"><span>  &lt;h4&gt;{{ title }}&lt;<span style="color:#f00;background-color:#faa">/h4&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f00;background-color:#faa">/template&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>返回一个对象，其中包含了可以传递给组件的所有 props</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> props = defineProps([<span style="color:#a50">&#39;title&#39;</span>])
+</span></span><span style="display:flex;"><span>console.log(props.title)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一个组件可以有任意多的 props，默认情况下，所有 prop 都接受任意类型的值</p>
+<p>父组件传递数据给子组件：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">BlogPost</span> <span style="color:#1e90ff">title</span>=<span style="color:#a50">&#34;My journey with Vue&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">BlogPost</span> <span style="color:#1e90ff">title</span>=<span style="color:#a50">&#34;Blogging with Vue&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">BlogPost</span> <span style="color:#1e90ff">title</span>=<span style="color:#a50">&#34;Why Vue is so fun&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>v-bind 可以传递动态 prop 值</p>
+<h3 id="监听事件-1">监听事件</h3>
+<p>父组件可以通过 v-on 或 @ 来选择性地监听子组件上抛的事件，就像监听原生 DOM 事件那样。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">BlogPost</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f00;background-color:#faa">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">enlarge-text</span>=<span style="color:#a50">&#34;postFontSize += 0.1&#34;</span>
+</span></span><span style="display:flex;"><span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>子组件可以通过调用内置的 $emit 方法，通过传入事件名称来抛出一个事件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- BlogPost.vue, 省略了 &lt;script&gt; --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">class</span>=<span style="color:#a50">&#34;blog-post&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">h4</span>&gt;{{ title }}&lt;/<span style="color:#1e90ff;font-weight:bold">h4</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;$emit(&#39;enlarge-text&#39;)&#34;</span>&gt;Enlarge text&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过 defineEmits 宏来声明需要抛出的事件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- BlogPost.vue --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span>defineProps([<span style="color:#a50">&#39;title&#39;</span>])
+</span></span><span style="display:flex;"><span>defineEmits([<span style="color:#a50">&#39;enlarge-text&#39;</span>])
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="通过插槽来分配内容">通过插槽来分配内容</h3>
+<p>子组件中传递HTML内容</p>
+<p>父组件：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">AlertBox</span>&gt;
+</span></span><span style="display:flex;"><span>  Something bad happened.
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">AlertBox</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>子组件：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">class</span>=<span style="color:#a50">&#34;alert-box&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">strong</span>&gt;This is an <span style="color:#0aa">Error</span> <span style="color:#00a">for</span> Demo Purposes&lt;/<span style="color:#1e90ff;font-weight:bold">strong</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">slot</span> /&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">style</span> <span style="color:#1e90ff">scoped</span>&gt;
+</span></span><span style="display:flex;"><span>.alert-box {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">/* ... */</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">style</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>&lt;slot&gt;</code> 元素表示父组件html渲染位置</p>
+<h3 id="动态组件">动态组件</h3>
+<p>通过组件的is属性实现</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!--</span> currentTab 改变时组件也改变 --&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">component</span> <span style="color:#1e90ff;font-weight:bold">:is</span><span style="color:#a50">=&#34;tabs[currentTab]&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">component</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>值可以是：</p>
+<ul>
+<li>被注册的组件名</li>
+<li>导入的组件对象</li>
+</ul>
+<p><code>&lt;KeepAlive&gt;</code> 组件强制被切换掉的组件仍然保持“存活”的状态</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!--</span> 非活跃的组件将会被缓存<span style="color:#f00;background-color:#faa">！</span> --&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">KeepAlive</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">component</span> <span style="color:#1e90ff;font-weight:bold">:is</span><span style="color:#a50">=&#34;activeComponent&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">KeepAlive</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dom-模板解析注意事项">DOM 模板解析注意事项</h3>
+<p>见官网，没啥必要学，反正都是直接用单文件组件开发</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/2%E5%9F%BA%E7%A1%80/" data-title="Vue-2基础" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/2%E5%9F%BA%E7%A1%80/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/2%E5%9F%BA%E7%A1%80/" data-title="Vue-2基础"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/2%E5%9F%BA%E7%A1%80/" data-title="Vue-2基础"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/2%E5%9F%BA%E7%A1%80/" data-title="Vue-2基础"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/1%E5%BC%80%E5%A7%8B/" class="prev" rel="prev" title="Vue-1开始"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-1开始</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/%E6%9D%82%E8%AE%B0/js%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB/" class="next" rel="next" title="前端-杂记-Js匿名函数和箭头函数的区别">前端-杂记-Js匿名函数和箭头函数的区别<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/17cc8c.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-15T17:18:24+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Vue-2基础"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

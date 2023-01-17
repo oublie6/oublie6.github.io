@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-深入组件-异步组件 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-深入组件-异步组件" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 基本用法 在大型项目中，我们可能需要拆分应用为更小的块" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-16T15:25:41+08:00" />
+<meta property="article:modified_time" content="2022-10-16T15:25:41+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-深入组件-异步组件"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 基本用法 在大型项目中，我们可能需要拆分应用为更小的块"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E7%BB%84%E5%90%88%E5%BC%8F%E5%87%BD%E6%95%B0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-深入组件-异步组件",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6\/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  903 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6\/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6\/","datePublished": "2022-10-16T15:25:41+08:00","dateModified": "2022-10-16T15:25:41+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-深入组件-异步组件</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;903 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本用法">基本用法</a></li>
+    <li><a href="#加载与错误状态">加载与错误状态</a></li>
+    <li><a href="#搭配-suspense-使用">搭配 Suspense 使用</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<h2 id="基本用法">基本用法</h2>
+<p>在大型项目中，我们可能需要拆分应用为更小的块，并仅在需要时再从服务器加载相关组件。Vue 提供了 defineAsyncComponent 方法来实现此功能：</p>
+<pre tabindex="0"><code>import { defineAsyncComponent } from &#39;vue&#39;
+
+const AsyncComp = defineAsyncComponent(() =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    // ...从服务器获取组件
+    resolve(/* 获取到的组件 */)
+  })
+})
+// ... 像使用其他一般组件一样使用 `AsyncComp`
+</code></pre><p>如你所见，defineAsyncComponent 方法接收一个返回 Promise 的加载函数。这个 Promise 的 resolve 回调方法应该在从服务器获得组件定义时调用。你也可以调用 reject(reason) 表明加载失败。</p>
+<p>ES 模块动态导入也会返回一个 Promise，所以多数情况下我们会将它和 defineAsyncComponent 搭配使用。类似 Vite 和 Webpack 这样的构建工具也支持此语法 (并且会将它们作为打包时的代码分割点)，因此我们也可以用它来导入 Vue 单文件组件：</p>
+<pre tabindex="0"><code>import { defineAsyncComponent } from &#39;vue&#39;
+
+const AsyncComp = defineAsyncComponent(() =&gt;
+  import(&#39;./components/MyComponent.vue&#39;)
+)
+</code></pre><p>最后得到的 AsyncComp 是一个外层包装过的组件，仅在页面需要它渲染时才会调用加载内部实际组件的函数。它会将接收到的 props 和插槽传给内部组件，所以你可以使用这个异步的包装组件无缝地替换原始组件，同时实现延迟加载。</p>
+<p>与普通组件一样，异步组件可以使用 app.component() 全局注册：</p>
+<pre tabindex="0"><code>app.component(&#39;MyComponent&#39;, defineAsyncComponent(() =&gt;
+  import(&#39;./components/MyComponent.vue&#39;)
+))
+</code></pre><p>你也可以在局部注册组件时使用 defineAsyncComponent：</p>
+<pre tabindex="0"><code>&lt;script&gt;
+import { defineAsyncComponent } from &#39;vue&#39;
+
+export default {
+  components: {
+    AdminPage: defineAsyncComponent(() =&gt;
+      import(&#39;./components/AdminPageComponent.vue&#39;)
+    )
+  }
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;AdminPage /&gt;
+&lt;/template&gt;
+</code></pre><h2 id="加载与错误状态">加载与错误状态</h2>
+<p>异步操作不可避免地会涉及到加载和错误状态，因此 defineAsyncComponent() 也支持在高级选项中处理这些状态：</p>
+<pre tabindex="0"><code>const AsyncComp = defineAsyncComponent({
+  // 加载函数
+  loader: () =&gt; import(&#39;./Foo.vue&#39;),
+
+  // 加载异步组件时使用的组件
+  loadingComponent: LoadingComponent,
+  // 展示加载组件前的延迟时间，默认为 200ms
+  delay: 200,
+
+  // 加载失败后展示的组件
+  errorComponent: ErrorComponent,
+  // 如果提供了一个 timeout 时间限制，并超时了
+  // 也会显示这里配置的报错组件，默认值是：Infinity
+  timeout: 3000
+})
+</code></pre><p>如果提供了一个加载组件，它将在内部组件加载时先行显示。在加载组件显示之前有一个默认的 200ms 延迟——这是因为在网络状况较好时，加载完成得很快，加载组件和最终组件之间的替换太快可能产生闪烁，反而影响用户感受。</p>
+<p>如果提供了一个报错组件，则它会在加载器函数返回的 Promise 抛错时被渲染。你还可以指定一个超时时间，在请求耗时超过指定时间时也会渲染报错组件。</p>
+<h2 id="搭配-suspense-使用">搭配 Suspense 使用</h2>
+<p>异步组件可以搭配内置的 <code>&lt;Suspense&gt; </code>组件一起使用，若想了解 <code>&lt;Suspense&gt; </code>和异步组件之间交互，请参阅 <code>&lt;Suspense&gt;</code> 章节。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" data-title="Vue-深入组件-异步组件" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" data-title="Vue-深入组件-异步组件"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" data-title="Vue-深入组件-异步组件"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" data-title="Vue-深入组件-异步组件"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" class="prev" rel="prev" title="Vue-深入组件-依赖注入"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-深入组件-依赖注入</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E7%BB%84%E5%90%88%E5%BC%8F%E5%87%BD%E6%95%B0/" class="next" rel="next" title="Vue-逻辑复用-组合式函数">Vue-逻辑复用-组合式函数<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

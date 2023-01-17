@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数据结构与算法-labuladong-第零章 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="数据结构与算法-labuladong-第零章" />
+<meta property="og:description" content="本系列笔记为作者在跟随labuladong的算法小抄学习的时候结合golang做的笔记。感谢东哥。 双指针技巧 秒杀链表和数组题目，快慢指针，左" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E9%9B%B6%E7%AB%A0/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-29T19:11:57+08:00" />
+<meta property="article:modified_time" content="2022-12-29T19:11:57+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="数据结构与算法-labuladong-第零章"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随labuladong的算法小抄学习的时候结合golang做的笔记。感谢东哥。 双指针技巧 秒杀链表和数组题目，快慢指针，左"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E9%9B%B6%E7%AB%A0/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/strings/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E4%B8%80%E7%AB%A0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据结构与算法-labuladong-第零章",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/labuladong\/%E7%AC%AC%E9%9B%B6%E7%AB%A0\/"
+        },"genre": "posts","keywords": "labuladong系列","wordcount":  2287 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/labuladong\/%E7%AC%AC%E9%9B%B6%E7%AB%A0\/","datePublished": "2022-12-29T19:11:57+08:00","dateModified": "2022-12-29T19:11:57+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-labuladong-第零章</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机网络</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-29">2022-12-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2287 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#双指针技巧">双指针技巧</a>
+      <ul>
+        <li><a href="#反转链表的某个区间">反转链表的某个区间</a></li>
+        <li><a href="#最长回文子串">最长回文子串</a></li>
+      </ul>
+    </li>
+    <li><a href="#二叉树">二叉树</a>
+      <ul>
+        <li><a href="#快速排序框架">快速排序框架</a></li>
+        <li><a href="#归并排序的代码框架">归并排序的代码框架</a></li>
+        <li><a href="#中后序框架">中后序框架</a></li>
+        <li><a href="#层序遍历">层序遍历</a></li>
+      </ul>
+    </li>
+    <li><a href="#动态规划">动态规划</a></li>
+    <li><a href="#回溯法">回溯法</a></li>
+    <li><a href="#bfs">BFS</a></li>
+    <li><a href="#二分搜索">二分搜索</a>
+      <ul>
+        <li><a href="#寻找一个数">寻找一个数</a></li>
+        <li><a href="#寻找左侧边界的二分搜索">寻找左侧边界的二分搜索</a></li>
+        <li><a href="#寻找右侧边界的二分查找">寻找右侧边界的二分查找</a></li>
+      </ul>
+    </li>
+    <li><a href="#滑动窗口">滑动窗口</a></li>
+    <li><a href="#股票买卖">股票买卖</a></li>
+    <li><a href="#时空复杂度分析">时空复杂度分析</a>
+      <ul>
+        <li><a href="#big-o-表示法">Big O 表示法</a></li>
+        <li><a href="#非递归算法分析">非递归算法分析</a></li>
+        <li><a href="#数据结构分析">数据结构分析</a></li>
+        <li><a href="#递归算法分析">递归算法分析</a></li>
+      </ul>
+    </li>
+    <li><a href="#解法代码分层">解法代码分层</a></li>
+    <li><a href="#递归debug">递归Debug</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://labuladong.github.io/algo/" target="_blank" rel="noopener noreffer ">labuladong的算法小抄</a>学习的时候结合golang做的笔记。感谢东哥。</p>
+<h2 id="双指针技巧">双指针技巧</h2>
+<p>秒杀链表和数组题目，快慢指针，左右指针</p>
+<p>当你需要创造一条新链表的时候，可以使用虚拟头结点简化边界情况的处理</p>
+<h3 id="反转链表的某个区间">反转链表的某个区间</h3>
+<p>[l,r)区间，l,r为*ListNode</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> next *ListNode
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//current是反转起点
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>prev,current:=<span style="color:#00a">nil</span>,l
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> l!=r{
+</span></span><span style="display:flex;"><span>  next=current.Next
+</span></span><span style="display:flex;"><span>  current.Next=prev
+</span></span><span style="display:flex;"><span>  prev=current
+</span></span><span style="display:flex;"><span>  current=next
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//此时current和next都为r
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="最长回文子串">最长回文子串</h3>
+<p>中间往两边扩展</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">longestPalindrome</span>(s <span style="color:#0aa">string</span>) <span style="color:#0aa">string</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> s == <span style="color:#a50">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> <span style="color:#a50">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    ss=s
+</span></span><span style="display:flex;"><span>    ll=<span style="color:#0aa">len</span>(s)
+</span></span><span style="display:flex;"><span>    ml, mr := <span style="color:#099">0</span>, <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i := <span style="color:#099">0</span>; i &lt; ll; i++ {
+</span></span><span style="display:flex;"><span>        l1, r1 := <span style="color:#0a0">expand</span>(i, i)
+</span></span><span style="display:flex;"><span>        l2, r2 := <span style="color:#0a0">expand</span>(i, i + <span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> r1 - l1 &gt; mr - ml {
+</span></span><span style="display:flex;"><span>            ml, mr = l1, r1
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> r2 - l2 &gt; mr - ml {
+</span></span><span style="display:flex;"><span>            ml, mr = l2, r2
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ss[ml:mr+<span style="color:#099">1</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> ss <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> ll <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">expand</span>(l, r <span style="color:#0aa">int</span>) (<span style="color:#0aa">int</span>, <span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> l&gt;=<span style="color:#099">0</span>&amp;&amp;r&lt;ll&amp;&amp;ss[l] == ss[r]{
+</span></span><span style="display:flex;"><span>        l--
+</span></span><span style="display:flex;"><span>        r++
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> l + <span style="color:#099">1</span>, r - <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二叉树">二叉树</h2>
+<h3 id="快速排序框架">快速排序框架</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">sort</span>(s []<span style="color:#0aa">int</span>,l <span style="color:#0aa">int</span>,r <span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 通过交换元素构建分界点 p
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  p:=<span style="color:#0a0">partition</span>(s,l,r)
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">sort</span>(s,l,p-<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">sort</span>(s,p+<span style="color:#099">1</span>,r)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">partition</span>(s []<span style="color:#0aa">int</span>,l <span style="color:#0aa">int</span>,r <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>  tmp:=s[l]
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> l&lt;r{
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> l&lt;r&amp;&amp;s[r]&gt;tmp{r--}
+</span></span><span style="display:flex;"><span>    s[l]=s[r]
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> l&lt;r&amp;&amp;s[l]&lt;rmp{l++}
+</span></span><span style="display:flex;"><span>    s[r]=s[l]
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  s[l]=tmp
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> l
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="归并排序的代码框架">归并排序的代码框架</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">sort</span>(s []<span style="color:#0aa">int</span>,l <span style="color:#0aa">int</span>,r <span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>  mid:=l+(r-l)/<span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">sort</span>(s,l,mid)
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">sort</span>(s,mid+<span style="color:#099">1</span>,r)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">merge</span>(s,l,mid,r)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="中后序框架">中后序框架</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">traverse</span>(root *TreeNode){
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> root==<span style="color:#00a">nil</span>{<span style="color:#00a">return</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//前序位置
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#0a0">traverse</span>(root.Left)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//中序位置
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#0a0">traverse</span>(root.Right)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//后序位置
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="层序遍历">层序遍历</h3>
+<p>使用一个list辅助，go里可以使用slice的append内置函数和子切片简单实现</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">levelTraverse</span>(root *TreeNode){
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> root==<span style="color:#00a">nil</span>{<span style="color:#00a">return</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  q:=[]*TreeNode{root}
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> <span style="color:#0aa">len</span>(q)!=<span style="color:#099">0</span>{
+</span></span><span style="display:flex;"><span>    tmp:=q[<span style="color:#099">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//处理
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    q=q[<span style="color:#099">1</span>:]
+</span></span><span style="display:flex;"><span>    q=<span style="color:#0aa">append</span>(q,tmp.Left,tmp.Right)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="动态规划">动态规划</h2>
+<p>动态规划就是聪明的穷举</p>
+<p>「最优子结构」：能够只通过子问题的最值得到原问题的最值</p>
+<p>「重叠子问题」：子问题存在重复计算，相当于递归树上有相同的节点，使用「备忘录」或者「DP table」来优化（具备这个性质的问题即使没有最优子结构性质，依然可以用备忘录来加速解题过程）</p>
+<p>明确 base case -&gt; 明确「状态」-&gt; 明确「选择」 -&gt; 定义 dp 数组/函数的含义</p>
+<p>通常DP可以分为两类：自顶向下的动态规划（递归函数实现），自底向上的动态规划（递推算法）。两种方法是同时存在的，并且都需要DP Table优化，它们的状态转移方程是统一的。</p>
+<blockquote>
+<p>这里的选择是修改问题状态的动作，其实就是状态转移方程求最值的参数，每个参数都是一个选择，表示父问题如何从子问题的结果得到自己的结果。比如股票买卖就是我今天是否卖出，买卖就是选择</p>
+</blockquote>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> dp_table [状态1][状态2][...]
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//状态初始化
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">init</span>(){}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//自顶向下
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">dp</span>(i,j){
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> 选择 in 所有可能的选择:
+</span></span><span style="display:flex;"><span>    result = 求最值(result,从子问题选择后的结果)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//自底向上
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">solution</span>(){
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> 状态1 in 状态1的所有取值:
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> 状态2 in 状态2的所有取值:
+</span></span><span style="display:flex;"><span>      ...
+</span></span><span style="display:flex;"><span>         dp[状态1][状态2][...] = 求最值(所有选择的结果)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于特定遍历顺序的DP可以进行空间优化，比如状态转移方程每次只需要2个子问题的状态，那么就可以把不需要的状态丢弃，仅保持最新的子问题状态</p>
+<h2 id="回溯法">回溯法</h2>
+<p>回溯法解决所有的排列，组合，子集问题</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>ans:=[]<span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>onpath:=[]<span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>visited:=[]<span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">backtrack</span>(当前位置){
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> 满足条件{
+</span></span><span style="display:flex;"><span>    ans=<span style="color:#0aa">append</span>(ans,onpath)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> 选择 := 当前位置.选择列表{
+</span></span><span style="display:flex;"><span>    做选择<span style="color:#f00;background-color:#faa">（</span>添加当前位置<span style="color:#f00;background-color:#faa">）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">backtrack</span>(选择后的位置)
+</span></span><span style="display:flex;"><span>    撤销选择<span style="color:#f00;background-color:#faa">（</span>取消当前位置<span style="color:#f00;background-color:#faa">）</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="bfs">BFS</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> ans *Node
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">BFS</span>(root *Node,target <span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>  q:=[]*Node{root}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> <span style="color:#0aa">len</span>(q)!=<span style="color:#099">0</span>{
+</span></span><span style="display:flex;"><span>    tmp:=q[<span style="color:#099">0</span>]
+</span></span><span style="display:flex;"><span>    q=q[<span style="color:#099">1</span>:]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> tmp满足条件{
+</span></span><span style="display:flex;"><span>      tmp处理
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    c:=tmp.children
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#099">0</span>;i&lt;<span style="color:#0aa">len</span>(c);i++{
+</span></span><span style="display:flex;"><span>      q=<span style="color:#0aa">append</span>(q,c[i])
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于需要避免走回头路的可以使用map或者数组来标记visited</p>
+<h2 id="二分搜索">二分搜索</h2>
+<h3 id="寻找一个数">寻找一个数</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">binarySearch</span>(s []<span style="color:#0aa">int</span>,t <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>  l,r,mid:=<span style="color:#099">0</span>,<span style="color:#0aa">len</span>(s)-<span style="color:#099">1</span>,<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> l&lt;=r{
+</span></span><span style="display:flex;"><span>    mid=l+(r-l)/<span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> s[mid]&lt;t{
+</span></span><span style="display:flex;"><span>      l=mid+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }<span style="color:#00a">else</span> <span style="color:#00a">if</span> s[mid]&gt;t{
+</span></span><span style="display:flex;"><span>      r=mid-<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }<span style="color:#00a">else</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#00a">return</span> mid
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> -<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="寻找左侧边界的二分搜索">寻找左侧边界的二分搜索</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">left_bound</span>(s []<span style="color:#0aa">int</span>,t <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>  l,r,mid:=<span style="color:#099">0</span>,<span style="color:#0aa">len</span>(s)-<span style="color:#099">1</span>,<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> l&lt;=r{
+</span></span><span style="display:flex;"><span>    mid=l+(r-l)/<span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> s[mid]&lt;t{
+</span></span><span style="display:flex;"><span>      l=mid+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }<span style="color:#00a">else</span> <span style="color:#00a">if</span> s[mid]&gt;t{
+</span></span><span style="display:flex;"><span>      r=mid-<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }<span style="color:#00a">else</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#aaa;font-style:italic">//需注意位置，这里改变的是r
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>      r=mid-<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//需注意位置，往左边找考虑最右边的情况，这里判断l
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">if</span> l==<span style="color:#0aa">len</span>(s){<span style="color:#00a">return</span> -<span style="color:#099">1</span>}
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//需注意位置，这里判断l，如果没找到l是插入位置
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">if</span> s[l]==t{<span style="color:#00a">return</span> l}<span style="color:#00a">else</span>{<span style="color:#00a">return</span> -<span style="color:#099">1</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="寻找右侧边界的二分查找">寻找右侧边界的二分查找</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">right_bound</span>(s []<span style="color:#0aa">int</span>,t <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>  l,r,mid:=<span style="color:#099">0</span>,<span style="color:#0aa">len</span>(s)-<span style="color:#099">1</span>,<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> l&lt;=r{
+</span></span><span style="display:flex;"><span>    mid=l+(r-l)/<span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> s[mid]&lt;t{
+</span></span><span style="display:flex;"><span>      l=mid+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }<span style="color:#00a">else</span> <span style="color:#00a">if</span> s[mid]&gt;t{
+</span></span><span style="display:flex;"><span>      r=mid-<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }<span style="color:#00a">else</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#aaa;font-style:italic">//需注意位置，这里改变的是r
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>      l=mid+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//需注意位置，往右边找考虑在最左边的情况，这里判断l-1
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">if</span> l-<span style="color:#099">1</span>&lt;<span style="color:#099">0</span>{<span style="color:#00a">return</span> -<span style="color:#099">1</span>}
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//需注意位置，这里判断l-1
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">if</span> s[l-<span style="color:#099">1</span>]==t{<span style="color:#00a">return</span> l-<span style="color:#099">1</span>}<span style="color:#00a">else</span>{<span style="color:#00a">return</span> -<span style="color:#099">1</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="滑动窗口">滑动窗口</h2>
+<p>左闭右开</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>l,r:=<span style="color:#099">0</span>,<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> r&lt;<span style="color:#0aa">len</span>(s){
+</span></span><span style="display:flex;"><span>  入滑动窗口处理s[r]
+</span></span><span style="display:flex;"><span>  r++
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> l满足增大条件{
+</span></span><span style="display:flex;"><span>    出滑动窗口处理s[l]
+</span></span><span style="display:flex;"><span>    l++
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="股票买卖">股票买卖</h2>
+<p>状态：天数i，允许交易最大次数k，持有状态[0，1]</p>
+<p>选择：sell，buy，rest</p>
+<p>在buy的时候减小k，因为交易是从buy开始的</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>dp[i][k][<span style="color:#099">0</span>] = <span style="color:#0a0">max</span>(dp[i-<span style="color:#099">1</span>][k][<span style="color:#099">0</span>], dp[i-<span style="color:#099">1</span>][k][<span style="color:#099">1</span>] + prices[i])
+</span></span><span style="display:flex;"><span>              <span style="color:#0a0">max</span>( 今天选择 rest,        今天选择 sell       )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dp[i][k][<span style="color:#099">1</span>] = <span style="color:#0a0">max</span>(dp[i-<span style="color:#099">1</span>][k][<span style="color:#099">1</span>], dp[i-<span style="color:#099">1</span>][k-<span style="color:#099">1</span>][<span style="color:#099">0</span>] - prices[i])
+</span></span><span style="display:flex;"><span>              <span style="color:#0a0">max</span>( 今天选择 rest,         今天选择 buy         )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="时空复杂度分析">时空复杂度分析</h2>
+<h3 id="big-o-表示法">Big O 表示法</h3>
+<blockquote>
+<p>O(g(n))= {f(n): 存在正常量c和n_0，使得对所有n ≥ n_0，有0 ≤ f(n) ≤ c*g(n)}</p>
+</blockquote>
+<ol>
+<li>只保留增长速率最快的项，其他的项可以省略</li>
+<li>Big O 记号表示复杂度的「上界」</li>
+</ol>
+<h3 id="非递归算法分析">非递归算法分析</h3>
+<p>空间复杂度：分配的数组空间大小
+时间复杂度：循环相乘，顺序相加，取最大的加数</p>
+<h3 id="数据结构分析">数据结构分析</h3>
+<p>摊还（平均）时间复杂度：算N个操作总的时间复杂度然后除以N</p>
+<p>比如一个单调栈，每个元素都进栈出栈一次，所以总的时间复杂度是O(2N)，除以N就是O(2)，取常数复杂度所以是O(1)</p>
+<h3 id="递归算法分析">递归算法分析</h3>
+<p>递归算法的时间复杂度 = 递归树的节点个数 x 每个节点的时间复杂度</p>
+<p>递归算法的空间复杂度 = 递归树的高度(递归栈的空间消耗) + 算法申请的存储空间</p>
+<h2 id="解法代码分层">解法代码分层</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//解题函数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">getans</span>(nums []<span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//数据初始化
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  a,l=<span style="color:#099">0</span>,<span style="color:#0aa">len</span>(nums)
+</span></span><span style="display:flex;"><span>  b=<span style="color:#0aa">make</span>([]slice,l)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//委托solution求解
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#0a0">solution</span>(nums)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//全局变量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">var</span> (
+</span></span><span style="display:flex;"><span>  a <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>  l <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>  b []<span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>  ans <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//solution函数，该函数也可以内联到解题函数中
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">solution</span>(nums []<span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//具体算法
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//工具函数，如递归
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">traverse</span>(){
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//具体算法
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="递归debug">递归Debug</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//全局变量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">var</span> count <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">printIndent</span>(n <span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> i:=<span style="color:#099">0</span>;i&lt;n;i++{fmt.<span style="color:#0a0">Print</span>(<span style="color:#a50">&#34; &#34;</span>)}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">dp</span>(){
+</span></span><span style="display:flex;"><span>  count++
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//每个fmt.println()之前调用printIndent(count)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#0a0">printIndent</span>(count)
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(xxx)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  count--
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E9%9B%B6%E7%AB%A0/" data-title="数据结构与算法-labuladong-第零章" data-hashtags="labuladong系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E9%9B%B6%E7%AB%A0/" data-hashtag="labuladong系列"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E9%9B%B6%E7%AB%A0/" data-title="数据结构与算法-labuladong-第零章"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E9%9B%B6%E7%AB%A0/" data-title="数据结构与算法-labuladong-第零章"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E9%9B%B6%E7%AB%A0/" data-title="数据结构与算法-labuladong-第零章"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/labuladong%E7%B3%BB%E5%88%97/">labuladong系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/strings/" class="prev" rel="prev" title="go标准库-Strings"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>go标准库-Strings</a>
+            <a href="/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/labuladong/%E7%AC%AC%E4%B8%80%E7%AB%A0/" class="next" rel="next" title="数据结构与算法-labuladong-第一章">数据结构与算法-labuladong-第一章<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-29T19:11:57+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"数据结构与算法-labuladong-第零章"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

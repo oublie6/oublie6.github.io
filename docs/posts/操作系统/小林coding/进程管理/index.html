@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>操作系统-小林coding-进程管理 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="操作系统-小林coding-进程管理" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 进程管理 进程、线程基础知识 进程 运行中的程序，就被称为「进程」（Pro" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-15T14:42:22+08:00" />
+<meta property="article:modified_time" content="2023-01-15T14:42:22+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="操作系统-小林coding-进程管理"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 进程管理 进程、线程基础知识 进程 运行中的程序，就被称为「进程」（Pro"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/linux%E5%91%BD%E4%BB%A4/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "操作系统-小林coding-进程管理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86\/"
+        },"genre": "posts","keywords": "小林coding系列","wordcount":  2375 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86\/","datePublished": "2023-01-15T14:42:22+08:00","dateModified": "2023-01-15T14:42:22+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-小林coding-进程管理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-15">2023-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2375 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#进程线程基础知识">进程、线程基础知识</a>
+      <ul>
+        <li><a href="#进程">进程</a>
+          <ul>
+            <li><a href="#进程的状态">进程的状态</a></li>
+            <li><a href="#进程的控制结构">进程的控制结构</a></li>
+            <li><a href="#进程的控制">进程的控制</a></li>
+            <li><a href="#进程的上下文切换">进程的上下文切换</a></li>
+          </ul>
+        </li>
+        <li><a href="#线程">线程</a>
+          <ul>
+            <li><a href="#为什么使用线程">为什么使用线程</a></li>
+            <li><a href="#什么是线程">什么是线程</a></li>
+            <li><a href="#线程与进程的比较httpsxiaolincodingcomos4_processprocess_basehtmle7babfe7a88be4b88ee8bf9be7a88be79a84e6af94e8be83"><a href="https://xiaolincoding.com/os/4_process/process_base.html#%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%AF%94%E8%BE%83">线程与进程的比较</a></a></li>
+            <li><a href="#线程的上下文切换">线程的上下文切换</a></li>
+            <li><a href="#线程的实现">线程的实现</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#进程间有哪些通信方式">进程间有哪些通信方式</a>
+      <ul>
+        <li><a href="#管道">管道</a>
+          <ul>
+            <li><a href="#匿名管道">匿名管道</a></li>
+            <li><a href="#命名管道">命名管道</a></li>
+          </ul>
+        </li>
+        <li><a href="#共享内存">共享内存</a></li>
+        <li><a href="#信号量">信号量</a></li>
+        <li><a href="#信号">信号</a></li>
+        <li><a href="#socket">Socket</a></li>
+      </ul>
+    </li>
+    <li><a href="#怎么避免死锁">怎么避免死锁</a>
+      <ul>
+        <li><a href="#死锁的概念">死锁的概念</a></li>
+      </ul>
+    </li>
+    <li><a href="#什么是悲观锁乐观锁">什么是悲观锁、乐观锁</a>
+      <ul>
+        <li><a href="#乐观锁与悲观锁">乐观锁与悲观锁</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/os/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<p><a href="https://xiaolincoding.com/os/4_process/process_base.html" target="_blank" rel="noopener noreffer ">进程管理</a></p>
+<h2 id="进程线程基础知识">进程、线程基础知识</h2>
+<h3 id="进程">进程</h3>
+<p>运行中的程序，就被称为「进程」（Process）</p>
+<p>中断：阻塞进程释放CPU</p>
+<p>多个程序、交替执行</p>
+<p>并行：同一时刻多个进程同时执行
+并发：同一时刻单个进程执行，但是一段时间内多个进程交替执行</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/5-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/5-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/5-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/5-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/5-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/5-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C.jpg" /></div>
+<h4 id="进程的状态">进程的状态</h4>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/10-%E8%BF%9B%E7%A8%8B%E4%B8%83%E4%B8%AD%E7%8A%B6%E6%80%81.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/10-%E8%BF%9B%E7%A8%8B%E4%B8%83%E4%B8%AD%E7%8A%B6%E6%80%81.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/10-%E8%BF%9B%E7%A8%8B%E4%B8%83%E4%B8%AD%E7%8A%B6%E6%80%81.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/10-%E8%BF%9B%E7%A8%8B%E4%B8%83%E4%B8%AD%E7%8A%B6%E6%80%81.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/10-%E8%BF%9B%E7%A8%8B%E4%B8%83%E4%B8%AD%E7%8A%B6%E6%80%81.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/10-%E8%BF%9B%E7%A8%8B%E4%B8%83%E4%B8%AD%E7%8A%B6%E6%80%81.jpg" /></div>
+<p>描述进程没有占用实际的物理内存空间的情况，这个状态就是挂起状态</p>
+<p>导致进程挂起的原因不只是因为进程所使用的内存空间不在物理内存，还包括如下情况：</p>
+<ul>
+<li>通过 sleep 让进程间歇性挂起，其工作原理是设置一个定时器，到期后唤醒进程</li>
+<li>用户希望挂起一个程序的执行，比如在 Linux 中用 Ctrl+Z 挂起进程</li>
+</ul>
+<h4 id="进程的控制结构">进程的控制结构</h4>
+<p>进程控制块（process control block，PCB）：进程存在的唯一标识</p>
+<p>信息：进程描述信息，进程控制和管理信息，资源分配清单，CPU 相关信息</p>
+<p>PCB 如何组织的：链表的方式进行组织，把具有相同状态的进程链在一起，组成各种队列</p>
+<h4 id="进程的控制">进程的控制</h4>
+<p>创建、终止、阻塞、唤醒</p>
+<h4 id="进程的上下文切换">进程的上下文切换</h4>
+<p>进程的上下文切换不仅包含了虚拟内存、栈、全局变量等用户空间的资源，还包括了内核堆栈、寄存器等内核空间的资源</p>
+<h3 id="线程">线程</h3>
+<h4 id="为什么使用线程">为什么使用线程</h4>
+<ul>
+<li>进程间通信开销大</li>
+<li>进程维护切换开销大</li>
+</ul>
+<h4 id="什么是线程">什么是线程</h4>
+<p>线程是进程当中的一条执行流程。</p>
+<p>同一个进程内多个线程之间共享代码段、数据段、打开的文件等资源，但每个线程各自都有一套独立的寄存器和栈，确保线程的控制流是相对独立的</p>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/16-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/16-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/16-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/16-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/16-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/16-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84.jpg" /></div>
+<p>线程的优点：</p>
+<ul>
+<li>一个进程中可以同时存在多个线程</li>
+<li>各个线程之间可以并发执行</li>
+<li>各个线程之间可以共享地址空间和文件等资源</li>
+</ul>
+<p>线程的缺点：当进程中的一个线程崩溃时，会导致其所属进程的所有线程崩溃（这里是针对 C/C++ 语言和goruntine，Java语言中的线程奔溃不会造成进程崩溃）</p>
+<p>举个例子，游戏的用户设计不应该使用多线程的方式，否则一个用户挂了，会影响其他同个进程的线程</p>
+<h4 id="线程与进程的比较httpsxiaolincodingcomos4_processprocess_basehtmle7babfe7a88be4b88ee8bf9be7a88be79a84e6af94e8be83"><a href="https://xiaolincoding.com/os/4_process/process_base.html#%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%AF%94%E8%BE%83" target="_blank" rel="noopener noreffer ">线程与进程的比较</a></h4>
+<p>线程相比进程能减少开销</p>
+<h4 id="线程的上下文切换">线程的上下文切换</h4>
+<p>线程是调度的基本单位，而进程则是资源拥有的基本单位</p>
+<ul>
+<li>当两个线程不属于同一个进程，切换的过程就跟进程上下文切换一样</li>
+<li>当两个线程是属于同一个进程，只需要切换线程的私有数据、寄存器等不共享的数据</li>
+</ul>
+<h4 id="线程的实现">线程的实现</h4>
+<p>主要有三种线程的实现方式:</p>
+<ul>
+<li>用户线程（User Thread）：在用户空间实现的线程，可扩展不支持线程技术的操作系统，切换块，但系统调用阻塞会影响同进程的线程，线程时间片分配不由操作系统控制无法打断，多线程进程和少线程进程分的时间片一样多</li>
+<li>内核线程（Kernel Thread）：在内核中实现的线程，由内核管理的线程，系统调用不会影响同进程线程，多线程进程获得更多时间片，但进程和线程上下文都由内核维护，线程的状态切换都需要系统调用开销大</li>
+<li>轻量级进程（LightWeight Process）：内核支持的用户线程，一个进程可有一个或多个 LWP，每个 LWP 是跟内核线程一对一映射的，也就是 LWP 都是由一个内核线程支持，而且 LWP 是由内核管理并像普通进程一样被调度。可以实现多对一，一对一，多对多用户线程和内核线程的对应关系</li>
+</ul>
+<p>存储线程控制块（Thread Control Block, TCB）的进程表在用户空间就是用户线程实现，在内核空间就是内核线程实现</p>
+<div id="id-4"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/22-LWP.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/22-LWP.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/22-LWP.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/22-LWP.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/22-LWP.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/22-LWP.jpg" /></div>
+<h2 id="进程间有哪些通信方式">进程间有哪些通信方式</h2>
+<p>每个进程的用户地址空间都是独立的，一般而言是不能互相访问的，但内核空间是每个进程都共享的，所以进程之间要通信必须通过内核。</p>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/4-%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/4-%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/4-%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/4-%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/4-%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/4-%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4.jpg" /></div>
+<p>有六种进程间通信方式</p>
+<h3 id="管道">管道</h3>
+<h4 id="匿名管道">匿名管道</h4>
+<p>linux的<code>|</code>运算符就使用了匿名管道</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#0aa">int</span> pipe(<span style="color:#0aa">int</span> fd[<span style="color:#099">2</span>])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-6"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/5-%E7%AE%A1%E9%81%93-pipe.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/5-%E7%AE%A1%E9%81%93-pipe.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/5-%E7%AE%A1%E9%81%93-pipe.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/5-%E7%AE%A1%E9%81%93-pipe.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/5-%E7%AE%A1%E9%81%93-pipe.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/5-%E7%AE%A1%E9%81%93-pipe.jpg" /></div>
+<p>创建的子进程会复制父进程的文件描述符</p>
+<div id="id-7"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/8-%E7%AE%A1%E9%81%93-pipe-shell.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/8-%E7%AE%A1%E9%81%93-pipe-shell.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/8-%E7%AE%A1%E9%81%93-pipe-shell.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/8-%E7%AE%A1%E9%81%93-pipe-shell.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/8-%E7%AE%A1%E9%81%93-pipe-shell.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/8-%E7%AE%A1%E9%81%93-pipe-shell.jpg" /></div>
+<p>匿名管道的通信范围是存在父子关系的进程</p>
+<h4 id="命名管道">命名管道</h4>
+<p>命名管道可以在不相关的进程间也能相互通信</p>
+<p>命名管道其实就是提前创建了一个类型为管道的设备文件，在进程里只要使用这个设备文件，就可以相互通信</p>
+<h3 id="共享内存">共享内存</h3>
+<p>多个进程拿出一块自己虚拟地址空间来映射到相同的物理内存中</p>
+<div id="id-8"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/9-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/9-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/9-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/9-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/9-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/9-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98.jpg" /></div>
+<h3 id="信号量">信号量</h3>
+<p>信号量是一个整型的计数器，用于实现进程间的互斥与同步，而不是用于缓存进程间通信的数据</p>
+<p>信号量表示资源的数量，控制信号量的方式有两种原子操作：</p>
+<ul>
+<li>P 操作：信号量减 1，如果信号量 &lt; 0，表明资源已被占用，进程阻塞等待；如果信号量 &gt;= 0，表明还有资源可使用，进程继续执行</li>
+<li>V 操作：信号量加上 1，如果信号量 &lt;= 0，表明当前有阻塞中的进程，将进程唤醒运行；如果信号量 &gt; 0，表明当前没有阻塞中的进程</li>
+</ul>
+<h3 id="信号">信号</h3>
+<p>异常情况下的工作模式</p>
+<p>Linux 操作系统中， 为了响应各种各样的事件，提供了几十种信号，分别代表不同的意义。可以通过 kill -l 命令查看所有信号</p>
+<p>运行在 shell 终端的进程，可以通过键盘输入某些组合键的时候，给进程发送信号</p>
+<ul>
+<li>Ctrl+C 产生 SIGINT 信号，表示终止该进程</li>
+<li>Ctrl+Z 产生 SIGTSTP 信号，表示停止该进程，但还未结束</li>
+</ul>
+<p>如果进程在后台运行，可以通过 kill 命令的方式给进程发送信号</p>
+<ul>
+<li>kill -9 1050 ，表示给 PID 为 1050 的进程发送 SIGKILL 信号，用来立即结束该进程</li>
+</ul>
+<p>信号是进程间通信机制中唯一的异步通信机制</p>
+<p>用户进程对信号的处理方式：</p>
+<ol>
+<li>执行默认操作</li>
+<li>捕捉信号：为信号定义一个信号处理函数，收到信号执行该函数</li>
+<li>忽略信号：不希望处理某些信号时，忽略该信号，不做任何处理。SIGKILL 和 SEGSTOP无法捕捉和忽略，它们用于在任何时候中断或结束某一进程</li>
+</ol>
+<h3 id="socket">Socket</h3>
+<p>Socket跨网络与不同主机上的进程之间通信</p>
+<p>根据创建 socket 类型的不同，通信的方式也就不同，主要有3类：TCP，UDP和本地</p>
+<p>TCP</p>
+<div id="id-9"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/12-TCP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/12-TCP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/12-TCP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/12-TCP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/12-TCP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/12-TCP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg" /></div>
+<p>UDP</p>
+<div id="id-10"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/13-UDP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/13-UDP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/13-UDP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/13-UDP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/13-UDP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/13-UDP%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg" /></div>
+<p>本地</p>
+<p>在同一台主机上进程间通信</p>
+<p>本地字节流 socket 和 本地数据报 socket 在 bind 的时候，不像 TCP 和 UDP 要绑定 IP 地址和端口，而是绑定一个本地文件，这也就是它们之间的最大区别</p>
+<h2 id="怎么避免死锁">怎么避免死锁</h2>
+<h3 id="死锁的概念">死锁的概念</h3>
+<p>死锁：多个线程都在等待对方释放锁</p>
+<p>条件：</p>
+<ul>
+<li>互斥条件：多个线程不能同时使用同一个资源</li>
+<li>持有并等待条件：线程 A 在等待资源 2 的同时并不会释放自己已经持有的资源 1</li>
+<li>不可剥夺条件：在自己使用完之前不能被其他线程获取</li>
+<li>环路等待条件：多个线程获取资源的顺序构成了环形链</li>
+</ul>
+<h2 id="什么是悲观锁乐观锁">什么是悲观锁、乐观锁</h2>
+<h3 id="乐观锁与悲观锁">乐观锁与悲观锁</h3>
+<p>悲观锁：访问共享资源前，先要上锁
+乐观锁：结束操作时检查是否有其他线程修改资源</p>
+<p>乐观锁全程并没有加锁，所以它也叫无锁编程</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-title="操作系统-小林coding-进程管理" data-hashtags="小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-hashtag="小林coding系列"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-title="操作系统-小林coding-进程管理"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-title="操作系统-小林coding-进程管理"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-title="操作系统-小林coding-进程管理"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="prev" rel="prev" title="操作系统-小林coding-内存管理"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>操作系统-小林coding-内存管理</a>
+            <a href="/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/linux%E5%91%BD%E4%BB%A4/" class="next" rel="next" title="操作系统-小林coding-Linux命令">操作系统-小林coding-Linux命令<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/df6c04.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2023-01-15T14:42:22+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"操作系统-小林coding-进程管理"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

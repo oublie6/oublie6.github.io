@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-逻辑复用-自定义指令 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-逻辑复用-自定义指令" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 介绍 除了 Vue 内置的一系列指令 (比如 v-model 或 v-show) 之外，Vue 还" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-16T15:54:17+08:00" />
+<meta property="article:modified_time" content="2022-10-16T15:54:17+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-逻辑复用-自定义指令"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 介绍 除了 Vue 内置的一系列指令 (比如 v-model 或 v-show) 之外，Vue 还"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E7%BB%84%E5%90%88%E5%BC%8F%E5%87%BD%E6%95%B0/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E6%8F%92%E4%BB%B6/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-逻辑复用-自定义指令",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8\/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  1584 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8\/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4\/","datePublished": "2022-10-16T15:54:17+08:00","dateModified": "2022-10-16T15:54:17+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-逻辑复用-自定义指令</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1584 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#指令钩子">指令钩子</a>
+      <ul>
+        <li><a href="#钩子参数">钩子参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#简化形式">简化形式</a></li>
+    <li><a href="#对象字面量">对象字面量</a></li>
+    <li><a href="#在组件上使用">在组件上使用</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<h2 id="介绍">介绍</h2>
+<p>除了 Vue 内置的一系列指令 (比如 v-model 或 v-show) 之外，Vue 还允许你注册自定义的指令 (Custom Directives)。</p>
+<p>我们已经介绍了两种在 Vue 中重用代码的方式：组件和组合式函数。组件是主要的构建模块，而组合式函数则侧重于有状态的逻辑。另一方面，自定义指令主要是为了重用涉及普通元素的底层 DOM 访问的逻辑。</p>
+<p>一个自定义指令由一个包含类似组件生命周期钩子的对象来定义。钩子函数会接收到指令所绑定元素作为其参数。下面是一个自定义指令的例子，当一个 input 元素被 Vue 插入到 DOM 中后，它会被自动聚焦：</p>
+<pre tabindex="0"><code>const focus = {
+  mounted: (el) =&gt; el.focus()
+}
+
+export default {
+  directives: {
+    // 在模板中启用 v-focus
+    focus
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;input v-focus /&gt;
+</code></pre><p>假设你还未点击页面中的其他地方，那么上面这个 input 元素应该会被自动聚焦。该指令比 autofocus attribute 更有用，因为它不仅仅可以在页面加载完成后生效，还可以在 Vue 动态插入元素后生效。</p>
+<p>和组件类似，自定义指令在模板中使用前必须先注册。在上面的例子中，我们使用 directives 选项完成了指令的局部注册。</p>
+<p>将一个自定义指令全局注册到应用层级也是一种常见的做法：</p>
+<pre tabindex="0"><code>const app = createApp({})
+
+// 使 v-focus 在所有组件中都可用
+app.directive(&#39;focus&#39;, {
+  /* ... */
+})
+</code></pre><p>只有当所需功能只能通过直接的 DOM 操作来实现时，才应该使用自定义指令。其他情况下应该尽可能地使用 v-bind 这样的内置指令来声明式地使用模板，这样更高效，也对服务端渲染更友好。</p>
+<h2 id="指令钩子">指令钩子</h2>
+<p>一个指令的定义对象可以提供几种钩子函数 (都是可选的)：</p>
+<pre tabindex="0"><code>const myDirective = {
+  // 在绑定元素的 attribute 前
+  // 或事件监听器应用前调用
+  created(el, binding, vnode, prevVnode) {
+    // 下面会介绍各个参数的细节
+  },
+  // 在元素被插入到 DOM 前调用
+  beforeMount(el, binding, vnode, prevVnode) {},
+  // 在绑定元素的父组件
+  // 及他自己的所有子节点都挂载完成后调用
+  mounted(el, binding, vnode, prevVnode) {},
+  // 绑定元素的父组件更新前调用
+  beforeUpdate(el, binding, vnode, prevVnode) {},
+  // 在绑定元素的父组件
+  // 及他自己的所有子节点都更新后调用
+  updated(el, binding, vnode, prevVnode) {},
+  // 绑定元素的父组件卸载前调用
+  beforeUnmount(el, binding, vnode, prevVnode) {},
+  // 绑定元素的父组件卸载后调用
+  unmounted(el, binding, vnode, prevVnode) {}
+}
+</code></pre><h3 id="钩子参数">钩子参数</h3>
+<p>指令的钩子会传递以下几种参数：</p>
+<ul>
+<li>el：指令绑定到的元素。这可以用于直接操作 DOM。</li>
+<li>binding：一个对象，包含以下属性。
+<ul>
+<li>value：传递给指令的值。例如在 v-my-directive=&ldquo;1 + 1&rdquo; 中，值是 2。</li>
+<li>oldValue：之前的值，仅在 beforeUpdate 和 updated 中可用。无论值是否更改，它都可用。</li>
+<li>arg：传递给指令的参数 (如果有的话)。例如在 v-my-directive:foo 中，参数是 &ldquo;foo&rdquo;。</li>
+<li>modifiers：一个包含修饰符的对象 (如果有的话)。例如在 v-my-directive.foo.bar 中，修饰符对象是 { foo: true, bar: true }。</li>
+<li>instance：使用该指令的组件实例。</li>
+<li>dir：指令的定义对象。</li>
+</ul>
+</li>
+<li>vnode：代表绑定元素的底层 VNode。</li>
+<li>prevNode：之前的渲染中代表指令所绑定元素的 VNode。仅在 beforeUpdate 和 updated 钩子中可用。</li>
+</ul>
+<p>举例来说，像下面这样使用指令：</p>
+<pre tabindex="0"><code>&lt;div v-example:foo.bar=&#34;baz&#34;&gt;
+</code></pre><p>binding 参数会是一个这样的对象：</p>
+<pre tabindex="0"><code>{
+  arg: &#39;foo&#39;,
+  modifiers: { bar: true },
+  value: /* `baz` 的值 */,
+  oldValue: /* 上一次更新时 `baz` 的值 */
+}
+</code></pre><p>和内置指令类似，自定义指令的参数也可以是动态的。举例来说：</p>
+<pre tabindex="0"><code>&lt;div v-example:[arg]=&#34;value&#34;&gt;&lt;/div&gt;
+</code></pre><p>这里指令的参数会基于组件的 arg 数据属性响应式地更新。</p>
+<p>除了 el 外，其他参数都是只读的，不要更改它们。若你需要在不同的钩子间共享信息，推荐通过元素的 dataset attribute 实现。</p>
+<h2 id="简化形式">简化形式</h2>
+<p>对于自定义指令来说，一个很常见的情况是仅仅需要在 mounted 和 updated 上实现相同的行为，除此之外并不需要其他钩子。这种情况下我们可以直接用一个函数来定义指令，如下所示：</p>
+<pre tabindex="0"><code>&lt;div v-color=&#34;color&#34;&gt;&lt;/div&gt;
+</code></pre><pre tabindex="0"><code>app.directive(&#39;color&#39;, (el, binding) =&gt; {
+  // 这会在 `mounted` 和 `updated` 时都调用
+  el.style.color = binding.value
+})
+</code></pre><h2 id="对象字面量">对象字面量</h2>
+<p>如果你的指令需要多个值，你可以向它传递一个 JavaScript 对象字面量。别忘了，指令也可以接收任何合法的 JavaScript 表达式。</p>
+<pre tabindex="0"><code>&lt;div v-demo=&#34;{ color: &#39;white&#39;, text: &#39;hello!&#39; }&#34;&gt;&lt;/div&gt;
+</code></pre><pre tabindex="0"><code>app.directive(&#39;demo&#39;, (el, binding) =&gt; {
+  console.log(binding.value.color) // =&gt; &#34;white&#34;
+  console.log(binding.value.text) // =&gt; &#34;hello!&#34;
+})
+</code></pre><h2 id="在组件上使用">在组件上使用</h2>
+<p>当在组件上使用自定义指令时，它会始终应用于组件的根节点，和透传 attributes 类似。</p>
+<pre tabindex="0"><code>&lt;MyComponent v-demo=&#34;test&#34; /&gt;
+</code></pre><pre tabindex="0"><code>&lt;!-- MyComponent 的模板 --&gt;
+
+&lt;div&gt; &lt;!-- v-demo 指令会被应用在此处 --&gt;
+  &lt;span&gt;My component content&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p>需要注意的是组件可能含有多个根节点。当应用到一个多根组件时，指令将会被忽略且抛出一个警告。和 attribute 不同，指令不能通过 v-bind=&quot;$attrs&quot; 来传递给一个不同的元素。总的来说，不推荐在组件上使用自定义指令。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/" data-title="Vue-逻辑复用-自定义指令" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/" data-title="Vue-逻辑复用-自定义指令"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/" data-title="Vue-逻辑复用-自定义指令"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/" data-title="Vue-逻辑复用-自定义指令"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E7%BB%84%E5%90%88%E5%BC%8F%E5%87%BD%E6%95%B0/" class="prev" rel="prev" title="Vue-逻辑复用-组合式函数"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-逻辑复用-组合式函数</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/%E6%8F%92%E4%BB%B6/" class="next" rel="next" title="Vue-逻辑复用-插件">Vue-逻辑复用-插件<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

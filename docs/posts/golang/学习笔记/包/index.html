@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-学习笔记-包 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-学习笔记-包" />
+<meta property="og:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-11T16:11:56+08:00" />
+<meta property="article:modified_time" content="2022-12-11T16:11:56+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-学习笔记-包"/>
+<meta name="twitter:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-学习笔记-包",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E5%8C%85\/"
+        },"genre": "posts","keywords": "go学习笔记","wordcount":  1421 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E5%8C%85\/","datePublished": "2022-12-11T16:11:56+08:00","dateModified": "2022-12-11T16:11:56+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-包</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1421 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#包和文件">包和文件</a></li>
+    <li><a href="#包简介">包简介</a></li>
+    <li><a href="#导入路径">导入路径</a></li>
+    <li><a href="#导入声明">导入声明</a></li>
+    <li><a href="#包的匿名导入">包的匿名导入</a></li>
+    <li><a href="#包和命名">包和命名</a></li>
+    <li><a href="#工具">工具</a>
+      <ul>
+        <li><a href="#工作区结构">工作区结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#标准库概述">标准库概述</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
+<h2 id="包和文件">包和文件</h2>
+<p>Go语言中的包和其他语言的库或模块的概念类似，目的都是为了支持模块化、封装、单独编译和代码重用。</p>
+<p>一个包的源代码保存在一个或多个以.go为文件后缀名的源文件中，通常一个包所在目录路径的后缀是包的导入路径</p>
+<p>每个包都对应一个独立的名字空间</p>
+<p>包还可以让我们通过控制哪些名字是外部可见的来隐藏内部实现信息：大写可见</p>
+<h2 id="包简介">包简介</h2>
+<p>每个包一般都定义了一个不同的名字空间用于它内部的每个标识符的访问。</p>
+<p>每个包还通过控制包内名字的可见性和是否导出来实现封装特性。</p>
+<h2 id="导入路径">导入路径</h2>
+<p>每个包是由一个全局唯一的字符串所标识的导入路径定位（支持相对路径和绝对路径以及网络资源）</p>
+<p>默认的包名就是包导入路径名的最后一段，因此即使两个包的导入路径不同，它们依然可能有一个相同的包名。</p>
+<p>也有三种例外情况：</p>
+<ul>
+<li>main包本身的导入路径是无关紧要的。名字为main的包是给go build（§10.7.3）构建命令一个信息，这个包编译完之后必须调用连接器生成一个可执行程序</li>
+<li>所有以_test为后缀包名的测试外部扩展包都由go test命令独立编译，普通包和测试的外部扩展包是相互独立的。</li>
+<li>一些依赖版本号的管理工具会在导入路径后追加版本号信息，例如&quot;gopkg.in/yaml.v2&quot;。这种情况下包的名字并不包含版本号后缀，而是yaml。</li>
+</ul>
+<h2 id="导入声明">导入声明</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;crypto/rand&#34;</span>
+</span></span><span style="display:flex;"><span>    mrand <span style="color:#a50">&#34;math/rand&#34;</span> <span style="color:#aaa;font-style:italic">// alternative name mrand avoids conflict
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="包的匿名导入">包的匿名导入</h2>
+<p>如果只是导入一个包而并不使用导入的包将会导致一个编译错误。但是有时候我们只是想利用导入包而产生的副作用：它会计算包级变量的初始化表达式和执行导入包的init初始化函数（§2.6.2）。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> _ <span style="color:#a50">&#34;image/png&#34;</span> <span style="color:#aaa;font-style:italic">// register PNG decoder
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="包和命名">包和命名</h2>
+<p>包名一般采用单数的形式。标准库的bytes、errors和strings使用了复数形式，这是为了避免和预定义的类型冲突，同样还有go/types是为了避免和type关键字冲突。</p>
+<p>当设计一个包的时候，需要考虑包名和成员名两个部分如何很好地配合。下面有一些例子：</p>
+<pre tabindex="0"><code>bytes.Equal    flag.Int    http.Get    json.Marshal
+</code></pre><h2 id="工具">工具</h2>
+<h3 id="工作区结构">工作区结构</h3>
+<pre tabindex="0"><code>GOPATH/
+    src/
+        gopl.io/
+            .git/
+            ch1/
+                helloworld/
+                    main.go
+                dup/
+                    main.go
+                ...
+        golang.org/x/net/
+            .git/
+            html/
+                parse.go
+                node.go
+                ...
+    bin/
+        helloworld
+        dup
+    pkg/
+        darwin_amd64/
+        ...
+</code></pre><p>注意，后面出现go mod 包管理方式。可以不使用GOPATH变量，在任意位置创建项目。</p>
+<h2 id="标准库概述">标准库概述</h2>
+<ul>
+<li>unsafe: 包含了一些打破 Go 语言“类型安全”的命令，一般的程序中不会被使用，可用在 C/C++ 程序的调用中。</li>
+<li>syscall-os-os/exec：
+<ul>
+<li>os:提供给我们一个平台无关性的操作系统功能接口</li>
+<li>os/exec: 提供我们运行外部操作系统命令和程序的方式</li>
+<li>syscall: 底层的外部包，提供了操作系统底层调用的基本接口</li>
+</ul>
+</li>
+<li>archive/tar 和 /zip-compress：压缩(解压缩)文件功能</li>
+<li>fmt-io-bufio-path/filepath-flag
+<ul>
+<li>fmt: 提供了格式化输入输出功能</li>
+<li>io: 提供了基本输入输出功能</li>
+<li>bufio: 缓冲输入输出功能的封装</li>
+<li>path/filepath: 用来操作在当前系统中的目标文件名路径</li>
+<li>flag: 对命令行参数的操作</li>
+</ul>
+</li>
+<li>strings-strconv-unicode-regexp-bytes
+<ul>
+<li>strings: 提供对字符串的操作</li>
+<li>strconv: 提供将字符串转换为基础类型的功能</li>
+<li>unicode: 为 unicode 型的字符串提供特殊的功能</li>
+<li>regexp: 正则表达式功能</li>
+<li>bytes: 提供对字符型分片的操作</li>
+</ul>
+</li>
+<li>math-math/cmath-math/big-math/rand-sort
+<ul>
+<li>math: 基本的数学函数</li>
+<li>math/rand: 伪随机数生成</li>
+<li>sort: 为数组排序和自定义集合</li>
+<li>math/big: 大数的实现和计算</li>
+</ul>
+</li>
+<li>container-/list-ring-heap
+<ul>
+<li>list: 双链表</li>
+</ul>
+</li>
+</ul>
+<p>遍历一个链表(当 l 是 *List)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">for</span> e := l.<span style="color:#0a0">Front</span>(); e != <span style="color:#00a">nil</span>; e = e.<span style="color:#0a0">Next</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//do something with e.Value
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>ring: 环形链表</li>
+<li>heap：二叉堆</li>
+<li>time-log
+<ul>
+<li>time: 日期和时间的基本操作。</li>
+<li>log: 记录程序运行时产生的日志,我们将在后面的章节使用它</li>
+</ul>
+</li>
+<li>encoding/json-encoding/xml-text/template</li>
+<li>net-net/http-html</li>
+<li>runtime: Go 程序运行时的交互操作，例如垃圾回收和协程创建</li>
+<li>reflect: 实现通过程序运行时反射，让程序操作任意类型的变量</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" data-title="golang-学习笔记-包" data-hashtags="go学习笔记"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" data-hashtag="go学习笔记"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" data-title="golang-学习笔记-包"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" data-title="golang-学习笔记-包"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" data-title="golang-学习笔记-包"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">go学习笔记</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" class="prev" rel="prev" title="golang-学习笔记-Map"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-学习笔记-Map</a>
+            <a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" class="next" rel="next" title="golang-学习笔记-结构（struct）与方法（method）">golang-学习笔记-结构（struct）与方法（method）<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-11T16:11:56+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"golang-学习笔记-包"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

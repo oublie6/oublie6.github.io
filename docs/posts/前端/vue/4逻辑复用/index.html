@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-4逻辑复用 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-4逻辑复用" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有&lt;script setup&gt;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-16T23:50:21+08:00" />
+<meta property="article:modified_time" content="2022-12-16T23:50:21+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-4逻辑复用"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有&lt;script setup&gt;"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/elasticsearch/%E7%AE%80%E4%BB%8B/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-4逻辑复用",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  1288 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8\/","datePublished": "2022-12-16T23:50:21+08:00","dateModified": "2022-12-16T23:50:21+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-4逻辑复用</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-16">2022-12-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1288 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#组合式函数">组合式函数</a>
+      <ul>
+        <li><a href="#鼠标跟踪器示例">鼠标跟踪器示例</a></li>
+        <li><a href="#异步状态示例">异步状态示例</a></li>
+        <li><a href="#约定和最佳实践">约定和最佳实践</a></li>
+        <li><a href="#通过抽取组合式函数改善代码结构">通过抽取组合式函数改善代码结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#自定义指令">自定义指令</a>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+        <li><a href="#指令钩子">指令钩子</a></li>
+        <li><a href="#简化形式">简化形式</a></li>
+        <li><a href="#对象字面量">对象字面量</a></li>
+        <li><a href="#在组件上使用">在组件上使用</a></li>
+      </ul>
+    </li>
+    <li><a href="#插件">插件</a>
+      <ul>
+        <li><a href="#介绍-1">介绍</a></li>
+        <li><a href="#编写一个插件">编写一个插件</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有<code>&lt;script setup&gt;</code>组合式API。</p>
+<h2 id="组合式函数">组合式函数</h2>
+<p>利用 Vue 的组合式 API 来封装和复用有状态逻辑的函数</p>
+<h3 id="鼠标跟踪器示例">鼠标跟踪器示例</h3>
+<p>见官网</p>
+<h3 id="异步状态示例">异步状态示例</h3>
+<p>见官网</p>
+<h3 id="约定和最佳实践">约定和最佳实践</h3>
+<p>命名：驼峰命名法命名，并以“use”作为开头</p>
+<p>输入参数：unref()兼容ref</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { unref } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">function</span> useFeature(maybeRef) {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 若 maybeRef 确实是一个 ref，它的 .value 会被返回
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#aaa;font-style:italic">// 否则，maybeRef 会被原样返回
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">const</span> value = unref(maybeRef)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>返回值:返回一个包含多个 ref 的非响应式对象，其在组件中结构后保持响应性</p>
+<p>副作用：组合式函数中添加 DOM 事件监听器或者请求数据，注意2点</p>
+<ol>
+<li>确保在组件挂载后才调用的生命周期钩子中执行 DOM 相关的副作用，例如：onMounted()，确保能访问到 DOM</li>
+<li>确保在 onUnmounted() 时清理副作用</li>
+</ol>
+<p>使用限制：组合式函数在 <code>&lt;script setup&gt;</code>应始终被同步地调用，以确定当前正在被执行的到底是哪个组件实例，从而：</p>
+<ol>
+<li>将生命周期钩子注册到该组件实例上</li>
+<li>将计算属性和监听器注册到该组件实例上，以便在该组件被卸载时停止监听，避免内存泄漏。</li>
+</ol>
+<h3 id="通过抽取组合式函数改善代码结构">通过抽取组合式函数改善代码结构</h3>
+<p>抽取组合式函数不仅是为了复用，也是为了代码组织。</p>
+<h2 id="自定义指令">自定义指令</h2>
+<h3 id="介绍">介绍</h3>
+<p>在 <code>&lt;script setup&gt;</code> 中，任何以 v 开头的驼峰式命名的变量都可以被用作一个自定义指令，模板中使用短横线连接</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 在模板中启用 v-focus
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">const</span> vFocus = {
+</span></span><span style="display:flex;"><span>  mounted: (el) =&gt; el.focus()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">input</span> <span style="color:#1e90ff">v</span><span style="color:#1e90ff;font-weight:bold">-focus</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="指令钩子">指令钩子</h3>
+<p>一个指令的定义对象可以提供几种钩子函数 (都是可选的)：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> myDirective = {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 在绑定元素的 attribute 前
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#aaa;font-style:italic">// 或事件监听器应用前调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  created(el, binding, vnode, prevVnode) {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 下面会介绍各个参数的细节
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 在元素被插入到 DOM 前调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  beforeMount(el, binding, vnode, prevVnode) {},
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 在绑定元素的父组件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#aaa;font-style:italic">// 及他自己的所有子节点都挂载完成后调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  mounted(el, binding, vnode, prevVnode) {},
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 绑定元素的父组件更新前调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  beforeUpdate(el, binding, vnode, prevVnode) {},
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 在绑定元素的父组件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#aaa;font-style:italic">// 及他自己的所有子节点都更新后调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  updated(el, binding, vnode, prevVnode) {},
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 绑定元素的父组件卸载前调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  beforeUnmount(el, binding, vnode, prevVnode) {},
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 绑定元素的父组件卸载后调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  unmounted(el, binding, vnode, prevVnode) {}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>钩子参数</p>
+<ul>
+<li>el：指令绑定到的元素。这可以用于直接操作 DOM。</li>
+<li>binding：一个对象，包含以下属性。
+<ul>
+<li>value：传递给指令的值</li>
+<li>oldValue：之前的值</li>
+<li>arg：传递给指令的参数</li>
+<li>modifiers：一个包含修饰符的对象</li>
+<li>instance：使用该指令的组件实例</li>
+<li>dir：指令的定义对象</li>
+</ul>
+</li>
+<li>vnode：代表绑定元素的底层 VNode</li>
+<li>prevNode：之前的渲染中代表指令所绑定元素的 VNode</li>
+</ul>
+<p>自定义指令的参数也可以是动态的</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">v-example:</span><span style="color:#f00;background-color:#faa">[</span><span style="color:#1e90ff">arg</span><span style="color:#f00;background-color:#faa">]=&#34;</span><span style="color:#1e90ff">value</span><span style="color:#f00;background-color:#faa">&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="简化形式">简化形式</h3>
+<p>仅仅需要在 mounted 和 updated 上实现相同的行为</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>app.directive(<span style="color:#a50">&#39;color&#39;</span>, (el, binding) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 这会在 `mounted` 和 `updated` 时都调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  el.style.color = binding.value
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="对象字面量">对象字面量</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">v-demo</span>=<span style="color:#a50">&#34;{ color: &#39;white&#39;, text: &#39;hello!&#39; }&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>app.directive(<span style="color:#a50">&#39;demo&#39;</span>, (el, binding) =&gt; {
+</span></span><span style="display:flex;"><span>  console.log(binding.value.color) <span style="color:#aaa;font-style:italic">// =&gt; &#34;white&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  console.log(binding.value.text) <span style="color:#aaa;font-style:italic">// =&gt; &#34;hello!&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在组件上使用">在组件上使用</h3>
+<p>子组件中该指令和透传 attributes 类似。</p>
+<p>指令不能通过 v-bind=&quot;$attrs&quot; 来传递给一个不同的元素</p>
+<p>不推荐在组件上使用自定义指令</p>
+<h2 id="插件">插件</h2>
+<h3 id="介绍-1">介绍</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { createApp } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> app = createApp({})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app.use(myPlugin, {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">/* 可选的选项 */</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> myPlugin = {
+</span></span><span style="display:flex;"><span>  install(app, options) {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 配置此应用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>常见用法：</p>
+<ol>
+<li>通过 app.component() 和 app.directive() 注册一到多个全局组件或自定义指令</li>
+<li>通过 app.provide() 使一个资源可被注入进整个应用</li>
+<li>向 app.config.globalProperties 中添加一些全局实例属性或方法</li>
+<li>一个可能上述三种都包含了的功能库 (例如 vue-router)</li>
+</ol>
+<h3 id="编写一个插件">编写一个插件</h3>
+<p>见官网</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" data-title="Vue-4逻辑复用" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" data-title="Vue-4逻辑复用"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" data-title="Vue-4逻辑复用"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" data-title="Vue-4逻辑复用"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" class="prev" rel="prev" title="Vue-3深入组件"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-3深入组件</a>
+            <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/elasticsearch/%E7%AE%80%E4%BB%8B/" class="next" rel="next" title="数据库-elasticsearch-简介">数据库-elasticsearch-简介<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-16T23:50:21+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Vue-4逻辑复用"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

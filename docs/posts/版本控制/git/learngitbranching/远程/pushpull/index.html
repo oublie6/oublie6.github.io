@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>版本控制-git-LearnGitBranching-远程-PushPull - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="版本控制-git-LearnGitBranching-远程-PushPull" />
+<meta property="og:description" content="本文来源于LearnGitBranching官网 远程仓库 远程仓库并不复杂, 在如今的云计算盛行的世界很容易把远程仓库想象成一个富有魔力的东西," />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/pushpull/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-15T13:23:52+08:00" />
+<meta property="article:modified_time" content="2022-10-15T13:23:52+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="版本控制-git-LearnGitBranching-远程-PushPull"/>
+<meta name="twitter:description" content="本文来源于LearnGitBranching官网 远程仓库 远程仓库并不复杂, 在如今的云计算盛行的世界很容易把远程仓库想象成一个富有魔力的东西,"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/pushpull/" /><link rel="prev" href="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E9%AB%98%E7%BA%A7%E8%AF%9D%E9%A2%98/" /><link rel="next" href="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/%E5%85%B3%E4%BA%8Eorigin%E5%92%8C%E5%AE%83%E7%9A%84%E5%91%A8%E8%BE%B9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "版本控制-git-LearnGitBranching-远程-PushPull",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6\/git\/learngitbranching\/%E8%BF%9C%E7%A8%8B\/pushpull\/"
+        },"genre": "posts","keywords": "git","wordcount":  2891 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6\/git\/learngitbranching\/%E8%BF%9C%E7%A8%8B\/pushpull\/","datePublished": "2022-10-15T13:23:52+08:00","dateModified": "2022-10-15T13:23:52+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">版本控制-git-LearnGitBranching-远程-PushPull</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>版本控制</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-15">2022-10-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2891 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#远程仓库">远程仓库</a></li>
+    <li><a href="#我们创建远程仓库的命令">我们创建远程仓库的命令</a></li>
+    <li><a href="#远程分支">远程分支</a></li>
+    <li><a href="#git-fetch">Git Fetch</a></li>
+    <li><a href="#git-fetch-做了些什么">git fetch 做了些什么</a>
+      <ul>
+        <li><a href="#git-fetch-不会做的事">git fetch 不会做的事</a></li>
+      </ul>
+    </li>
+    <li><a href="#git-pull">Git Pull</a></li>
+    <li><a href="#模拟团队合作">模拟团队合作</a></li>
+    <li><a href="#git-push">Git Push</a></li>
+    <li><a href="#偏离的工作">偏离的工作</a></li>
+    <li><a href="#远程服务器拒绝remote-rejected">远程服务器拒绝!(Remote Rejected)</a>
+      <ul>
+        <li><a href="#为什么会被拒绝">为什么会被拒绝?</a></li>
+        <li><a href="#解决办法">解决办法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文来源于<a href="https://learngitbranching.js.org/?locale=zh_CN" target="_blank" rel="noopener noreffer ">LearnGitBranching官网</a></p>
+<h2 id="远程仓库">远程仓库</h2>
+<p>远程仓库并不复杂, 在如今的云计算盛行的世界很容易把远程仓库想象成一个富有魔力的东西, 但实际上它们只是你的仓库在另个一台计算机上的拷贝。你可以通过因特网与这台计算机通信 —— 也就是增加或是获取提交记录</p>
+<p>话虽如此, 远程仓库却有一系列强大的特性</p>
+<ul>
+<li>首先也是最重要的的点, 远程仓库是一个强大的备份。本地仓库也有恢复文件到指定版本的能力, 但所有的信息都是保存在本地的。有了远程仓库以后，即使丢失了本地所有数据, 你仍可以通过远程仓库拿回你丢失的数据。</li>
+<li>还有就是, 远程让代码社交化了! 既然你的项目被托管到别的地方了, 你的朋友可以更容易地为你的项目做贡献(或者拉取最新的变更)</li>
+</ul>
+<p>现在用网站来对远程仓库进行可视化操作变得越发流行了(像 GitHub), 但远程仓库永远是这些工具的顶梁柱, 因此理解其概念非常的重要!</p>
+<h2 id="我们创建远程仓库的命令">我们创建远程仓库的命令</h2>
+<p>直到现在, 教程都聚焦于本地仓库的操作（branch、merge、rebase 等等）。但我们现在需要学习远程仓库的操作 —— 我们需要一个配置这种环境的命令, 它就是 git clone。 从技术上来讲，git clone 命令在真实的环境下的作用是在本地创建一个远程仓库的拷贝（比如从 github.com）。 但在我们的教程中使用这个命令会有一些不同 —— 它会在远程创建一个你本地仓库的副本。显然这和真实命令的意思刚好相反，但是它帮咱们把本地仓库和远程仓库关联到了一起，在教程中就凑合着用吧。</p>
+<h2 id="远程分支">远程分支</h2>
+<p>我们的本地仓库多了一个名为 o/main 的分支, 这种类型的分支就叫远程分支。</p>
+<p>远程分支反映了远程仓库(在你上次和它通信时)的状态。这会有助于你理解本地的工作与公共工作的差别 —— 这是你与别人分享工作成果前至关重要的一步.</p>
+<p>远程分支有一个特别的属性，在你检出时自动进入分离 HEAD 状态。Git 这么做是出于不能直接在这些分支上进行操作的原因, 你必须在别的地方完成你的工作, （更新了远程分支之后）再用远程分享你的工作成果。</p>
+<p>你可能想问这些远程分支的前面的 o/ 是什么意思呢？好吧, 远程分支有一个命名规范 —— 它们的格式是:<code>&lt;remote name&gt;/&lt;branch name&gt;</code></p>
+<p>因此，如果你看到一个名为 o/main 的分支，那么这个分支就叫 main，远程仓库的名称就是 o。</p>
+<p>大多数的开发人员会将它们主要的远程仓库命名为 origin，并不是 o。这是因为当你用 git clone 某个仓库时，Git 已经帮你把远程仓库的名称设置为 origin 了</p>
+<p>不过 origin 对于我们的 UI 来说太长了，因此不得不使用简写 o :) 但是要记住, 当你使用真正的 Git 时, 你的远程仓库默认为 origin!</p>
+<p>如果检出远程分支会怎么样呢？</p>
+<p>正如你所见，Git 变成了分离 HEAD 状态，当添加新的提交时 o/main 也不会更新。这是因为 o/main 只有在远程仓库中相应的分支更新了以后才会更新。</p>
+<h2 id="git-fetch">Git Fetch</h2>
+<p>Git 远程仓库相当的操作实际可以归纳为两点：向远程仓库传输数据以及从远程仓库获取数据。既然我们能与远程仓库同步，那么就可以分享任何能被 Git 管理的更新（因此可以分享代码、文件、想法、情书等等）。</p>
+<p>本节课我们将学习如何从远程仓库获取数据 —— 命令如其名，它就是 git fetch。</p>
+<p>你会看到当我们从远程仓库获取数据时, 远程分支也会更新以反映最新的远程仓库。在上一节课程中我们已经提及过这一点了。</p>
+<h2 id="git-fetch-做了些什么">git fetch 做了些什么</h2>
+<p>git fetch 完成了仅有的但是很重要的两步:</p>
+<ul>
+<li>从远程仓库下载本地仓库中缺失的提交记录</li>
+<li>更新远程分支指针(如 o/main)</li>
+</ul>
+<p>git fetch 实际上将本地仓库中的远程分支更新成了远程仓库相应分支最新的状态。</p>
+<p>如果你还记得上一节课程中我们说过的，远程分支反映了远程仓库在你最后一次与它通信时的状态，git fetch 就是你与远程仓库通信的方式了！希望我说的够明白了，你已经了解 git fetch 与远程分支之间的关系了吧。</p>
+<p>git fetch 通常通过互联网（使用 http:// 或 git:// 协议) 与远程仓库通信。</p>
+<h3 id="git-fetch-不会做的事">git fetch 不会做的事</h3>
+<p>git fetch 并不会改变你本地仓库的状态。它不会更新你的 main 分支，也不会修改你磁盘上的文件。</p>
+<h2 id="git-pull">Git Pull</h2>
+<p>其实有很多方法的 —— 当远程分支中有新的提交时，你可以像合并本地分支那样来合并远程分支。也就是说就是你可以执行以下命令:</p>
+<ul>
+<li>git cherry-pick o/main</li>
+<li>git rebase o/main</li>
+<li>git merge o/main</li>
+<li>&hellip;</li>
+</ul>
+<p>实际上，由于先抓取更新再合并到本地分支这个流程很常用，因此 Git 提供了一个专门的命令来完成这两个操作。它就是我们要讲的 git pull。</p>
+<p>git pull 就是 git fetch 和 git merge 的缩写！</p>
+<h2 id="模拟团队合作">模拟团队合作</h2>
+<h2 id="git-push">Git Push</h2>
+<p>git push 负责将你的变更上传到指定的远程仓库，并在远程仓库上合并你的新提交记录。一旦 git push 完成, 你的朋友们就可以从这个远程仓库下载你分享的成果了！</p>
+<p>注意 —— git push 不带任何参数时的行为与 Git 的一个名为 push.default 的配置有关。它的默认值取决于你正使用的 Git 的版本，但是在教程中我们使用的是 upstream。 这没什么太大的影响，但是在你的项目中进行推送之前，最好检查一下这个配置</p>
+<h2 id="偏离的工作">偏离的工作</h2>
+<p>假设你周一克隆了一个仓库，然后开始研发某个新功能。到周五时，你新功能开发测试完毕，可以发布了。但是 —— 天啊！你的同事这周写了一堆代码，还改了许多你的功能中使用的 API，这些变动会导致你新开发的功能变得不可用。但是他们已经将那些提交推送到远程仓库了，因此你的工作就变成了基于项目旧版的代码，与远程仓库最新的代码不匹配了。</p>
+<p>这种情况下, git push 就不知道该如何操作了。如果你执行 git push，Git 应该让远程仓库回到星期一那天的状态吗？还是直接在新代码的基础上添加你的代码，亦或由于你的提交已经过时而直接忽略你的提交？</p>
+<p>因为这情况（历史偏离）有许多的不确定性，Git 是不会允许你 push 变更的。实际上它会强制你先合并远程最新的代码，然后才能分享你的工作。</p>
+<p>如果我们在 push 之前做 rebase 呢？</p>
+<p>我们用 git fetch 更新了本地仓库中的远程分支，然后用 rebase 将我们的工作移动到最新的提交记录下，最后再用 git push 推送到远程仓库。</p>
+<p>还有其它的方法可以在远程仓库变更了以后更新我的工作吗? 当然有，我们还可以使用 merge</p>
+<p>尽管 git merge 不会移动你的工作（它会创建新的合并提交），但是它会告诉 Git 你已经合并了远程仓库的所有变更。这是因为远程分支现在是你本地分支的祖先，也就是说你的提交已经包含了远程分支的所有变化。</p>
+<p>我们用 git fetch 更新了本地仓库中的远程分支，然后合并了新变更到我们的本地分支（为了包含远程仓库的变更），最后我们用 git push 把工作推送到远程仓库</p>
+<p>很好！但是要敲那么多命令，有没有更简单一点的？</p>
+<p>当然 —— 前面已经介绍过 git pull 就是 fetch 和 merge 的简写，类似的 git pull &ndash;rebase 就是 fetch 和 rebase 的简写！</p>
+<h2 id="远程服务器拒绝remote-rejected">远程服务器拒绝!(Remote Rejected)</h2>
+<p>如果你是在一个大的合作团队中工作, 很可能是main被锁定了, 需要一些Pull Request流程来合并修改。如果你直接提交(commit)到本地main, 然后试图推送(push)修改, 你将会收到这样类似的信息:</p>
+<pre tabindex="0"><code>! [远程服务器拒绝] main -&gt; main (TF402455: 不允许推送(push)这个分支; 你必须使用pull request来更新这个分支.)
+</code></pre><h3 id="为什么会被拒绝">为什么会被拒绝?</h3>
+<p>远程服务器拒绝直接推送(push)提交到main, 因为策略配置要求 pull requests 来提交更新.</p>
+<p>你应该按照流程,新建一个分支, 推送(push)这个分支并申请pull request,但是你忘记并直接提交给了main.现在你卡住并且无法推送你的更新</p>
+<h3 id="解决办法">解决办法</h3>
+<p>新建一个分支feature, 推送到远程服务器. 然后reset你的main分支和远程服务器保持一致, 否则下次你pull并且他人的提交和你冲突的时候就会有问题.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/pushpull/" data-title="版本控制-git-LearnGitBranching-远程-PushPull" data-hashtags="git"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/pushpull/" data-hashtag="git"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/pushpull/" data-title="版本控制-git-LearnGitBranching-远程-PushPull"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/pushpull/" data-title="版本控制-git-LearnGitBranching-远程-PushPull"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/pushpull/" data-title="版本控制-git-LearnGitBranching-远程-PushPull"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/git/">git</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E9%AB%98%E7%BA%A7%E8%AF%9D%E9%A2%98/" class="prev" rel="prev" title="版本控制-git-LearnGitBranching-主要-高级话题"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>版本控制-git-LearnGitBranching-主要-高级话题</a>
+            <a href="/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E8%BF%9C%E7%A8%8B/%E5%85%B3%E4%BA%8Eorigin%E5%92%8C%E5%AE%83%E7%9A%84%E5%91%A8%E8%BE%B9/" class="next" rel="next" title="版本控制-git-LearnGitBranching-远程-关于origin和它的周边">版本控制-git-LearnGitBranching-远程-关于origin和它的周边<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-15T13:23:52+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"版本控制-git-LearnGitBranching-远程-PushPull"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

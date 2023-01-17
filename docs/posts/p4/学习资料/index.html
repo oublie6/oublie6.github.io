@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>P4-学习资料 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="P4-学习资料" />
+<meta property="og:description" content="P4-learning wiki 入门 将此存储库克隆到您的机器中: git clone https://github.com/nsg-ethz/p4-learning.git 所需软件 为了能够编译 P4 代码，在软件交换机中运行它并创建与主机的虚拟拓扑，需要首先安装几个依赖项和开" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/p4/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-01T11:41:09+08:00" />
+<meta property="article:modified_time" content="2022-12-01T11:41:09+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="P4-学习资料"/>
+<meta name="twitter:description" content="P4-learning wiki 入门 将此存储库克隆到您的机器中: git clone https://github.com/nsg-ethz/p4-learning.git 所需软件 为了能够编译 P4 代码，在软件交换机中运行它并创建与主机的虚拟拓扑，需要首先安装几个依赖项和开"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/p4/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" /><link rel="prev" href="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/git%E4%B8%A2%E5%BC%83%E5%8E%86%E5%8F%B2commit/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/sort/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "P4-学习资料",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/p4\/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99\/"
+        },"genre": "posts","keywords": "P4","wordcount":  12313 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/p4\/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99\/","datePublished": "2022-12-01T11:41:09+08:00","dateModified": "2022-12-01T11:41:09+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">P4-学习资料</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/p4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>P4</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-01">2022-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;12313 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;25 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#入门">入门</a>
+      <ul>
+        <li><a href="#将此存储库克隆到您的机器中">将此存储库克隆到您的机器中:</a></li>
+        <li><a href="#所需软件">所需软件</a></li>
+      </ul>
+    </li>
+    <li><a href="#迁移到新版本">迁移到新版本</a>
+      <ul>
+        <li><a href="#什么是新的">什么是新的？</a></li>
+        <li><a href="#如何迁移到新版本">如何迁移到新版本？</a></li>
+      </ul>
+    </li>
+    <li><a href="#bmv2-simple-swich">BMv2 simple swich</a>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+        <li><a href="#标准元数据">标准元数据</a>
+          <ul>
+            <li><a href="#排队元数据">排队元数据</a></li>
+            <li><a href="#内在元数据">内在元数据</a></li>
+          </ul>
+        </li>
+        <li><a href="#externs">Externs</a></li>
+        <li><a href="#高级功能示例">高级功能示例</a>
+          <ul>
+            <li><a href="#创建组播组">创建组播组</a></li>
+            <li><a href="#克隆数据包">克隆数据包</a></li>
+            <li><a href="#数据包摘要">数据包摘要</a></li>
+          </ul>
+        </li>
+        <li><a href="#使用严格的优先级队列">使用严格的优先级队列</a></li>
+        <li><a href="#入口和出口管道">入口和出口管道</a>
+          <ul>
+            <li><a href="#入口管道">入口管道</a></li>
+            <li><a href="#出口管道">出口管道</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#控制平面">控制平面</a>
+      <ul>
+        <li><a href="#控制交换机">控制交换机</a></li>
+        <li><a href="#simple-switch客户端">simple switch客户端</a>
+          <ul>
+            <li><a href="#运行客户端">运行客户端</a></li>
+            <li><a href="#填表">填表</a></li>
+            <li><a href="#将客户端输入写入文件">将客户端输入写入文件</a></li>
+            <li><a href="#使用p4-utils配置文件">使用P4-Utils配置文件</a></li>
+          </ul>
+        </li>
+        <li><a href="#thrift-api">Thrift API</a></li>
+        <li><a href="#p4runtime-api">P4Runtime API</a></li>
+      </ul>
+    </li>
+    <li><a href="#调试和故障排除">调试和故障排除</a>
+      <ul>
+        <li><a href="#监控流量">监控流量</a>
+          <ul>
+            <li><a href="#pcap文件">.pcap文件</a></li>
+            <li><a href="#wireshark和tshark">Wireshark和TShark</a></li>
+            <li><a href="#tcpdump">Tcpdump</a></li>
+          </ul>
+        </li>
+        <li><a href="#logging记录">Logging记录</a>
+          <ul>
+            <li><a href="#控制台记录">控制台记录</a></li>
+            <li><a href="#客户端记录">客户端记录</a></li>
+            <li><a href="#事件记录">事件记录</a></li>
+          </ul>
+        </li>
+        <li><a href="#调试器">调试器</a></li>
+        <li><a href="#将信息附加到数据包">将信息附加到数据包</a></li>
+        <li><a href="#使用-p4-表检查标题元数据值">使用 P4 表检查标题/元数据值</a></li>
+        <li><a href="#如果以上没有解决你的问题">如果以上没有解决你的问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#scapy">Scapy</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://github.com/nsg-ethz/p4-learning/wiki/Getting-Started" target="_blank" rel="noopener noreffer ">P4-learning wiki</a></p>
+<h2 id="入门">入门</h2>
+<h3 id="将此存储库克隆到您的机器中">将此存储库克隆到您的机器中:</h3>
+<pre tabindex="0"><code>git clone https://github.com/nsg-ethz/p4-learning.git
+</code></pre><h3 id="所需软件">所需软件</h3>
+<p>为了能够编译 P4 代码，在软件交换机中运行它并创建与主机的虚拟拓扑，需要首先安装几个依赖项和开源工具。特别是，需要在机器上安装以下包（及其依赖项）。</p>
+<ul>
+<li>PI为P4Runtime服务器提供了一个实现框架。只有涉及P4Runtime开关的拓扑才需要它。</li>
+<li>behavioral Model(BMv2)包含行为模型的几种变体（例如simple_switch和simple_switch_grpc）的软件实现。</li>
+<li>P4C是支持P4_14和P4_16的 P4 编程语言的参考编译器。</li>
+<li>Mininet允许在单个机器（VM、云或本机）上创建一个真实的虚拟网络，运行真实的内核、交换机和应用程序代码。</li>
+<li>FRRouting是适用于 Linux 和 Unix 平台的免费开源 Internet 路由协议套件。它实现了 BGP、OSPF、RIP、IS-IS、PIM、LDP、BFD、Babel、PBR、OpenFabric 和 VRRP，并支持 EIGRP 和 NHRP。P4-Utils中的路由器节点基于FRRouting。没有路由器的拓扑不需要它。</li>
+<li>P4-Utils是支持 P4 设备的Mininet的扩展它受到p4lang存储库中原始p4app的强烈启发。</li>
+</ul>
+<p>由于安装过程可能有点乏味和繁琐，请查看P4-Utils安装指南。实际上，由于P4-Learning只是P4-Utils的示例和练习的汇编，因此它们的软件要求是相同的。您可以选择安装P4-Tools套件（包括P4-Learning和P4-Utils）的不同方式：您可以使用 VM 或安装脚本。</p>
+<h2 id="迁移到新版本">迁移到新版本</h2>
+<h3 id="什么是新的">什么是新的？</h3>
+<p>最近更新的P4-Utils引入了一些改进，也影响了P4-Learning。实际上， P4-Utils是一个框架，它可以创建带有 P4 设备的虚拟网络。此后，我们列出了添加或修改的最重要的功能。</p>
+<ul>
+<li>该应用程序现在完全基于 Python 3。</li>
+<li>用于启动网络的遗留 JSON 配置文件已得到简化。</li>
+<li>现在也可以使用 Python 脚本和新的NetworkAPI.</li>
+<li>P4Runtime目前可以使用新的 API。</li>
+<li>出于兼容性原因，保留了遗留的Thrift API 和客户端。</li>
+</ul>
+<p>所有练习和示例都已迁移到新版本，并且现在与新框架兼容。但是，如果您有根据旧示例制作的自定义示例，请确保您已将任何控制器移植到 Python 3，并且 JSON 网络配置文件符合新规范。</p>
+<h3 id="如何迁移到新版本">如何迁移到新版本？</h3>
+<p>见<a href="https://github.com/nsg-ethz/p4-learning/wiki/Migrate-to-the-new-version#how-to-migrate-to-the-new-version" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h2 id="bmv2-simple-swich">BMv2 simple swich</h2>
+<h3 id="介绍">介绍</h3>
+<p>Simple Switch目标是 P4 开发中使用的实际架构。Simple Switch架构是P4_14规范（P4 语言的第一版）中提出的抽象交换机模型的实现。Simple Switch目标已使用行为模型 (BMv2) 库实现，这是一个允许开发人员实现自己的软件 P4 目标的框架。</p>
+<p>BMv2 存储库实现了两个不同版本的Simple Switch，它们具有不同的控制平面接口。</p>
+<p>|目标target|控制平面|
+|:=:|:=:|
+|simple_switch|Thrift|
+|simple_switch_grpc|P4Runtime,Thrift|</p>
+<p>然而，目标仍然使用 P4保留相同的数据平面配置选项。因此，本文档中给出的大部分与数据平面相关的说明对两者均有效。对于控制平面，下表显示了配置Simple Switch的不同方法。</p>
+<p>|控制平面|方法|
+|:=:|:=:|
+|Thrift|SimpleSwitchThriftAPI,simple_switch_CLI|
+|P4Runtime|SimpleSwitchP4RuntimeAPI|</p>
+<p>在该语言的第二个版本（P4_16，我们在此存储库中使用的版本）中，对语言和语法进行了一些向后不兼容的更改。特别是，大量的语言特性被从语言中剔除并移入库中，包括计数器、校验和单元、仪表等。因此，P4_16语言的核心已经变得非常简单，而高级特性是一个独特的目标架构现在在所谓的架构库中描述。v1model架构（我们在每个程序开始时导入的架构）是Simple Switch的架构库目标。它包括所有标准元数据和内部元数据字段、外部函数和交换机架构（或管道）包描述的声明。</p>
+<p>现在，P4_16语言也有自己的规范中定义的便携式交换架构（PSA）。截至 2018 年 9 月，PSA 架构的部分实现已经完成，但尚未完成。它将在名为psa_switch的单独可执行程序中实现，与此处描述的simple_switch程序不同。</p>
+<h3 id="标准元数据">标准元数据</h3>
+<p>该v1model.p4体系结构定义了一长串元数据字段。每个字段都有不同的用法，有些是可写的，有些是只读的，有些两者都是。一些字段由开关填充，并为您提供有用的信息，如ingress_port、时间戳等。其他字段可用于告诉开关做什么（即egress_spec）。对于使用v1model架构并包含文件v1model.p4的P4_16程序，以下所有字段都是standard_metadata_t类型结构体的一部分。</p>
+<p>以下是字段：</p>
+<ul>
+<li>ingress_port (bit&lt;9&gt;)：数据包到达设备的入口端口号。只读。对于重新提交和重新循环的数据包ingress_port 是0。</li>
+<li>packet_length (bit&lt;32&gt;)：对于来自端口的新数据包或再循环数据包，数据包的长度（以字节为单位）。对于克隆或重新提交的数据包，您可能需要将其包含在要保留的字段列表中，否则其值将变为0.</li>
+<li>egress_spec (bit&lt;9&gt;)可以在ingress入口代码中分配一个值，以控制数据包将转到哪个输出端口。P4_14 原语drop和v1model 原语动作mark_to_drop为该字段分配实现特定值DROP_PORT（simple_switch默认为十进制511，但可以通过特定于目标的命令行选项&ndash;drop-port更改），这样 在在入口处理结束时，具有该egress_spec值的数据包将被丢弃，不会存储在数据包缓冲区中，也不会发送到出口处理。如果您的 P4 程序分配了DROP_PORT给egress_spec，它仍然会相应地运行，即使您从不调用mark_to_drop( P4_16 ) 或drop( P4_14 ).</li>
+<li>egress_port (bit&lt;9&gt;)：仅在出口处理期间访问，只读。此数据包的目标输出端口。</li>
+<li>instance_type (bit&lt;32&gt;)：包含一个可以被您的 P4 代码读取的值。在入口代码中，该值可用于区分数据包是从端口新到达的（NORMAL），它是重新提交原语操作的结果（RESUBMIT），还是再循环原语操作的结果（RECIRC）。在出口处理中，可用于确定数据包是否作为入口到出口克隆原语操作 ( INGRESS_CLONE)、出口到出口克隆原语操作 ( EGRESS_CLONE)、入口处理期间指定的多播复制 ( REPLICATION)、或者都不是，所以来自入口 ( NORMAL) 的普通单播数据包。您可以在下面查看每个实例类型的值，或在 P4 代码的开头复制此定义。</li>
+</ul>
+<pre tabindex="0"><code>#define PKT_INSTANCE_TYPE_NORMAL 0
+#define PKT_INSTANCE_TYPE_INGRESS_CLONE 1
+#define PKT_INSTANCE_TYPE_EGRESS_CLONE 2
+#define PKT_INSTANCE_TYPE_COALESCED 3
+#define PKT_INSTANCE_TYPE_INGRESS_RECIRC 4
+#define PKT_INSTANCE_TYPE_REPLICATION 5
+#define PKT_INSTANCE_TYPE_RESUBMIT 6
+</code></pre><ul>
+<li>parser_status或parser_error:parser_status是P4_14语言规范中的名称。它已在v1model中重命名为parser_error。值0或者error.NoError（根据P4_16和v1model）表示没有错误。否则，该值指示解析期间发生的错误。可能的值是：</li>
+</ul>
+<pre tabindex="0"><code>error {
+    NoError,           /// No error.
+    PacketTooShort,    /// Not enough bits in packet for &#39;extract&#39;.
+    NoMatch,           /// &#39;select&#39; expression has no matches.
+    StackOutOfBounds,  /// Reference to invalid element of a header stack.
+    HeaderTooShort,    /// Extracting too many bits into a varbit field.
+    ParserTimeout      /// Parser execution time limit exceeded.
+}
+</code></pre><h4 id="排队元数据">排队元数据</h4>
+<p>当从入口到出口管道时，队列元数据由交换机填充。因此，此元数据字段只能从出口管道访问，并且它们是只读的。对于使用v1model架构并包含文件v1model.p4的P4_16程序，以下所有字段都是standard_metadata_t类型结构体的一部分。无需为这些字段定义自己的结构类型。</p>
+<p>以下是字段：</p>
+<ul>
+<li>enq_timestamp (bit&lt;32&gt;): 时间戳，以微秒为单位，在数据包首次入队时设置。</li>
+<li>enq_qdepth (bit&lt;19&gt;): 数据包首次入队时的队列深度。</li>
+<li>deq_timedelta (bit&lt;32&gt;): 时间，以微秒为单位，数据包在队列中花费的时间。</li>
+<li>deq_qdepth (bit&lt;19&gt;): 数据包出列时的队列深度。</li>
+<li>qid (bit&lt;5&gt;)：当有多个队列为每个出口端口提供服务时（例如，启用优先级排队时），每个队列都会分配一个固定的唯一 ID，该 ID 将写入该字段。否则，此字段设置为 0。待定：qid当前不是v1model中类型standard_metadata_t的一部分。也许应该添加？</li>
+</ul>
+<h4 id="内在元数据">内在元数据</h4>
+<p>每个体系结构通常定义自己的内部元数据字段，除了标准元数据字段外，还使用这些字段来提供更高级的功能（实际上，内部元数据是standard_metadata_t类型结构体的一部分）。体系结构并不严格要求这些标头，因为可以编写 P4 程序并在不定义它们的情况下通过simple_switch运行它。但是，需要它们的存在才能启用simple_switch. 这些字段中的大多数，对于位宽没有严格的要求，但我们建议您遵循我们的以下建议。其中一些固有元数据字段可以直接访问（读和/或写），其他的只能通过原语操作访问。</p>
+<ul>
+<li>ingress_global_timestamp (bit&lt;48&gt;)：一个时间戳，以微秒为单位，当数据包出现在入口时设置。每次交换机启动时，时钟都设置为 0。该字段可以直接从任一管道（入口和出口）读取，但不应写入。</li>
+<li>egress_global_timestamp (bit&lt;48&gt;)：一个时间戳，以微秒为单位，在数据包开始出口处理时设置。时钟与ingress_global_timestamp相同。该字段只能从出口管道中读取，但不应写入。</li>
+<li>mcast_grp (bit&lt;16&gt;): 多播功能的需要。当您希望多播数据包时，需要在入口管道中写入此字段。值为 0 表示没有多播。此值必须是通过 BMv2 运行时接口配置的有效多播组之一。</li>
+<li>egress_rid (bit&lt;16&gt;): 多播功能的需要。该字段仅在出口管道中有效，并且只能从中读取。它用于唯一标识同一入口数据包的多播副本。</li>
+<li>checksum_error (bit&lt;1&gt;)： 只读。如果对verify_checksum原始操作的调用发现校验和错误，则为 1，否则为 0。调用verify_checksum应该在v1model的VerifyChecksum控件中，它在解析器之后和入口之前执行。</li>
+<li>priority (bit&lt;3&gt;): 优先级队列中的数据包优先级。可能的优先级介于 0（最低优先级）和 7（最高优先级）之间。</li>
+</ul>
+<h3 id="externs">Externs</h3>
+<p>有外部类型、函数和对象。它们都在v1model.p4架构文件描述中定义。</p>
+<ul>
+<li>counter(bit&lt;32&gt; size, CounterType type)：它允许您声明一个间接计数器数组，可以一个一个地增加。</li>
+</ul>
+<p>void count(in bit&lt;32&gt; index): 函数将索引为index的计数器增加1和/或数据包中的字节数。</p>
+<ul>
+<li>direct_counter(CounterType type)：它允许您声明一个直接计数器，以后可以用表引用它。每次表中有一个匹配项时，该匹配项的条目位置的计数器都会增加1，或者增加数据包包含的字节数。</li>
+</ul>
+<p>void count()：在给定引用表的匹配操作期间自动调用。</p>
+<ul>
+<li>meter(bit&lt;32&gt; size, MeterType type)：它允许您声明一个间接仪表数组。计量器可以跟踪数据包或字节速率。</li>
+</ul>
+<p>void execute_meter<!-- raw HTML omitted -->(in bit&lt;32&gt; index, out T result)：在给定index的情况下执行仪表并返回仪表的颜色状态。</p>
+<ul>
+<li>direct_meter(MeterType Type)：它允许您声明一个直接仪表，以后可以用表引用，类似于计数器。每次表中有一个匹配项时，该匹配项的条目位置的计量器就会增加1，或者增加数据包包含的字节数。</li>
+</ul>
+<p>void read(out T result)：返回最后执行的条目的颜色。</p>
+<ul>
+<li>register(bit<!-- raw HTML omitted --> size)：它允许您声明一个数组或寄存器，大小为size，元素位数为T（例如bit&lt;8&gt;）。</li>
+</ul>
+<p>void read(out T result, in bit&lt;32&gt; index): 读取index单元格内容。将输出（必须具有 T位数）存储在变量 result 中。</p>
+<p>void write(in bit&lt;32&gt; index, in T value)value: 在index单元格写入（也有宽度T）。</p>
+<ul>
+<li>void random<!-- raw HTML omitted -->(out T result, in T lo, in T hi): 在lo和hi之间生成一个随机值并将其存储在result. 这三个变量必须具有相同的类型（宽度）。</li>
+<li>void digest<!-- raw HTML omitted -->(in bit&lt;32&gt; receiver, in T data): 允许您摘要小块信息并将它们发送到控制器的函数。用于发送摘要消息的通道取决于交换机架构。在Simple Switch中，摘要是使用nanomsg套接字库实现的。与simple_switch一起使用时，您可以将接收方字段始终设置为1。数据需要是包含您想要摘要到控制器的所有变量、标头或元数据的一个结构体。</li>
+<li>void mark_to_drop(inout standard_metadata_t standard_metadata)：简单地将standard_metadata.egress_spec设置为一个值，该值指示流量管理器或出口端丢弃数据包。请注意，此函数不会表现为return，这意味着如果程序egress_spec在离开ingress或egress管道之前更改数据包将不会被丢弃。</li>
+<li>void hash&lt;O, T, D, M&gt;(out O result, in HashAlgorithm algo, in T base, in D data, in M max): 对data执行哈希算法algo并将输出存储在result. 输出值将介于base和之间max。您可以在v1model.p4架构描述中看到不同的可用算法。</li>
+<li>void verify_checksum&lt;T, O&gt;(in bool condition, in T data, in O checksum, HashAlgorithm algo): 验证接收数据完整性的函数。如果condition为真，它会对data结构体执行哈希算法algo并将值与checksum进行比较。然后它将输出存储在standard_metadata.checksum_error（0 有效，1 无效）中。</li>
+<li>void update_checksum&lt;T, O&gt;(in bool condition, in T data, inout O checksum, HashAlgorithm algo): 允许您在修改计算过程中涉及的某些字段后更新校验和字段的函数。如果condition为真，则使用algo算法对data结构体进行哈希处理并存储在您选择的checksum字段中。比如ipv4.checksum字段。</li>
+<li>void verify_checksum_with_payload&lt;T, O&gt;(in bool condition, in T data, in O checksum, HashAlgorithm algo): 与verify_checksum相同，但包括data之后的数据包有效载荷。</li>
+<li>void resubmit<!-- raw HTML omitted -->(in T data): 将原始数据包重新提交给解析器。它只能在入口处应用。在入口结束时，original数据包（不会出现修改）将再次提交给解析器，但是data参数中添加的所有字段将保留它们在original数据包入口结束时的值。如果对一个数据包执行了多个重新提交操作，则仅使用最后一次重新提交操作的字段列表，并且仅重新提交一个数据包。</li>
+<li>void recirculate<!-- raw HTML omitted -->(in T data)：将修改后的数据包重新循环到入口解析器。它只能在出口处应用。此函数标记要在出口解析后重新循环的数据包，这意味着对数据包所做的所有更改都将保留在重新循环的数据包中。与重新提交类似，可以使用data参数保留一些元数据字段。</li>
+<li>void clone(in CloneType type, in bit&lt;32&gt; session)：此函数允许您创建数据包克隆。有关详细信息，请参阅下面的特定部分。</li>
+<li>void clone3<!-- raw HTML omitted -->(in CloneType type, in bit&lt;32&gt; session, in T data)：与clone但允许您将一些元数据字段复制到克隆的数据包。</li>
+<li>void truncate(in bit&lt;32&gt; length)：允许您在出口处截断数据包的功能。数据包将只保留您在length参数中指定的字节数。它可以在入口或出口处执行，但它只会在出口解析期间生效。</li>
+</ul>
+<h3 id="高级功能示例">高级功能示例</h3>
+<p>在本节中，我们将解释如何使用Simple Switch提供的一些最高级的功能。其中大部分涉及 P4 代码和控制平面编程。</p>
+<h4 id="创建组播组">创建组播组</h4>
+<p>为了使用Simple Switch的数据包复制引擎，需要在 P4 程序和使用运行时接口 ( SimpleSwitchThriftAPI, SimpleSwitchP4RuntimeAPI) 或simple_switch_CLI完成几件事.</p>
+<blockquote>
+<p>使用SimpleSwitchP4RuntimeAPI无法控制simple_switch</p>
+</blockquote>
+<p>首先，您需要创建多播组、多播节点并将它们关联到端口和组。这可以使用P4-Utils提供的simple_switch_CLI或 API来完成：</p>
+<ol>
+<li>创建多播组：</li>
+</ol>
+<pre tabindex="0"><code>mc_mgrp_create &lt;id&gt;
+</code></pre><ol start="2">
+<li>创建具有复制 ID ( rid) 的多播节点：</li>
+</ol>
+<pre tabindex="0"><code>mc_node_create &lt;rid&gt; &lt;port_number&gt;
+</code></pre><p>此函数返回一个handle_id，它是将节点与多播组相关联时需要使用的某种标识符。默认情况下，我们创建的第一个节点handle_id返回 0，下一个节点返回 1，依此类推。因此，我们只需要记住我们添加它们的顺序。请注意，rid和handle_id是不一样的。可以为您创建的每个节点设置相同的rid，它只是标识符，将附加到使用此mc_node进行多播的每个数据包。可以在出口处通过读取standard_metadata.egress_rid找到该值。</p>
+<ol start="3">
+<li>为节点分配多播组：</li>
+</ol>
+<pre tabindex="0"><code>mc_node_associate &lt;mcast_grp_id&gt; &lt;node_handle_id&gt;
+</code></pre><p>在下面的示例中，我们将使用simple_switch_CLI关联端口1，2和3到同一个多播组：</p>
+<pre tabindex="0"><code>mc_mgrp_create 1
+
+mc_node_create 0 1
+mc_node_create 0 2
+mc_node_create 0 3
+
+mc_node_associate 1 0
+mc_node_associate 1 1
+mc_node_associate 1 2
+</code></pre><p>或者，您可以创建具有多个端口的节点，如下所示：</p>
+<pre tabindex="0"><code>mc_mgrp_create 1
+mc_node_create 0 1 2 3
+mc_node_associate 1 0
+</code></pre><p>最后，一旦您对复制引擎进行了编程并添加了多播组，您就可以在 P4 程序中使用它们。为此，您需要在入口管道中给standard_metadata.mcast_grp写入要用于多播的多播组 ID 的值。按照我们的示例，要将数据包发送到端口 1、2 和 3，我们需要设置standard_metadata.mcast_grp = 1.</p>
+<h4 id="克隆数据包">克隆数据包</h4>
+<p>克隆/镜像数据包是一种非常常见的交换机功能。克隆用于创建数据包副本并将它们发送到其他地方。这可用于监控、将数据发送到控制平面等。</p>
+<p>imple Switch提供了两个可用于克隆数据包的extern函数：</p>
+<ul>
+<li>clone(in CloneType type, in bit&lt;32&gt; session)</li>
+<li>clone3<!-- raw HTML omitted -->(in CloneType type, in bit&lt;32&gt; session, in T data)</li>
+</ul>
+<ol>
+<li>两个 extern 中的第一个参数是类型，Simple Switch允许两种类型CloneType.I2E, 和CloneType.E2E。第一种类型可用于将原始数据包的副本发送到出口管道，后者将出口数据包的副本发送到缓冲区机制。</li>
+<li>第二个参数是镜像 id或session id。交换机使用镜像 ID 来了解应将数据包克隆到哪个端口。需要使用控制平面 API 或客户端通过执行以下操作来配置此映射</li>
+</ol>
+<pre tabindex="0"><code>mirroring_add &lt;session&gt; &lt;output_port&gt;
+</code></pre><ol start="3">
+<li>使用clone3时，您可以将元数据作为第三个参数添加元数据结构体。当一个数据包被克隆时，它的所有元数据字段都被重置为默认值（通常是0）。使用时，clone3您可以告诉交换机复制一些元数据值，以便克隆的数据包能够访问它们。</li>
+</ol>
+<p>例如，假设我们想将每个数据包的副本发送到一个正在侦听端口号的控制器7，以执行我们将要执行的操作：</p>
+<ol>
+<li>使用客户端或 API 添加镜像会话：</li>
+</ol>
+<pre tabindex="0"><code>mirroring_add 100 7
+</code></pre><ol start="2">
+<li>在 p4 代码中使用 clone extern（在入口管道期间）：</li>
+</ol>
+<pre tabindex="0"><code>clone(CloneType.I2E, 100)
+</code></pre><ol start="3">
+<li>数据包将被克隆到出口管道。要区分普通数据包和克隆数据包，您需要使用该standard_metadata.instance_type字段（请参阅上文文档）。对于从入口管道克隆的数据包，instance_type == 1.</li>
+</ol>
+<h4 id="数据包摘要">数据包摘要</h4>
+<p>Simple Switch目标提供了一种使用digest外部函数将一些小信息（摘要）发送到控制器的方法。摘要数据包是和原始数据包一起发送的，因此不需要克隆任何东西。因此，例如，在典型的 L2 学习案例中，您仍然希望转发未匹配源 MAC 查找的数据包，同时向控制平面发送通知。Simple Switch摘要是使用套接字库Nanomsg实现的。digest必须从入口管道调用。下面是一个例子。</p>
+<p>假设我们在 p4 代码中定义了这个元数据结构：</p>
+<pre tabindex="0"><code>struct digest_data_t {
+
+    bit&lt;8&gt; a;
+    bit&lt;8&gt; b;
+
+}
+
+struct metadata {
+    /* empty */
+    digest_data_t digest_data;
+}
+</code></pre><p>然后我们可以在入口管道中调用摘要：</p>
+<pre tabindex="0"><code>digest(1, meta.digest_data); //assume that metadata is called meta in the ingress parameters
+</code></pre><blockquote>
+<p>注意 digest 的第一个参数总是1.</p>
+</blockquote>
+<p>接收摘要数据包并非易事，因为交换机添加了一些需要解析的控制标头，此外，对于每个摘要数据包，交换机都需要一个确认消息（用于过滤重复项）。</p>
+<h3 id="使用严格的优先级队列">使用严格的优先级队列</h3>
+<p>Simple Switch允许每个输出端口使用多个队列。但是，为了使用它们，您需要做一些小的修改。</p>
+<ol>
+<li>在bmv2/targets/simple_switch/simple_switch.h文件中取消注释#define SSWITCH_PRIORITY_QUEUEING_ON。</li>
+<li>将这两个元数据字段添加到v1model.p4文件中：</li>
+</ol>
+<pre tabindex="0"><code>//Priority queueing
+@alias(&#34;queueing_metadata.qid&#34;)           bit&lt;5&gt;  qid;
+@alias(&#34;intrinsic_metadata.priority&#34;)     bit&lt;3&gt; priority;
+</code></pre><ol start="3">
+<li>将修改后的v1model.p4文件复制到/usr/local/share/p4c/p4include/：</li>
+</ol>
+<pre tabindex="0"><code>cp v1model.p4 /usr/local/share/p4c/p4include/
+</code></pre><ol start="4">
+<li>重新编译 BMv2，以便添加多个队列。</li>
+</ol>
+<p>默认情况下，您将有 8 个严格优先级队列，0 为最高优先级，7 为最低优先级。较高优先级队列中的数据包将始终比较低优先级队列中的数据包先传输。要选择要用于数据包的队列，您需要将该standard_metadata.priority字段设置为0-7。如果需要，您可以单独配置每个队列的速率和长度。为此，您必须修改simple_switch代码。如果您想这样做，请提出要求，我们可以向您展示如何操作。</p>
+<h3 id="入口和出口管道">入口和出口管道</h3>
+<p>我们已经看到可以以多种方式处理数据包。根据我们是否要单播、多播、克隆、摘要、重新提交或再循环，可以对数据包进行不同的处理。此外，您可能会问自己，如果我们尝试同时进行单播和多播，或者重新提交并重新传播，会发生什么情况。在本节中，我们将解释Simple Switch如何处理入口和出口管道的这些情况。</p>
+<h4 id="入口管道">入口管道</h4>
+<p>在本节中，我们将展示在执行了来自入口控制的所有逻辑之后数据包会发生什么。</p>
+<ol>
+<li>如果clone或clone3被调用，数据包将使用镜像 ID 克隆到您指定的egress_port位置（有关更多信息，请参阅克隆部分）。这会将入口数据包复制到出口管道，而无需所有入口控制修改。如果是clone3，数据包还将保留指定的元数据字段。最后，它会将standard_metadata.instance_type修改为相应的值。</li>
+<li>如果有digest的调用，交换机将向控制器发送带有指定字段的控制平面消息。</li>
+<li>前两个条件可以并行执行。现在我们将展示一些相互排斥的动作，如果一个动作发生，另一个动作就不会发生。此外，我们在这里展示它们的顺序很重要。交换机仅执行第一个真条件。</li>
+</ol>
+<ol>
+<li>重新提交：如果重新提交被调用，数据包将使用原始数据包值和元数据字段(默认值)再次发送到入口解析器。您可以通过将某些字段传递给重新提交操作来保留它们。</li>
+<li>多播：如果在入口期间设置standard_metadata.mcast_grp字段，则根据您使用控制平面 API 配置交换机的方式，将数据包复制 n 次（请参阅上面的多播部分中的更多信息）。</li>
+<li>丢弃：如果egress_port==511或0数据包被丢弃。您可以通过调用mark_to_drop操作或直接将这些值分配给egress_port字段来实现。</li>
+<li>单播：如果以上都不是，则数据包在egress_spec端口队列中排队。</li>
+</ol>
+<h4 id="出口管道">出口管道</h4>
+<p>在本节中，我们将展示在执行了出口控制的所有逻辑后数据包会发生什么。</p>
+<ol>
+<li>如果在出口管道中调用clone或clone3被调用，数据包将使用镜像 ID 克隆到您指定的egress_port位置（有关更多信息，请参阅克隆部分）。这会将出口数据包的副本和被clone3指定的元数据发送到出口控制块。</li>
+<li>现在我们将展示一些相互排斥的动作，如果一个动作发生，另一个动作就不会发生。此外，我们在这里展示它们的顺序很重要。交换机仅执行第一个真条件。</li>
+</ol>
+<ol>
+<li>丢弃：如果您mark_to_drop在出口管道期间调用，数据包将在管道末端直接丢弃。</li>
+<li>Recirculate：如果您调用该recirculate操作，数据包将再次发送到入口解析器，数据包由出口解析器构建（您可以添加或删除包头）。数据包将保留指定的字段。</li>
+<li>Send Packet Out：数据包发送到接口。</li>
+</ol>
+<h2 id="控制平面">控制平面</h2>
+<h3 id="控制交换机">控制交换机</h3>
+<p>BMv2存储库实现了两个不同版本的Simple Switch，它们具有不同的控制平面接口。</p>
+<p>|目标target|控制平面|
+|:=:|:=:|
+|simple_switch|Thrift|
+|simple_switch_grpc|P4Runtime,Thrift|</p>
+<p>下表显示了配置Simple Switch的不同方法，这些方法将在后续段落中进行更详细的介绍。由于P4-Utils最近的更新，P4Runtime现在可以使用新的控制平面 API。请注意，API（即SimpleSwitchThriftAPI和SimpleSwitchP4RuntimeAPI）由P4-Utils提供，而客户端（即simple_switch_CLI）由 BMv2 直接实现。</p>
+<p>|控制平面|方法|
+|:=:|:=:|
+|Thrift|SimpleSwitchThriftAPI,simple_switch_CLI|
+|P4Runtime|SimpleSwitchP4RuntimeAPI|</p>
+<h3 id="simple-switch客户端">simple switch客户端</h3>
+<p>我们可以使用simple_switch_CLI来配置交换机并填充匹配操作表。</p>
+<h4 id="运行客户端">运行客户端</h4>
+<p>要获得交换机客户端，只需运行：</p>
+<pre tabindex="0"><code>simple_switch_CLI --thrift-port &lt;port&gt;
+</code></pre><p>客户端连接到在每个交换机进程中运行的Thrift服务器。9090是默认端口号，但当然，如果您在计算机上运行多个设备，则需要为每个设备提供不同的端口。一个客户端实例只能连接到一台交换机设备。</p>
+<h4 id="填表">填表</h4>
+<p>最常用的修改表内容的命令如下。</p>
+<ul>
+<li>table_set_default &lt;table_name&gt; &lt;action_name&gt; &lt;action_parameters&gt;用于设置表的默认动作（即没有找到匹配时执行的动作）。</li>
+<li>table_add &lt;table_name&gt; &lt;action_name&gt; &lt;match_fields&gt; =&gt; &lt;action_parameters&gt;用于设置与表中特定匹配项相关的操作。</li>
+</ul>
+<p>例如，如果我们有下表：</p>
+<pre tabindex="0"><code>action drop(){
+    // drops packet
+    mark_to_drop(standard_metadata);
+}
+
+action action_name(bit&lt;8&gt; action_parameter){
+    ...
+}
+
+table table_name {
+    key = {
+        standard_metadata.ingress_port: exact;
+    }
+    actions = {
+        drop;
+        action_name;
+    }
+}
+</code></pre><pre tabindex="0"><code>table_set_default table_name drop
+table_add table_name action_name 1 =&gt; 5
+</code></pre><p>第一个命令将为表table_name设置默认操作和操作参数（在本例中为无）。因此，当使用表table_name时如果没有匹配项，将调用drop操作。在第二个示例命令中添加一个匹配的条目，如果standard_metadata.ingress_port等于 1 将执行action_parameter设置为5的action_name动作。</p>
+<h4 id="将客户端输入写入文件">将客户端输入写入文件</h4>
+<p>您还可以填充表格，直接在文本文件中写入命令，然后提供给客户端：</p>
+<pre tabindex="0"><code>simple_switch_CLI --thrift-port &lt;port&gt; &lt; command_file.txt
+</code></pre><h4 id="使用p4-utils配置文件">使用P4-Utils配置文件</h4>
+<p>或者，您可以使用P4-Utils配置文件（即）为每个交换机p4app.json设置一个配置文件。cli创建拓扑或重启交换机时，P4-Utils将自动使用该文件来填充和配置交换机。</p>
+<p>要设置默认客户端配置文件，您需要定义交换机，例如：</p>
+<pre tabindex="0"><code>    &#34;switches&#34;: {
+      &#34;s1&#34;: {
+        &#34;cli_input&#34;: &#34;&lt;path_to_cli_commands_file&gt;&#34;
+      }
+    }
+</code></pre><p>您可以p4app.json在<a href="https://nsg-ethz.github.io/p4-utils/usage.html#json" target="_blank" rel="noopener noreffer ">官方P4-Utils文档</a>中找到有关的所有文档。</p>
+<h3 id="thrift-api">Thrift API</h3>
+<p>您可以找到作为P4-Utils的功能之一的Simple Switch Client 包装器。它被叫做SimpleSwitchThriftAPI并基本上允许用户执行相同的操作，但不是使用发送到客户端的文本，而是可以使用脚本语言（如 Python）的强大功能。您可以在<a href="https://nsg-ethz.github.io/p4-utils/advanced_usage.html#thrift-api" target="_blank" rel="noopener noreffer ">此处</a>阅读有关此 API的更多信息。</p>
+<h3 id="p4runtime-api">P4Runtime API</h3>
+<p>P4 语言联盟最近定义了P4Runtime，这是一种控制平面规范，用于控制由 P4 程序定义或描述的设备的数据平面元素。这个新协议旨在成为 P4 设备的标准，这样即使是控制平面程序也可以与目标无关。</p>
+<p>针对这种需求，在P4-Utils的上一次更新中引入了P4Runtime API。它被称为SimpleSwitchP4RuntimeAPI并旨在提供在功能和命名方面与SimpleSwitchThriftAPI的方法相似的方法，以便更容易地从一个迁移到另一个。您可以在<a href="https://nsg-ethz.github.io/p4-utils/advanced_usage.html#p4runtime-api" target="_blank" rel="noopener noreffer ">此处</a>阅读有关此 API的更多信息。</p>
+<h2 id="调试和故障排除">调试和故障排除</h2>
+<h3 id="监控流量">监控流量</h3>
+<p>在调试 P4 程序时，Sniffing traffic嗅探流量是一个非常强大的工具。仅通过观察流量就可以轻松实现验证流量是否穿过特定路径，或者标头字段是否符合预期等基本操作。为此，可以使用多种工具。</p>
+<h4 id="pcap文件">.pcap文件</h4>
+<p>提供了一个选项，simple_switch可以将通过其接口的所有流量保存在一个.pcap文件中。要在启动交换机时启用 pcap 日志记录，请使用&ndash;pcap=&lt;output_dir&gt;命令行选项。例如：</p>
+<pre tabindex="0"><code>sudo simple_switch -i 0@&lt;iface0&gt; -i 1@&lt;iface1&gt; --pcap=&lt;output_dir&gt; &lt;path to JSON file&gt;
+</code></pre><p>数据包日志记录将使用以下命名创建多个文件：&lt;sw_name&gt;-&lt;intf_num&gt;_&lt;in|out&gt;.pcap.</p>
+<p>P4-Utils集成</p>
+<p>如果您.pcap在p4app.json配置文件或网络配置脚本中启用文件，交换机将使用该&ndash;pcap选项启动并用./pcap作输出目录。</p>
+<h4 id="wireshark和tshark">Wireshark和TShark</h4>
+<p>另一种选择是在流量流动时观察流量。为此，您可以使用TShark及其 GUI 版本Wireshark等工具，它们已安装在 VM 中。要使用TShark运行捕获流量：</p>
+<pre tabindex="0"><code>sudo tshark -i &lt;interface_name&gt;
+</code></pre><h4 id="tcpdump">Tcpdump</h4>
+<p>同样，如果您愿意，可以使用tcpdump（也已经安装在 VM 中）。要使用 tcpdump run 捕获流量（显示链路层信息并且不解析地址）：</p>
+<pre tabindex="0"><code>sudo tcpdump -l -enn -i &lt;interface_name&gt;
+</code></pre><h3 id="logging记录">Logging记录</h3>
+<p>要启用日志记录，请确保在编译bmv2之前configure启用&ndash;with-nanomsg标志。</p>
+<h4 id="控制台记录">控制台记录</h4>
+<p>要在启动交换机时启用控制台日志记录，请使用&ndash;log-console命令行选项。例如：</p>
+<pre tabindex="0"><code>sudo simple_switch -i 0@&lt;iface0&gt; -i 1@&lt;iface1&gt; --log-console &lt;path to JSON file&gt;
+</code></pre><p>这将打印终端中的所有消息。由于这不是最方便的，您始终可以将其重定向到日志文件：</p>
+<pre tabindex="0"><code>sudo simple_switch -i 0@&lt;iface0&gt; -i 1@&lt;iface1&gt; --log-console &lt;path to JSON file&gt; &gt;/path_to_file/sw.log
+</code></pre><p>P4-Utils集成</p>
+<p>如果在p4app.json配置文件中启用日志记录，交换机会自动将所有控制台日志记录写入./log目录下的一个文件中，后缀为&lt;sw_name&gt;.log.</p>
+<h4 id="客户端记录">客户端记录</h4>
+<p>如果启用了日志记录，并且您在启动拓扑时使用了simple_switch_CLI（使用P4-Utils），则输出cli也将记录在名称下的日志文件夹中&lt;sw_name&gt;_cli_output.log</p>
+<h4 id="事件记录">事件记录</h4>
+<p>要在启动交换机时启用事件日志记录，请使用&ndash;nanolog命令行选项。例如，要使用ipc地址ipc:///tmp/bm-log.ipc：</p>
+<pre tabindex="0"><code>sudo ./simple_switch -i 0@&lt;iface0&gt; -i 1@&lt;iface1&gt; --nanolog ipc:///tmp/bm-log.ipc &lt;path to JSON file&gt;
+</code></pre><p>在交换机运行时使用<a href="https://github.com/p4lang/behavioral-model/blob/main/tools/nanomsg_client.py" target="_blank" rel="noopener noreffer ">tools/nanomsg_client.py</a>如下：</p>
+<pre tabindex="0"><code>sudo ./nanomsg_client.py [--thrift-port &lt;port&gt;]
+</code></pre><p>该脚本将为每个数据包显示重要事件（表命中/未命中、解析器转换……）。</p>
+<p>使用P4-Utils创建拓扑时，每个交换机都会自动分配一个Thrift端口。有几种方法可以找到交换机和端口之间的映射，但最简单的方法是查看p4run显示的print消息。尝试找到如下所示的一行：</p>
+<pre tabindex="0"><code>s1 -&gt; Thrift port: 9090
+</code></pre><h3 id="调试器">调试器</h3>
+<p>要启用调试器，请确保将&ndash;enable-debugger标志传递给configure. 启动交换机时，您还需要使用命令行标志&ndash;debugger。</p>
+<p>在交换机运行时使用tools/p4dbg.py将调试器附加到交换机：</p>
+<pre tabindex="0"><code>sudo ./p4dbg.py [--thrift-port &lt;port&gt;]
+</code></pre><p>您可以在<a href="https://github.com/p4lang/behavioral-model/blob/master/docs/p4dbg_user_guide.md" target="_blank" rel="noopener noreffer ">BMv2 文档</a>中找到 P4 调试器用户指南。</p>
+<h3 id="将信息附加到数据包">将信息附加到数据包</h3>
+<p>有时您不想使用日志系统或调试器，或者基本上它们被禁用。然而，您仍然可以通过仅根据执行代码的哪一部分修改标头字段来了解代码的作用，并在数据包离开交换机时检查该值。当然，您可以做一些更复杂的事情，使用多个字段，读取寄存器的值并将其保存在标头中，等等。</p>
+<h3 id="使用-p4-表检查标题元数据值">使用 P4 表检查标题/元数据值</h3>
+<p>我们已经有一个例子涵盖了这一点。基本上这个想法是使用 P4 表并exact匹配您要跟踪的所有字段。每次执行表时，如果启用了 BMv2 调试，交换机会将用于匹配表条目的每个字段的值写入交换机日志文件中。有关详细信息，请参阅示例。</p>
+<h3 id="如果以上没有解决你的问题">如果以上没有解决你的问题</h3>
+<p>P4，周围的所有工具都很新。有几次事情就是不工作，因为编译器或软件开关实现中存在错误。</p>
+<ol>
+<li>首先，检查P4-16 规范对此的说明。该规范非常通用，并不总是能够直接回答某些“操作”的预期行为应该是什么，因为答案可能与特定交换机实现的作用完全相关（在我们的例子中是 BMv2简 simple switch）。</li>
+<li>检查p4-org邮件列表。可能您不是第一个遇到此问题的人，并且已经有人在邮件列表中询问您需要什么。谷歌搜索时只从邮件列表中获取结果的一个好技巧是按如下方式编写查询：site:http://lists.p4.org/ <!-- raw HTML omitted -->。如果您在google中输入  site:http://lists.p4.org/ &ldquo;simple_switch&rdquo;，您将获得出现simple_switch的所有线程。</li>
+<li>检查BMv2和P4C存储库的GitHub 问题部分。默认情况下，搜索栏会添加一个is:issue is:open过滤器，您只需将其删除并输入关键字即可查找有关该问题的信息以及如何解决它。</li>
+<li>如果你在任何地方都找不到解决方案，你可以自己写在邮件列表中，或者在 GitHub 中打开一个问题。</li>
+</ol>
+<h2 id="scapy">Scapy</h2>
+<p>正如<a href="https://scapy.net/" target="_blank" rel="noopener noreffer ">官网</a>所写，Scapy是一个强大的交互式数据包操作程序。它能够伪造或解码大量协议的数据包、在线发送它们、捕获它们、匹配请求和回复等等。它可以轻松处理大多数经典任务，如扫描、跟踪路由、探测、单元测试、攻击或网络发现。</p>
+<p>链接</p>
+<ul>
+<li><a href="https://scapy.net/" target="_blank" rel="noopener noreffer ">Scapy</a></li>
+<li><a href="https://scapy.readthedocs.io/en/latest/" target="_blank" rel="noopener noreffer ">最新文档</a></li>
+<li><a href="http://packetlife.net/media/library/36/scapy.pdf" target="_blank" rel="noopener noreffer ">基本备忘单</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/p4/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" data-title="P4-学习资料" data-hashtags="P4"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/p4/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" data-hashtag="P4"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/p4/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" data-title="P4-学习资料"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/p4/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" data-title="P4-学习资料"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/p4/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" data-title="P4-学习资料"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/p4/">P4</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/git%E4%B8%A2%E5%BC%83%E5%8E%86%E5%8F%B2commit/" class="prev" rel="prev" title="版本控制-git-Git丢弃历史commit"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>版本控制-git-Git丢弃历史commit</a>
+            <a href="/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/sort/" class="next" rel="next" title="go标准库-Sort">go标准库-Sort<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-01T11:41:09+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"P4-学习资料"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

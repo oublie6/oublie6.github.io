@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-基础-事件处理 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-基础-事件处理" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 监听事件 v-on 指令 (简写为 @) 监听 DOM 事件，并在事件触发时执" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-15T17:24:07+08:00" />
+<meta property="article:modified_time" content="2022-10-15T17:24:07+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-基础-事件处理"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 监听事件 v-on 指令 (简写为 @) 监听 DOM 事件，并在事件触发时执"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E8%A1%A8%E5%8D%95%E8%BE%93%E5%85%A5%E7%BB%91%E5%AE%9A/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-基础-事件处理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E5%9F%BA%E7%A1%80\/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  1835 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E5%9F%BA%E7%A1%80\/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86\/","datePublished": "2022-10-15T17:24:07+08:00","dateModified": "2022-10-15T17:24:07+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-基础-事件处理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-15">2022-10-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1835 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#监听事件">监听事件</a></li>
+    <li><a href="#内联事件处理器">内联事件处理器</a></li>
+    <li><a href="#方法事件处理器">方法事件处理器</a>
+      <ul>
+        <li><a href="#方法与内联事件判断">方法与内联事件判断</a></li>
+      </ul>
+    </li>
+    <li><a href="#在内联处理器中调用方法">在内联处理器中调用方法</a></li>
+    <li><a href="#在内联事件处理器中访问事件参数">在内联事件处理器中访问事件参数</a></li>
+    <li><a href="#事件修饰符">事件修饰符</a></li>
+    <li><a href="#按键修饰符">按键修饰符</a>
+      <ul>
+        <li><a href="#按键别名">按键别名</a></li>
+        <li><a href="#系统按键修饰符">系统按键修饰符</a></li>
+        <li><a href="#exact-修饰符">.exact 修饰符</a></li>
+      </ul>
+    </li>
+    <li><a href="#鼠标按键修饰符">鼠标按键修饰符</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<h2 id="监听事件">监听事件</h2>
+<p>v-on 指令 (简写为 @) 监听 DOM 事件，并在事件触发时执行对应的 JavaScript。用法：v-on:click=&ldquo;methodName&rdquo; 或 @click=&ldquo;handler&rdquo;。</p>
+<p>事件处理器的值可以是：</p>
+<ol>
+<li>内联事件处理器：事件被触发时执行的内联 JavaScript 语句 (与 onclick 类似)。</li>
+<li>方法事件处理器：一个指向组件上定义的方法的属性名或是路径。</li>
+</ol>
+<h2 id="内联事件处理器">内联事件处理器</h2>
+<pre tabindex="0"><code>data() {
+  return {
+    count: 0
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;button @click=&#34;count++&#34;&gt;Add 1&lt;/button&gt;
+&lt;p&gt;Count is: {{ count }}&lt;/p&gt;
+</code></pre><h2 id="方法事件处理器">方法事件处理器</h2>
+<pre tabindex="0"><code>data() {
+  return {
+    name: &#39;Vue.js&#39;
+  }
+},
+methods: {
+  greet(event) {
+    // 方法中的 `this` 指向当前活跃的组件实例
+    alert(`Hello ${this.name}!`)
+    // `event` 是 DOM 原生事件
+    if (event) {
+      alert(event.target.tagName)
+    }
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;!-- `greet` 是上面定义过的方法名 --&gt;
+&lt;button @click=&#34;greet&#34;&gt;Greet&lt;/button&gt;
+</code></pre><p>方法事件处理器会自动接收原生 DOM 事件并触发执行。在上面的例子中，我们能够通过被触发事件的 event.target.tagName 访问到该 DOM 元素。</p>
+<h3 id="方法与内联事件判断">方法与内联事件判断</h3>
+<p>模板编译器会通过检查 v-on 的值是否是合法的 JavaScript 标识符或属性访问路径来断定是何种形式的事件处理器。举例来说，foo、foo.bar 和 foo[&lsquo;bar&rsquo;] 会被视为方法事件处理器，而 foo() 和 count++ 会被视为内联事件处理器。</p>
+<h2 id="在内联处理器中调用方法">在内联处理器中调用方法</h2>
+<p>还可以在内联事件处理器中调用方法。这允许我们向方法传入自定义参数以代替原生事件：</p>
+<pre tabindex="0"><code>methods: {
+  say(message) {
+    alert(message)
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;button @click=&#34;say(&#39;hello&#39;)&#34;&gt;Say hello&lt;/button&gt;
+&lt;button @click=&#34;say(&#39;bye&#39;)&#34;&gt;Say bye&lt;/button&gt;
+</code></pre><h2 id="在内联事件处理器中访问事件参数">在内联事件处理器中访问事件参数</h2>
+<p>有时我们需要在内联事件处理器中访问原生 DOM 事件。你可以向该处理器方法传入一个特殊的 $event 变量，或者使用内联箭头函数：</p>
+<pre tabindex="0"><code>&lt;!-- 使用特殊的 $event 变量 --&gt;
+&lt;button @click=&#34;warn(&#39;Form cannot be submitted yet.&#39;, $event)&#34;&gt;
+  Submit
+&lt;/button&gt;
+
+&lt;!-- 使用内联箭头函数 --&gt;
+&lt;button @click=&#34;(event) =&gt; warn(&#39;Form cannot be submitted yet.&#39;, event)&#34;&gt;
+  Submit
+&lt;/button&gt;
+</code></pre><pre tabindex="0"><code>methods: {
+  warn(message, event) {
+    // 这里可以访问 DOM 原生事件
+    if (event) {
+      event.preventDefault()
+    }
+    alert(message)
+  }
+}
+</code></pre><h2 id="事件修饰符">事件修饰符</h2>
+<p>在处理事件时调用 event.preventDefault() 或 event.stopPropagation() 是很常见的。尽管我们可以直接在方法内调用，但如果方法能更专注于数据逻辑而不用去处理 DOM 事件的细节会更好。</p>
+<p>为解决这一问题，Vue 为 v-on 提供了事件修饰符。修饰符是用 . 表示的指令后缀，包含以下这些：.stop,.prevent,.self,.capture,.once,.passive</p>
+<pre tabindex="0"><code>&lt;!-- 单击事件将停止传递 --&gt;
+&lt;a @click.stop=&#34;doThis&#34;&gt;&lt;/a&gt;
+
+&lt;!-- 提交事件将不再重新加载页面 --&gt;
+&lt;form @submit.prevent=&#34;onSubmit&#34;&gt;&lt;/form&gt;
+
+&lt;!-- 修饰语可以使用链式书写 --&gt;
+&lt;a @click.stop.prevent=&#34;doThat&#34;&gt;&lt;/a&gt;
+
+&lt;!-- 也可以只有修饰符 --&gt;
+&lt;form @submit.prevent&gt;&lt;/form&gt;
+
+&lt;!-- 仅当 event.target 是元素本身时才会触发事件处理器 --&gt;
+&lt;!-- 例如：事件处理器不来自子元素 --&gt;
+&lt;div @click.self=&#34;doThat&#34;&gt;...&lt;/div&gt;
+</code></pre><p>使用修饰符时需要注意调用顺序，因为相关代码是以相同的顺序生成的。因此使用 @click.prevent.self 会阻止元素及其子元素的所有点击事件的默认行为而 @click.self.prevent 则只会阻止对元素本身的点击事件的默认行为。</p>
+<p>.capture、.once 和 .passive 修饰符与原生 addEventListener 事件相对应：</p>
+<pre tabindex="0"><code>&lt;!-- 添加事件监听器时，使用 `capture` 捕获模式 --&gt;
+&lt;!-- 例如：指向内部元素的事件，在被内部元素处理前，先被外部处理 --&gt;
+&lt;div @click.capture=&#34;doThis&#34;&gt;...&lt;/div&gt;
+
+&lt;!-- 点击事件最多被触发一次 --&gt;
+&lt;a @click.once=&#34;doThis&#34;&gt;&lt;/a&gt;
+
+&lt;!-- 滚动事件的默认行为 (scrolling) 将立即发生而非等待 `onScroll` 完成 --&gt;
+&lt;!-- 以防其中包含 `event.preventDefault()` --&gt;
+&lt;div @scroll.passive=&#34;onScroll&#34;&gt;...&lt;/div&gt;
+</code></pre><p>.passive 修饰符一般用于触摸事件的监听器，可以用来改善移动端设备的滚屏性能。</p>
+<p>请勿同时使用 .passive 和 .prevent，因为 .passive 已经向浏览器表明了你不想阻止事件的默认行为。如果你这么做了，则 .prevent 会被忽略，并且浏览器会抛出警告。</p>
+<h2 id="按键修饰符">按键修饰符</h2>
+<p>Vue 允许在 v-on 或 @ 监听按键事件时添加按键修饰符。</p>
+<pre tabindex="0"><code>&lt;!-- 仅在 `key` 为 `Enter` 时调用 `submit` --&gt;
+&lt;input @keyup.enter=&#34;submit&#34; /&gt;
+</code></pre><p>你可以直接使用 KeyboardEvent.key 暴露的按键名称作为修饰符，但需要转为 kebab-case 形式。</p>
+<pre tabindex="0"><code>&lt;input @keyup.page-down=&#34;onPageDown&#34; /&gt;
+</code></pre><p>在上面的例子中，仅会在 $event.key 为 &lsquo;PageDown&rsquo; 时调用事件处理。</p>
+<h3 id="按键别名">按键别名</h3>
+<p>Vue 为一些常用的按键提供了别名：</p>
+<p>.enter
+.tab
+.delete (捕获“Delete”和“Backspace”两个按键)
+.esc
+.space
+.up
+.down
+.left
+.right</p>
+<h3 id="系统按键修饰符">系统按键修饰符</h3>
+<p>你可以使用以下系统按键修饰符来触发鼠标或键盘事件监听器，只有当按键被按下时才会触发。</p>
+<p>.ctrl .alt .shift .meta</p>
+<p>在 Mac 键盘上，meta 是 Command 键 (⌘)。在 Windows 键盘上，meta 键是 Windows 键 (⊞)。在 Sun 微机系统键盘上，meta 是钻石键 (◆)。在某些键盘上，特别是 MIT 和 Lisp 机器的键盘及其后代版本的键盘，如 Knight 键盘，space-cadet 键盘，meta 都被标记为“META”。在 Symbolics 键盘上，meta 也被标识为“META”或“Meta”。</p>
+<p>举例来说：</p>
+<pre tabindex="0"><code>&lt;!-- Alt + Enter --&gt;
+&lt;input @keyup.alt.enter=&#34;clear&#34; /&gt;
+
+&lt;!-- Ctrl + 点击 --&gt;
+&lt;div @click.ctrl=&#34;doSomething&#34;&gt;Do something&lt;/div&gt;
+</code></pre><p>请注意，系统按键修饰符和常规按键不同。与 keyup 事件一起使用时，该按键必须在事件发出时处于按下状态。换句话说，keyup.ctrl 只会在你仍然按住 ctrl 但松开了另一个键时被触发。若你单独松开 ctrl 键将不会触发。</p>
+<h3 id="exact-修饰符">.exact 修饰符</h3>
+<p>.exact 修饰符允许控制触发一个事件所需的确定组合的系统按键修饰符。</p>
+<pre tabindex="0"><code>&lt;!-- 当按下 Ctrl 时，即使同时按下 Alt 或 Shift 也会触发 --&gt;
+&lt;button @click.ctrl=&#34;onClick&#34;&gt;A&lt;/button&gt;
+
+&lt;!-- 仅当按下 Ctrl 且未按任何其他键时才会触发 --&gt;
+&lt;button @click.ctrl.exact=&#34;onCtrlClick&#34;&gt;A&lt;/button&gt;
+
+&lt;!-- 仅当没有按下任何系统按键时触发 --&gt;
+&lt;button @click.exact=&#34;onClick&#34;&gt;A&lt;/button&gt;
+</code></pre><h2 id="鼠标按键修饰符">鼠标按键修饰符</h2>
+<ul>
+<li>.left</li>
+<li>.right</li>
+<li>.middle</li>
+</ul>
+<p>这些修饰符将处理程序限定为由特定鼠标按键触发的事件。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" data-title="Vue-基础-事件处理" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" data-title="Vue-基础-事件处理"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" data-title="Vue-基础-事件处理"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" data-title="Vue-基础-事件处理"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" class="prev" rel="prev" title="Vue-基础-列表渲染"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-基础-列表渲染</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E8%A1%A8%E5%8D%95%E8%BE%93%E5%85%A5%E7%BB%91%E5%AE%9A/" class="next" rel="next" title="Vue-基础-表单输入绑定">Vue-基础-表单输入绑定<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

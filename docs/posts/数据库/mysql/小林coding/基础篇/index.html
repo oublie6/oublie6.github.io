@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数据库-mysql-小林coding-基础篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="数据库-mysql-小林coding-基础篇" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 MySQL 执行流程 分为server层和存储引擎层 Server 层负责建立连接、分析和执行" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-07T12:21:06+08:00" />
+<meta property="article:modified_time" content="2022-12-07T12:21:06+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="数据库-mysql-小林coding-基础篇"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 MySQL 执行流程 分为server层和存储引擎层 Server 层负责建立连接、分析和执行"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%9D%82%E9%A1%B9/steam%E4%B8%8B%E8%BD%BD%E6%8A%80%E5%B7%A7/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E7%B4%A2%E5%BC%95%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据库-mysql-小林coding-基础篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E5%9F%BA%E7%A1%80%E7%AF%87\/"
+        },"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  2886 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E5%9F%BA%E7%A1%80%E7%AF%87\/","datePublished": "2022-12-07T12:21:06+08:00","dateModified": "2022-12-07T12:21:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-mysql-小林coding-基础篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-07">2022-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2886 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#mysql-执行流程">MySQL 执行流程</a>
+      <ul>
+        <li><a href="#1-连接器">1. 连接器</a></li>
+        <li><a href="#2-查询缓存">2. 查询缓存</a></li>
+        <li><a href="#3-解析-sql">3. 解析 SQL</a></li>
+        <li><a href="#4-执行-sql">4. 执行 SQL</a></li>
+      </ul>
+    </li>
+    <li><a href="#mysql-一行记录是怎么存储的">MySQL 一行记录是怎么存储的</a>
+      <ul>
+        <li><a href="#mysql-的数据存放在哪个文件">MySQL 的数据存放在哪个文件</a></li>
+        <li><a href="#innodb-行格式有哪些">InnoDB 行格式有哪些</a></li>
+        <li><a href="#compact-行格式">COMPACT 行格式</a>
+          <ul>
+            <li><a href="#额外信息">额外信息</a></li>
+            <li><a href="#真实数据">真实数据</a></li>
+          </ul>
+        </li>
+        <li><a href="#varcharn-中-n-最大取值为多少">varchar(n) 中 n 最大取值为多少</a>
+          <ul>
+            <li><a href="#单字段的情况">单字段的情况</a></li>
+            <li><a href="#多字段的情况">多字段的情况</a></li>
+          </ul>
+        </li>
+        <li><a href="#行溢出后mysql-是怎么处理的">行溢出后，MySQL 是怎么处理的</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/mysql/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<h2 id="mysql-执行流程">MySQL 执行流程</h2>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/sql%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/mysql%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/sql%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/mysql%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/sql%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/mysql%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/sql%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/mysql%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/sql%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/mysql%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/sql%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/mysql%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B.png" /></div>
+<p>分为<code>server层</code>和<code>存储引擎层</code></p>
+<ul>
+<li>Server 层负责建立连接、分析和执行 SQL。</li>
+<li>存储引擎层负责数据的存储和提取</li>
+</ul>
+<p>流程：</p>
+<h3 id="1-连接器">1. 连接器</h3>
+<p>连接数据库，MySQL 是基于 TCP 协议进行传输（TCP 三次握手）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># -h 指定 MySQL 服务得 IP 地址，如果是连接本地的 MySQL服务，可以不用这个参数；</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># -u 指定用户名，管理员角色名为 root；</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># -p 指定密码，如果命令行中不填写密码（为了密码安全，建议不要在命令行写密码），就需要在交互对话里面输入密码</span>
+</span></span><span style="display:flex;"><span>mysql -h<span style="color:#a00">$ip</span> -u<span style="color:#a00">$user</span> -p
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>验证用户名和密码，并读取权限，管理员修改的权限对已连接用户不起作用，权限只能应用于该用户下一次连接。</p>
+<ul>
+<li>查看 MySQL 服务被多少个客户端连接:</li>
+</ul>
+<pre tabindex="0"><code>show processlist
+</code></pre><ul>
+<li>空闲连接</li>
+</ul>
+<p>wait_timeout变量控制空闲连接最大时间</p>
+<pre tabindex="0"><code>show variables like &#39;wait_timeout&#39;;
+</code></pre><p>手动断开空闲连接kill connection + id</p>
+<pre tabindex="0"><code>kill connection +6;
+</code></pre><ul>
+<li>连接数限制</li>
+</ul>
+<p>最大连接数由 max_connections 参数控制</p>
+<p>MySQL 的连接也跟 HTTP 一样，有短连接和长连接的概念，</p>
+<ul>
+<li>长连接占用内存问题</li>
+</ul>
+<p>定期断开长连接或者客户端主动重置连接</p>
+<h3 id="2-查询缓存">2. 查询缓存</h3>
+<p>MySQL 8.0 版本直接将查询缓存删掉了，也就是说 MySQL 8.0 开始，执行一条 SQL 查询语句，不会再走到查询缓存这个阶段了。</p>
+<h3 id="3-解析-sql">3. 解析 SQL</h3>
+<p>由解析器完成</p>
+<p>词法分析，语法分析</p>
+<h3 id="4-执行-sql">4. 执行 SQL</h3>
+<p>每条SELECT 查询语句流程主要可以分为下面这三个阶段：prepare 预处理阶段；optimize 优化阶段；execute 执行阶段；</p>
+<ul>
+<li>预处理</li>
+</ul>
+<p>检查语句中的表或者字段是否存在</p>
+<p>将 select * 中的 * 符号，扩展为表上的所有列</p>
+<ul>
+<li>优化</li>
+</ul>
+<p>将 SQL 查询语句的执行方案确定下来</p>
+<p>explain 命令会输出这SQL 语句的执行计划</p>
+<p>执行计划中 possible_key是可以选择的索引；key指的是使用的索引，null值表示不使用索引；Extra表示选择的过程。</p>
+<ul>
+<li>执行器</li>
+</ul>
+<p>三种方式：主键索引查询，全表扫描，索引下推</p>
+<p>执行器和存储引擎都是一个记录一个记录地进行查询。</p>
+<p>存储引擎给执行器发送的记录会在执行器中再检查是否符合条件然后发送给客户端（Server 层每从存储引擎读到一条记录就会发送给客户端，客户端会等查询语句查询完成后显示出所有的记录）。</p>
+<p>二级索引B+树定位符合条件的主键后使用主键去主键索引查询完整记录的过程叫回表。</p>
+<p>索引下推：减少二级索引（辅助索引）的回表操作，将 Server 层部分负责的事情，交给存储引擎层去处理。联合索引可以过滤的记录就不回表了。执行计划里的 Extr 部分显示了 “Using index condition”，说明使用了索引下推。</p>
+<h2 id="mysql-一行记录是怎么存储的">MySQL 一行记录是怎么存储的</h2>
+<h3 id="mysql-的数据存放在哪个文件">MySQL 的数据存放在哪个文件</h3>
+<ul>
+<li>db.opt：存储当前数据库的默认字符集和字符校验规则</li>
+<li>表名字.frm：表结构</li>
+<li>表名字.ibd：表数据</li>
+</ul>
+<p>表空间由段（segment）、区（extent）、页（page）、行（row）组成</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84.drawio.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84.drawio.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84.drawio.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84.drawio.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84.drawio.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%A8%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84.drawio.png" /></div>
+<ol>
+<li>行（row）：记录</li>
+<li>页（page）：InnoDB 的数据是按「页」为单位来读写的。默认每个页的大小为 16KB。</li>
+<li>区（extent）：在表中数据量大的时候，为某个索引分配空间的时候就不再按照页为单位分配了，而是按照区（extent）为单位分配。每个区的大小为 1MB，对于 16KB 的页来说，连续的 64 个页会被划为一个区，这样就使得链表中相邻的页的物理位置也相邻，就能使用顺序 I/O 了。</li>
+<li>段（segment）：表空间是由各个段（segment）组成的，段是由多个区（extent）组成的。索引段：存放 B + 树的非叶子节点的区的集合；数据段：存放 B + 树的叶子节点的区的集合；回滚段：存放的是回滚数据的区的集合，之前讲事务隔离 (opens new window)的时候就介绍到了多版本并发控制（MVCC）利用了回滚段实现了多版本查询数据。</li>
+</ol>
+<h3 id="innodb-行格式有哪些">InnoDB 行格式有哪些</h3>
+<p>InnoDB 提供了 4 种行格式，分别是 Redundant、Compact、Dynamic和 Compressed 行格式。</p>
+<ul>
+<li>Redundant 是很古老的行格式了， MySQL 5.0 版本之前用的行格式，现在基本没人用了。</li>
+<li>Compact 是一种紧凑的行格式，设计的初衷就是为了让一个数据页中可以存放更多的行记录，从 MySQL 5.1 版本之后，行格式默认设置成 Compact。</li>
+<li>Dynamic 和 Compressed 两个都是紧凑的行格式，它们的行格式都和 Compact 差不多，因为都是基于 Compact 改进一点东西。从 MySQL5.7 版本之后，默认使用 Dynamic 行格式。</li>
+</ul>
+<h3 id="compact-行格式">COMPACT 行格式</h3>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/COMPACT.drawio.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/COMPACT.drawio.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/COMPACT.drawio.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/COMPACT.drawio.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/COMPACT.drawio.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/COMPACT.drawio.png" /></div>
+<h4 id="额外信息">额外信息</h4>
+<ol>
+<li>变长字段长度列表：</li>
+</ol>
+<p>varchar， 顺序和后面的真是信息顺序相反，即逆序存放，因为指向记录的指针指的是记录头信息和真实数据直接的位置，向左就是记录头信息向右就是真实数据，使得位置靠前的记录的真实数据和数据对应的字段长度信息可以同时在一个 CPU Cache Line 中，这样就可以提高 CPU Cache 的命中率，同样的道理， NULL 值列表的信息也需要逆序存放。</p>
+<p>另外NULL 是不会存放在行格式中记录的真实数据部分里的，所以这里不会存放值为null的变长字段（在NULL 值列表中标记）。</p>
+<p>当数据表没有变长字段的时候，比如全部都是 int 类型的字段，这时候表里的行格式就不会有「变长字段长度列表」了</p>
+<ol start="2">
+<li>NULL 值列表</li>
+</ol>
+<p>如果存在允许 NULL 值的列，则每个列对应一个二进制位（bit），二进制位按照列的顺序逆序排列。</p>
+<ul>
+<li>值为1时，代表该列的值为NULL。</li>
+<li>值为0时，代表该列的值不为NULL。</li>
+</ul>
+<p>当数据表的字段都定义成 NOT NULL 的时候，这时候表里的行格式就不会有 NULL 值列表了。</p>
+<p>「NULL 值列表」的空间不是固定 1 字节的。当一条记录有 9 个字段值都是 NULL，那么就会创建 2 字节空间的「NULL 值列表」，以此类推。</p>
+<ol start="3">
+<li>记录头信息</li>
+</ol>
+<p>记录头信息中包含的内容很多，说几个比较重要的：</p>
+<p>delete_mask ：标识此条数据是否被删除。</p>
+<p>next_record：下一条记录的位置。记录与记录之间是通过链表组织的。指向的是下一条记录的「记录头信息」和「真实数据」之间的位置。</p>
+<p>record_type：表示当前记录的类型，0表示普通记录，1表示B+树非叶子节点记录，2表示最小记录，3表示最大记录。</p>
+<h4 id="真实数据">真实数据</h4>
+<p>记录真实数据部分除了定义的字段，还有三个隐藏字段，分别为：row_id、trx_id、roll_pointer</p>
+<ul>
+<li>row_id：如果我们建表的时候指定了主键或者唯一约束列，那么就没有 row_id 隐藏字段了。如果既没有指定主键，又没有唯一约束，那么 InnoDB 就会为记录添加 row_id 隐藏字段。row_id不是必需的，占用 6 个字节。</li>
+<li>trx_id：事务id，表示这个数据是由哪个事务生成的。 trx_id是必需的，占用 6 个字节。</li>
+<li>roll_pointer：这条记录上一个版本的指针。roll_pointer 是必需的，占用 7 个字节。</li>
+</ul>
+<h3 id="varcharn-中-n-最大取值为多少">varchar(n) 中 n 最大取值为多少</h3>
+<p>MySQL 规定除了 TEXT、BLOBs 这种大对象类型之外，其他所有的列（不包括隐藏列和记录头信息）占用的字节长度加起来不能超过 65535 个字节。</p>
+<h4 id="单字段的情况">单字段的情况</h4>
+<p>一行数据的最大字节数是 65535（不包含 TEXT、BLOBs 这种大对象类型），其中包含了 storage overhead（「变长字段长度列表」和 「NULL 值列表」）</p>
+<h4 id="多字段的情况">多字段的情况</h4>
+<p>如果有多个字段的话，要保证所有字段的长度 + 变长字段字节数列表所占用的字节数 + NULL值列表所占用的字节数 &lt;= 65535。</p>
+<h3 id="行溢出后mysql-是怎么处理的">行溢出后，MySQL 是怎么处理的</h3>
+<p>一些大对象如 TEXT、BLOB发生行溢出，多的数据就会存到另外的「溢出页」中。真实数据处用 20 字节存储指向溢出页的地址。</p>
+<div id="id-4"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA.png" /></div>
+<p>Compressed 和 Dynamic 这两个行格式采用完全的行溢出方式，记录的真实数据处不会存储该列的一部分数据，只存储 20 个字节的指针来指向溢出页。实际的数据都存储在溢出页中：</p>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA2.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA2.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA2.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA2.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA2.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/row_format/%E8%A1%8C%E6%BA%A2%E5%87%BA2.png" /></div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-title="数据库-mysql-小林coding-基础篇" data-hashtags="mysql,小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-hashtag="mysql"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-title="数据库-mysql-小林coding-基础篇"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-title="数据库-mysql-小林coding-基础篇"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-title="数据库-mysql-小林coding-基础篇"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/mysql/">mysql</a>,&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%9D%82%E9%A1%B9/steam%E4%B8%8B%E8%BD%BD%E6%8A%80%E5%B7%A7/" class="prev" rel="prev" title="杂项-Steam下载技巧"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>杂项-Steam下载技巧</a>
+            <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E7%B4%A2%E5%BC%95%E7%AF%87/" class="next" rel="next" title="数据库-mysql-小林coding-索引篇">数据库-mysql-小林coding-索引篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/8c525f.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-07T12:21:06+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"数据库-mysql-小林coding-基础篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

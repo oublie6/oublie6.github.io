@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-基础-模板语法 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-基础-模板语法" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 文本插值 &lt;span&gt;Message: {{ msg }}&lt;/span&gt; 原始 HTML &lt;p&gt;Using v-html directive: &lt;span v-html=&#34;rawHtml&#34;&gt;&lt;/span&gt;&lt;/p&gt; Attribute 绑定 &lt;div v-bind:id=&#34;dynamicId&#34;&gt;&lt;/div&gt; v-bind 指令指示" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-15T16:03:57+08:00" />
+<meta property="article:modified_time" content="2022-10-15T16:03:57+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-基础-模板语法"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 文本插值 &lt;span&gt;Message: {{ msg }}&lt;/span&gt; 原始 HTML &lt;p&gt;Using v-html directive: &lt;span v-html=&#34;rawHtml&#34;&gt;&lt;/span&gt;&lt;/p&gt; Attribute 绑定 &lt;div v-bind:id=&#34;dynamicId&#34;&gt;&lt;/div&gt; v-bind 指令指示"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAvue%E5%BA%94%E7%94%A8/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-基础-模板语法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E5%9F%BA%E7%A1%80\/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  1660 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E5%9F%BA%E7%A1%80\/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95\/","datePublished": "2022-10-15T16:03:57+08:00","dateModified": "2022-10-15T16:03:57+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-基础-模板语法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-15">2022-10-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1660 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#文本插值">文本插值</a></li>
+    <li><a href="#原始-html">原始 HTML</a></li>
+    <li><a href="#attribute-绑定">Attribute 绑定</a>
+      <ul>
+        <li><a href="#简写">简写</a></li>
+        <li><a href="#布尔型-attribute">布尔型 Attribute</a></li>
+        <li><a href="#动态绑定多个值">动态绑定多个值</a></li>
+      </ul>
+    </li>
+    <li><a href="#使用-javascript-表达式">使用 JavaScript 表达式</a>
+      <ul>
+        <li><a href="#仅支持表达式">仅支持表达式</a></li>
+        <li><a href="#调用函数">调用函数</a></li>
+        <li><a href="#受限的全局访问">受限的全局访问</a></li>
+      </ul>
+    </li>
+    <li><a href="#指令-directives">指令 Directives</a>
+      <ul>
+        <li><a href="#参数-arguments">参数 Arguments</a></li>
+        <li><a href="#动态参数">动态参数</a>
+          <ul>
+            <li><a href="#动态参数值的限制">动态参数值的限制</a></li>
+            <li><a href="#动态参数语法的限制">动态参数语法的限制</a></li>
+          </ul>
+        </li>
+        <li><a href="#修饰符-modifiers">修饰符 Modifiers</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<h2 id="文本插值">文本插值</h2>
+<pre tabindex="0"><code>&lt;span&gt;Message: {{ msg }}&lt;/span&gt;
+</code></pre><h2 id="原始-html">原始 HTML</h2>
+<pre tabindex="0"><code>&lt;p&gt;Using v-html directive: &lt;span v-html=&#34;rawHtml&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+</code></pre><h2 id="attribute-绑定">Attribute 绑定</h2>
+<pre tabindex="0"><code>&lt;div v-bind:id=&#34;dynamicId&#34;&gt;&lt;/div&gt;
+</code></pre><p>v-bind 指令指示 Vue 将元素的 id attribute 与组件的 dynamicId 属性保持一致。如果绑定的值是 null 或者 undefined，那么该 attribute 将会从渲染的元素上移除。</p>
+<h3 id="简写">简写</h3>
+<p>v-bind 简写语法：</p>
+<pre tabindex="0"><code>&lt;div :id=&#34;dynamicId&#34;&gt;&lt;/div&gt;
+</code></pre><h3 id="布尔型-attribute">布尔型 Attribute</h3>
+<p>布尔型 attribute 依据 true / false 值来决定 attribute 是否应该存在于该元素上。disabled 就是最常见的例子之一。</p>
+<pre tabindex="0"><code>&lt;button :disabled=&#34;isButtonDisabled&#34;&gt;Button&lt;/button&gt;
+</code></pre><p>当 isButtonDisabled 为真值或一个空字符串 (即 <code>&lt;button disabled=&quot;&quot;&gt;</code>) 时，元素会包含这个 disabled attribute。而当其为其他假值时 attribute 将被忽略。</p>
+<h3 id="动态绑定多个值">动态绑定多个值</h3>
+<p>如果你有像这样的一个包含多个 attribute 的 JavaScript 对象：</p>
+<pre tabindex="0"><code>data() {
+  return {
+    objectOfAttrs: {
+      id: &#39;container&#39;,
+      class: &#39;wrapper&#39;
+    }
+  }
+}
+</code></pre><p>通过不带参数的 v-bind，你可以将它们绑定到单个元素上：</p>
+<pre tabindex="0"><code>&lt;div v-bind=&#34;objectOfAttrs&#34;&gt;&lt;/div&gt;
+</code></pre><h2 id="使用-javascript-表达式">使用 JavaScript 表达式</h2>
+<p>Vue 在所有的数据绑定中都支持完整的 JavaScript 表达式：</p>
+<pre tabindex="0"><code>{{ number + 1 }}
+
+{{ ok ? &#39;YES&#39; : &#39;NO&#39; }}
+
+{{ message.split(&#39;&#39;).reverse().join(&#39;&#39;) }}
+
+&lt;div :id=&#34;`list-${id}`&#34;&gt;&lt;/div&gt;
+</code></pre><p>这些表达式都会被作为 JavaScript ，以组件为作用域解析执行。</p>
+<p>在 Vue 模板内，JavaScript 表达式可以被使用在如下场景上：</p>
+<ul>
+<li>在文本插值中 (双大括号)</li>
+<li>在任何 Vue 指令 (以 v- 开头的特殊 attribute) attribute 的值中</li>
+</ul>
+<h3 id="仅支持表达式">仅支持表达式</h3>
+<p>每个绑定仅支持单一表达式，也就是一段能够被求值的 JavaScript 代码。一个简单的判断方法是是否可以合法地写在 return 后面。</p>
+<p>下面的例子都是无效的：</p>
+<pre tabindex="0"><code>&lt;!-- 这是一个语句，而非表达式 --&gt;
+{{ var a = 1 }}
+
+&lt;!-- 条件控制也不支持，请使用三元表达式 --&gt;
+{{ if (ok) { return message } }}
+</code></pre><h3 id="调用函数">调用函数</h3>
+<p>可以在绑定的表达式中使用一个组件暴露的方法：</p>
+<pre tabindex="0"><code>&lt;span :title=&#34;toTitleDate(date)&#34;&gt;
+  {{ formatDate(date) }}
+&lt;/span&gt;
+</code></pre><p>绑定在表达式中的方法在组件每次更新时都会被重新调用。</p>
+<h3 id="受限的全局访问">受限的全局访问</h3>
+<p>模板中的表达式仅能够访问到有限的全局对象列表。该列表中会暴露常用的内置全局对象，比如 Math 和 Date。</p>
+<p>没有显式包含在列表中的全局对象将不能在模板内表达式中访问，例如用户附加在 window 上的属性。</p>
+<p>你可以自行在 app.config.globalProperties 上显式地添加它们，供所有的 Vue 表达式使用。</p>
+<h2 id="指令-directives">指令 Directives</h2>
+<p>指令是带有 v- 前缀的特殊 attribute。</p>
+<p>指令 attribute 的期望值为一个 JavaScript 表达式。一个指令的任务是在其表达式的值变化时响应式地更新 DOM。以 v-if 为例：</p>
+<pre tabindex="0"><code>&lt;p v-if=&#34;seen&#34;&gt;Now you see me&lt;/p&gt;
+</code></pre><p>这里，v-if 指令会基于表达式 seen 的值的真假来移除/插入该 <code>&lt;p&gt; </code>元素。</p>
+<h3 id="参数-arguments">参数 Arguments</h3>
+<p>某些指令会需要一个“参数”，在指令名后通过一个冒号隔开做标识。例如用 v-bind 指令来响应式地更新一个 HTML attribute：</p>
+<pre tabindex="0"><code>&lt;a v-bind:href=&#34;url&#34;&gt; ... &lt;/a&gt;
+
+&lt;!-- 简写 --&gt;
+&lt;a :href=&#34;url&#34;&gt; ... &lt;/a&gt;
+</code></pre><p>这里 href 就是一个参数，它告诉 v-bind 指令将表达式 url 的值绑定到元素的 href attribute 上。在简写中，参数前的一切 (例如 v-bind:) 都会被缩略为一个 : 字符。</p>
+<p>另一个例子是 v-on 指令，它将监听 DOM 事件：</p>
+<pre tabindex="0"><code>&lt;a v-on:click=&#34;doSomething&#34;&gt; ... &lt;/a&gt;
+
+&lt;!-- 简写 --&gt;
+&lt;a @click=&#34;doSomething&#34;&gt; ... &lt;/a&gt;
+</code></pre><p>这里的参数是要监听的事件名称：click。v-on 有一个相应的缩写，即 @ 字符。</p>
+<h3 id="动态参数">动态参数</h3>
+<p>在指令参数上也可以使用一个 JavaScript 表达式，包含在一对方括号内:</p>
+<pre tabindex="0"><code>&lt;!--
+注意，参数表达式有一些约束，
+参见下面“动态参数值的限制”与“动态参数语法的限制”章节的解释
+--&gt;
+&lt;a v-bind:[attributeName]=&#34;url&#34;&gt; ... &lt;/a&gt;
+
+&lt;!-- 简写 --&gt;
+&lt;a :[attributeName]=&#34;url&#34;&gt; ... &lt;/a&gt;
+</code></pre><p>attributeName 会作为一个 JavaScript 表达式被动态执行，计算得到的值会被用作最终的参数。举例来说，如果你的组件实例有一个数据属性 attributeName，其值为 &ldquo;href&rdquo;，那么这个绑定就等价于 v-bind:href。</p>
+<p>你还可以将一个函数绑定到动态的事件名称上：</p>
+<pre tabindex="0"><code>&lt;a v-on:[eventName]=&#34;doSomething&#34;&gt; ... &lt;/a&gt;
+
+&lt;!-- 简写 --&gt;
+&lt;a @[eventName]=&#34;doSomething&#34;&gt;
+</code></pre><h4 id="动态参数值的限制">动态参数值的限制</h4>
+<p>应当是一个字符串，或者是 null。特殊值 null 意为显式移除该绑定。非字符串的值会触发警告。</p>
+<h4 id="动态参数语法的限制">动态参数语法的限制</h4>
+<p>动态参数表达式因为某些字符的缘故有一些语法限制，比如空格和引号，在 HTML attribute 名称中都是不合法的。例如下面的示例：</p>
+<pre tabindex="0"><code>&lt;!-- 这会触发一个编译器警告 --&gt;
+&lt;a :[&#39;foo&#39; + bar]=&#34;value&#34;&gt; ... &lt;/a&gt;
+</code></pre><p>如果需要传入一个复杂的动态参数，推荐使用计算属性替换复杂的表达式</p>
+<p>当使用 DOM 内嵌模板 (直接写在 HTML 文件里的模板) 时，浏览器会强制将其转换为小写：</p>
+<pre tabindex="0"><code>&lt;a :[someAttr]=&#34;value&#34;&gt; ... &lt;/a&gt;
+</code></pre><p>上面的例子将会在 DOM 内嵌模板中被转换为 :[someattr]。如果你的组件拥有 “someAttr” 属性而非 “someattr”，这段代码将不会工作。单文件组件内的模板不受此限制。</p>
+<h3 id="修饰符-modifiers">修饰符 Modifiers</h3>
+<p>修饰符是以点开头的特殊后缀，表明指令需要以一些特殊的方式被绑定。例如 .prevent 修饰符会告知 v-on 指令对触发的事件调用 event.preventDefault()：</p>
+<pre tabindex="0"><code>&lt;form @submit.prevent=&#34;onSubmit&#34;&gt;...&lt;/form&gt;
+</code></pre><p>完整的指令语法：</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/directive.69c37117.png"
+        data-srcset="https://cn.vuejs.org/assets/directive.69c37117.png, https://cn.vuejs.org/assets/directive.69c37117.png 1.5x, https://cn.vuejs.org/assets/directive.69c37117.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/directive.69c37117.png"
+        title="https://cn.vuejs.org/assets/directive.69c37117.png" /></div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" data-title="Vue-基础-模板语法" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" data-title="Vue-基础-模板语法"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" data-title="Vue-基础-模板语法"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" data-title="Vue-基础-模板语法"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAvue%E5%BA%94%E7%94%A8/" class="prev" rel="prev" title="Vue-基础-创建一个Vue应用"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-基础-创建一个Vue应用</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" class="next" rel="next" title="Vue-基础-响应式基础">Vue-基础-响应式基础<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d8d1a4.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

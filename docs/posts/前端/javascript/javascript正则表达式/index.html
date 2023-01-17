@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>JavaScript-JavaScript正则表达式 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="JavaScript-JavaScript正则表达式" />
+<meta property="og:description" content="本系列是作者在跟着W3school的JS教程学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。 什么是正则表达式？ 正" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-08T13:11:04+08:00" />
+<meta property="article:modified_time" content="2022-10-08T13:11:04+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="JavaScript-JavaScript正则表达式"/>
+<meta name="twitter:description" content="本系列是作者在跟着W3school的JS教程学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。 什么是正则表达式？ 正"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E4%BD%8D%E8%BF%90%E7%AE%97/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E9%94%99%E8%AF%AF/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "JavaScript-JavaScript正则表达式",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/javascript\/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F\/"
+        },"genre": "posts","keywords": "JavaScript","wordcount":  701 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/javascript\/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F\/","datePublished": "2022-10-08T13:11:04+08:00","dateModified": "2022-10-08T13:11:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">JavaScript-JavaScript正则表达式</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-08">2022-10-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;701 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是正则表达式">什么是正则表达式？</a></li>
+    <li><a href="#句法">句法</a></li>
+    <li><a href="#使用字符串方法">使用字符串方法</a></li>
+    <li><a href="#对字符串使用字符串-search">对字符串使用字符串 search()</a></li>
+    <li><a href="#使用带有正则表达式的字符串-search">使用带有正则表达式的字符串 search()</a></li>
+    <li><a href="#将字符串replace与字符串一起使用">将字符串replace()与字符串一起使用</a></li>
+    <li><a href="#将字符串replace与正则表达式一起使用">将字符串replace()与正则表达式一起使用</a></li>
+    <li><a href="#正则表达式修饰符---正则表达式模式">正则表达式修饰符   正则表达式模式</a></li>
+    <li><a href="#使用正则表达式对象">使用正则表达式对象</a></li>
+    <li><a href="#test">test()</a></li>
+    <li><a href="#exec">exec()</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://www.w3schools.com/js/default.asp" target="_blank" rel="noopener noreffer ">W3school的JS教程</a>学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。</p>
+<h2 id="什么是正则表达式">什么是正则表达式？</h2>
+<p>正则表达式是形成搜索模式的字符序列。</p>
+<p>当您在文本中搜索数据时，您可以使用此搜索模式来描述您要搜索的内容。</p>
+<p>正则表达式可以是单个字符，也可以是更复杂的模式。</p>
+<p>正则表达式可用于执行所有类型的文本搜索 和文本替换操作。</p>
+<h2 id="句法">句法</h2>
+<pre tabindex="0"><code>/pattern/modifiers;
+
+/w3schools/i;
+</code></pre><h2 id="使用字符串方法">使用字符串方法</h2>
+<p>在 JavaScript 中，正则表达式通常与两个字符串方法一起使用：search()和replace().</p>
+<p>该search()方法使用表达式搜索匹配项，并返回匹配项的位置。</p>
+<p>该replace()方法返回一个修改后的字符串，其中模式被替换。</p>
+<h2 id="对字符串使用字符串-search">对字符串使用字符串 search()</h2>
+<p>该search()方法在字符串中搜索指定值并返回匹配的位置：</p>
+<pre tabindex="0"><code>let text = &#34;Visit W3Schools!&#34;;
+let n = text.search(&#34;W3Schools&#34;);
+</code></pre><h2 id="使用带有正则表达式的字符串-search">使用带有正则表达式的字符串 search()</h2>
+<pre tabindex="0"><code>let text = &#34;Visit W3Schools&#34;;
+let n = text.search(/w3schools/i);
+</code></pre><h2 id="将字符串replace与字符串一起使用">将字符串replace()与字符串一起使用</h2>
+<p>该replace()方法将指定值替换为字符串中的另一个值：</p>
+<pre tabindex="0"><code>let text = &#34;Visit Microsoft!&#34;;
+let result = text.replace(&#34;Microsoft&#34;, &#34;W3Schools&#34;);
+</code></pre><h2 id="将字符串replace与正则表达式一起使用">将字符串replace()与正则表达式一起使用</h2>
+<pre tabindex="0"><code>let text = &#34;Visit Microsoft!&#34;;
+let result = text.replace(/microsoft/i, &#34;W3Schools&#34;);
+</code></pre><blockquote>
+<p>可以在上述方法中使用正则表达式参数（而不是字符串参数）。正则表达式可以使您的搜索更加强大（例如不区分大小写）。</p>
+</blockquote>
+<h2 id="正则表达式修饰符---正则表达式模式">正则表达式修饰符   正则表达式模式</h2>
+<p>见<a href="https://www.w3schools.com/js/js_regexp.asp" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h2 id="使用正则表达式对象">使用正则表达式对象</h2>
+<p>在 JavaScript 中，RegExp 对象是具有预定义属性和方法的正则表达式对象。</p>
+<h2 id="test">test()</h2>
+<p>test()方法是 RegExp 表达式方法。</p>
+<p>它在字符串中搜索模式，并根据结果返回真或假。</p>
+<pre tabindex="0"><code>const pattern = /e/;
+pattern.test(&#34;The best things in life are free!&#34;);
+
+/e/.test(&#34;The best things in life are free!&#34;);
+</code></pre><h2 id="exec">exec()</h2>
+<p>exec()方法是 RegExp 表达式方法。</p>
+<p>它在字符串中搜索指定的模式，并将找到的文本作为对象返回。</p>
+<p>如果未找到匹配项，则返回一个空(null)对象。</p>
+<pre tabindex="0"><code>/e/.exec(&#34;The best things in life are free!&#34;);
+</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="JavaScript-JavaScript正则表达式" data-hashtags="JavaScript"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-hashtag="JavaScript"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="JavaScript-JavaScript正则表达式"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="JavaScript-JavaScript正则表达式"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-title="JavaScript-JavaScript正则表达式"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/javascript/">JavaScript</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E4%BD%8D%E8%BF%90%E7%AE%97/" class="prev" rel="prev" title="JavaScript-JavaScript位运算"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>JavaScript-JavaScript位运算</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E9%94%99%E8%AF%AF/" class="next" rel="next" title="JavaScript-JavaScript错误">JavaScript-JavaScript错误<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

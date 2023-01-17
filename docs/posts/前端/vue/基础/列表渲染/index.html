@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-基础-列表渲染 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-基础-列表渲染" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 v-for v-for 指令基于一个数组来渲染一个列表。v-for 指令的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-15T17:05:51+08:00" />
+<meta property="article:modified_time" content="2022-10-15T17:05:51+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-基础-列表渲染"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 v-for v-for 指令基于一个数组来渲染一个列表。v-for 指令的"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-基础-列表渲染",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E5%9F%BA%E7%A1%80\/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  2039 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E5%9F%BA%E7%A1%80\/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93\/","datePublished": "2022-10-15T17:05:51+08:00","dateModified": "2022-10-15T17:05:51+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-基础-列表渲染</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-15">2022-10-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2039 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#v-for">v-for</a></li>
+    <li><a href="#v-for-与对象">v-for 与对象</a></li>
+    <li><a href="#在-v-for-里使用范围值">在 v-for 里使用范围值</a></li>
+    <li><a href="#template-上的-v-for"><template> 上的 v-for</a></li>
+    <li><a href="#v-for-与-v-if">v-for 与 v-if</a></li>
+    <li><a href="#通过-key-管理状态">通过 key 管理状态</a></li>
+    <li><a href="#组件上使用-v-for">组件上使用 v-for</a></li>
+    <li><a href="#数组变化侦测">数组变化侦测</a>
+      <ul>
+        <li><a href="#变更方法">变更方法</a></li>
+        <li><a href="#替换一个数组">替换一个数组</a></li>
+      </ul>
+    </li>
+    <li><a href="#展示过滤或排序后的结果">展示过滤或排序后的结果</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<h2 id="v-for">v-for</h2>
+<p>v-for 指令基于一个数组来渲染一个列表。v-for 指令的值使用 item in items 形式的特殊语法，其中 items 是源数据的数组，而 item 是迭代项的别名：</p>
+<pre tabindex="0"><code>data() {
+  return {
+    items: [{ message: &#39;Foo&#39; }, { message: &#39;Bar&#39; }]
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;li v-for=&#34;item in items&#34;&gt;
+  {{ item.message }}
+&lt;/li&gt;
+</code></pre><p>v-for 块中可以完整地访问父作用域内的属性和变量。v-for 也支持使用可选的第二个参数表示当前项的位置索引。</p>
+<pre tabindex="0"><code>data() {
+  return {
+    parentMessage: &#39;Parent&#39;,
+    items: [{ message: &#39;Foo&#39; }, { message: &#39;Bar&#39; }]
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;li v-for=&#34;(item, index) in items&#34;&gt;
+  {{ parentMessage }} - {{ index }} - {{ item.message }}
+&lt;/li&gt;
+</code></pre><p>v-for 变量的作用域和下面的 JavaScript 代码很类似：</p>
+<pre tabindex="0"><code>const parentMessage = &#39;Parent&#39;
+const items = [
+  /* ... */
+]
+
+items.forEach((item, index) =&gt; {
+  // 可以访问外层的 `parentMessage`
+  // 而 `item` 和 `index` 只在这个作用域可用
+  console.log(parentMessage, item.message, index)
+})
+</code></pre><p>可以在定义 v-for 的变量别名时使用解构，和解构函数参数类似：</p>
+<pre tabindex="0"><code>&lt;li v-for=&#34;{ message } in items&#34;&gt;
+  {{ message }}
+&lt;/li&gt;
+
+&lt;!-- 有 index 索引时 --&gt;
+&lt;li v-for=&#34;({ message }, index) in items&#34;&gt;
+  {{ message }} {{ index }}
+&lt;/li&gt;
+</code></pre><p>对于多层嵌套的 v-for，作用域的工作方式和函数的作用域很类似。每个 v-for 作用域都可以访问到父级作用域：</p>
+<pre tabindex="0"><code>&lt;li v-for=&#34;item in items&#34;&gt;
+  &lt;span v-for=&#34;childItem in item.children&#34;&gt;
+    {{ item.message }} {{ childItem }}
+  &lt;/span&gt;
+&lt;/li&gt;
+</code></pre><p>可以使用 of 作为分隔符来替代 in，这更接近 JavaScript 的迭代器语法：</p>
+<pre tabindex="0"><code>&lt;div v-for=&#34;item of items&#34;&gt;&lt;/div&gt;
+</code></pre><h2 id="v-for-与对象">v-for 与对象</h2>
+<p>你也可以使用 v-for 来遍历一个对象的所有属性。遍历的顺序会基于对该对象调用 Object.keys() 的返回值来决定。</p>
+<pre tabindex="0"><code>data() {
+  return {
+    myObject: {
+      title: &#39;How to do lists in Vue&#39;,
+      author: &#39;Jane Doe&#39;,
+      publishedAt: &#39;2016-04-10&#39;
+    }
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;ul&gt;
+  &lt;li v-for=&#34;value in myObject&#34;&gt;
+    {{ value }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>可以通过提供第二个参数表示属性名 (例如 key)：</p>
+<pre tabindex="0"><code>&lt;li v-for=&#34;(value, key) in myObject&#34;&gt;
+  {{ key }}: {{ value }}
+&lt;/li&gt;
+</code></pre><p>第三个参数表示位置索引：</p>
+<pre tabindex="0"><code>&lt;li v-for=&#34;(value, key, index) in myObject&#34;&gt;
+  {{ index }}. {{ key }}: {{ value }}
+&lt;/li&gt;
+</code></pre><h2 id="在-v-for-里使用范围值">在 v-for 里使用范围值</h2>
+<p>v-for 可以直接接受一个整数值会将该模板基于 1&hellip;n 的取值范围重复多次。</p>
+<pre tabindex="0"><code>&lt;span v-for=&#34;n in 10&#34;&gt;{{ n }}&lt;/span&gt;
+</code></pre><p>注意此处 n 的初值是从 1 开始而非 0。</p>
+<h2 id="template-上的-v-for"><template> 上的 v-for</h2>
+<p>可以在 <code>&lt;template&gt; </code>标签上使用 v-for 来渲染一个包含多个元素的块。例如：</p>
+<pre tabindex="0"><code>&lt;ul&gt;
+  &lt;template v-for=&#34;item in items&#34;&gt;
+    &lt;li&gt;{{ item.msg }}&lt;/li&gt;
+    &lt;li class=&#34;divider&#34; role=&#34;presentation&#34;&gt;&lt;/li&gt;
+  &lt;/template&gt;
+&lt;/ul&gt;
+</code></pre><h2 id="v-for-与-v-if">v-for 与 v-if</h2>
+<p>当它们同时存在于一个节点上时，v-if 比 v-for 的优先级更高。这意味着 v-if 的条件将无法访问到 v-for 作用域内定义的变量别名：</p>
+<pre tabindex="0"><code>&lt;!--
+ 这会抛出一个错误，因为属性 todo 此时
+ 没有在该实例上定义
+--&gt;
+&lt;li v-for=&#34;todo in todos&#34; v-if=&#34;!todo.isComplete&#34;&gt;
+  {{ todo.name }}
+&lt;/li&gt;
+</code></pre><p>在外新包装一层 <code>&lt;template&gt;</code> 再在其上使用 v-for 可以解决这个问题 (这也更加明显易读)：</p>
+<pre tabindex="0"><code>&lt;template v-for=&#34;todo in todos&#34;&gt;
+  &lt;li v-if=&#34;!todo.isComplete&#34;&gt;
+    {{ todo.name }}
+  &lt;/li&gt;
+&lt;/template&gt;
+</code></pre><h2 id="通过-key-管理状态">通过 key 管理状态</h2>
+<p>Vue 默认按照“就地更新”的策略来更新通过 v-for 渲染的元素列表。当数据项的顺序改变时，Vue 不会随之移动 DOM 元素的顺序，而是就地更新每个元素，确保它们在原本指定的索引位置上渲染。</p>
+<p>默认模式是高效的，但只适用于列表渲染输出的结果不依赖子组件状态或者临时 DOM 状态 (例如表单输入值) 的情况。</p>
+<p>为了给 Vue 一个提示，以便它可以跟踪每个节点的标识，从而重用和重新排序现有的元素，你需要为每个元素对应的块提供一个唯一的 key attribute：</p>
+<pre tabindex="0"><code>&lt;div v-for=&#34;item in items&#34; :key=&#34;item.id&#34;&gt;
+  &lt;!-- 内容 --&gt;
+&lt;/div&gt;
+</code></pre><p>当你使用 <code>&lt;template v-for&gt;</code> 时，key 应该被放置在这个 <code>&lt;template&gt; </code>容器上：</p>
+<pre tabindex="0"><code>&lt;template v-for=&#34;todo in todos&#34; :key=&#34;todo.name&#34;&gt;
+  &lt;li&gt;{{ todo.name }}&lt;/li&gt;
+&lt;/template&gt;
+</code></pre><p>注意</p>
+<p>key 在这里是一个通过 v-bind 绑定的特殊 attribute。请不要和在 v-for 中使用对象里所提到的对象属性名相混淆。</p>
+<p>推荐在任何可行的时候为 v-for 提供一个 key attribute，除非所迭代的 DOM 内容非常简单 (例如：不包含组件或有状态的 DOM 元素)，或者你想有意采用默认行为来提高性能。</p>
+<p>key 绑定的值期望是一个基础类型的值，例如字符串或 number 类型。不要用对象作为 v-for 的 key。关于 key attribute 的更多用途细节，请参阅 key API 文档。</p>
+<h2 id="组件上使用-v-for">组件上使用 v-for</h2>
+<p>可以直接在组件上使用 v-for，和在一般的元素上使用没有区别 (别忘记提供一个 key)：</p>
+<pre tabindex="0"><code>&lt;MyComponent v-for=&#34;item in items&#34; :key=&#34;item.id&#34; /&gt;
+</code></pre><p>但是，这不会自动将任何数据传递给组件，因为组件有自己独立的作用域。为了将迭代后的数据传递到组件中，我们还需要传递 props：</p>
+<pre tabindex="0"><code>&lt;MyComponent
+  v-for=&#34;(item, index) in items&#34;
+  :item=&#34;item&#34;
+  :index=&#34;index&#34;
+  :key=&#34;item.id&#34;
+/&gt;
+</code></pre><p>不自动将 item 注入组件的原因是，这会使组件与 v-for 的工作方式紧密耦合。明确其数据的来源可以使组件在其他情况下重用。</p>
+<h2 id="数组变化侦测">数组变化侦测</h2>
+<h3 id="变更方法">变更方法</h3>
+<p>Vue 能够侦听响应式数组的变更方法，并在它们被调用时触发相关的更新。这些变更方法包括：push(),pop(),shift(),unshift(),splice(),sort(),reverse()</p>
+<h3 id="替换一个数组">替换一个数组</h3>
+<p>变更方法，顾名思义，就是会对调用它们的原数组进行变更。相对地，也有一些不可变 (immutable) 方法，例如 filter()，concat() 和 slice()，这些都不会更改原数组，而总是返回一个新数组。当遇到的是非变更方法时，我们需要将旧的数组替换为新的：</p>
+<pre tabindex="0"><code>this.items = this.items.filter((item) =&gt; item.message.match(/Foo/))
+</code></pre><p>你可能认为这将导致 Vue 丢弃现有的 DOM 并重新渲染整个列表——幸运的是，情况并非如此。Vue 实现了一些巧妙的方法来最大化对 DOM 元素的重用，因此用另一个包含部分重叠对象的数组来做替换，仍会是一种非常高效的操作。</p>
+<h2 id="展示过滤或排序后的结果">展示过滤或排序后的结果</h2>
+<p>有时，我们希望显示数组经过过滤或排序后的内容，而不实际变更或重置原始数据。在这种情况下，你可以创建返回已过滤或已排序数组的计算属性。</p>
+<p>举例来说：</p>
+<pre tabindex="0"><code>data() {
+  return {
+    numbers: [1, 2, 3, 4, 5]
+  }
+},
+computed: {
+  evenNumbers() {
+    return this.numbers.filter(n =&gt; n % 2 === 0)
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;li v-for=&#34;n in evenNumbers&#34;&gt;{{ n }}&lt;/li&gt;
+</code></pre><p>在计算属性不可行的情况下 (例如在多层嵌套的 v-for 循环中)，你可以使用以下方法：</p>
+<pre tabindex="0"><code>data() {
+  return {
+    sets: [[ 1, 2, 3, 4, 5 ], [6, 7, 8, 9, 10]]
+  }
+},
+methods: {
+  even(numbers) {
+    return numbers.filter(number =&gt; number % 2 === 0)
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;ul v-for=&#34;numbers in sets&#34;&gt;
+  &lt;li v-for=&#34;n in even(numbers)&#34;&gt;{{ n }}&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>在计算属性中使用 reverse() 和 sort() 的时候务必小心！这两个方法将变更原始数组，计算函数中不应该这么做。请在调用这些方法之前创建一个原数组的副本：</p>
+<pre tabindex="0"><code>- return numbers.reverse()
++ return [...numbers].reverse()
+</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" data-title="Vue-基础-列表渲染" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" data-title="Vue-基础-列表渲染"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" data-title="Vue-基础-列表渲染"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/" data-title="Vue-基础-列表渲染"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93/" class="prev" rel="prev" title="Vue-基础-条件渲染"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-基础-条件渲染</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/" class="next" rel="next" title="Vue-基础-事件处理">Vue-基础-事件处理<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

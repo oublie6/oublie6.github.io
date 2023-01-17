@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-go-zero-教程-Looklook - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-go-zero-教程-Looklook" />
+<meta property="og:description" content="go-zero官网 go-zero详细文档 go-zero looklook github 本系列为作者跟着Mikaelemmmm的b站教学视频学习时做的笔记 looklook文档 Mika" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/looklook/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-08T12:23:56+08:00" />
+<meta property="article:modified_time" content="2023-01-08T12:23:56+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-go-zero-教程-Looklook"/>
+<meta name="twitter:description" content="go-zero官网 go-zero详细文档 go-zero looklook github 本系列为作者跟着Mikaelemmmm的b站教学视频学习时做的笔记 looklook文档 Mika"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/looklook/" /><link rel="prev" href="https://oublie6.github.io/posts/%E4%BA%91%E5%8E%9F%E7%94%9F/docker/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><link rel="next" href="https://oublie6.github.io/posts/golang/go-zero/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E8%B7%B5/%E7%BB%99rpc%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9Bhttp%E6%8E%A5%E5%8F%A3/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-go-zero-教程-Looklook",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/looklook\/"
+        },"genre": "posts","keywords": "go-zero","wordcount":  4669 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/looklook\/","datePublished": "2023-01-08T12:23:56+08:00","dateModified": "2023-01-08T12:23:56+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-教程-Looklook</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-08">2023-01-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4669 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#项目架构图和业务架构图">项目架构图和业务架构图</a></li>
+    <li><a href="#zerolooklook使用的中间件">zerolooklook使用的中间件</a></li>
+    <li><a href="#looklook架构讲解">looklook架构讲解</a></li>
+    <li><a href="#项目目录讲解">项目目录讲解</a></li>
+    <li><a href="#部署过程">部署过程</a></li>
+    <li><a href="#定时任务">定时任务</a></li>
+    <li><a href="#自定义jwt验证不通过响应">自定义jwt验证不通过响应</a></li>
+    <li><a href="#微信支付api">微信支付api</a></li>
+    <li><a href="#技术栈过多的问题">技术栈过多的问题</a></li>
+    <li><a href="#官方文档笔记">官方文档笔记</a>
+      <ul>
+        <li><a href="#1开发环境部署">1.开发环境部署</a>
+          <ul>
+            <li><a href="#项目介绍">项目介绍</a></li>
+            <li><a href="#技术栈">技术栈</a></li>
+          </ul>
+        </li>
+        <li><a href="#nginx网关">nginx网关</a></li>
+        <li><a href="#鉴权服务">鉴权服务</a></li>
+        <li><a href="#用户服务">用户服务</a></li>
+        <li><a href="#民宿服务">民宿服务</a></li>
+        <li><a href="#订单服务">订单服务</a></li>
+        <li><a href="#支付服务">支付服务</a></li>
+        <li><a href="#消息-延迟-定时队列">消息-延迟-定时队列</a>
+          <ul>
+            <li><a href="#如何使用">如何使用</a></li>
+          </ul>
+        </li>
+        <li><a href="#分布式事务">分布式事务</a></li>
+        <li><a href="#错误处理">错误处理</a></li>
+        <li><a href="#日志收集">日志收集</a></li>
+        <li><a href="#链路追踪">链路追踪</a></li>
+        <li><a href="#服务监控">服务监控</a>
+          <ul>
+            <li><a href="#配置步骤">配置步骤</a></li>
+          </ul>
+        </li>
+        <li><a href="#部署环境搭建">部署环境搭建</a></li>
+        <li><a href="#发布服务到k8s">发布服务到k8s</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://go-zero.dev/cn/" target="_blank" rel="noopener noreffer ">go-zero官网</a></p>
+<p><a href="https://legacy.go-zero.dev/cn/" target="_blank" rel="noopener noreffer ">go-zero详细文档</a></p>
+<p><a href="https://github.com/Mikaelemmmm/go-zero-looklook" target="_blank" rel="noopener noreffer ">go-zero looklook github</a></p>
+<p>本系列为作者跟着<a href="https://space.bilibili.com/389552232" target="_blank" rel="noopener noreffer ">Mikaelemmmm</a>的b站教学视频学习时做的笔记</p>
+<p><a href="https://github.com/Mikaelemmmm/go-zero-looklook/tree/main/doc/chinese" target="_blank" rel="noopener noreffer ">looklook文档</a></p>
+<p>Mikaelemmmm哥用爱发电，希望大家给looklook项目点个star</p>
+<h2 id="项目架构图和业务架构图">项目架构图和业务架构图</h2>
+<div id="id-1"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/gozerolooklook.png"
+        data-srcset="https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/gozerolooklook.png, https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/gozerolooklook.png 1.5x, https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/gozerolooklook.png 2x"
+        data-sizes="auto"
+        alt="https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/gozerolooklook.png"
+        title="https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/gozerolooklook.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/go-zero-looklook-service.png"
+        data-srcset="https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/go-zero-looklook-service.png, https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/go-zero-looklook-service.png 1.5x, https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/go-zero-looklook-service.png 2x"
+        data-sizes="auto"
+        alt="https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/go-zero-looklook-service.png"
+        title="https://github.com/Mikaelemmmm/go-zero-looklook/raw/main/doc/chinese/images/1/go-zero-looklook-service.png" /></p>
+</div>
+<h2 id="zerolooklook使用的中间件">zerolooklook使用的中间件</h2>
+<p><a href="https://github.com/zeromicro/go-queue" target="_blank" rel="noopener noreffer ">zeromicro/go-queue</a>里面的dq，kq和rabbitmq</p>
+<p>dq基于redis，kq基于kafka，rabbitmq基于rabbitmq。都是封装好的消息队列使用很方便。</p>
+<p>dq的asynq可以做延时任务，基于<a href="https://github.com/robfig/cron" target="_blank" rel="noopener noreffer ">cron库</a>，调用schedule模块来布置定时任务。用于分布式高可用，防止单点故障（相对直接使用cron布置任务）</p>
+<h2 id="looklook架构讲解">looklook架构讲解</h2>
+<p>线上部署</p>
+<p>cdn=》防火墙（可以是云服务自带的防火墙直接配）=》负载均衡=》nginx集群=》k8s集群（api：使用goctl生成的k8s yaml文件会暴露出访问端口，直接把端口配置到nginx里面，另外api内部调用rpc的服务；rpc服务不暴露端口给外面，仅在k8s集群内部的网段开放服务，供api调用和调用内部中间件；mq，job，schedule也只被rpc调用不暴露给外面）=》使用filebeat来获取日志并发给kafka=》kafka将存储日志消息=》go-stash消费并过滤日志消息并push到elasticsearch</p>
+<p>jeager做链路监控，prometheus做服务器监控，grafana查看Prometheus监控信息</p>
+<h2 id="项目目录讲解">项目目录讲解</h2>
+<p>app里面是所有的业务</p>
+<p>common里面放常用的定制组件</p>
+<p>deploy是部署相关的文件</p>
+<p>doc是项目的文档</p>
+<p>docker-compose.yaml和docker-compose-env.yaml分别是业务容器和环境容器的docker-compose文件</p>
+<h2 id="部署过程">部署过程</h2>
+<p>见<a href="https://github.com/Mikaelemmmm/go-zero-looklook/blob/main/doc/chinese/1-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md" target="_blank" rel="noopener noreffer ">项目文档</a></p>
+<p>启动过程中es可能会启动比较慢，依赖es的kibana，jeager也起不来。</p>
+<p>mysql在windows可能因为权限起不来</p>
+<p>日志收集使用filebeat搜集容器文件夹内容，然后输出给kafka，所以需要进入kafka创建3个topic，对应业务架构里面支付成功通知所有订阅者（2个）和项目架构的log搜集（1个）。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker <span style="color:#0aa">exec</span> -it kafka /bin/sh
+</span></span><span style="display:flex;"><span><span style="color:#0aa">cd</span> /opt/kafka/bin/
+</span></span><span style="display:flex;"><span>./kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor <span style="color:#099">1</span> -partitions <span style="color:#099">1</span> --topic looklook-log
+</span></span><span style="display:flex;"><span>./kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor <span style="color:#099">1</span> -partitions <span style="color:#099">1</span> --topic payment-update-paystatus-topic
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>mysql的容器初次使用时需要配置允许远程连接</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker <span style="color:#0aa">exec</span> -it mysql mysql -uroot -p
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">##输入密码：PXDN93VRKUm8TeE7</span>
+</span></span><span style="display:flex;"><span>use mysql;
+</span></span><span style="display:flex;"><span>update user <span style="color:#0aa">set</span> <span style="color:#a00">host</span>=<span style="color:#a50">&#39;%&#39;</span> where <span style="color:#a00">user</span>=<span style="color:#a50">&#39;root&#39;</span>;
+</span></span><span style="display:flex;"><span>FLUSH PRIVILEGES;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>并在mysql中导入sql文件来构建表</p>
+<p>modd的img需要你配置modd.conf，配置很简单</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">#usercenter
+app/usercenter/cmd/rpc/**/*.go {
+    prep: go build -o data/server/usercenter-rpc  -v app/usercenter/cmd/rpc/usercenter.go
+    daemon +sigkill: ./data/server/usercenter-rpc -f app/usercenter/cmd/rpc/etc/usercenter.yaml
+}
+</code></pre><p>app/usercenter/cmd/rpc/**/*.go表示这些文件变化就出发下面的代码块</p>
+<p>代码块里面按格式写就可以重新构建项目，实现热重载</p>
+<p>查看looklook容器日志</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker logs -f looklook
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>go-stash可能会比kafka启动的早所以如果日志收集出问题可以选择重启一下go-stash</p>
+<h2 id="定时任务">定时任务</h2>
+<p>app/mqueue/scheduler/logic/settleRecordJob.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (l *MqueueScheduler) <span style="color:#0a0">settleRecordScheduler</span>()  {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	task := asynq.<span style="color:#0a0">NewTask</span>(jobtype.ScheduleSettleRecord, <span style="color:#00a">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// every one minute exec
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	entryID, err := l.svcCtx.Scheduler.<span style="color:#0a0">Register</span>(<span style="color:#a50">&#34;*/1 * * * *&#34;</span>, task)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>		logx.<span style="color:#0a0">WithContext</span>(l.ctx).<span style="color:#0a0">Errorf</span>(<span style="color:#a50">&#34;!!!MqueueSchedulerErr!!! ====&gt; 【settleRecordScheduler】 registered  err:%+v , task:%+v&#34;</span>,err,task)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;【settleRecordScheduler】 registered an  entry: %q \n&#34;</span>, entryID)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="自定义jwt验证不通过响应">自定义jwt验证不通过响应</h2>
+<p>在生成server的语句里面添加选项WithUnauthorizedCallback</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>server := rest.<span style="color:#0a0">MustNewServer</span>(c.RestConf, rest.<span style="color:#0a0">WithUnauthorizedCallback</span>(<span style="color:#00a">func</span>(w http.ResponseWriter, r *http.Request, err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  w.<span style="color:#0a0">WriteHeader</span>(<span style="color:#099">200</span>)
+</span></span><span style="display:flex;"><span>}))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是通常前端来处理返回给用户的结果，后端只需要直接将错误代码发给前端。</p>
+<h2 id="微信支付api">微信支付api</h2>
+<p>这个api可以直接用，线上测试没问题</p>
+<h2 id="技术栈过多的问题">技术栈过多的问题</h2>
+<p>Mikaelmmmm希望做一个大而全的后端项目。</p>
+<p>如果觉得技术栈太多，可以在docker-compose里面将不熟悉的内容都注释掉，不跑一些中间件。looklook的模块划分的很好，把相关的代码注释掉即可。</p>
+<h2 id="官方文档笔记">官方文档笔记</h2>
+<h3 id="1开发环境部署">1.开发环境部署</h3>
+<h4 id="项目介绍">项目介绍</h4>
+<p>本项目开发环境推荐docker-compose，使用直链方式，测试、线上部署使用k8s</p>
+<ul>
+<li>app：所有业务代码包含api、rpc以及mq（消息队列、延迟队列、定时任务）</li>
+<li>common：通用组件 error、middleware、interceptor、tool、ctxdata等</li>
+<li>data：该项目包含该目录依赖所有中间件(mysql、es、redis、grafana等)产生的数据。</li>
+<li>deploy：
+<ul>
+<li>filebeat: docker部署filebeat配置</li>
+<li>go-stash：go-stash配置</li>
+<li>nginx: nginx网关配置</li>
+<li>prometheus ： prometheus配置</li>
+<li>goctl: 该项目goctl的template</li>
+</ul>
+</li>
+<li>doc : 该项目系列文档</li>
+<li>modd.conf : modd热加载配置文件</li>
+</ul>
+<h4 id="技术栈">技术栈</h4>
+<p>k8s，go-zero，nginx网关，filebeat，kafka，go-stash，elasticsearch，kibana，prometheus，grafana，jaeger，go-queue，asynq，asynqmon，dtm，docker，docker-compose，mysql，redis，modd，jenkins，gitlab，harbor</p>
+<h3 id="nginx网关">nginx网关</h3>
+<p>容器内部nginx端口是8081，使用docker暴露出去8888映射端口8081，这样外部通过8888来访问网关</p>
+<p>使用location来匹配每个服务</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">server{
+      listen 8081;
+      access_log /var/log/nginx/looklook.com_access.log;
+      error_log /var/log/nginx/looklook.com_error.log;
+
+
+      location ~ /order/ {
+           proxy_set_header Host $http_host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header REMOTE-HOST $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_pass http://looklook:1001;
+      }
+}
+</code></pre><p>通过go-zero自带的jwt鉴权之后，我们可以在ctx中拿到userId，</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (l *DetailLogic) <span style="color:#0a0">Detail</span>(req types.UserInfoReq) (*types.UserInfoResp, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>	userId := ctxdata.<span style="color:#0a0">GetUidFromCtx</span>(l.ctx)
+</span></span><span style="display:flex;"><span>	......
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="鉴权服务">鉴权服务</h3>
+<p><a href="https://legacy.go-zero.dev/cn/jwt.html" target="_blank" rel="noopener noreffer ">go-zero官方文档</a></p>
+<p>go-zero从jwt token解析后会将用户生成token时传入的kv原封不动的放在http.Request的Context中，因此我们可以通过Context就可以拿到你想要的值</p>
+<p>在desc/api文件中定义go-zero自带的jwt中间件</p>
+<pre tabindex="0"><code class="language-api" data-lang="api">@server(
+	...
+	jwt: JwtAuth
+)
+service usercenter {
+	......
+}
+</code></pre><p>会在 go-zero-looklook/app/usercenter/cmd/api/internal/handler/routes.go里面添加一句</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Code generated by goctl. DO NOT EDIT.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">package</span> handler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	........
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	server.<span style="color:#0a0">AddRoutes</span>(
+</span></span><span style="display:flex;"><span>		[]rest.Route{
+</span></span><span style="display:flex;"><span>			...
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		rest.<span style="color:#0a0">WithJwt</span>(serverCtx.Config.JwtAuth.AccessSecret),
+</span></span><span style="display:flex;"><span>		...
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用户发起请求资源 -&gt; nginx网关-&gt;匹配到对应服务模块 -&gt; auth模块-&gt;identity-api -&gt;identity-rpc -&gt; 用户请求的资源</p>
+<h3 id="用户服务">用户服务</h3>
+<p>model中定义了Trans方法暴露事务给logic</p>
+<p>在usercenter-rpc注册成功之后，需要请求token给前端登陆，直接在rigister内部生成获取token的logic实例并调用它的方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//2、Generate the token, so that the service doesn&#39;t call rpc internally
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>generateTokenLogic :=<span style="color:#0a0">NewGenerateTokenLogic</span>(l.ctx,l.svcCtx)
+</span></span><span style="display:flex;"><span>tokenResp,err:=generateTokenLogic.<span style="color:#0a0">GenerateToken</span>(&amp;usercenter.GenerateTokenReq{
+</span></span><span style="display:flex;"><span>  UserId: userId,
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>, errors.<span style="color:#0a0">Wrapf</span>(ErrGenerateTokenError, <span style="color:#a50">&#34;GenerateToken userId : %d&#34;</span>, userId)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>详见<a href="https://github.com/Mikaelemmmm/go-zero-looklook/blob/main/doc/chinese/4-%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1.md" target="_blank" rel="noopener noreffer ">官网文档</a></p>
+<h3 id="民宿服务">民宿服务</h3>
+<p>详见<a href="https://github.com/Mikaelemmmm/go-zero-looklook/blob/main/doc/chinese/5-%E6%B0%91%E5%AE%BF%E6%9C%8D%E5%8A%A1.md" target="_blank" rel="noopener noreffer ">官网文档</a></p>
+<p>【小技巧】 mapreduce</p>
+<p>【小技巧】model cache、singleflight</p>
+<h3 id="订单服务">订单服务</h3>
+<p>详见<a href="https://github.com/Mikaelemmmm/go-zero-looklook/blob/main/doc/chinese/6-%E8%AE%A2%E5%8D%95%E6%9C%8D%E5%8A%A1.md" target="_blank" rel="noopener noreffer ">官网文档</a></p>
+<p>这里写了延迟队列的用法，rpc创建订单的同时生成一个asynq延迟消息，延迟消息时间到了就在go-zero-looklook/app/mqueue/cmd/job/internal/logic/closeOrder.go中进行处理，这里会查询order rpc该订单的状态，如果已经支付则消费消息直接返回nil，否则修改订单消息为取消。</p>
+<h3 id="支付服务">支付服务</h3>
+<p>详见<a href="https://github.com/Mikaelemmmm/go-zero-looklook/blob/main/doc/chinese/7-%E6%94%AF%E4%BB%98%E6%9C%8D%E5%8A%A1.md" target="_blank" rel="noopener noreffer ">官网文档</a></p>
+<p>这里查询order-rpc获取订单详情，并根据返回的totalPrice，description和openid（注册的时候获取，userId对应openid）生成微信预支付订单并返回给前端</p>
+<p>当前端拿着微信预处理订单发起支付，用户输入密码支付成功后，微信服务器会回调服务器，回调地址在配置中填写</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#1e90ff;font-weight:bold">WxPayConf</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#1e90ff;font-weight:bold">NotifyUrl </span>:<span style="color:#bbb"> </span>http://xxx.xxx.com/payment/v1/thirdPayment/thirdPaymentWxPayCallback<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里生成微信订单使用的时第三方库wechatpay-apiv3/wechatpay-go</p>
+<p>github.com/wechatpay-apiv3/wechatpay-go/services/payments/jsapi</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 3、create wechat pay pre pay order
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>wxPayClient, err := svc.<span style="color:#0a0">NewWxPayClientV3</span>(l.svcCtx.Config)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>, err
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>jsApiSvc := jsapi.JsapiApiService{Client: wxPayClient}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Get the prepay_id, as well as the parameters and signatures needed to invoke the payment
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>resp, _, err := jsApiSvc.<span style="color:#0a0">PrepayWithRequestPayment</span>(l.ctx,
+</span></span><span style="display:flex;"><span>  jsapi.PrepayRequest{
+</span></span><span style="display:flex;"><span>    Appid:       core.<span style="color:#0a0">String</span>(l.svcCtx.Config.WxMiniConf.AppId),
+</span></span><span style="display:flex;"><span>    Mchid:       core.<span style="color:#0a0">String</span>(l.svcCtx.Config.WxPayConf.MchId),
+</span></span><span style="display:flex;"><span>    Description: core.<span style="color:#0a0">String</span>(description),
+</span></span><span style="display:flex;"><span>    OutTradeNo:  core.<span style="color:#0a0">String</span>(createPaymentResp.Sn),
+</span></span><span style="display:flex;"><span>    Attach:      core.<span style="color:#0a0">String</span>(description),
+</span></span><span style="display:flex;"><span>    NotifyUrl:   core.<span style="color:#0a0">String</span>(l.svcCtx.Config.WxPayConf.NotifyUrl),
+</span></span><span style="display:flex;"><span>    Amount: &amp;jsapi.Amount{
+</span></span><span style="display:flex;"><span>      Total: core.<span style="color:#0a0">Int64</span>(totalPrice),
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    Payer: &amp;jsapi.Payer{
+</span></span><span style="display:flex;"><span>      Openid: core.<span style="color:#0a0">String</span>(openId),
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>, errors.<span style="color:#0a0">Wrapf</span>(ErrWxPayError, <span style="color:#a50">&#34;Failed to initiate WeChat payment pre-order err : %v , userId: %d , orderSn:%s&#34;</span>, err, userId, orderSn)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>微信回调回来之后，调用verifyAndUpdateState 将流水单号改为已支付。</p>
+<p>verifyAndUpdateState方法，查询单号是否存在，比对回调回来的金额与创建时候金额是否一致。这里不用在校验签名了，前一步的sdk已经做了处理了</p>
+<p>支付回调成功之后，会给用户发送一个入驻码，去了商家那里要展示这个码，商家通过后台核对码，其实就是美团的样子，我们去美团下单，美团会给你个码，用户拿着这个码去入住或者消费等。</p>
+<p>verifyAndUpdateState调用了rpc的UpdateTradeState方法，核心做了两件事情，第一是更新支付状态，第二通过go-queue向消息队列(kafka)发送了一条日志消息</p>
+<p>UpdateHomestayOrderTradeState更改订单状态，在发送一条asynq给mqueue-job队列，让mqueue-job发送微信小程序模版消息给用户</p>
+<h3 id="消息-延迟-定时队列">消息-延迟-定时队列</h3>
+<p>asynq特点</p>
+<ul>
+<li>直接基于redis，一般项目都有redis，而asynq本身就是基于redis所以可以少维护一个中间件</li>
+<li>支持消息队列、延迟队列、定时任务调度 ， 因为希望项目支持定时任务而asynq直接就支持</li>
+<li>有webui界面，每个任务都可以暂停、归档、通过ui界面查看成功失败、监控</li>
+</ul>
+<p>go-queue特点：kafka的吞吐量高</p>
+<h4 id="如何使用">如何使用</h4>
+<p>自己使用serviceGroup改造，目录结构还是延续api的基本差不多, 将handler改成了listen ， 将logic换成了mqs 。</p>
+<p>main中不使用MustNewServer方法，使用c.SetUp()然后serviceGroup := service.NewServiceGroup()</p>
+<p>接下来就是go-zero的serivceGroup管理服务了，serviceGroup是用来管理一组service的，那service其实就是一个接口</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Service is the interface that groups Start and Stop methods.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>Service <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>  Starter <span style="color:#aaa;font-style:italic">//Start
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  Stopper <span style="color:#aaa;font-style:italic">//Stop
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>只要你的服务实现了这2个接口，就可以加入到serviceGroup统一管理</p>
+<p>把所有的mq都实现这个接口，然后统一放到都 list.Mqs中，在启动服务即可</p>
+<h3 id="分布式事务">分布式事务</h3>
+<p>本项目服务划分相对独立一些，所以目前没有使用到分布式事务</p>
+<h3 id="错误处理">错误处理</h3>
+<p>grpc的err对应的错误码其实就是一个uint32 ， 我们自己定义错误用uint32然后在rpc的全局拦截器返回时候转成grpc的err，就可以了</p>
+<p>所以我们自己定义全局错误码在app/common/xerr</p>
+<h3 id="日志收集">日志收集</h3>
+<p>filebeat,kafka,go-stash和elk直接配置好容器并挂载好容器内配置就好了</p>
+<h3 id="链路追踪">链路追踪</h3>
+<p>go-zero底层已经帮我们把代码跟链路追踪对接的代码已经写好了，默认支持jaeger、zinpink。我们只需要在我们的业务代码配置中，也就是你的业务配置的yaml中配置参数即可。</p>
+<h3 id="服务监控">服务监控</h3>
+<p>go-zero已经在代码中给我们集成好了prometheus。当我们启动api、rpc都会额外启动一个goroutine 提供prometheus的服务</p>
+<p>order-mq这种使用serviceGroup管理的服务，在启动文件main中要显示调用一下SetUp才可以，api、rpc不需要，配置都一样</p>
+<h4 id="配置步骤">配置步骤</h4>
+<p>配置prometheus与grafana：容器和容器内配置</p>
+<p>业务配置：只需要在业务配置文件中配置即可</p>
+<h3 id="部署环境搭建">部署环境搭建</h3>
+<p>gitlab : 放代码，可以做ci</p>
+<p>jenkins：做cd发布项目</p>
+<p>harbor : 镜像仓库</p>
+<p>k8s : 运行服务</p>
+<h3 id="发布服务到k8s">发布服务到k8s</h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-01-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/looklook/" data-title="golang-go-zero-教程-Looklook" data-hashtags="go-zero"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/looklook/" data-hashtag="go-zero"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/looklook/" data-title="golang-go-zero-教程-Looklook"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/looklook/" data-title="golang-go-zero-教程-Looklook"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/looklook/" data-title="golang-go-zero-教程-Looklook"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go-zero/">go-zero</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E4%BA%91%E5%8E%9F%E7%94%9F/docker/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="云原生-docker-个人笔记"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>云原生-docker-个人笔记</a>
+            <a href="/posts/golang/go-zero/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E8%B7%B5/%E7%BB%99rpc%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9Bhttp%E6%8E%A5%E5%8F%A3/" class="next" rel="next" title="golang-go-zero-微服务实践-给rpc服务提供http接口">golang-go-zero-微服务实践-给rpc服务提供http接口<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d8d1a4.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2023-01-08T12:23:56+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"golang-go-zero-教程-Looklook"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

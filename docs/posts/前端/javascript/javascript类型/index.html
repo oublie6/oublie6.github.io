@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>JavaScript-JavaScript类型 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="JavaScript-JavaScript类型" />
+<meta property="og:description" content="本系列是作者在跟着W3school的JS教程学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。 在 JavaScript 中有 5 种不同的数" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-08T11:04:01+08:00" />
+<meta property="article:modified_time" content="2022-10-08T11:04:01+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="JavaScript-JavaScript类型"/>
+<meta name="twitter:description" content="本系列是作者在跟着W3school的JS教程学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。 在 JavaScript 中有 5 种不同的数"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript_map/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "JavaScript-JavaScript类型",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/javascript\/javascript%E7%B1%BB%E5%9E%8B\/"
+        },"genre": "posts","keywords": "JavaScript","wordcount":  1075 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/javascript\/javascript%E7%B1%BB%E5%9E%8B\/","datePublished": "2022-10-08T11:04:01+08:00","dateModified": "2022-10-08T11:04:01+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">JavaScript-JavaScript类型</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-08">2022-10-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1075 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#typeof-运算符">typeof 运算符</a></li>
+    <li><a href="#原始数据">原始数据</a></li>
+    <li><a href="#复杂数据">复杂数据</a></li>
+    <li><a href="#typeof-的数据类型">typeof 的数据类型</a></li>
+    <li><a href="#constructor属性">constructor属性</a></li>
+    <li><a href="#undefined">Undefined</a></li>
+    <li><a href="#空值">空值</a></li>
+    <li><a href="#null">Null</a></li>
+    <li><a href="#undefined和null之间的区别">Undefined和Null之间的区别</a></li>
+    <li><a href="#instanceof-运算符">instanceof 运算符</a></li>
+    <li><a href="#void运算符">void运算符</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://www.w3schools.com/js/default.asp" target="_blank" rel="noopener noreffer ">W3school的JS教程</a>学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。</p>
+<p>在 JavaScript 中有 5 种不同的数据类型可以包含值：string number boolean object function</p>
+<p>有 6 种类型的对象：Object Date Array String Number Boolean</p>
+<p>以及 2 种不能包含值的数据类型：null undefined</p>
+<h2 id="typeof-运算符">typeof 运算符</h2>
+<pre tabindex="0"><code>typeof &#34;John&#34;                 // Returns &#34;string&#34;
+typeof 3.14                   // Returns &#34;number&#34;
+typeof NaN                    // Returns &#34;number&#34;
+typeof false                  // Returns &#34;boolean&#34;
+typeof [1,2,3,4]              // Returns &#34;object&#34;
+typeof {name:&#39;John&#39;, age:34}  // Returns &#34;object&#34;
+typeof new Date()             // Returns &#34;object&#34;
+typeof function () {}         // Returns &#34;function&#34;
+typeof myCar                  // Returns &#34;undefined&#34; *
+typeof null                   // Returns &#34;object&#34;
+</code></pre><h2 id="原始数据">原始数据</h2>
+<pre tabindex="0"><code>typeof &#34;John&#34;              // Returns &#34;string&#34;
+typeof 3.14                // Returns &#34;number&#34;
+typeof true                // Returns &#34;boolean&#34;
+typeof false               // Returns &#34;boolean&#34;
+typeof x                   // Returns &#34;undefined&#34; (if x has no value)
+</code></pre><h2 id="复杂数据">复杂数据</h2>
+<p>typeof {name:&lsquo;John&rsquo;, age:34} // Returns &ldquo;object&rdquo;
+typeof [1,2,3,4]             // Returns &ldquo;object&rdquo; (not &ldquo;array&rdquo;, see note below)
+typeof null                  // Returns &ldquo;object&rdquo;
+typeof function myFunc(){}   // Returns &ldquo;function&rdquo;</p>
+<p>typeof运算符为数组返回“object ” ，因为在 JavaScript 中数组是对象。</p>
+<h2 id="typeof-的数据类型">typeof 的数据类型</h2>
+<p>typeof运算符不是变量。它是一个运算符。运算符 ( + - * / ) 没有任何数据类型。</p>
+<p>但是，typeof运算符总是返回一个字符串（包含操作数的类型）。</p>
+<h2 id="constructor属性">constructor属性</h2>
+<p>constructor属性返回所有 JavaScript 变量的构造函数。</p>
+<pre tabindex="0"><code>&#34;John&#34;.constructor                // Returns function String()  {[native code]}
+(3.14).constructor                // Returns function Number()  {[native code]}
+false.constructor                 // Returns function Boolean() {[native code]}
+[1,2,3,4].constructor             // Returns function Array()   {[native code]}
+{name:&#39;John&#39;,age:34}.constructor  // Returns function Object()  {[native code]}
+new Date().constructor            // Returns function Date()    {[native code]}
+function () {}.constructor        // Returns function Function(){[native code]}
+</code></pre><p>您可以检查构造函数属性以了解对象是否为Array （包含单词“Array”）：</p>
+<pre tabindex="0"><code>function isArray(myArray) {
+  return myArray.constructor.toString().indexOf(&#34;Array&#34;) &gt; -1;
+}
+</code></pre><p>或者更简单，您可以检查对象是否为Array 函数：</p>
+<pre tabindex="0"><code>function isArray(myArray) {
+  return myArray.constructor === Array;
+}
+</code></pre><p>以上方法适用于其他类型如Date()</p>
+<h2 id="undefined">Undefined</h2>
+<p>在 JavaScript 中，没有值的变量有值undefined。类型也是undefined。<code>let car;</code></p>
+<p>通过将值设置为undefined，可以清空任何变量。类型也将是undefined.<code>car = undefined; </code></p>
+<h2 id="空值">空值</h2>
+<p>空值与undefined无关。</p>
+<p>空字符串同时具有合法值和类型。</p>
+<pre tabindex="0"><code>let car = &#34;&#34;;
+</code></pre><h2 id="null">Null</h2>
+<p>在 JavaScriptnull中是“无”。它应该是不存在的东西。</p>
+<p>不幸的是，在 JavaScript 中，数据类型null是对象。</p>
+<p>您可以将其视为 JavaScript 中的一个错误，typeof null是一个对象。但应该是null。</p>
+<p>您可以通过将对象设置为null来清空对象：</p>
+<pre tabindex="0"><code>let person = {firstName:&#34;John&#34;, lastName:&#34;Doe&#34;, age:50, eyeColor:&#34;blue&#34;};
+person = null;    // Now value is null, but type is still an object
+</code></pre><p>您还可以通过将对象设置为undefined来清空对象：</p>
+<pre tabindex="0"><code>let person = {firstName:&#34;John&#34;, lastName:&#34;Doe&#34;, age:50, eyeColor:&#34;blue&#34;};
+person = undefined;   // Now both value and type is undefined
+</code></pre><h2 id="undefined和null之间的区别">Undefined和Null之间的区别</h2>
+<p>undefined并且null值相等但类型不同：</p>
+<pre tabindex="0"><code>typeof undefined           // undefined
+typeof null                // object
+
+null === undefined         // false
+null == undefined          // true
+</code></pre><h2 id="instanceof-运算符">instanceof 运算符</h2>
+<p>如果对象是指定对象的实例，则运算instanceof符返回：true</p>
+<pre tabindex="0"><code>const cars = [&#34;Saab&#34;, &#34;Volvo&#34;, &#34;BMW&#34;];
+
+(cars instanceof Array);
+(cars instanceof Object);
+(cars instanceof String);
+(cars instanceof Number);
+</code></pre><h2 id="void运算符">void运算符</h2>
+<p>void运算符计算表达式并返回 undefined。此运算符通常用于获取未定义的原始值，使用“void(0)”（在不使用返回值的情况下评估表达式时很有用）。</p>
+<pre tabindex="0"><code>&lt;a href=&#34;javascript:void(0);&#34;&gt;
+  Useless link
+&lt;/a&gt;
+
+&lt;a href=&#34;javascript:void(document.body.style.backgroundColor=&#39;red&#39;);&#34;&gt;
+  Click me to change the background color of body to red
+&lt;/a&gt;
+</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B/" data-title="JavaScript-JavaScript类型" data-hashtags="JavaScript"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B/" data-hashtag="JavaScript"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B/" data-title="JavaScript-JavaScript类型"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B/" data-title="JavaScript-JavaScript类型"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B/" data-title="JavaScript-JavaScript类型"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/javascript/">JavaScript</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/javascript/javascript_map/" class="prev" rel="prev" title="JavaScript-JavaScript_Map"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>JavaScript-JavaScript_Map</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="next" rel="next" title="JavaScript-JavaScript类型转换">JavaScript-JavaScript类型转换<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>深度学习-感知机 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="深度学习-感知机" />
+<meta property="og:description" content="1 感知机是什么 感知机接收多个输入信号,输出一个信号.这里所说的“信号”可以想 象成电流或河流那样具备“流动性”的东西.像电流流过导线,向前方输" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-29T16:48:52+08:00" />
+<meta property="article:modified_time" content="2022-09-29T16:48:52+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="深度学习-感知机"/>
+<meta name="twitter:description" content="1 感知机是什么 感知机接收多个输入信号,输出一个信号.这里所说的“信号”可以想 象成电流或河流那样具备“流动性”的东西.像电流流过导线,向前方输"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/" /><link rel="prev" href="https://oublie6.github.io/posts/python/anaconda3/anaconda3%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" /><link rel="next" href="https://oublie6.github.io/posts/web%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2/%E7%AC%AC%E4%B8%80%E7%AB%A0/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "深度学习-感知机",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0\/%E6%84%9F%E7%9F%A5%E6%9C%BA\/"
+        },"genre": "posts","keywords": "深度学习","wordcount":  1124 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0\/%E6%84%9F%E7%9F%A5%E6%9C%BA\/","datePublished": "2022-09-29T16:48:52+08:00","dateModified": "2022-09-29T16:48:52+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">深度学习-感知机</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-29">2022-09-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1124 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#简单逻辑电路">简单逻辑电路</a></li>
+    <li><a href="#感知机的实现">感知机的实现</a>
+      <ul>
+        <li><a href="#简单的实现">简单的实现</a></li>
+        <li><a href="#导入权重和偏置">导入权重和偏置</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="1-感知机是什么">1 感知机是什么</h1>
+<p>感知机接收多个输入信号,输出一个信号.这里所说的“信号”可以想 象成电流或河流那样具备“流动性”的东西.像电流流过导线,向前方输送 电子一样,感知机的信号也会形成流,向前方输送信息.但是,和实际的电 流不同的是,感知机的信号只有“流/不流”(1/0)两种取值.</p>
+<blockquote>
+<p>严格地讲,本章中所说的感知机应该称为“人工神经元”或“朴素感知机”,但是因为很多基本的处 理都是共通的,所以这里就简单地称为“感知机”.</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%9b%be2-1.png"
+        data-srcset="/images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%9b%be2-1.png, /images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%9b%be2-1.png 1.5x, /images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%9b%be2-1.png 2x"
+        data-sizes="auto"
+        alt="/images/python/深度学习/图2-1.png"
+        title="图2-1　有两个输入的感知机" /></p>
+<p>图2-1是一个接收两个输入信号的感知机的例子.x1,x2是输入信号, y是输出信号,w1,w2是权重(w是weight的首字母).图中的○称为“神 经元”或者“节点”.输入信号被送往神经元时,会被分别乘以固定的权重(w1x1,w2x2).神经元会计算传送过来的信号的总和,只有当这个总和超过 了某个界限值时,才会输出1.这也称为“神经元被激活”.这里将这个界 限值称为阈值,用符号θ表示.</p>
+<p>感知机的运行原理只有这些！把上述内容用数学式来表示，就是式（2.1）。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%bc%8f2.1.png"
+        data-srcset="/images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%bc%8f2.1.png, /images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%bc%8f2.1.png 1.5x, /images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%bc%8f2.1.png 2x"
+        data-sizes="auto"
+        alt="/images/python/深度学习/式2.1.png"
+        title="式2.1" /></p>
+<h2 id="简单逻辑电路">简单逻辑电路</h2>
+<p>图2-2　与门的真值表:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">x1</th>
+<th style="text-align:center">x2</th>
+<th style="text-align:center">y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>用感知机来表示这个与门。需要做的就是确定能满足图2-2的真值表的w1、w2、θ的值。</p>
+<p>实际上,满足图2-2的条件的参数的选择方法有无数多个.比如,当 (w1, w2, θ) = (0.5, 0.5, 0.7) 时,可以满足图 2-2 的条件.此外,当 (w1, w2, θ) 为(0.5, 0.5, 0.8)或者(1.0, 1.0, 1.0)时,同样也满足与门的条件.设定这样的 参数后,仅当x1和x2同时为1时,信号的加权总和才会超过给定的阈值θ.</p>
+<p>图2-3　与非门的真值表</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">x1</th>
+<th style="text-align:center">x2</th>
+<th style="text-align:center">y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<p>要表示与非门,可以用(w1, w2, θ) = (−0.5, −0.5, −0.7)这样的组合(其 他的组合也是无限存在的).实际上,只要把实现与门的参数值的符号取反, 就可以实现与非门.</p>
+<p>图2-4　或门的真值表</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">x1</th>
+<th style="text-align:center">x2</th>
+<th style="text-align:center">y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>这里决定感知机参数的并不是计算机,而是我们人.我们看着真值 表这种“训练数据”,人工考虑(想到)了参数的值.而机器学习的课 题就是将这个决定参数值的工作交由计算机自动进行.学习是确定 合适的参数的过程,而人要做的是思考感知机的构造(模型),并把 训练数据交给计算机.</p>
+</blockquote>
+<p>如上所示,我们已经知道使用感知机可以表示与门,与非门,或门的逻 辑电路.这里重要的一点是：与门,与非门,或门的感知机构造是一样的. 实际上,3个门电路只有参数的值(权重和阈值)不同.也就是说,相同构造 的感知机,只需通过适当地调整参数的值,就可以像“变色龙演员”表演不 同的角色一样,变身为与门,与非门,或门.</p>
+<h2 id="感知机的实现">感知机的实现</h2>
+<h3 id="简单的实现">简单的实现</h3>
+<pre tabindex="0"><code>def AND(x1, x2):
+ w1, w2, theta = 0.5, 0.5, 0.7
+ tmp = x1*w1 + x2*w2
+ if tmp &lt;= theta:
+ return 0
+ elif tmp &gt; theta:
+ return 1
+</code></pre><p>也可以实现与非门和或门，不过让我们来对它们的实现稍作修改。</p>
+<h3 id="导入权重和偏置">导入权重和偏置</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%bc%8f2.3.png"
+        data-srcset="/images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%bc%8f2.3.png, /images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%bc%8f2.3.png 1.5x, /images/python/%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0/%e5%bc%8f2.3.png 2x"
+        data-sizes="auto"
+        alt="/images/python/深度学习/式2.3.png"
+        title="式2.3" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-09-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/" data-title="深度学习-感知机" data-hashtags="深度学习"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/" data-hashtag="深度学习"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/" data-title="深度学习-感知机"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/" data-title="深度学习-感知机"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%84%9F%E7%9F%A5%E6%9C%BA/" data-title="深度学习-感知机"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/python/anaconda3/anaconda3%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="prev" rel="prev" title="Anaconda3-常用命令"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Anaconda3-常用命令</a>
+            <a href="/posts/web%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2/%E7%AC%AC%E4%B8%80%E7%AB%A0/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" class="next" rel="next" title="web安全攻防-第一章-渗透测试之信息收集">web安全攻防-第一章-渗透测试之信息收集<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-学习笔记-错误处理与测试 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-学习笔记-错误处理与测试" />
+<meta property="og:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-11T19:40:21+08:00" />
+<meta property="article:modified_time" content="2022-12-11T19:40:21+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-学习笔记-错误处理与测试"/>
+<meta name="twitter:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/goroutines%E5%92%8Cchannels/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-学习笔记-错误处理与测试",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95\/"
+        },"genre": "posts","keywords": "go学习笔记","wordcount":  2360 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95\/","datePublished": "2022-12-11T19:40:21+08:00","dateModified": "2022-12-11T19:40:21+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-错误处理与测试</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2360 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#错误处理">错误处理</a>
+      <ul>
+        <li><a href="#定义错误">定义错误</a></li>
+        <li><a href="#用-fmt-创建错误对象">用 fmt 创建错误对象</a></li>
+      </ul>
+    </li>
+    <li><a href="#运行时异常和-panic">运行时异常和 panic</a></li>
+    <li><a href="#从-panic-中恢复recover">从 panic 中恢复（Recover）</a></li>
+    <li><a href="#启动外部命令和程序">启动外部命令和程序</a></li>
+    <li><a href="#go-中的单元测试和基准测试">Go 中的单元测试和基准测试</a></li>
+    <li><a href="#测试的具体例子">测试的具体例子</a></li>
+    <li><a href="#用测试数据表驱动测试">用（测试数据）表驱动测试</a></li>
+    <li><a href="#性能调试分析并优化-go-程序">性能调试：分析并优化 Go 程序</a>
+      <ul>
+        <li><a href="#时间和内存消耗">时间和内存消耗</a></li>
+        <li><a href="#用-go-test-调试">用 go test 调试</a></li>
+        <li><a href="#用-pprof-调试">用 pprof 调试</a></li>
+      </ul>
+    </li>
+    <li><a href="#覆盖率测试">覆盖率测试</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
+<p>Go 检查和报告错误条件的惯有方式</p>
+<ul>
+<li>产生错误的函数会返回两个变量，一个值和一个错误码；如果后者是 nil 就是成功，非 nil 就是发生了错误。</li>
+<li>为了防止发生错误时正在执行的函数（如果有必要的话甚至会是整个程序）被中止，在调用函数后必须检查错误。</li>
+</ul>
+<h2 id="错误处理">错误处理</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> <span style="color:#0aa">error</span> <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">Error</span>() <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当程序处于错误状态时可以用 os.Exit(1) 来中止运行。</p>
+<h3 id="定义错误">定义错误</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>err := errors.<span style="color:#0a0">New</span>(<span style="color:#f00;background-color:#faa">“</span>math - square root of negative number<span style="color:#f00;background-color:#faa">”</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个包中有自己定义的error</p>
+<h3 id="用-fmt-创建错误对象">用 fmt 创建错误对象</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>err = fmt.<span style="color:#0a0">Errorf</span>(<span style="color:#a50">&#34;usage: %s infile.txt outfile.txt&#34;</span>, filepath.<span style="color:#0a0">Base</span>(os.Args[<span style="color:#099">0</span>]))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="运行时异常和-panic">运行时异常和 panic</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#0aa">panic</span>(<span style="color:#a50">&#34;A severe error occurred: stopping the program!&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="从-panic-中恢复recover">从 panic 中恢复（Recover）</h2>
+<p>必须为defer语句或者是defer语句调用的匿名函数，不能在defer块里面调用其他函数来recover</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">defer</span> <span style="color:#00a">func</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> e := <span style="color:#0aa">recover</span>(); e != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;Panicing %s\r\n&#34;</span>, e)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="启动外部命令和程序">启动外部命令和程序</h2>
+<p>os 包有一个 StartProcess 函数可以调用或启动外部系统命令和二进制可执行文件；它的第一个参数是要运行的进程，第二个参数用来传递选项或参数，第三个参数是含有系统环境基本信息的结构体。这个在windows里面用不了。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">/* Linux: */</span>
+</span></span><span style="display:flex;"><span>env := os.<span style="color:#0a0">Environ</span>()
+</span></span><span style="display:flex;"><span>procAttr := &amp;os.ProcAttr{
+</span></span><span style="display:flex;"><span>  Env: env,
+</span></span><span style="display:flex;"><span>  Files: []*os.File{
+</span></span><span style="display:flex;"><span>      os.Stdin,
+</span></span><span style="display:flex;"><span>      os.Stdout,
+</span></span><span style="display:flex;"><span>      os.Stderr,
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 1st example: list files
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>pid, err := os.<span style="color:#0a0">StartProcess</span>(<span style="color:#a50">&#34;/bin/ls&#34;</span>, []<span style="color:#0aa">string</span>{<span style="color:#a50">&#34;ls&#34;</span>, <span style="color:#a50">&#34;-l&#34;</span>}, procAttr)  
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;Error %v starting process!&#34;</span>, err)  <span style="color:#aaa;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  os.<span style="color:#0a0">Exit</span>(<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>exec 包中也有同样功能的更简单的结构体和函数；主要是 exec.Command(name string, arg &hellip;string) 和 Run()</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>cmd := exec.<span style="color:#0a0">Command</span>(<span style="color:#a50">&#34;gedit&#34;</span>)  <span style="color:#aaa;font-style:italic">// this opens a gedit-window
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err = cmd.<span style="color:#0a0">Run</span>()
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;Error %v executing command!&#34;</span>, err)
+</span></span><span style="display:flex;"><span>  os.<span style="color:#0a0">Exit</span>(<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="go-中的单元测试和基准测试">Go 中的单元测试和基准测试</h2>
+<p>_test 程序不会被普通的 Go 编译器编译，所以当放应用部署到生产环境时它们不会被部署；只有 gotest 会编译所有的程序：普通程序和测试程序。</p>
+<p>测试函数必须有这种形式的头部：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">TestAbcde</span>(t *testing.T)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>T 是传给测试函数的结构类型，用来管理测试状态，支持格式化测试日志，如 t.Log，t.Error，t.ErrorF 等。在函数的结尾把输出跟想要的结果对比，如果不等就打印一个错误。成功的测试则直接返回。</p>
+<p>用下面这些函数来通知测试失败：</p>
+<ol>
+<li>func (t *T) Fail()标记测试函数为失败，然后继续执行（剩下的测试）。</li>
+<li>func (t *T) FailNow()标记测试函数为失败并中止执行；文件中别的测试也被略过，继续执行下一个文件。</li>
+<li>func (t *T) Log(args &hellip;interface{})  args 被用默认的格式格式化并打印到错误日志中。</li>
+<li>func (t *T) Fatal(args &hellip;interface{}) 结合 先执行 3），然后执行 2）的效果。</li>
+</ol>
+<p>&ndash;chatty 或 -v 选项，每个执行的测试函数以及测试状态会被打印。</p>
+<p><a href="https://www.cnblogs.com/Otiger/p/16221889.html" target="_blank" rel="noopener noreffer ">博客园Otiger基准测试</a></p>
+<p>testing 包中有一些类型和函数可以用来做简单的基准测试；测试代码中必须包含以 BenchmarkZzz 打头的函数并接收一个 *testing.B 类型的参数，</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">BenchmarkReverse</span>(b *testing.B) {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> n := <span style="color:#099">0</span>; n &lt; b.N; n++ {
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">testfunc</span>(xxx)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令 go test –test.bench=.* 会运行所有的基准测试函数；代码中的函数会被调用 N 次（N是非常大的数，如 N = 1000000），并展示 N 的值和函数执行的平均时间，单位为 ns（纳秒，ns/op）。如果是用 testing.Benchmark 调用这些函数，直接运行程序即可。</p>
+<p>-benchmem 参数展示内存消耗情况</p>
+<p>-cpu 使用几个cpu核心</p>
+<p>-count 连续跑N次</p>
+<p>-benchtime 指定运行秒数</p>
+<h2 id="测试的具体例子">测试的具体例子</h2>
+<p>even/even.go：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> even
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Even</span>(i <span style="color:#0aa">int</span>) <span style="color:#0aa">bool</span> {        <span style="color:#aaa;font-style:italic">// Exported function
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">return</span> i%<span style="color:#099">2</span> == <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Odd</span>(i <span style="color:#0aa">int</span>) <span style="color:#0aa">bool</span> {        <span style="color:#aaa;font-style:italic">// Exported function
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">return</span> i%<span style="color:#099">2</span> != <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>even/oddeven_test.go：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> even
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#a50">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">TestEven</span>(t *testing.T) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> !<span style="color:#0a0">Even</span>(<span style="color:#099">10</span>) {
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Log</span>(<span style="color:#a50">&#34; 10 must be even!&#34;</span>)
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Fail</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> <span style="color:#0a0">Even</span>(<span style="color:#099">7</span>) {
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Log</span>(<span style="color:#a50">&#34; 7 is not even!&#34;</span>)
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Fail</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">TestOdd</span>(t *testing.T) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> !<span style="color:#0a0">Odd</span>(<span style="color:#099">11</span>) {
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Log</span>(<span style="color:#a50">&#34; 11 must be odd!&#34;</span>)
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Fail</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> <span style="color:#0a0">Odd</span>(<span style="color:#099">10</span>) {
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Log</span>(<span style="color:#a50">&#34; 10 is not odd!&#34;</span>)
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Fail</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于测试需要具体的输入用例且不可能测试到所有的用例（非常像一个无穷的数），所以我们必须对要使用的测试用例思考再三。</p>
+<p>至少应该包括：</p>
+<ul>
+<li>正常的用例</li>
+<li>反面的用例（错误的输入，如用负数或字母代替数字，没有输入等）</li>
+<li>边界检查用例（如果参数的取值范围是 0 到 1000，检查 0 和 1000 的情况）</li>
+</ul>
+<h2 id="用测试数据表驱动测试">用（测试数据）表驱动测试</h2>
+<p>把测试的输入数据和期望的结果写在一起组成一个数据表：表中的每条记录都是一个含有输入和期望值的完整测试用例，还可以结合像测试名字这样的额外信息来让测试输出更多的信息</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> tests = []<span style="color:#00a">struct</span>{     <span style="color:#aaa;font-style:italic">// Test table
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    in  <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    out <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}{
+</span></span><span style="display:flex;"><span>    {<span style="color:#f00;background-color:#faa">“</span>in1<span style="color:#f00;background-color:#faa">”</span>, <span style="color:#f00;background-color:#faa">“</span>exp1<span style="color:#f00;background-color:#faa">”</span>},
+</span></span><span style="display:flex;"><span>    {<span style="color:#f00;background-color:#faa">“</span>in2<span style="color:#f00;background-color:#faa">”</span>, <span style="color:#f00;background-color:#faa">“</span>exp2<span style="color:#f00;background-color:#faa">”</span>},
+</span></span><span style="display:flex;"><span>    {<span style="color:#f00;background-color:#faa">“</span>in3<span style="color:#f00;background-color:#faa">”</span>, <span style="color:#f00;background-color:#faa">“</span>exp3<span style="color:#f00;background-color:#faa">”</span>},
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">TestFunction</span>(t *testing.T) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i, tt := <span style="color:#00a">range</span> tests {
+</span></span><span style="display:flex;"><span>        s := <span style="color:#0a0">FuncToBeTested</span>(tt.in)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> s != tt.out {
+</span></span><span style="display:flex;"><span>            t.<span style="color:#0a0">Errorf</span>(<span style="color:#f00;background-color:#faa">“</span>%d. %q =&gt; %q, wanted: %q<span style="color:#f00;background-color:#faa">”</span>, i, tt.in, s, tt.out)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果大部分函数都可以写成这种形式，那么写一个帮助函数 verify 对实际测试会很有帮助：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">verify</span>(t *testing.T, testnum <span style="color:#0aa">int</span>, testcase, input, output, expected <span style="color:#0aa">string</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> expected != output {
+</span></span><span style="display:flex;"><span>        t.<span style="color:#0a0">Errorf</span>(<span style="color:#f00;background-color:#faa">“</span>%d. %s with input = %s: output %s != %s<span style="color:#f00;background-color:#faa">”</span>, testnum, testcase, input, output, expected)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>TestFunction 则变为：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">TestFunction</span>(t *testing.T) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i, tt := <span style="color:#00a">range</span> tests {
+</span></span><span style="display:flex;"><span>        s := <span style="color:#0a0">FuncToBeTested</span>(tt.in)
+</span></span><span style="display:flex;"><span>        <span style="color:#0a0">verify</span>(t, i, <span style="color:#f00;background-color:#faa">“</span>FuncToBeTested: <span style="color:#f00;background-color:#faa">“</span>, tt.in, s, tt.out)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="性能调试分析并优化-go-程序">性能调试：分析并优化 Go 程序</h2>
+<h3 id="时间和内存消耗">时间和内存消耗</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#4c8317">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#4c8317"></span>/usr/bin/time -f <span style="color:#a50">&#39;%Uu %Ss %er %MkB %C&#39;</span> <span style="color:#a50">&#34;</span><span style="color:#a00">$@</span><span style="color:#a50">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="用-go-test-调试">用 go test 调试</h3>
+<p>cpuprofile 和 -memprofile 标志向指定文件写入 CPU 或 内存使用情况报告</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go <span style="color:#0aa">test</span> -x -v -cpuprofile=prof.out -file x_test.go
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="用-pprof-调试">用 pprof 调试</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> cpuprofile = flag.<span style="color:#0a0">String</span>(<span style="color:#a50">&#34;cpuprofile&#34;</span>, <span style="color:#a50">&#34;&#34;</span>, <span style="color:#a50">&#34;write cpu profile to file&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
+</span></span><span style="display:flex;"><span>    flag.<span style="color:#0a0">Parse</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> *cpuprofile != <span style="color:#a50">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>        f, err := os.<span style="color:#0a0">Create</span>(*cpuprofile)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>            log.<span style="color:#0a0">Fatal</span>(err)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        pprof.<span style="color:#0a0">StartCPUProfile</span>(f)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">defer</span> pprof.<span style="color:#0a0">StopCPUProfile</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行程序：<code>progexec -cpuprofile=progexec.prof</code></p>
+<p>使用gopprof工具查看：<code>gopprof progexec progexec.prof</code></p>
+<p>如果开启了 CPU 性能分析，Go 程序会以大约每秒 100 次的频率阻塞，并记录当前执行的 goroutine 栈上的程序计数器样本。</p>
+<p>此工具一些有趣的命令：</p>
+<ol>
+<li>topN:展示分析结果中最频繁的 N 份样本，top5 它会展示在程序运行期间调用最频繁的 5 个函数</li>
+<li>web 或 web 函数名：生成一份 SVG 格式的分析数据图表，并在网络浏览器中打开它，函数被表示成不同的矩形（被调用越多，矩形越大），箭头指示函数调用链</li>
+<li>list 函数名 或 weblist 函数名，展示对应函数名的代码行列表，第 2 列表示当前行执行消耗的时间，这样就很好地指出了运行过程中消耗最大的代码。需要<code>pprof.WriteHeapProfile(f)</code></li>
+</ol>
+<h2 id="覆盖率测试">覆盖率测试</h2>
+<p>首先，我们要确保所有的测试都正常通过：</p>
+<p>-coverprofile标志参数重新运行测试</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ go <span style="color:#0aa">test</span> -run=Coverage -coverprofile=c.out gopl.io/ch7/eval
+</span></span><span style="display:flex;"><span>ok      gopl.io/ch7/eval         0.032s      coverage: 68.5% of statements
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看HTML报告</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ go tool cover -html=c.out
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" data-title="golang-学习笔记-错误处理与测试" data-hashtags="go学习笔记"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" data-hashtag="go学习笔记"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" data-title="golang-学习笔记-错误处理与测试"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" data-title="golang-学习笔记-错误处理与测试"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" data-title="golang-学习笔记-错误处理与测试"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">go学习笔记</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" class="prev" rel="prev" title="golang-学习笔记-读写数据"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-学习笔记-读写数据</a>
+            <a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/goroutines%E5%92%8Cchannels/" class="next" rel="next" title="golang-学习笔记-Goroutines和Channels">golang-学习笔记-Goroutines和Channels<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-11T19:40:21+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"golang-学习笔记-错误处理与测试"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

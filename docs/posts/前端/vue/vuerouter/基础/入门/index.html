@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-Router-基础-入门 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-Router-基础-入门" />
+<meta property="og:description" content="本系列是作者在跟着vue-router官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 用 Vue &#43; Vue Router 创建单页应用非常简单：通过 V" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%85%A5%E9%97%A8/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-16T16:54:12+08:00" />
+<meta property="article:modified_time" content="2022-10-16T16:54:12+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-Router-基础-入门"/>
+<meta name="twitter:description" content="本系列是作者在跟着vue-router官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 用 Vue &#43; Vue Router 创建单页应用非常简单：通过 V"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%85%A5%E9%97%A8/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E4%BB%8B%E7%BB%8D/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-Router-基础-入门",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/vuerouter\/%E5%9F%BA%E7%A1%80\/%E5%85%A5%E9%97%A8\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  810 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/vuerouter\/%E5%9F%BA%E7%A1%80\/%E5%85%A5%E9%97%A8\/","datePublished": "2022-10-16T16:54:12+08:00","dateModified": "2022-10-16T16:54:12+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-Router-基础-入门</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;810 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#html">HTML</a>
+      <ul>
+        <li><a href="#router-link">router-link</a></li>
+        <li><a href="#router-view">router-view</a></li>
+      </ul>
+    </li>
+    <li><a href="#javascript">JavaScript</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://router.vuejs.org/zh/introduction.html" target="_blank" rel="noopener noreffer ">vue-router官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<p>用 Vue + Vue Router 创建单页应用非常简单：通过 Vue.js，我们已经用组件组成了我们的应用。当加入 Vue Router 时，我们需要做的就是将我们的组件映射到路由上，让 Vue Router 知道在哪里渲染它们。下面是一个基本的例子：</p>
+<h2 id="html">HTML</h2>
+<pre tabindex="0"><code>&lt;script src=&#34;https://unpkg.com/vue@3&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://unpkg.com/vue-router@4&#34;&gt;&lt;/script&gt;
+
+&lt;div id=&#34;app&#34;&gt;
+  &lt;h1&gt;Hello App!&lt;/h1&gt;
+  &lt;p&gt;
+    &lt;!--使用 router-link 组件进行导航 --&gt;
+    &lt;!--通过传递 `to` 来指定链接 --&gt;
+    &lt;!--`&lt;router-link&gt;` 将呈现一个带有正确 `href` 属性的 `&lt;a&gt;` 标签--&gt;
+    &lt;router-link to=&#34;/&#34;&gt;Go to Home&lt;/router-link&gt;
+    &lt;router-link to=&#34;/about&#34;&gt;Go to About&lt;/router-link&gt;
+  &lt;/p&gt;
+  &lt;!-- 路由出口 --&gt;
+  &lt;!-- 路由匹配到的组件将渲染在这里 --&gt;
+  &lt;router-view&gt;&lt;/router-view&gt;
+&lt;/div&gt;
+</code></pre><h3 id="router-link">router-link</h3>
+<p>请注意，我们没有使用常规的 a 标签，而是使用一个自定义组件 router-link 来创建链接。这使得 Vue Router 可以在不重新加载页面的情况下更改 URL，处理 URL 的生成以及编码。我们将在后面看到如何从这些功能中获益。</p>
+<h3 id="router-view">router-view</h3>
+<p>router-view 将显示与 url 对应的组件。你可以把它放在任何地方，以适应你的布局。</p>
+<h2 id="javascript">JavaScript</h2>
+<pre tabindex="0"><code>// 1. 定义路由组件.
+// 也可以从其他文件导入
+const Home = { template: &#39;&lt;div&gt;Home&lt;/div&gt;&#39; }
+const About = { template: &#39;&lt;div&gt;About&lt;/div&gt;&#39; }
+
+// 2. 定义一些路由
+// 每个路由都需要映射到一个组件。
+// 我们后面再讨论嵌套路由。
+const routes = [
+  { path: &#39;/&#39;, component: Home },
+  { path: &#39;/about&#39;, component: About },
+]
+
+// 3. 创建路由实例并传递 `routes` 配置
+// 你可以在这里输入更多的配置，但我们在这里
+// 暂时保持简单
+const router = VueRouter.createRouter({
+  // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
+  history: VueRouter.createWebHashHistory(),
+  routes, // `routes: routes` 的缩写
+})
+
+// 5. 创建并挂载根实例
+const app = Vue.createApp({})
+//确保 _use_ 路由实例使
+//整个应用支持路由。
+app.use(router)
+
+app.mount(&#39;#app&#39;)
+
+// 现在，应用已经启动了！
+</code></pre><p>通过调用 app.use(router)，我们可以在任意组件中以 this.$router 的形式访问它，并且以 this.$route 的形式访问当前路由：</p>
+<pre tabindex="0"><code>// Home.vue
+export default {
+  computed: {
+    username() {
+      // 我们很快就会看到 `params` 是什么
+      return this.$route.params.username
+    },
+  },
+  methods: {
+    goToDashboard() {
+      if (isAuthenticated) {
+        this.$router.push(&#39;/dashboard&#39;)
+      } else {
+        this.$router.push(&#39;/login&#39;)
+      }
+    },
+  },
+}
+</code></pre><p>要在 setup 函数中访问路由，请调用 useRouter 或 useRoute 函数。我们将在 Composition API 中了解更多信息。</p>
+<p>在整个文档中，我们会经常使用 router 实例，请记住，this.$router 与直接使用通过 createRouter 创建的 router 实例完全相同。我们使用 this.$router 的原因是，我们不想在每个需要操作路由的组件中都导入路由。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%85%A5%E9%97%A8/" data-title="Vue-Router-基础-入门" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%85%A5%E9%97%A8/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%85%A5%E9%97%A8/" data-title="Vue-Router-基础-入门"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%85%A5%E9%97%A8/" data-title="Vue-Router-基础-入门"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%85%A5%E9%97%A8/" data-title="Vue-Router-基础-入门"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E4%BB%8B%E7%BB%8D/" class="prev" rel="prev" title="Vue-Router-介绍"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-Router-介绍</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D/" class="next" rel="next" title="Vue-Router-基础-带参数的动态路由匹配">Vue-Router-基础-带参数的动态路由匹配<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-16T16:54:12+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Vue-Router-基础-入门"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

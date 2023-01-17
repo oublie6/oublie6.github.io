@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>go第三方库-Swagger - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="go第三方库-Swagger" />
+<meta property="og:description" content="godoc 本文为作者在goswag官网学习时做的笔记 快速开始 将注释添加到API源代码中，请参阅声明性注释格式。 使用如下命令下载swag：$ go install github.com/swaggo/swag/cmd/swag@latest 在包" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/swagger/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-21T14:11:22+08:00" />
+<meta property="article:modified_time" content="2022-10-21T14:11:22+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="go第三方库-Swagger"/>
+<meta name="twitter:description" content="godoc 本文为作者在goswag官网学习时做的笔记 快速开始 将注释添加到API源代码中，请参阅声明性注释格式。 使用如下命令下载swag：$ go install github.com/swaggo/swag/cmd/swag@latest 在包"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/swagger/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/viper/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/go-generate/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "go第三方库-Swagger",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/swagger\/"
+        },"genre": "posts","keywords": "go第三方库","wordcount":  1366 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/swagger\/","datePublished": "2022-10-21T14:11:22+08:00","dateModified": "2022-10-21T14:11:22+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go第三方库-Swagger</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-21">2022-10-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1366 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#快速开始">快速开始</a></li>
+    <li><a href="#swag-cli">swag cli</a></li>
+    <li><a href="#支持的web框架">支持的Web框架</a></li>
+    <li><a href="#如何与gin集成">如何与Gin集成</a></li>
+    <li><a href="#格式化说明">格式化说明</a></li>
+    <li><a href="#开发现状">开发现状</a></li>
+    <li><a href="#声明式注释格式">声明式注释格式</a></li>
+    <li><a href="#通用api信息">通用API信息</a>
+      <ul>
+        <li><a href="#使用markdown描述">使用Markdown描述</a></li>
+      </ul>
+    </li>
+    <li><a href="#api操作">API操作</a></li>
+    <li><a href="#mime类型">Mime类型</a></li>
+    <li><a href="#参数类型">参数类型</a></li>
+    <li><a href="#数据类型">数据类型</a></li>
+    <li><a href="#安全性">安全性</a></li>
+    <li><a href="#属性">属性</a>
+      <ul>
+        <li><a href="#当前可用的">当前可用的</a></li>
+        <li><a href="#进一步的">进一步的</a></li>
+      </ul>
+    </li>
+    <li><a href="#样例">样例</a>
+      <ul>
+        <li><a href="#多行的描述">多行的描述</a></li>
+        <li><a href="#用户自定义的具有数组类型的结构">用户自定义的具有数组类型的结构</a></li>
+        <li><a href="#响应对象中的模型组合">响应对象中的模型组合</a></li>
+        <li><a href="#使用多路径参数">使用多路径参数</a></li>
+        <li><a href="#结构体的示例值">结构体的示例值</a></li>
+        <li><a href="#结构体描述">结构体描述</a></li>
+        <li><a href="#使用swaggertype标签更改字段类型">使用swaggertype标签更改字段类型</a></li>
+        <li><a href="#使用swaggerignore标签排除字段">使用swaggerignore标签排除字段</a></li>
+        <li><a href="#将扩展信息添加到结构字段">将扩展信息添加到结构字段</a></li>
+        <li><a href="#对展示的模型重命名">对展示的模型重命名</a></li>
+        <li><a href="#如何使用安全性注释">如何使用安全性注释</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
+<p>本文为作者在<a href="https://github.com/swaggo/swag/blob/master/README_zh-CN.md" target="_blank" rel="noopener noreffer ">goswag官网</a>学习时做的笔记</p>
+<h2 id="快速开始">快速开始</h2>
+<ol>
+<li>将注释添加到API源代码中，请参阅声明性注释格式。</li>
+<li>使用如下命令下载swag：<code>$ go install github.com/swaggo/swag/cmd/swag@latest</code></li>
+<li>在包含main.go文件的项目根目录运行<code>swag init</code>。这将会解析注释并生成需要的文件（docs文件夹和docs/docs.go）。确保导入了生成的docs/docs.go文件，这样特定的配置文件才会被初始化。如果通用API注释没有写在main.go中，可以使用-g标识符来告知swag。<code>swag init -g http/api.go</code></li>
+<li>(可选) 使用fmt格式化 SWAG 注释。(请先升级到最新版本) <code>swag fmt</code></li>
+</ol>
+<h2 id="swag-cli">swag cli</h2>
+<p>见官网</p>
+<h2 id="支持的web框架">支持的Web框架</h2>
+<ul>
+<li>gin</li>
+<li>echo</li>
+<li>buffalo</li>
+<li>net/http</li>
+<li>net/http</li>
+<li>gorilla/mux</li>
+<li>go-chi/chi</li>
+<li>flamingo</li>
+<li>fiber</li>
+<li>atreugo</li>
+</ul>
+<h2 id="如何与gin集成">如何与Gin集成</h2>
+<ol>
+<li>使用swag init生成Swagger2.0文档后，导入如下代码包：</li>
+</ol>
+<pre tabindex="0"><code>import &#34;github.com/swaggo/gin-swagger&#34; // gin-swagger middleware
+import &#34;github.com/swaggo/files&#34; // swagger embed files
+</code></pre><ol start="2">
+<li>在main.go源代码中添加通用的API注释：</li>
+</ol>
+<pre tabindex="0"><code>// @title           Swagger Example API
+// @version         1.0
+// @description     This is a sample server celler server.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /api/v1
+
+// @securityDefinitions.basic  BasicAuth
+func main() {
+    r := gin.Default()
+
+    c := controller.NewController()
+
+    v1 := r.Group(&#34;/api/v1&#34;)
+    {
+        accounts := v1.Group(&#34;/accounts&#34;)
+        {
+            accounts.GET(&#34;:id&#34;, c.ShowAccount)
+            accounts.GET(&#34;&#34;, c.ListAccounts)
+            accounts.POST(&#34;&#34;, c.AddAccount)
+            accounts.DELETE(&#34;:id&#34;, c.DeleteAccount)
+            accounts.PATCH(&#34;:id&#34;, c.UpdateAccount)
+            accounts.POST(&#34;:id/images&#34;, c.UploadAccountImage)
+        }
+    //...
+    }
+    r.GET(&#34;/swagger/*any&#34;, ginSwagger.WrapHandler(swaggerFiles.Handler))
+    r.Run(&#34;:8080&#34;)
+}
+//...
+</code></pre><p>此外，可以动态设置一些通用的API信息。生成的代码包docs导出SwaggerInfo变量，使用该变量可以通过编码的方式设置标题、描述、版本、主机和基础路径。使用Gin的示例：</p>
+<pre tabindex="0"><code>package main
+
+import (
+    &#34;github.com/gin-gonic/gin&#34;
+    &#34;github.com/swaggo/files&#34;
+    &#34;github.com/swaggo/gin-swagger&#34;
+
+    &#34;./docs&#34; // docs is generated by Swag CLI, you have to import it.
+)
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+func main() {
+
+    // programatically set swagger info
+    docs.SwaggerInfo.Title = &#34;Swagger Example API&#34;
+    docs.SwaggerInfo.Description = &#34;This is a sample server Petstore server.&#34;
+    docs.SwaggerInfo.Version = &#34;1.0&#34;
+    docs.SwaggerInfo.Host = &#34;petstore.swagger.io&#34;
+    docs.SwaggerInfo.BasePath = &#34;/v2&#34;
+    docs.SwaggerInfo.Schemes = []string{&#34;http&#34;, &#34;https&#34;}
+
+    r := gin.New()
+
+    // use ginSwagger middleware to serve the API docs
+    r.GET(&#34;/swagger/*any&#34;, ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+    r.Run()
+}
+</code></pre><ol start="3">
+<li>在controller代码中添加API操作注释：</li>
+</ol>
+<pre tabindex="0"><code>package controller
+
+import (
+    &#34;fmt&#34;
+    &#34;net/http&#34;
+    &#34;strconv&#34;
+
+    &#34;github.com/gin-gonic/gin&#34;
+    &#34;github.com/swaggo/swag/example/celler/httputil&#34;
+    &#34;github.com/swaggo/swag/example/celler/model&#34;
+)
+
+// ShowAccount godoc
+// @Summary      Show an account
+// @Description  get string by ID
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        id   path      int  true  &#34;Account ID&#34;
+// @Success      200  {object}  model.Account
+// @Failure      400  {object}  httputil.HTTPError
+// @Failure      404  {object}  httputil.HTTPError
+// @Failure      500  {object}  httputil.HTTPError
+// @Router       /accounts/{id} [get]
+func (c *Controller) ShowAccount(ctx *gin.Context) {
+  id := ctx.Param(&#34;id&#34;)
+  aid, err := strconv.Atoi(id)
+  if err != nil {
+    httputil.NewError(ctx, http.StatusBadRequest, err)
+    return
+  }
+  account, err := model.AccountOne(aid)
+  if err != nil {
+    httputil.NewError(ctx, http.StatusNotFound, err)
+    return
+  }
+  ctx.JSON(http.StatusOK, account)
+}
+
+// ListAccounts godoc
+// @Summary      List accounts
+// @Description  get accounts
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        q    query     string  false  &#34;name search by q&#34;  Format(email)
+// @Success      200  {array}   model.Account
+// @Failure      400  {object}  httputil.HTTPError
+// @Failure      404  {object}  httputil.HTTPError
+// @Failure      500  {object}  httputil.HTTPError
+// @Router       /accounts [get]
+func (c *Controller) ListAccounts(ctx *gin.Context) {
+  q := ctx.Request.URL.Query().Get(&#34;q&#34;)
+  accounts, err := model.AccountsAll(q)
+  if err != nil {
+    httputil.NewError(ctx, http.StatusNotFound, err)
+    return
+  }
+  ctx.JSON(http.StatusOK, accounts)
+}
+//...
+</code></pre><pre tabindex="0"><code>swag init
+</code></pre><ol start="4">
+<li>运行程序，然后在浏览器中访问 http://localhost:8080/swagger/index.html 。将看到Swagger 2.0 Api文档，如下所示：</li>
+</ol>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/swaggo/swag/master/assets/swagger-image.png"
+        data-srcset="https://raw.githubusercontent.com/swaggo/swag/master/assets/swagger-image.png, https://raw.githubusercontent.com/swaggo/swag/master/assets/swagger-image.png 1.5x, https://raw.githubusercontent.com/swaggo/swag/master/assets/swagger-image.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/swaggo/swag/master/assets/swagger-image.png"
+        title="https://raw.githubusercontent.com/swaggo/swag/master/assets/swagger-image.png" /></div>
+<h2 id="格式化说明">格式化说明</h2>
+<p>可以针对Swag的注释自动格式化，就像go fmt。
+此处查看格式化结果 here.</p>
+<p>示例：</p>
+<pre tabindex="0"><code>swag fmt
+</code></pre><p>排除目录（不扫描）示例：</p>
+<pre tabindex="0"><code>swag fmt -d ./ --exclude ./internal
+</code></pre><h2 id="开发现状">开发现状</h2>
+<p>见官网</p>
+<h2 id="声明式注释格式">声明式注释格式</h2>
+<p>见官网</p>
+<h2 id="通用api信息">通用API信息</h2>
+<p>见官网</p>
+<h3 id="使用markdown描述">使用Markdown描述</h3>
+<p>如果文档中的短字符串不足以完整表达，或者需要展示图片，代码示例等类似的内容，则可能需要使用Markdown描述。要使用Markdown描述，请使用一下注释。</p>
+<p>见官网</p>
+<h2 id="api操作">API操作</h2>
+<p>见官网</p>
+<h2 id="mime类型">Mime类型</h2>
+<p>swag 接受所有格式正确的MIME类型, 即使匹配 <em>/</em>。除此之外，swag还接受某些MIME类型的别名，如下所示：</p>
+<p>见官网</p>
+<h2 id="参数类型">参数类型</h2>
+<ul>
+<li>query</li>
+<li>path</li>
+<li>header</li>
+<li>body</li>
+<li>formData</li>
+</ul>
+<h2 id="数据类型">数据类型</h2>
+<ul>
+<li>string (string)</li>
+<li>integer (int, uint, uint32, uint64)</li>
+<li>number (float32)</li>
+<li>boolean (bool)</li>
+<li>user defined struct</li>
+</ul>
+<h2 id="安全性">安全性</h2>
+<p>见官网</p>
+<h2 id="属性">属性</h2>
+<p>见官网</p>
+<h3 id="当前可用的">当前可用的</h3>
+<p>见官网</p>
+<h3 id="进一步的">进一步的</h3>
+<p>见官网</p>
+<h2 id="样例">样例</h2>
+<h3 id="多行的描述">多行的描述</h3>
+<p>可以在常规api描述或路由定义中添加跨越多行的描述，如下所示：</p>
+<pre tabindex="0"><code>// @description This is the first line
+// @description This is the second line
+// @description And so forth.
+</code></pre><h3 id="用户自定义的具有数组类型的结构">用户自定义的具有数组类型的结构</h3>
+<pre tabindex="0"><code>// @Success 200 {array} model.Account &lt;-- This is a user defined struct.
+</code></pre><pre tabindex="0"><code>package model
+
+type Account struct {
+    ID   int    `json:&#34;id&#34; example:&#34;1&#34;`
+    Name string `json:&#34;name&#34; example:&#34;account name&#34;`
+}
+</code></pre><h3 id="响应对象中的模型组合">响应对象中的模型组合</h3>
+<h3 id="使用多路径参数">使用多路径参数</h3>
+<h3 id="结构体的示例值">结构体的示例值</h3>
+<h3 id="结构体描述">结构体描述</h3>
+<h3 id="使用swaggertype标签更改字段类型">使用swaggertype标签更改字段类型</h3>
+<h3 id="使用swaggerignore标签排除字段">使用swaggerignore标签排除字段</h3>
+<h3 id="将扩展信息添加到结构字段">将扩展信息添加到结构字段</h3>
+<h3 id="对展示的模型重命名">对展示的模型重命名</h3>
+<h3 id="如何使用安全性注释">如何使用安全性注释</h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/swagger/" data-title="go第三方库-Swagger" data-hashtags="go第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/swagger/" data-hashtag="go第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/swagger/" data-title="go第三方库-Swagger"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/swagger/" data-title="go第三方库-Swagger"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/swagger/" data-title="go第三方库-Swagger"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">go第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/viper/" class="prev" rel="prev" title="go第三方库-viper"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>go第三方库-viper</a>
+            <a href="/posts/golang/%E6%9D%82%E8%AE%B0/go-generate/" class="next" rel="next" title="golang-杂记-Go Generate">golang-杂记-Go Generate<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d8d1a4.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-21T14:11:22+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"go第三方库-Swagger"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数据库-redis-小林coding-面试篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="数据库-redis-小林coding-面试篇" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 Redis 是一种基于内存的数据库，读写速度非常快，常用于缓存，消息队列、分布" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%9D%A2%E8%AF%95%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-22T11:12:34+08:00" />
+<meta property="article:modified_time" content="2022-12-22T11:12:34+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="数据库-redis-小林coding-面试篇"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 Redis 是一种基于内存的数据库，读写速度非常快，常用于缓存，消息队列、分布"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%9D%A2%E8%AF%95%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E6%97%A5%E5%BF%97%E7%AF%87/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据库-redis-小林coding-面试篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E9%9D%A2%E8%AF%95%E7%AF%87\/"
+        },"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  842 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E9%9D%A2%E8%AF%95%E7%AF%87\/","datePublished": "2022-12-22T11:12:34+08:00","dateModified": "2022-12-22T11:12:34+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-redis-小林coding-面试篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;842 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#redis-与-memcached-区别">Redis 与 Memcached 区别</a></li>
+    <li><a href="#为什么用-redis-作为-mysql-的缓存">为什么用 Redis 作为 MySQL 的缓存</a></li>
+    <li><a href="#redis-数据结构">Redis 数据结构</a></li>
+    <li><a href="#redis-线程模型">Redis 线程模型</a>
+      <ul>
+        <li><a href="#redis-程序是单线程吗">Redis 程序是单线程吗？</a></li>
+        <li><a href="#redis-为什么这么快">Redis 为什么这么快</a></li>
+        <li><a href="#redis-60-之后为什么引入了多线程">Redis 6.0 之后为什么引入了多线程</a></li>
+      </ul>
+    </li>
+    <li><a href="#redis-持久化">Redis 持久化</a>
+      <ul>
+        <li><a href="#aof-日志">AOF 日志</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/redis/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<p>Redis 是一种基于内存的数据库，读写速度非常快，常用于缓存，消息队列、分布式锁等场景。</p>
+<p>单线程负责保证操作都是原子性</p>
+<h2 id="redis-与-memcached-区别">Redis 与 Memcached 区别</h2>
+<ul>
+<li>Redis 支持的数据类型更丰富</li>
+<li>Redis 支持数据的持久化</li>
+<li>Redis 原生支持集群模式</li>
+<li>Redis 支持发布订阅模型、Lua 脚本、事务等功能</li>
+</ul>
+<h2 id="为什么用-redis-作为-mysql-的缓存">为什么用 Redis 作为 MySQL 的缓存</h2>
+<ol>
+<li>Redis 具备高性能：基于内存</li>
+<li>Redis 具备高并发：单机QPS（Query Per Second，每秒钟处理完请求的次数）10w以上，单机mysql不到1w</li>
+</ol>
+<h2 id="redis-数据结构">Redis 数据结构</h2>
+<p>常见的有五种数据类型：</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/redis/%E5%85%AB%E8%82%A1%E6%96%87/key.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/redis/%E5%85%AB%E8%82%A1%E6%96%87/key.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/redis/%E5%85%AB%E8%82%A1%E6%96%87/key.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/redis/%E5%85%AB%E8%82%A1%E6%96%87/key.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/redis/%E5%85%AB%E8%82%A1%E6%96%87/key.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/redis/%E5%85%AB%E8%82%A1%E6%96%87/key.png" /></div>
+<p>底层实现</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/9fa26a74965efbf0f56b707a03bb9b7f.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/9fa26a74965efbf0f56b707a03bb9b7f.png, https://img-blog.csdnimg.cn/img_convert/9fa26a74965efbf0f56b707a03bb9b7f.png 1.5x, https://img-blog.csdnimg.cn/img_convert/9fa26a74965efbf0f56b707a03bb9b7f.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/9fa26a74965efbf0f56b707a03bb9b7f.png"
+        title="https://img-blog.csdnimg.cn/img_convert/9fa26a74965efbf0f56b707a03bb9b7f.png" /></div>
+<h2 id="redis-线程模型">Redis 线程模型</h2>
+<h3 id="redis-程序是单线程吗">Redis 程序是单线程吗？</h3>
+<p>Redis 单线程指的是「接收客户端请求-&gt;解析请求 -&gt;进行数据读写等操作-&gt;发送数据给客户端」这个过程是由一个线程（主线程）来完成的</p>
+<p>Redis 程序并不是单线程的，会启动后台线程完成关闭文件、AOF 刷盘、释放内存等任务</p>
+<h3 id="redis-为什么这么快">Redis 为什么这么快</h3>
+<ul>
+<li>大部分操作都在内存中完成，采用了高效的数据结构，Redis 瓶颈可能是机器的内存大小或者网络带宽，而并非 CPU</li>
+<li>单线程模型避免了多线程之间的竞争</li>
+<li>I/O 多路复用机制，一个线程处理多个 IO 流，减少开销</li>
+</ul>
+<h3 id="redis-60-之后为什么引入了多线程">Redis 6.0 之后为什么引入了多线程</h3>
+<p>Redis 的性能瓶颈有时会出现在网络 I/O 的处理上，使用多线程加速网络 I/O 的处理</p>
+<p>但是对于命令的执行，Redis 仍然使用单线程来处理</p>
+<p>引入的多线程 I/O 特性对性能提升至少是一倍以上</p>
+<p>Redis 6.0 版本之后，Redis 在启动的时候，默认情况下会创建 6 个线程：</p>
+<ul>
+<li>Redis-server ： Redis的主线程，主要负责执行命令</li>
+<li>bio_close_file、bio_aof_fsync、bio_lazy_free：三个后台线程，分别异步处理关闭文件任务、AOF刷盘任务、释放内存任务</li>
+<li>io_thd_1、io_thd_2、io_thd_3：三个 I/O 线程，io-threads 默认是 4 ，所以会启动 3（4-1）个 I/O 多线程，用来分担 Redis 网络 I/O 的压力</li>
+</ul>
+<h2 id="redis-持久化">Redis 持久化</h2>
+<ul>
+<li>AOF 日志：每执行一条写操作命令，就把该命令以追加的方式写入到一个文件里</li>
+<li>RDB 快照：将某一时刻的内存数据，以二进制的方式写入磁盘</li>
+<li>混合持久化方式：同时使用 AOF 和 RBD</li>
+</ul>
+<h3 id="aof-日志">AOF 日志</h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%9D%A2%E8%AF%95%E7%AF%87/" data-title="数据库-redis-小林coding-面试篇" data-hashtags="redis,小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%9D%A2%E8%AF%95%E7%AF%87/" data-hashtag="redis"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%9D%A2%E8%AF%95%E7%AF%87/" data-title="数据库-redis-小林coding-面试篇"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%9D%A2%E8%AF%95%E7%AF%87/" data-title="数据库-redis-小林coding-面试篇"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%9D%A2%E8%AF%95%E7%AF%87/" data-title="数据库-redis-小林coding-面试篇"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/redis/">redis</a>,&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E6%97%A5%E5%BF%97%E7%AF%87/" class="prev" rel="prev" title="数据库-mysql-小林coding-日志篇"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据库-mysql-小林coding-日志篇</a>
+            <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%AF%87/" class="next" rel="next" title="数据库-redis-小林coding-数据类型篇">数据库-redis-小林coding-数据类型篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/86ccfb.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-22T11:12:34+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"数据库-redis-小林coding-面试篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

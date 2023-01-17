@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-深入组件-依赖注入 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-深入组件-依赖注入" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 Prop 逐级透传问题 通常情况下，当我们需要从父组件向子组件" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-16T15:15:41+08:00" />
+<meta property="article:modified_time" content="2022-10-16T15:15:41+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-深入组件-依赖注入"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 Prop 逐级透传问题 通常情况下，当我们需要从父组件向子组件"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E6%8F%92%E6%A7%BDslots/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-深入组件-依赖注入",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6\/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  1690 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6\/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5\/","datePublished": "2022-10-16T15:15:41+08:00","dateModified": "2022-10-16T15:15:41+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-深入组件-依赖注入</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1690 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#prop-逐级透传问题">Prop 逐级透传问题</a></li>
+    <li><a href="#provide-提供">Provide (提供)</a></li>
+    <li><a href="#应用层-provide">应用层 Provide</a></li>
+    <li><a href="#inject-注入">Inject (注入)</a>
+      <ul>
+        <li><a href="#注入别名">注入别名</a></li>
+        <li><a href="#注入默认值">注入默认值</a></li>
+      </ul>
+    </li>
+    <li><a href="#和响应式数据配合使用">和响应式数据配合使用</a></li>
+    <li><a href="#使用-symbol-作注入名">使用 Symbol 作注入名</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<h2 id="prop-逐级透传问题">Prop 逐级透传问题</h2>
+<p>通常情况下，当我们需要从父组件向子组件传递数据时，会使用 props。想象一下这样的结构：有一些多层级嵌套的组件，形成了一颗巨大的组件树，而某个深层的子组件需要一个较远的祖先组件中的部分数据。在这种情况下，如果仅使用 props 则必须将其沿着组件链逐级传递下去，这会非常麻烦：</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/prop-drilling.11201220.png"
+        data-srcset="https://cn.vuejs.org/assets/prop-drilling.11201220.png, https://cn.vuejs.org/assets/prop-drilling.11201220.png 1.5x, https://cn.vuejs.org/assets/prop-drilling.11201220.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/prop-drilling.11201220.png"
+        title="https://cn.vuejs.org/assets/prop-drilling.11201220.png" /></div>
+<p>注意，虽然这里的 <code>&lt;Footer&gt; </code>组件可能根本不关心这些 props，但为了使<code>&lt;DeepChild&gt;</code>能访问到它们，仍然需要定义并向下传递。如果组件链路非常长，可能会影响到更多这条路上的组件。这一问题被称为“prop 逐级透传”，显然是我们希望尽量避免的情况。</p>
+<p>provide 和 inject 可以帮助我们解决这一问题。 [1] 一个父组件相对于其所有的后代组件，会作为依赖提供者。任何后代的组件树，无论层级有多深，都可以注入由父组件提供给整条链路的依赖。</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/provide-inject.3e0505e4.png"
+        data-srcset="https://cn.vuejs.org/assets/provide-inject.3e0505e4.png, https://cn.vuejs.org/assets/provide-inject.3e0505e4.png 1.5x, https://cn.vuejs.org/assets/provide-inject.3e0505e4.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/provide-inject.3e0505e4.png"
+        title="https://cn.vuejs.org/assets/provide-inject.3e0505e4.png" /></div>
+<h2 id="provide-提供">Provide (提供)</h2>
+<p>要为组件后代提供数据，需要使用到 provide 选项：</p>
+<pre tabindex="0"><code>export default {
+  provide: {
+    message: &#39;hello!&#39;
+  }
+}
+</code></pre><p>对于 provide 对象上的每一个属性，后代组件会用其 key 为注入名查找期望注入的值，属性的值就是要提供的数据。</p>
+<p>如果我们需要提供依赖当前组件实例的状态 (比如那些由 data() 定义的数据属性)，那么可以以函数形式使用 provide：</p>
+<pre tabindex="0"><code>export default {
+  data() {
+    return {
+      message: &#39;hello!&#39;
+    }
+  },
+  provide() {
+    // 使用函数的形式，可以访问到 `this`
+    return {
+      message: this.message
+    }
+  }
+}
+</code></pre><p>然而，请注意这不会使注入保持响应性。我们会在后续小节中讨论如何让注入转变为响应式。</p>
+<h2 id="应用层-provide">应用层 Provide</h2>
+<p>除了在一个组件中提供依赖，我们还可以在整个应用层面提供依赖：</p>
+<pre tabindex="0"><code>import { createApp } from &#39;vue&#39;
+
+const app = createApp({})
+
+app.provide(/* 注入名 */ &#39;message&#39;, /* 值 */ &#39;hello!&#39;)
+</code></pre><p>在应用级别提供的数据在该应用内的所有组件中都可以注入。这在你编写插件时会特别有用，因为插件一般都不会使用组件形式来提供值。</p>
+<h2 id="inject-注入">Inject (注入)</h2>
+<p>要注入上层组件提供的数据，需使用 inject 选项来声明：</p>
+<pre tabindex="0"><code>export default {
+  inject: [&#39;message&#39;],
+  created() {
+    console.log(this.message) // injected value
+  }
+}
+</code></pre><p>注入会在组件自身的状态之前被解析，因此你可以在 data() 中访问到注入的属性：</p>
+<pre tabindex="0"><code>export default {
+  inject: [&#39;message&#39;],
+  data() {
+    return {
+      // 基于注入值的初始数据
+      fullMessage: this.message
+    }
+  }
+}
+</code></pre><h3 id="注入别名">注入别名</h3>
+<p>当以数组形式使用 inject，注入的属性会以同名的 key 暴露到组件实例上。在上面的例子中，提供的属性名为 &ldquo;message&rdquo;，注入后以 this.message 的形式暴露。访问的本地属性名和注入名是相同的。</p>
+<p>如果我们想要用一个不同的本地属性名注入该属性，我们需要在 inject 选项的属性上使用对象的形式：</p>
+<pre tabindex="0"><code>export default {
+  inject: {
+    /* 本地属性名 */ localMessage: {
+      from: /* 注入来源名 */ &#39;message&#39;
+    }
+  }
+</code></pre><p>这里，组件本地化了原注入名 &ldquo;message&rdquo; 所提供的的属性，并将其暴露为 this.localMessage。</p>
+<h3 id="注入默认值">注入默认值</h3>
+<p>默认情况下，inject 假设传入的注入名会被某个祖先链上的组件提供。如果该注入名的确没有任何组件提供，则会抛出一个运行时警告。</p>
+<p>如果在注入一个值时不要求必须有提供者，那么我们应该声明一个默认值，和 props 类似：</p>
+<pre tabindex="0"><code>export default {
+  // 当声明注入的默认值时
+  // 必须使用对象形式
+  inject: {
+    message: {
+      from: &#39;message&#39;, // 当与原注入名同名时，这个属性是可选的
+      default: &#39;default value&#39;
+    },
+    user: {
+      // 对于非基础类型数据，如果创建开销比较大，或是需要确保每个组件实例
+      // 需要独立数据的，请使用工厂函数
+      default: () =&gt; ({ name: &#39;John&#39; })
+    }
+  }
+</code></pre><h2 id="和响应式数据配合使用">和响应式数据配合使用</h2>
+<p>为保证注入方和供给方之间的响应性链接，我们需要使用 computed() 函数提供一个计算属性：</p>
+<pre tabindex="0"><code>import { computed } from &#39;vue&#39;
+
+export default {
+  data() {
+    return {
+      message: &#39;hello!&#39;
+    }
+  },
+  provide() {
+    return {
+      // 显式提供一个计算属性
+      message: computed(() =&gt; this.message)
+    }
+  }
+}
+</code></pre><p>computed() 函数常用于组合式 API 风格的组件中，但它同样还可以用于补充选项式 API 风格的某些用例。你可以通过阅读响应式系统基础和计算属性两个章节了解更多组合式的 API 风格。</p>
+<p>上面的用例需要设置 app.config.unwrapInjectedRef = true 以保证注入会自动解包这个计算属性。这将会在 Vue 3.3 后成为一个默认行为，而我们暂时在此告知此项配置以避免后续升级对代码的破坏性。在 3.3 后就不需要这样做了。</p>
+<h2 id="使用-symbol-作注入名">使用 Symbol 作注入名</h2>
+<p>至此，我们已经了解了如何使用字符串作为注入名。但如果你正在构建大型的应用，包含非常多的依赖提供，或者你正在编写提供给其他开发者使用的组件库，建议最好使用 Symbol 来作为注入名以避免潜在的冲突。</p>
+<p>我们通常推荐在一个单独的文件中导出这些注入名 Symbol：</p>
+<pre tabindex="0"><code>// keys.js
+export const myInjectionKey = Symbol()
+</code></pre><pre tabindex="0"><code>// 在供给方组件中
+import { myInjectionKey } from &#39;./keys.js&#39;
+
+export default {
+  provide() {
+    return {
+      [myInjectionKey]: {
+        /* 要提供的数据 */
+      }
+    }
+  }
+}
+</code></pre><pre tabindex="0"><code>// 注入方组件
+import { myInjectionKey } from &#39;./keys.js&#39;
+
+export default {
+  inject: {
+    injected: { from: myInjectionKey }
+  }
+}
+</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" data-title="Vue-深入组件-依赖注入" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" data-title="Vue-深入组件-依赖注入"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" data-title="Vue-深入组件-依赖注入"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" data-title="Vue-深入组件-依赖注入"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E6%8F%92%E6%A7%BDslots/" class="prev" rel="prev" title="Vue-深入组件-插槽Slots"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-深入组件-插槽Slots</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6/" class="next" rel="next" title="Vue-深入组件-异步组件">Vue-深入组件-异步组件<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/86ccfb.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

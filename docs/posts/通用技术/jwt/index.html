@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>通用技术-Jwt - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="通用技术-Jwt" />
+<meta property="og:description" content="本文来源于阮一峰老师的jwt Token教程 JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案 跨域认证的问题 互联网服务离不开用户认证。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/jwt/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-22T08:46:22+08:00" />
+<meta property="article:modified_time" content="2022-10-22T08:46:22+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="通用技术-Jwt"/>
+<meta name="twitter:description" content="本文来源于阮一峰老师的jwt Token教程 JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案 跨域认证的问题 互联网服务离不开用户认证。"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/jwt/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/go-generate/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/go%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "通用技术-Jwt",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF\/jwt\/"
+        },"genre": "posts","keywords": "jwt","wordcount":  1781 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF\/jwt\/","datePublished": "2022-10-22T08:46:22+08:00","dateModified": "2022-10-22T08:46:22+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">通用技术-Jwt</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>通用技术</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-22">2022-10-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1781 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#跨域认证的问题">跨域认证的问题</a></li>
+    <li><a href="#jwt-的原理">JWT 的原理</a></li>
+    <li><a href="#jwt-的数据结构">JWT 的数据结构</a>
+      <ul>
+        <li><a href="#header">Header</a></li>
+        <li><a href="#payload">Payload</a></li>
+        <li><a href="#signature">Signature</a></li>
+        <li><a href="#base64url">Base64URL</a></li>
+      </ul>
+    </li>
+    <li><a href="#jwt-的使用方式">JWT 的使用方式</a></li>
+    <li><a href="#jwt-的几个特点">JWT 的几个特点</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文来源于<a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener noreffer ">阮一峰老师的jwt Token教程</a></p>
+<p>JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案</p>
+<h2 id="跨域认证的问题">跨域认证的问题</h2>
+<p>互联网服务离不开用户认证。一般流程是下面这样。</p>
+<ol>
+<li>用户向服务器发送用户名和密码。</li>
+<li>服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
+<li>服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
+<li>用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
+<li>服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
+</ol>
+<p>这种模式扩展性（scaling）不好。服务器集群，或者是跨域的服务导向架构要求 session 数据共享，每台服务器都能够读取 session。</p>
+<h2 id="jwt-的原理">JWT 的原理</h2>
+<p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户。</p>
+<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。</p>
+<p>服务器不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
+<h2 id="jwt-的数据结构">JWT 的数据结构</h2>
+<p>JWT是一个很长的字符串，中间用点（.）分隔成三个部分。JWT 内部是没有换行的。三个部分依次如下。</p>
+<ul>
+<li>Header（头部）</li>
+<li>Payload（负载）</li>
+<li>Signature（签名）</li>
+</ul>
+<p>写成一行，Header.Payload.Signature</p>
+<h3 id="header">Header</h3>
+<p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p>
+<pre tabindex="0"><code>{
+  &#34;alg&#34;: &#34;HS256&#34;,
+  &#34;typ&#34;: &#34;JWT&#34;
+}
+</code></pre><p>上面代码中，alg属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；typ属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。</p>
+<p>最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p>
+<h3 id="payload">Payload</h3>
+<p>Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
+<ul>
+<li>iss (issuer)：签发人</li>
+<li>exp (expiration time)：过期时间</li>
+<li>sub (subject)：主题</li>
+<li>aud (audience)：受众</li>
+<li>nbf (Not Before)：生效时间</li>
+<li>iat (Issued At)：签发时间</li>
+<li>jti (JWT ID)：编号</li>
+</ul>
+<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
+<pre tabindex="0"><code>{
+  &#34;sub&#34;: &#34;1234567890&#34;,
+  &#34;name&#34;: &#34;John Doe&#34;,
+  &#34;admin&#34;: true
+
+
+
+}
+</code></pre><p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。</p>
+<p>这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p>
+<h3 id="signature">Signature</h3>
+<p>Signature 部分是对前两部分的签名，防止数据篡改。</p>
+<p>首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</p>
+<pre tabindex="0"><code>HMACSHA256(
+  base64UrlEncode(header) + &#34;.&#34; +
+  base64UrlEncode(payload),
+  secret)
+</code></pre><p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用&quot;点&quot;（.）分隔，就可以返回给用户。</p>
+<h3 id="base64url">Base64URL</h3>
+<p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。</p>
+<p>JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符+、/和=，在 URL 里面有特殊含义，所以要被替换掉：=被省略、+替换成-，/替换成_ 。这就是 Base64URL 算法。</p>
+<h2 id="jwt-的使用方式">JWT 的使用方式</h2>
+<p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
+<pre tabindex="0"><code>Authorization: Bearer &lt;token&gt;
+</code></pre><p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
+<h2 id="jwt-的几个特点">JWT 的几个特点</h2>
+<ol>
+<li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</li>
+<li>JWT 不加密的情况下，不能将秘密数据写入 JWT。</li>
+<li>JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。</li>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。</li>
+<li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
+<li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/jwt/" data-title="通用技术-Jwt" data-hashtags="jwt"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/jwt/" data-hashtag="jwt"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/jwt/" data-title="通用技术-Jwt"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/jwt/" data-title="通用技术-Jwt"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/jwt/" data-title="通用技术-Jwt"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/jwt/">jwt</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E6%9D%82%E8%AE%B0/go-generate/" class="prev" rel="prev" title="golang-杂记-Go Generate"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-杂记-Go Generate</a>
+            <a href="/posts/golang/%E6%9D%82%E8%AE%B0/go%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="next" rel="next" title="golang-杂记-Go结构体内存布局">golang-杂记-Go结构体内存布局<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-22T08:46:22+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"通用技术-Jwt"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

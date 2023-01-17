@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-viper-Viper - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-viper-Viper" />
+<meta property="og:description" content="本系列为作者跟着viper官网学习做的笔记 安装 go get github.com/spf13/viper 注意： Viper 使用Go Modules来管理依赖项。 什么是Viper？ Viper 是一个完整的 Go 应用程序配" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/viper/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-21T08:58:51+08:00" />
+<meta property="article:modified_time" content="2022-10-21T08:58:51+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-viper-Viper"/>
+<meta name="twitter:description" content="本系列为作者跟着viper官网学习做的笔记 安装 go get github.com/spf13/viper 注意： Viper 使用Go Modules来管理依赖项。 什么是Viper？ Viper 是一个完整的 Go 应用程序配"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/viper/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/ref%E5%92%8Creactive/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-viper-Viper",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/viper\/"
+        },"genre": "posts","keywords": "viper","wordcount":  5962 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/viper\/","datePublished": "2022-10-21T08:58:51+08:00","dateModified": "2022-10-21T08:58:51+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-viper-Viper</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-21">2022-10-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5962 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;12 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#什么是viper">什么是Viper？</a></li>
+    <li><a href="#为什么是viper">为什么是Viper？</a></li>
+    <li><a href="#将值存入-viper">将值存入 Viper</a>
+      <ul>
+        <li><a href="#建立默认值">建立默认值</a></li>
+        <li><a href="#读取配置文件">读取配置文件</a></li>
+        <li><a href="#编写配置文件">编写配置文件</a></li>
+        <li><a href="#查看和重新读取配置文件">查看和重新读取配置文件</a></li>
+        <li><a href="#从-ioreader-读取配置">从 io.Reader 读取配置</a></li>
+        <li><a href="#设置覆盖">设置覆盖</a></li>
+        <li><a href="#注册和使用别名">注册和使用别名</a></li>
+        <li><a href="#使用环境变量">使用环境变量</a></li>
+        <li><a href="#环境示例">环境示例</a></li>
+        <li><a href="#使用标志">使用标志</a></li>
+        <li><a href="#flag接口">flag接口</a></li>
+        <li><a href="#远程键值存储支持">远程键/值存储支持</a></li>
+        <li><a href="#远程键值存储示例---未加密">远程键/值存储示例 - 未加密</a></li>
+        <li><a href="#远程键值存储示例---加密">远程键/值存储示例 - 加密</a></li>
+        <li><a href="#观察-etcd-中的变化---未加密">观察 etcd 中的变化 - 未加密</a></li>
+      </ul>
+    </li>
+    <li><a href="#从-viper-获取值">从 Viper 获取值</a>
+      <ul>
+        <li><a href="#访问嵌套键">访问嵌套键</a></li>
+        <li><a href="#提取子树">提取子树</a></li>
+        <li><a href="#解组">解组</a></li>
+        <li><a href="#解码自定义格式">解码自定义格式</a></li>
+        <li><a href="#编组到字符串">编组到字符串</a></li>
+      </ul>
+    </li>
+    <li><a href="#viper-or-vipers">Viper or Vipers?</a>
+      <ul>
+        <li><a href="#working-with-multiple-vipers">Working with multiple vipers</a></li>
+      </ul>
+    </li>
+    <li><a href="#问答">问答</a>
+      <ul>
+        <li><a href="#为什么叫viper蝰蛇">为什么叫“Viper”蝰蛇？</a></li>
+        <li><a href="#为什么叫cobra眼镜蛇">为什么叫“cobra”眼镜蛇？</a></li>
+        <li><a href="#viper-是否支持区分大小写的键">Viper 是否支持区分大小写的键？</a></li>
+        <li><a href="#同时读写viper是否安全">同时读写viper是否安全？</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列为作者跟着<a href="https://github.com/spf13/viper" target="_blank" rel="noopener noreffer ">viper官网</a>学习做的笔记</p>
+<h2 id="安装">安装</h2>
+<pre tabindex="0"><code>go get github.com/spf13/viper
+</code></pre><p>注意： Viper 使用Go Modules来管理依赖项。</p>
+<h2 id="什么是viper">什么是Viper？</h2>
+<p>Viper 是一个完整的 Go 应用程序配置解决方案，包括 12-Factor 应用程序。它旨在在应用程序中工作，并且可以处理所有类型的配置需求和格式。它支持：</p>
+<ul>
+<li>设置默认值</li>
+<li>从 JSON、TOML、YAML、HCL、envfile 和 Java 属性配置文件读取</li>
+<li>实时观看和重新阅读配置文件（可选）</li>
+<li>从环境变量中读取</li>
+<li>从远程配置系统（etcd 或 Consul）读取，并观察变化</li>
+<li>从命令行标志读取</li>
+<li>从缓冲区读取</li>
+<li>设置显式值</li>
+</ul>
+<p>Viper 可以被认为是满足您所有应用程序配置需求的注册表。</p>
+<h2 id="为什么是viper">为什么是Viper？</h2>
+<p>在构建现代应用程序时，您不必担心配置文件格式；您想专注于构建出色的软件。Viper 是来帮助解决这个问题的。</p>
+<p>Viper 为您执行以下操作：</p>
+<ol>
+<li>查找、加载和解组 JSON、TOML、YAML、HCL、INI、envfile 或 Java 属性格式的配置文件。</li>
+<li>提供一种机制来为您的不同配置选项设置默认值。</li>
+<li>提供一种机制来为通过命令行标志指定的选项设置覆盖值。</li>
+<li>提供别名系统以轻松重命名参数而不会破坏现有代码。</li>
+<li>便于区分用户何时提供了与默认值相同的命令行或配置文件。</li>
+</ol>
+<p>Viper 使用以下优先顺序。每个项目优先于它下面的项目：</p>
+<ul>
+<li>显式调用Set</li>
+<li>flag</li>
+<li>env</li>
+<li>config</li>
+<li>键/值存储</li>
+<li>default</li>
+</ul>
+<p>重要提示： Viper 配置键不区分大小写。正在进行关于将其设为可选的讨论。</p>
+<h2 id="将值存入-viper">将值存入 Viper</h2>
+<h3 id="建立默认值">建立默认值</h3>
+<p>一个好的配置系统将支持默认值。密钥不需要默认值，但在尚未通过配置文件、环境变量、远程配置或flag设置密钥的情况下很有用。</p>
+<p>例子：</p>
+<pre tabindex="0"><code>viper.SetDefault(&#34;ContentDir&#34;, &#34;content&#34;)
+viper.SetDefault(&#34;LayoutDir&#34;, &#34;layouts&#34;)
+viper.SetDefault(&#34;Taxonomies&#34;, map[string]string{&#34;tag&#34;: &#34;tags&#34;, &#34;category&#34;: &#34;categories&#34;})
+</code></pre><h3 id="读取配置文件">读取配置文件</h3>
+<p>Viper 需要最少的配置，因此它知道在哪里查找配置文件。Viper 支持 JSON、TOML、YAML、HCL、INI、envfile 和 Java 属性文件。Viper 可以搜索多个路径，但目前单个 Viper 实例仅支持单个配置文件。Viper 不默认任何配置搜索路径，将默认决定留给应用程序。</p>
+<p>下面是一个如何使用 Viper 搜索和读取配置文件的示例。不需要任何特定路径，但应至少提供一个路径，其中需要配置文件。</p>
+<pre tabindex="0"><code>viper.SetConfigName(&#34;config&#34;) // name of config file (without extension)
+viper.SetConfigType(&#34;yaml&#34;) // REQUIRED if the config file does not have the extension in the name
+viper.AddConfigPath(&#34;/etc/appname/&#34;)   // path to look for the config file in
+viper.AddConfigPath(&#34;$HOME/.appname&#34;)  // call multiple times to add many search paths
+viper.AddConfigPath(&#34;.&#34;)               // optionally look for config in the working directory
+err := viper.ReadInConfig() // Find and read the config file
+if err != nil { // Handle errors reading the config file
+	panic(fmt.Errorf(&#34;fatal error config file: %w&#34;, err))
+}
+</code></pre><p>您可以处理找不到配置文件的特定情况，如下所示：</p>
+<pre tabindex="0"><code>if err := viper.ReadInConfig(); err != nil {
+	if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+		// Config file not found; ignore error if desired
+	} else {
+		// Config file was found but another error was produced
+	}
+}
+
+// Config file found and successfully parsed
+</code></pre><p>注意 [从 1.6 开始]：您也可以有一个没有扩展名的文件，并以编程方式指定格式。对于那些位于用户Home中没有任何扩展名的配置文件.bashrc</p>
+<h3 id="编写配置文件">编写配置文件</h3>
+<p>从配置文件中读取很有用，但有时您希望存储在运行时所做的所有修改。为此，可以使用一堆命令，每个命令都有自己的用途：</p>
+<ul>
+<li>WriteConfig - 将当前 viper 配置写入预定义路径（如果存在）。如果没有预定义的路径，则会出错。如果存在，将覆盖当前配置文件。</li>
+<li>SafeWriteConfig - 将当前 viper 配置写入预定义路径。如果没有预定义的路径，则会出错。如果存在，则不会覆盖当前配置文件。</li>
+<li>WriteConfigAs - 将当前的 viper 配置写入给定的文件路径。将覆盖给定文件（如果存在）。</li>
+<li>SafeWriteConfigAs - 将当前的 viper 配置写入给定的文件路径。不会覆盖给定文件（如果存在）。</li>
+</ul>
+<p>根据经验，标有安全的所有文件都不会覆盖任何文件，如果不存在则创建，而默认行为是创建或截断。</p>
+<p>一个小例子部分：</p>
+<pre tabindex="0"><code>viper.WriteConfig() // writes current config to predefined path set by &#39;viper.AddConfigPath()&#39; and &#39;viper.SetConfigName&#39;
+viper.SafeWriteConfig()
+viper.WriteConfigAs(&#34;/path/to/my/.config&#34;)
+viper.SafeWriteConfigAs(&#34;/path/to/my/.config&#34;) // will error since it has already been written
+viper.SafeWriteConfigAs(&#34;/path/to/my/.other_config&#34;)
+</code></pre><h3 id="查看和重新读取配置文件">查看和重新读取配置文件</h3>
+<p>Viper 支持让您的应用程序在运行时实时读取配置文件的能力。</p>
+<p>需要重新启动服务器才能使配置生效的日子已经一去不复返了，viper 驱动的应用程序可以在运行时读取配置文件的更新而不会错过任何一个节拍。</p>
+<p>只需告诉 viper 实例 watchConfig。或者，您可以为 Viper 提供一个函数，以便在每次发生更改时运行。</p>
+<p>确保在调用WatchConfig()之前添加所有 configPaths</p>
+<pre tabindex="0"><code>viper.OnConfigChange(func(e fsnotify.Event) {
+	fmt.Println(&#34;Config file changed:&#34;, e.Name)
+})
+viper.WatchConfig()
+</code></pre><h3 id="从-ioreader-读取配置">从 io.Reader 读取配置</h3>
+<p>Viper 预定义了许多配置源，例如文件、环境变量、标志和远程 K/V 存储，但您不受它们的约束。您还可以实现自己所需的配置源并将其提供给 viper。</p>
+<pre tabindex="0"><code>viper.SetConfigType(&#34;yaml&#34;) // or viper.SetConfigType(&#34;YAML&#34;)
+
+// any approach to require this configuration into your program.
+var yamlExample = []byte(`
+Hacker: true
+name: steve
+hobbies:
+- skateboarding
+- snowboarding
+- go
+clothing:
+  jacket: leather
+  trousers: denim
+age: 35
+eyes : brown
+beard: true
+`)
+
+viper.ReadConfig(bytes.NewBuffer(yamlExample))
+
+viper.Get(&#34;name&#34;) // this would be &#34;steve&#34;
+</code></pre><h3 id="设置覆盖">设置覆盖</h3>
+<p>这些可能来自命令行flag，也可能来自您自己的应用程序逻辑。</p>
+<pre tabindex="0"><code>viper.Set(&#34;Verbose&#34;, true)
+viper.Set(&#34;LogFile&#34;, LogFile)
+</code></pre><h3 id="注册和使用别名">注册和使用别名</h3>
+<p>别名允许多个键引用单个值</p>
+<pre tabindex="0"><code>viper.RegisterAlias(&#34;loud&#34;, &#34;Verbose&#34;)
+
+viper.Set(&#34;verbose&#34;, true) // same result as next line
+viper.Set(&#34;loud&#34;, true)   // same result as prior line
+
+viper.GetBool(&#34;loud&#34;) // true
+viper.GetBool(&#34;verbose&#34;) // true
+</code></pre><h3 id="使用环境变量">使用环境变量</h3>
+<p>Viper 完全支持环境变量。这使开箱即用的 12 因子应用成为可能。有五种方法可以帮助使用 ENV：</p>
+<ul>
+<li>AutomaticEnv()</li>
+<li>BindEnv(string&hellip;) : error</li>
+<li>SetEnvPrefix(string)</li>
+<li>SetEnvKeyReplacer(string&hellip;) *strings.Replacer</li>
+<li>AllowEmptyEnv(bool)</li>
+</ul>
+<p>使用 ENV 变量时，重要的是要认识到 Viper 将 ENV 变量视为区分大小写。</p>
+<p>Viper 提供了一种机制来尝试确保 ENV 变量是唯一的。通过使用SetEnvPrefix，您可以告诉 Viper 在读取环境变量时使用前缀。BindEnv和AutomaticEnv两者都将使用此前缀。</p>
+<p>BindEnv接受一个或多个参数。第一个参数是键名，其余的是要绑定到该键的环境变量的名称。如果提供了多个，它们将按照指定的顺序优先。环境变量的名称区分大小写。如果未提供 ENV 变量名称，那么 Viper 将自动假定 ENV 变量与以下格式匹配：前缀 + &ldquo;_&rdquo; + 全部大写的键名。当您显式提供 ENV 变量名称（第二个参数）时，它不会自动添加前缀。例如，如果第二个参数是“id”，Viper 将查找 ENV 变量“ID”。</p>
+<p>使用 ENV 变量时要认识到的一件重要事情是每次访问时都会读取该值。BindEnv调用时，Viper 不固定该值。</p>
+<p>AutomaticEnv是一个强大的帮手，尤其是与 SetEnvPrefix一起使用时。 在任何时候viper.Get调用时，Viper 将发出请求时检查环境变量。它将应用以下规则。它将检查名称与键的大写形式匹配环境变量，如果设置了EnvPrefix还会匹配是否有该前缀。</p>
+<p>SetEnvKeyReplacer允许您使用strings.Replacer对象在一定程度上重写 Env 键。-如果您想在Get()调用中使用<code>-</code>或某些东西 ，但希望您的环境变量使用<code>_</code>分隔符，这很有用。可以在viper_test.go中找到使用它的示例。</p>
+<p>或者，您可以工厂函数NewWithOptions使用EnvKeyReplacer。与SetEnvKeyReplacer不同，它接受一个StringReplacer允许您编写自定义字符串替换逻辑的接口。</p>
+<p>默认情况下，空环境变量被视为未设置，并将回退到下一个配置源。要将空环境变量视为已设置，请使用该AllowEmptyEnv方法。</p>
+<h3 id="环境示例">环境示例</h3>
+<pre tabindex="0"><code>SetEnvPrefix(&#34;spf&#34;) // will be uppercased automatically
+BindEnv(&#34;id&#34;)
+
+os.Setenv(&#34;SPF_ID&#34;, &#34;13&#34;) // typically done outside of the app
+
+id := Get(&#34;id&#34;) // 13
+</code></pre><h3 id="使用标志">使用标志</h3>
+<p>Viper 具有绑定flag的能力。具体来说，Viper 支持Pflags 在Cobra库中使用。</p>
+<p>像BindEnv，在调用绑定方法时不会设置该值，而是在访问它时设置该值。这意味着您可以尽可能早地绑定，即使在 init()函数中也是如此。</p>
+<p>对于单个flag，该BindPFlag()方法提供此功能。</p>
+<p>例子：</p>
+<pre tabindex="0"><code>serverCmd.Flags().Int(&#34;port&#34;, 1138, &#34;Port to run Application server on&#34;)
+viper.BindPFlag(&#34;port&#34;, serverCmd.Flags().Lookup(&#34;port&#34;))
+</code></pre><p>您还可以绑定现有的一组 pflags (pflag.FlagSet)：</p>
+<p>例子：</p>
+<pre tabindex="0"><code>pflag.Int(&#34;flagname&#34;, 1234, &#34;help message for flagname&#34;)
+
+pflag.Parse()
+viper.BindPFlags(pflag.CommandLine)
+
+i := viper.GetInt(&#34;flagname&#34;) // retrieve values from viper instead of pflag
+</code></pre><p>在 Viper 中使用pflag并不排除使用 标准库中使用flag包的其他包。pflag 包可以通过导入这些标志来处理为标志包定义的标志。这是通过调用一个名为 AddGoFlagSet() 的 pflag 包提供的便利函数来完成的。</p>
+<p>例子：</p>
+<pre tabindex="0"><code>package main
+
+import (
+	&#34;flag&#34;
+	&#34;github.com/spf13/pflag&#34;
+)
+
+func main() {
+
+	// using standard library &#34;flag&#34; package
+	flag.Int(&#34;flagname&#34;, 1234, &#34;help message for flagname&#34;)
+
+	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+	pflag.Parse()
+	viper.BindPFlags(pflag.CommandLine)
+
+	i := viper.GetInt(&#34;flagname&#34;) // retrieve value from viper
+
+	// ...
+}
+</code></pre><h3 id="flag接口">flag接口</h3>
+<p>Viper 提供了两个 Go 接口来绑定其他flag系统，如果你不使用Pflags.</p>
+<p>FlagValue表示单个flag。这是一个关于如何实现此接口的非常简单的示例：</p>
+<pre tabindex="0"><code>type myFlag struct {}
+func (f myFlag) HasChanged() bool { return false }
+func (f myFlag) Name() string { return &#34;my-flag-name&#34; }
+func (f myFlag) ValueString() string { return &#34;my-flag-value&#34; }
+func (f myFlag) ValueType() string { return &#34;string&#34; }
+</code></pre><p>一旦你的标志实现了这个接口，你可以简单地告诉 Viper 绑定它：</p>
+<pre tabindex="0"><code>viper.BindFlagValue(&#34;my-flag-name&#34;, myFlag{})
+</code></pre><p>FlagValueSet代表一组标志。这是一个关于如何实现此接口的非常简单的示例：</p>
+<pre tabindex="0"><code>type myFlagSet struct {
+	flags []myFlag
+}
+
+func (f myFlagSet) VisitAll(fn func(FlagValue)) {
+	for _, flag := range flags {
+		fn(flag)
+	}
+}
+</code></pre><p>一旦你的标志集实现了这个接口，你可以简单地告诉 Viper 绑定它：</p>
+<pre tabindex="0"><code>fSet := myFlagSet{
+	flags: []myFlag{myFlag{}, myFlag{}},
+}
+viper.BindFlagValues(&#34;my-flags&#34;, fSet)
+</code></pre><h3 id="远程键值存储支持">远程键/值存储支持</h3>
+<p>要在 Viper 中启用远程支持，请对包进行空白导入viper/remote ：</p>
+<pre tabindex="0"><code>import _ &#34;github.com/spf13/viper/remote&#34;
+</code></pre><p>Viper 将读取从 Key/Value 存储（如 etcd 或 Consul）中的路径检索到的配置字符串（如 JSON、TOML、YAML、HCL 或 envfile）。这些值优先于默认值，但会被从磁盘、标志或环境变量中检索到的配置值覆盖。</p>
+<p>Viper 使用crypt从 K/V 存储中检索配置，这意味着您可以加密存储配置值，如果您拥有正确的 gpg 密钥环，则可以自动解密它们。加密是可选的。</p>
+<p>您可以将远程配置与本地配置结合使用，也可以独立使用。</p>
+<p>crypt有一个命令行助手，您可以使用它来将配置放入您的 K/V 存储中。crypt默认为http://127.0.0.1:4001上的 etcd 。</p>
+<pre tabindex="0"><code>$ go get github.com/bketelsen/crypt/bin/crypt
+$ crypt set -plaintext /config/hugo.json /Users/hugo/settings/config.json
+</code></pre><p>确认您的值已设置：</p>
+<pre tabindex="0"><code>$ crypt get -plaintext /config/hugo.json
+</code></pre><p>crypt有关如何设置加密值或如何使用 Consul 的示例，请参阅文档。</p>
+<h3 id="远程键值存储示例---未加密">远程键/值存储示例 - 未加密</h3>
+<h4 id="etcd">etcd</h4>
+<pre tabindex="0"><code>viper.AddRemoteProvider(&#34;etcd&#34;, &#34;http://127.0.0.1:4001&#34;,&#34;/config/hugo.json&#34;)
+viper.SetConfigType(&#34;json&#34;) // because there is no file extension in a stream of bytes, supported extensions are &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;, &#34;properties&#34;, &#34;props&#34;, &#34;prop&#34;, &#34;env&#34;, &#34;dotenv&#34;
+err := viper.ReadRemoteConfig()
+</code></pre><h4 id="etcd3">etcd3</h4>
+<pre tabindex="0"><code>viper.AddRemoteProvider(&#34;etcd3&#34;, &#34;http://127.0.0.1:4001&#34;,&#34;/config/hugo.json&#34;)
+viper.SetConfigType(&#34;json&#34;) // because there is no file extension in a stream of bytes, supported extensions are &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;, &#34;properties&#34;, &#34;props&#34;, &#34;prop&#34;, &#34;env&#34;, &#34;dotenv&#34;
+err := viper.ReadRemoteConfig()
+</code></pre><h4 id="consul">Consul</h4>
+<p>您需要使用包含所需配置的 JSON 值将密钥设置为 Consul 键/值存储。例如，创建一个带有值的Consul键/值存储键MY_CONSUL_KEY：</p>
+<pre tabindex="0"><code>{
+    &#34;port&#34;: 8080,
+    &#34;hostname&#34;: &#34;myhostname.com&#34;
+}
+</code></pre><pre tabindex="0"><code>viper.AddRemoteProvider(&#34;consul&#34;, &#34;localhost:8500&#34;, &#34;MY_CONSUL_KEY&#34;)
+viper.SetConfigType(&#34;json&#34;) // Need to explicitly set this to json
+err := viper.ReadRemoteConfig()
+
+fmt.Println(viper.Get(&#34;port&#34;)) // 8080
+fmt.Println(viper.Get(&#34;hostname&#34;)) // myhostname.com
+</code></pre><h4 id="firestore">Firestore</h4>
+<pre tabindex="0"><code>viper.AddRemoteProvider(&#34;firestore&#34;, &#34;google-cloud-project-id&#34;, &#34;collection/document&#34;)
+viper.SetConfigType(&#34;json&#34;) // Config&#39;s format: &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;
+err := viper.ReadRemoteConfig()
+</code></pre><p>当然，您也可以使用SecureRemoteProvider</p>
+<h3 id="远程键值存储示例---加密">远程键/值存储示例 - 加密</h3>
+<pre tabindex="0"><code>viper.AddSecureRemoteProvider(&#34;etcd&#34;,&#34;http://127.0.0.1:4001&#34;,&#34;/config/hugo.json&#34;,&#34;/etc/secrets/mykeyring.gpg&#34;)
+viper.SetConfigType(&#34;json&#34;) // because there is no file extension in a stream of bytes,  supported extensions are &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;, &#34;properties&#34;, &#34;props&#34;, &#34;prop&#34;, &#34;env&#34;, &#34;dotenv&#34;
+err := viper.ReadRemoteConfig()
+</code></pre><h3 id="观察-etcd-中的变化---未加密">观察 etcd 中的变化 - 未加密</h3>
+<pre tabindex="0"><code>// alternatively, you can create a new viper instance.
+var runtime_viper = viper.New()
+
+runtime_viper.AddRemoteProvider(&#34;etcd&#34;, &#34;http://127.0.0.1:4001&#34;, &#34;/config/hugo.yml&#34;)
+runtime_viper.SetConfigType(&#34;yaml&#34;) // because there is no file extension in a stream of bytes, supported extensions are &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;, &#34;properties&#34;, &#34;props&#34;, &#34;prop&#34;, &#34;env&#34;, &#34;dotenv&#34;
+
+// read from remote config the first time.
+err := runtime_viper.ReadRemoteConfig()
+
+// unmarshal config
+runtime_viper.Unmarshal(&amp;runtime_conf)
+
+// open a goroutine to watch remote changes forever
+go func(){
+	for {
+		time.Sleep(time.Second * 5) // delay after each request
+
+		// currently, only tested with etcd support
+		err := runtime_viper.WatchRemoteConfig()
+		if err != nil {
+			log.Errorf(&#34;unable to read remote config: %v&#34;, err)
+			continue
+		}
+
+		// unmarshal new config into our runtime config struct. you can also use channel
+		// to implement a signal to notify the system of the changes
+		runtime_viper.Unmarshal(&amp;runtime_conf)
+	}
+}()
+</code></pre><h2 id="从-viper-获取值">从 Viper 获取值</h2>
+<p>在 Viper 中，有几种方法可以根据值的类型获取值。存在以下功能和方法：</p>
+<ul>
+<li>Get(key string) : interface{}</li>
+<li>GetBool(key string) : bool</li>
+<li>GetFloat64(key string) : float64</li>
+<li>GetInt(key string) : int</li>
+<li>GetIntSlice(key string) : []int</li>
+<li>GetString(key string) : string</li>
+<li>GetStringMap(key string) : map[string]interface{}</li>
+<li>GetStringMapString(key string) : map[string]string</li>
+<li>GetStringSlice(key string) : []string</li>
+<li>GetTime(key string) : time.Time</li>
+<li>GetDuration(key string) : time.Duration</li>
+<li>IsSet(key string) : bool</li>
+<li>AllSettings() : map[string]interface{}</li>
+</ul>
+<p>要认识到的一件重要的事情是，如果没有找到每个 Get 函数，它将返回一个零值。为了检查给定的密钥是否存在，提供了该IsSet()方法。</p>
+<p>例子：</p>
+<pre tabindex="0"><code>viper.GetString(&#34;logfile&#34;) // case-insensitive Setting &amp; Getting
+if viper.GetBool(&#34;verbose&#34;) {
+	fmt.Println(&#34;verbose enabled&#34;)
+}
+</code></pre><h3 id="访问嵌套键">访问嵌套键</h3>
+<p>访问器方法还接受深度嵌套键的格式化路径。例如，如果加载了以下 JSON 文件：</p>
+<pre tabindex="0"><code>{
+    &#34;host&#34;: {
+        &#34;address&#34;: &#34;localhost&#34;,
+        &#34;port&#34;: 5799
+    },
+    &#34;datastore&#34;: {
+        &#34;metric&#34;: {
+            &#34;host&#34;: &#34;127.0.0.1&#34;,
+            &#34;port&#34;: 3099
+        },
+        &#34;warehouse&#34;: {
+            &#34;host&#34;: &#34;198.0.0.1&#34;,
+            &#34;port&#34;: 2112
+        }
+    }
+}
+</code></pre><p>Viper 可以通过传递键的.分隔路径来访问嵌套字段：</p>
+<pre tabindex="0"><code>GetString(&#34;datastore.metric.host&#34;) // (returns &#34;127.0.0.1&#34;)
+</code></pre><p>这符合上面建立的优先规则；对路径的搜索将通过剩余的配置注册表进行级联，直到找到为止。</p>
+<p>例如，给定这个配置文件，datastore.metric.host和 datastore.metric.port都已经定义（并且可能被覆盖）。如果另外 datastore.metric.protocol在默认值中定义，Viper 也会找到它。</p>
+<p>但是，如果datastore.metric被立即值覆盖（通过标志、环境变量、Set()方法……），则所有datastore.metric的子键都变为未定义，它们被更高优先级的配置级别“遮蔽”。</p>
+<p>Viper 可以通过在路径中使用数字来访问数组索引。例如：</p>
+<pre tabindex="0"><code>{
+    &#34;host&#34;: {
+        &#34;address&#34;: &#34;localhost&#34;,
+        &#34;ports&#34;: [
+            5799,
+            6029
+        ]
+    },
+    &#34;datastore&#34;: {
+        &#34;metric&#34;: {
+            &#34;host&#34;: &#34;127.0.0.1&#34;,
+            &#34;port&#34;: 3099
+        },
+        &#34;warehouse&#34;: {
+            &#34;host&#34;: &#34;198.0.0.1&#34;,
+            &#34;port&#34;: 2112
+        }
+    }
+}
+
+GetInt(&#34;host.ports.1&#34;) // returns 6029
+</code></pre><p>最后，如果存在与分隔键路径匹配的键，则将返回其值。例如</p>
+<pre tabindex="0"><code>{
+    &#34;datastore.metric.host&#34;: &#34;0.0.0.0&#34;,
+    &#34;host&#34;: {
+        &#34;address&#34;: &#34;localhost&#34;,
+        &#34;port&#34;: 5799
+    },
+    &#34;datastore&#34;: {
+        &#34;metric&#34;: {
+            &#34;host&#34;: &#34;127.0.0.1&#34;,
+            &#34;port&#34;: 3099
+        },
+        &#34;warehouse&#34;: {
+            &#34;host&#34;: &#34;198.0.0.1&#34;,
+            &#34;port&#34;: 2112
+        }
+    }
+}
+
+GetString(&#34;datastore.metric.host&#34;) // returns &#34;0.0.0.0&#34;
+</code></pre><h3 id="提取子树">提取子树</h3>
+<p>在开发可重用模块时，提取配置的子集并将其传递给模块通常很有用。这样，可以使用不同的配置多次实例化模块。</p>
+<p>例如，一个应用程序可能会出于不同目的使用多个不同的缓存存储：</p>
+<pre tabindex="0"><code>cache:
+  cache1:
+    max-items: 100
+    item-size: 64
+  cache2:
+    max-items: 200
+    item-size: 80
+</code></pre><p>我们可以将缓存名称传递给模块（例如NewCache(&ldquo;cache1&rdquo;)），但它需要奇怪的连接来访问配置键，并且与全局配置的分离度较低。</p>
+<p>因此，让我们将 Viper 实例传递给代表配置子集的构造函数，而不是这样做：</p>
+<pre tabindex="0"><code>cache1Config := viper.Sub(&#34;cache.cache1&#34;)
+if cache1Config == nil { // Sub returns nil if the key cannot be found
+	panic(&#34;cache configuration not found&#34;)
+}
+
+cache1 := NewCache(cache1Config)
+</code></pre><p>注意：始终检查Sub的返回值。如果找不到密钥，会返回nil。</p>
+<p>在内部，该NewCache函数可以直接寻址max-items和item-size键：</p>
+<pre tabindex="0"><code>func NewCache(v *Viper) *Cache {
+	return &amp;Cache{
+		MaxItems: v.GetInt(&#34;max-items&#34;),
+		ItemSize: v.GetInt(&#34;item-size&#34;),
+	}
+}
+</code></pre><p>生成的代码很容易测试，因为它与主配置结构分离，并且更容易重用（出于同样的原因）。</p>
+<h3 id="解组">解组</h3>
+<p>您还可以选择将所有或特定值解组到结构、map等。</p>
+<p>有两种方法可以做到这一点：</p>
+<ul>
+<li>Unmarshal(rawVal interface{}) : error</li>
+<li>UnmarshalKey(key string, rawVal interface{}) : error</li>
+</ul>
+<p>例子：</p>
+<pre tabindex="0"><code>type config struct {
+	Port int
+	Name string
+	PathMap string `mapstructure:&#34;path_map&#34;`
+}
+
+var C config
+
+err := viper.Unmarshal(&amp;C)
+if err != nil {
+	t.Fatalf(&#34;unable to decode into struct, %v&#34;, err)
+}
+</code></pre><p>如果要解组键本身包含点（默认键分隔符）的配置，则必须更改分隔符：</p>
+<pre tabindex="0"><code>v := viper.NewWithOptions(viper.KeyDelimiter(&#34;::&#34;))
+
+v.SetDefault(&#34;chart::values&#34;, map[string]interface{}{
+	&#34;ingress&#34;: map[string]interface{}{
+		&#34;annotations&#34;: map[string]interface{}{
+			&#34;traefik.frontend.rule.type&#34;:                 &#34;PathPrefix&#34;,
+			&#34;traefik.ingress.kubernetes.io/ssl-redirect&#34;: &#34;true&#34;,
+		},
+	},
+})
+
+type config struct {
+	Chart struct{
+		Values map[string]interface{}
+	}
+}
+
+var C config
+
+v.Unmarshal(&amp;C)
+</code></pre><p>Viper 还支持解组到嵌入式结构：</p>
+<pre tabindex="0"><code>/*
+Example config:
+
+module:
+    enabled: true
+    token: 89h3f98hbwf987h3f98wenf89ehf
+*/
+type config struct {
+	Module struct {
+		Enabled bool
+
+		moduleConfig `mapstructure:&#34;,squash&#34;`
+	}
+}
+
+// moduleConfig could be in a module specific package
+type moduleConfig struct {
+	Token string
+}
+
+var C config
+
+err := viper.Unmarshal(&amp;C)
+if err != nil {
+	t.Fatalf(&#34;unable to decode into struct, %v&#34;, err)
+}
+</code></pre><p>Viper 在后台使用github.com/mitchellh/mapstructure来解组默认使用mapstructure标签的值。</p>
+<h3 id="解码自定义格式">解码自定义格式</h3>
+<p>Viper 经常要求的一个功能是添加更多的值格式和解码器。例如，解析字符（点、逗号、分号等）将字符串分隔为切片。</p>
+<p>这已经在 Viper 中使用 mapstructure decode hooks 提供了。</p>
+<h3 id="编组到字符串">编组到字符串</h3>
+<p>您可能需要将 viper 中保存的所有设置编组为字符串，而不是将它们写入文件。您可以通过调用AllSettings()返回您最喜欢的格式的编组器.</p>
+<pre tabindex="0"><code>import (
+	yaml &#34;gopkg.in/yaml.v2&#34;
+	// ...
+)
+
+func yamlStringSettings() string {
+	c := viper.AllSettings()
+	bs, err := yaml.Marshal(c)
+	if err != nil {
+		log.Fatalf(&#34;unable to marshal config to YAML: %v&#34;, err)
+	}
+	return string(bs)
+}
+</code></pre><h2 id="viper-or-vipers">Viper or Vipers?</h2>
+<p>Viper 开箱即用。开始使用 Viper 无需配置或初始化。由于大多数应用程序都希望使用单个中央存储库进行配置，因此 viper 包提供了这一点。它类似于单例。</p>
+<p>在上面的所有示例中，他们都演示了在其单例样式方法中使用 viper。</p>
+<h3 id="working-with-multiple-vipers">Working with multiple vipers</h3>
+<p>您还可以创建许多不同的 viper 以在您的应用程序中使用。每个都有自己独特的一组配置和值。每个都可以从不同的配置文件、键值存储等中读取。viper 包支持的所有功能都被镜像为 viper 上的方法。</p>
+<p>例子：</p>
+<pre tabindex="0"><code>x := viper.New()
+y := viper.New()
+
+x.SetDefault(&#34;ContentDir&#34;, &#34;content&#34;)
+y.SetDefault(&#34;ContentDir&#34;, &#34;foobar&#34;)
+
+//...
+</code></pre><p>当使用多个Viper时，由用户负责跟踪不同的Viper。</p>
+<h2 id="问答">问答</h2>
+<h3 id="为什么叫viper蝰蛇">为什么叫“Viper”蝰蛇？</h3>
+<p>答：Viper 旨在成为 Cobra的伴侣。虽然两者都可以完全独立运行，但它们共同构成了强大的组合，可以满足您的大部分应用程序基础需求。</p>
+<h3 id="为什么叫cobra眼镜蛇">为什么叫“cobra”眼镜蛇？</h3>
+<p>指挥官有更好的名字吗？</p>
+<h3 id="viper-是否支持区分大小写的键">Viper 是否支持区分大小写的键？</h3>
+<p>tl;博士：不。</p>
+<p>Viper 合并了来自各种来源的配置，其中许多要么不区分大小写，要么使用与其他来源不同的大小写（例如 env vars）。为了在使用多个来源时提供最佳体验，已决定使所有键不区分大小写。</p>
+<p>已经有几次尝试实现区分大小写，但不幸的是，这并不是那么微不足道。我们可能会尝试在Viper v2中实现它，但尽管有最初的噪音，但似乎并没有太多要求。</p>
+<p>您可以通过填写此反馈表来投票支持区分大小写：https ://forms.gle/R6faU74qPRPAzchZ9</p>
+<h3 id="同时读写viper是否安全">同时读写viper是否安全？</h3>
+<p>不，您需要自己同步对 viper 的访问（例如通过使用sync包）。并发读取和写入可能会导致恐慌。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/viper/" data-title="golang-viper-Viper" data-hashtags="viper"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/viper/" data-hashtag="viper"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/viper/" data-title="golang-viper-Viper"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/viper/" data-title="golang-viper-Viper"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/viper/" data-title="golang-viper-Viper"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/viper/">viper</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/ref%E5%92%8Creactive/" class="prev" rel="prev" title="Vue-个人笔记-Ref和reactive"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-个人笔记-Ref和reactive</a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

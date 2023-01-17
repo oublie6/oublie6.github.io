@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>go第三方库-Gorm - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="go第三方库-Gorm" />
+<meta property="og:description" content="godoc 官方API 官方文档 李文周博客 模型定义 按照约定定义struct 约定 ID 作为主键 结构体名&#43;s 表名 字段名&#43;s 列名 CreatedAt 创建时间 UpdatedAt 更新时间 gorm.Mo" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/gorm/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-19T11:15:43+08:00" />
+<meta property="article:modified_time" content="2022-12-19T11:15:43+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="go第三方库-Gorm"/>
+<meta name="twitter:description" content="godoc 官方API 官方文档 李文周博客 模型定义 按照约定定义struct 约定 ID 作为主键 结构体名&#43;s 表名 字段名&#43;s 列名 CreatedAt 创建时间 UpdatedAt 更新时间 gorm.Mo"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/gorm/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/go%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98pprof/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%9D%82%E9%A1%B9/windows%E9%9C%80%E8%A6%81%E6%9D%83%E9%99%90%E4%BF%AE%E6%94%B9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "go第三方库-Gorm",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/gorm\/"
+        },"genre": "posts","keywords": "go第三方库","wordcount":  5681 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/gorm\/","datePublished": "2022-12-19T11:15:43+08:00","dateModified": "2022-12-19T11:15:43+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go第三方库-Gorm</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-19">2022-12-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5681 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;12 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#模型定义">模型定义</a>
+      <ul>
+        <li><a href="#约定">约定</a></li>
+      </ul>
+    </li>
+    <li><a href="#连接到数据库">连接到数据库</a>
+      <ul>
+        <li><a href="#连接池">连接池</a></li>
+      </ul>
+    </li>
+    <li><a href="#crud接口">CRUD接口</a>
+      <ul>
+        <li><a href="#创建">创建</a></li>
+      </ul>
+    </li>
+    <li><a href="#查询">查询</a>
+      <ul>
+        <li><a href="#find">Find</a></li>
+        <li><a href="#where">Where</a></li>
+        <li><a href="#not">Not</a></li>
+        <li><a href="#or">Or</a></li>
+        <li><a href="#select">Select</a></li>
+        <li><a href="#table与model">Table与Model</a></li>
+        <li><a href="#order">Order</a></li>
+        <li><a href="#limit">Limit</a></li>
+        <li><a href="#group">Group</a></li>
+        <li><a href="#distinct">Distinct</a></li>
+        <li><a href="#joins">Joins</a></li>
+        <li><a href="#scan">Scan</a></li>
+        <li><a href="#锁">锁</a></li>
+        <li><a href="#子查询">子查询</a></li>
+        <li><a href="#命名参数">命名参数</a></li>
+        <li><a href="#优化器索引提示">优化器、索引提示</a></li>
+        <li><a href="#迭代">迭代</a></li>
+        <li><a href="#findinbatches">FindInBatches</a></li>
+        <li><a href="#查询钩子">查询钩子</a></li>
+        <li><a href="#scope">Scope</a></li>
+        <li><a href="#count">Count</a></li>
+      </ul>
+    </li>
+    <li><a href="#更新">更新</a>
+      <ul>
+        <li><a href="#更新单个列">更新单个列</a></li>
+        <li><a href="#更新多列">更新多列</a></li>
+        <li><a href="#更新-hook">更新 Hook</a></li>
+        <li><a href="#批量更新">批量更新</a></li>
+        <li><a href="#阻止全局更新">阻止全局更新</a></li>
+        <li><a href="#更新的记录数">更新的记录数</a></li>
+        <li><a href="#使用-sql-表达式更新">使用 SQL 表达式更新</a></li>
+        <li><a href="#根据子查询进行更新">根据子查询进行更新</a></li>
+        <li><a href="#不使用-hook-和时间追踪">不使用 Hook 和时间追踪</a></li>
+        <li><a href="#返回修改行的数据">返回修改行的数据</a></li>
+        <li><a href="#检查字段是否有变更">检查字段是否有变更</a></li>
+        <li><a href="#在-update-时修改值">在 Update 时修改值</a></li>
+      </ul>
+    </li>
+    <li><a href="#删除">删除</a>
+      <ul>
+        <li><a href="#批量删除">批量删除</a></li>
+        <li><a href="#delete-hook">Delete Hook</a></li>
+        <li><a href="#阻止全局删除">阻止全局删除</a></li>
+        <li><a href="#返回删除行的数据">返回删除行的数据</a></li>
+        <li><a href="#软删除">软删除</a></li>
+        <li><a href="#查找被软删除的记录">查找被软删除的记录</a></li>
+        <li><a href="#永久删除">永久删除</a></li>
+        <li><a href="#delete-flag">Delete Flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#sql-构建器">SQL 构建器</a>
+      <ul>
+        <li><a href="#原生-sql">原生 SQL</a></li>
+        <li><a href="#dryrun-模式">DryRun 模式</a></li>
+        <li><a href="#tosql">ToSQL</a></li>
+        <li><a href="#row--rows">Row &amp; Rows</a></li>
+        <li><a href="#将-sqlrows-扫描至-model">将 sql.Rows 扫描至 model</a></li>
+        <li><a href="#连接">连接</a></li>
+        <li><a href="#子句clause">子句（Clause）</a></li>
+        <li><a href="#子句构造器">子句构造器</a></li>
+      </ul>
+    </li>
+    <li><a href="#关联">关联</a></li>
+    <li><a href="#context">Context</a>
+      <ul>
+        <li><a href="#单会话模式">单会话模式</a></li>
+        <li><a href="#持续会话模式">持续会话模式</a></li>
+        <li><a href="#context-超时">Context 超时</a></li>
+        <li><a href="#hookscallbacks-中的-context">Hooks/Callbacks 中的 Context</a></li>
+      </ul>
+    </li>
+    <li><a href="#处理错误">处理错误</a>
+      <ul>
+        <li><a href="#errrecordnotfound">ErrRecordNotFound</a></li>
+      </ul>
+    </li>
+    <li><a href="#链式方法">链式方法</a></li>
+    <li><a href="#会话">会话</a>
+      <ul>
+        <li><a href="#dryrun">DryRun</a></li>
+        <li><a href="#预编译">预编译</a></li>
+        <li><a href="#newdb">NewDB</a></li>
+      </ul>
+    </li>
+    <li><a href="#hook钩子">Hook钩子</a></li>
+    <li><a href="#事务">事务</a>
+      <ul>
+        <li><a href="#禁用默认事务">禁用默认事务</a></li>
+        <li><a href="#事务-1">事务</a></li>
+        <li><a href="#嵌套事务">嵌套事务</a></li>
+        <li><a href="#手动事务">手动事务</a></li>
+        <li><a href="#savepointrollbackto">SavePoint、RollbackTo</a></li>
+      </ul>
+    </li>
+    <li><a href="#迁移">迁移</a></li>
+    <li><a href="#logger">Logger</a>
+      <ul>
+        <li><a href="#日志级别">日志级别</a></li>
+        <li><a href="#自定义-logger">自定义 Logger</a></li>
+      </ul>
+    </li>
+    <li><a href="#迁移-1">迁移</a></li>
+    <li><a href="#常规数据库接口-sqldb">常规数据库接口 sql.DB</a>
+      <ul>
+        <li><a href="#连接池-1">连接池</a></li>
+      </ul>
+    </li>
+    <li><a href="#设置">设置</a></li>
+    <li><a href="#数据库索引">数据库索引</a>
+      <ul>
+        <li><a href="#唯一索引">唯一索引</a></li>
+        <li><a href="#复合索引">复合索引</a></li>
+      </ul>
+    </li>
+    <li><a href="#复合主键">复合主键</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
+<p><a href="https://pkg.go.dev/gorm.io/gorm" target="_blank" rel="noopener noreffer ">官方API</a></p>
+<p><a href="https://gorm.io/zh_CN/docs/" target="_blank" rel="noopener noreffer ">官方文档</a></p>
+<p><a href="https://www.liwenzhou.com/posts/Go/gorm-crud/" target="_blank" rel="noopener noreffer ">李文周博客</a></p>
+<h2 id="模型定义">模型定义</h2>
+<p>按照约定定义struct</p>
+<h3 id="约定">约定</h3>
+<p>ID 作为主键</p>
+<p>结构体名+s 表名</p>
+<p>字段名+s 列名</p>
+<p>CreatedAt 创建时间</p>
+<p>UpdatedAt 更新时间</p>
+<p>gorm.Model内嵌以复用开发者提供的代码</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// gorm.Model 的定义
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">type</span> Model <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  ID        <span style="color:#0aa">uint</span>           <span style="color:#a50">`gorm:&#34;primaryKey&#34;`</span>
+</span></span><span style="display:flex;"><span>  CreatedAt time.Time
+</span></span><span style="display:flex;"><span>  UpdatedAt time.Time
+</span></span><span style="display:flex;"><span>  DeletedAt gorm.DeletedAt <span style="color:#a50">`gorm:&#34;index&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://gorm.io/zh_CN/docs/models.html#%E5%AD%97%E6%AE%B5%E6%A0%87%E7%AD%BE" target="_blank" rel="noopener noreffer ">字段标签</a></p>
+<h2 id="连接到数据库">连接到数据库</h2>
+<p>获取数据库连接</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>dsn := <span style="color:#a50">&#34;user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&amp;parseTime=True&amp;loc=Local&#34;</span>
+</span></span><span style="display:flex;"><span>db, err := gorm.<span style="color:#0a0">Open</span>(mysql.<span style="color:#0a0">Open</span>(dsn), &amp;gorm.Config{})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现有database/sql连接初始化一个新的*gorm.DB</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>gormDB, err := gorm.<span style="color:#0a0">Open</span>(mysql.<span style="color:#0a0">New</span>(mysql.Config{
+</span></span><span style="display:flex;"><span>  Conn: sqlDB,
+</span></span><span style="display:flex;"><span>}), &amp;gorm.Config{})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="连接池">连接池</h3>
+<p>gorm使用database/sql标准库维护连接池</p>
+<p><code>func (db *gorm.DB) DB() (*sql.DB, error)</code></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>sqlDB, err := db.<span style="color:#0a0">DB</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SetMaxIdleConns 设置空闲连接池中连接的最大数量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>sqlDB.<span style="color:#0a0">SetMaxIdleConns</span>(<span style="color:#099">10</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SetMaxOpenConns 设置打开数据库连接的最大数量。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>sqlDB.<span style="color:#0a0">SetMaxOpenConns</span>(<span style="color:#099">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SetConnMaxLifetime 设置了连接可复用的最大时间。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>sqlDB.<span style="color:#0a0">SetConnMaxLifetime</span>(time.Hour)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="crud接口">CRUD接口</h2>
+<h3 id="创建">创建</h3>
+<p>完整结构体创建记录</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>result := db.<span style="color:#0a0">Create</span>(&amp;user) <span style="color:#aaa;font-style:italic">// 通过数据的指针来创建
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>用指定的字段创建记录:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;Name&#34;</span>, <span style="color:#a50">&#34;Age&#34;</span>, <span style="color:#a50">&#34;CreatedAt&#34;</span>).<span style="color:#0a0">Create</span>(&amp;user)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>忽略字段创建记录</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Omit</span>(<span style="color:#a50">&#34;Name&#34;</span>, <span style="color:#a50">&#34;Age&#34;</span>, <span style="color:#a50">&#34;CreatedAt&#34;</span>).<span style="color:#0a0">Create</span>(&amp;user)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>批量插入:</p>
+<ol>
+<li>将一个 slice 传递给 Create 方法(也是传递引用)，这将仅生成一句sql来创建</li>
+<li>CreateInBatches 分批创建，每一批生成一局sql可以设置批次大小<code>db.CreateInBatches(users, 100)</code></li>
+</ol>
+<p>创建钩子:Model的BeforeSave, BeforeCreate, AfterSave, AfterCreate方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (u *User) <span style="color:#0a0">BeforeCreate</span>(tx *gorm.DB) (err <span style="color:#0aa">error</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以返回错误取消创建</p>
+<p>SkipHooks 会话模式跳过钩子函数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>DB.<span style="color:#0a0">Session</span>(&amp;gorm.Session{SkipHooks: <span style="color:#00a">true</span>}).<span style="color:#0a0">Create</span>(&amp;user)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据 Map 创建：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Create</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{}{
+</span></span><span style="display:flex;"><span>  <span style="color:#a50">&#34;Name&#34;</span>: <span style="color:#a50">&#34;jinzhu&#34;</span>, <span style="color:#a50">&#34;Age&#34;</span>: <span style="color:#099">18</span>,
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// batch insert from `[]map[string]interface{}{}`
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Create</span>([]<span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{}{
+</span></span><span style="display:flex;"><span>  {<span style="color:#a50">&#34;Name&#34;</span>: <span style="color:#a50">&#34;jinzhu_1&#34;</span>, <span style="color:#a50">&#34;Age&#34;</span>: <span style="color:#099">18</span>},
+</span></span><span style="display:flex;"><span>  {<span style="color:#a50">&#34;Name&#34;</span>: <span style="color:#a50">&#34;jinzhu_2&#34;</span>, <span style="color:#a50">&#34;Age&#34;</span>: <span style="color:#099">20</span>},
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>关联创建：创建关联数据时，如果关联值是非零值，这些关联会被 upsert，且它们的 Hook 方法也会被调用</p>
+<p>默认值：标签 default 为字段定义默认值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> User <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  ID   <span style="color:#0aa">int64</span>
+</span></span><span style="display:flex;"><span>  Name <span style="color:#0aa">string</span> <span style="color:#a50">`gorm:&#34;default:galeone&#34;`</span>
+</span></span><span style="display:flex;"><span>  Age  <span style="color:#0aa">int64</span>  <span style="color:#a50">`gorm:&#34;default:18&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="查询">查询</h2>
+<p>Gorm提供了很多好用的方法，比如查询表中第一个记录等等，但是我认为这些方法都是冗余的没必要去记住（增加学习难度），使用元方法（不可替代），比如Scan()方法和Table()方法一起用可以替代First()，Last(),Take()和Find()，查询结果直接读到第一个参数中，如果是多条记录则使用一个slice来接收。</p>
+<p>其实Scan()方法都可以使用Rows()和代替，因为gorm是基于官方database.sql库的。</p>
+<p>sql.Row对象的读取方法见<a href="#row--rows" rel="">Row&amp;Rows</a></p>
+<p>另外这些方法都是可以链式调用的（这些方法都返回一个会话对象，属于同一个会话，并且之前方法添加的条件，在后面方法中仍然生效）</p>
+<h3 id="find">Find</h3>
+<p>func (db *DB) Find(dest interface{}, conds &hellip;interface{}) (tx *DB)：将查询结果给到dst对象（为一个slice或者实例）,相当于Scan和Table</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Get all records
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>result := db.<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM users;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>result.RowsAffected <span style="color:#aaa;font-style:italic">// returns found records count, equals `len(users)`
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>result.Error        <span style="color:#aaa;font-style:italic">// returns error
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="where">Where</h3>
+<p>func (db *DB) Where(query interface{}, args &hellip;interface{}) (tx *DB)：添加任意查询条件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Get first matched record
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>).<span style="color:#0a0">First</span>(&amp;user)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM users WHERE name = &#39;jinzhu&#39; ORDER BY id LIMIT 1;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="not">Not</h3>
+<p>func (db *DB) Not(query interface{}, args &hellip;interface{}) (tx *DB)：添加非条件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Not</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>).<span style="color:#0a0">First</span>(&amp;user)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM users WHERE NOT name = &#34;jinzhu&#34; ORDER BY id LIMIT 1;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="or">Or</h3>
+<p>func (db *DB) Or(query interface{}, args &hellip;interface{}) (tx *DB)：添加或条件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;role = ?&#34;</span>, <span style="color:#a50">&#34;admin&#34;</span>).<span style="color:#0a0">Or</span>(<span style="color:#a50">&#34;role = ?&#34;</span>, <span style="color:#a50">&#34;super_admin&#34;</span>).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM users WHERE role = &#39;admin&#39; OR role = &#39;super_admin&#39;;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="select">Select</h3>
+<p>func (db *DB) Select(query interface{}, args &hellip;interface{}) (tx *DB)：选择特定字段(与之对应的还有一个Omit，忽略字段)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;age&#34;</span>).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT name, age FROM users;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="table与model">Table与Model</h3>
+<p>From子句</p>
+<p>func (db *DB) Table(name string, args &hellip;interface{}) (tx *DB)：直接给出表名</p>
+<p>func (db *DB) Model(value interface{}) (tx *DB)：根据对象类型或切片对应类型推测表名（注意可以使用切片）</p>
+<h3 id="order">Order</h3>
+<p>func (db *DB) Order(value interface{}) (tx *DB)：添加order by条件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Order</span>(<span style="color:#a50">&#34;age desc, name&#34;</span>).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM users ORDER BY age desc, name;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="limit">Limit</h3>
+<p>func (db *DB) Limit(limit int) (tx *DB)：添加limit条件，负数取消该会话之前添加的limit条件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Limit</span>(<span style="color:#099">10</span>).<span style="color:#0a0">Find</span>(&amp;users1).<span style="color:#0a0">Limit</span>(-<span style="color:#099">1</span>).<span style="color:#0a0">Find</span>(&amp;users2)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM users LIMIT 10; (users1)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM users; (users2)
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="group">Group</h3>
+<p>func (db *DB) Group(name string) (tx *DB)：添加grop by条件，通常和Table()方法一起用，Rows()方法返回一个<code>*sql.Rows</code>对象需要关闭，防止再次被枚举</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>rows, err := db.<span style="color:#0a0">Table</span>(<span style="color:#a50">&#34;orders&#34;</span>).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;date(created_at) as date, sum(amount) as total&#34;</span>).<span style="color:#0a0">Group</span>(<span style="color:#a50">&#34;date(created_at)&#34;</span>).<span style="color:#0a0">Rows</span>()
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> rows.<span style="color:#0a0">Close</span>()
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> rows.<span style="color:#0a0">Next</span>() {
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="distinct">Distinct</h3>
+<p>func (db *DB) Distinct(args &hellip;interface{}) (tx *DB)：添加distinct条件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Distinct</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;age&#34;</span>).<span style="color:#0a0">Order</span>(<span style="color:#a50">&#34;name, age desc&#34;</span>).<span style="color:#0a0">Find</span>(&amp;results)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="joins">Joins</h3>
+<p>func (db *DB) Joins(query string, args &hellip;interface{}) (tx *DB)：添加Join条件，当该方法先于select()方法调用时为Join预加载，即将全表先进行连接再进行查询</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;users.name, emails.email&#34;</span>).<span style="color:#0a0">Joins</span>(<span style="color:#a50">&#34;left join emails on emails.user_id = users.id&#34;</span>).<span style="color:#0a0">Scan</span>(&amp;result{})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT users.name, emails.email FROM `users` left join emails on emails.user_id = users.id
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="scan">Scan</h3>
+<p>func (db *DB) Scan(dest interface{}) (tx *DB)：与Find()方法一样但是不根据结构体读取表名</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Table</span>(<span style="color:#a50">&#34;users&#34;</span>).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;age&#34;</span>).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;Antonio&#34;</span>).<span style="color:#0a0">Scan</span>(&amp;result)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="锁">锁</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Clauses</span>(clause.Locking{Strength: <span style="color:#a50">&#34;UPDATE&#34;</span>}).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM `users` FOR UPDATE
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Clauses</span>(clause.Locking{
+</span></span><span style="display:flex;"><span>  Strength: <span style="color:#a50">&#34;SHARE&#34;</span>,
+</span></span><span style="display:flex;"><span>  Table: clause.Table{Name: clause.CurrentTable},
+</span></span><span style="display:flex;"><span>}).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM `users` FOR SHARE OF `users`
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Clauses</span>(clause.Locking{
+</span></span><span style="display:flex;"><span>  Strength: <span style="color:#a50">&#34;UPDATE&#34;</span>,
+</span></span><span style="display:flex;"><span>  Options: <span style="color:#a50">&#34;NOWAIT&#34;</span>,
+</span></span><span style="display:flex;"><span>}).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM `users` FOR UPDATE NOWAIT
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="子查询">子查询</h3>
+<p>子查询：*gorm.DB 对象作为<code>(?)</code>参数，再次证明gorm是一个sql字符串拼接器</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;amount &gt; (?)&#34;</span>, db.<span style="color:#0a0">Table</span>(<span style="color:#a50">&#34;orders&#34;</span>).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;AVG(amount)&#34;</span>)).<span style="color:#0a0">Find</span>(&amp;orders)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM &#34;orders&#34; WHERE amount &gt; (SELECT AVG(amount) FROM &#34;orders&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Table</span>(<span style="color:#a50">&#34;(?) as u&#34;</span>, db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;age&#34;</span>)).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;age = ?&#34;</span>, <span style="color:#099">18</span>).<span style="color:#0a0">Find</span>(&amp;User{})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM (SELECT `name`,`age` FROM `users`) as u WHERE `age` = 18
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="命名参数">命名参数</h3>
+<p>sql.NamedArg 和 map[string]interface{}{}</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name1 = @name OR name2 = @name&#34;</span>, sql.<span style="color:#0a0">Named</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>)).<span style="color:#0a0">Find</span>(&amp;user)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM `users` WHERE name1 = &#34;jinzhu&#34; OR name2 = &#34;jinzhu&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name1 = @name OR name2 = @name&#34;</span>, <span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{}{<span style="color:#a50">&#34;name&#34;</span>: <span style="color:#a50">&#34;jinzhu&#34;</span>}).<span style="color:#0a0">First</span>(&amp;user)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM `users` WHERE name1 = &#34;jinzhu&#34; OR name2 = &#34;jinzhu&#34; ORDER BY `users`.`id` LIMIT 1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="优化器索引提示">优化器、索引提示</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#a50">&#34;gorm.io/hints&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//优化器
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Clauses</span>(hints.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;MAX_EXECUTION_TIME(10000)&#34;</span>)).<span style="color:#0a0">Find</span>(&amp;User{})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * /*+ MAX_EXECUTION_TIME(10000) */ FROM `users`
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//索引提示
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Clauses</span>(hints.<span style="color:#0a0">UseIndex</span>(<span style="color:#a50">&#34;idx_user_name&#34;</span>)).<span style="color:#0a0">Find</span>(&amp;User{})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM `users` USE INDEX (`idx_user_name`)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Clauses</span>(hints.<span style="color:#0a0">ForceIndex</span>(<span style="color:#a50">&#34;idx_user_name&#34;</span>, <span style="color:#a50">&#34;idx_user_id&#34;</span>).<span style="color:#0a0">ForJoin</span>()).<span style="color:#0a0">Find</span>(&amp;User{})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM `users` FORCE INDEX FOR JOIN (`idx_user_name`,`idx_user_id`)&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="迭代">迭代</h3>
+<p>func (db *DB) ScanRows(rows *sql.Rows, dest interface{}) error</p>
+<h3 id="findinbatches">FindInBatches</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 每次批量处理 100 条
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>result := db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;processed = ?&#34;</span>, <span style="color:#00a">false</span>).<span style="color:#0a0">FindInBatches</span>(&amp;results, <span style="color:#099">100</span>, <span style="color:#00a">func</span>(tx *gorm.DB, batch <span style="color:#0aa">int</span>) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> _, result := <span style="color:#00a">range</span> results {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 批量处理找到的记录
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tx.<span style="color:#0a0">Save</span>(&amp;results)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tx.RowsAffected <span style="color:#aaa;font-style:italic">// 本次批量操作影响的记录数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>  batch <span style="color:#aaa;font-style:italic">// Batch 1, 2, 3
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 如果返回错误会终止后续批量操作
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="查询钩子">查询钩子</h3>
+<p>AfterFind</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (u *User) <span style="color:#0a0">AfterFind</span>(tx *gorm.DB) (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> u.Role == <span style="color:#a50">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>    u.Role = <span style="color:#a50">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="scope">Scope</h3>
+<p>像调用自己的方法一样地调用<code>func xxx(db *gorm.DB) *gorm.DB</code>类型函数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">AmountGreaterThan1000</span>(db *gorm.DB) *gorm.DB {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;amount &gt; ?&#34;</span>, <span style="color:#099">1000</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">PaidWithCreditCard</span>(db *gorm.DB) *gorm.DB {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;pay_mode_sign = ?&#34;</span>, <span style="color:#a50">&#34;C&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Scopes</span>(AmountGreaterThan1000, PaidWithCreditCard).<span style="color:#0a0">Find</span>(&amp;orders)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 查找所有金额大于 1000 的信用卡订单
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="count">Count</h3>
+<p>获取匹配的记录数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> count <span style="color:#0aa">int64</span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>).<span style="color:#0a0">Or</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu 2&#34;</span>).<span style="color:#0a0">Count</span>(&amp;count)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT count(1) FROM users WHERE name = &#39;jinzhu&#39; OR name = &#39;jinzhu 2&#39;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="更新">更新</h2>
+<h3 id="更新单个列">更新单个列</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 条件更新
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;active = ?&#34;</span>, <span style="color:#00a">true</span>).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;hello&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET name=&#39;hello&#39;, updated_at=&#39;2013-11-17 21:34:10&#39; WHERE active=true;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="更新多列">更新多列</h3>
+<p>通过Table或者Model获取表，然后调用Update()传入一个表记录对象或者一个map[string]interface{}的对象，将满足条件的记录修改为对象的非nil值，可以配合Select一起使用更新选定字段会，select会更新nil值(所以推荐使用map更新)：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 使用 Map 进行 Select
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// User&#39;s ID is `111`:
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name&#34;</span>).<span style="color:#0a0">Updates</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{}{<span style="color:#a50">&#34;name&#34;</span>: <span style="color:#a50">&#34;hello&#34;</span>, <span style="color:#a50">&#34;age&#34;</span>: <span style="color:#099">18</span>, <span style="color:#a50">&#34;active&#34;</span>: <span style="color:#00a">false</span>})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET name=&#39;hello&#39; WHERE id=111;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="更新-hook">更新 Hook</h3>
+<p>BeforeSave, BeforeUpdate, AfterSave, AfterUpdate</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (u *User) <span style="color:#0a0">BeforeUpdate</span>(tx *gorm.DB) (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> u.Role == <span style="color:#a50">&#34;admin&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> errors.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;admin user not allowed to update&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="批量更新">批量更新</h3>
+<p>添加查询条件更新</p>
+<h3 id="阻止全局更新">阻止全局更新</h3>
+<p>全局更新需要添加选择条件或者使用原生Sql或者设置session AllowGlobalUpdate为真，否则返回ErrMissingWhereClause错误</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;1 = 1&#34;</span>).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET `name` = &#34;jinzhu&#34; WHERE 1=1
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Exec</span>(<span style="color:#a50">&#34;UPDATE users SET name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET name = &#34;jinzhu&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Session</span>(&amp;gorm.Session{AllowGlobalUpdate: <span style="color:#00a">true</span>}).<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET `name` = &#34;jinzhu&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="更新的记录数">更新的记录数</h3>
+<p>更新的记录数使用*gorm的属性查看</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 通过 `RowsAffected` 得到更新的记录数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>result := db.<span style="color:#0a0">Model</span>(User{}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;role = ?&#34;</span>, <span style="color:#a50">&#34;admin&#34;</span>).<span style="color:#0a0">Updates</span>(User{Name: <span style="color:#a50">&#34;hello&#34;</span>, Age: <span style="color:#099">18</span>})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET name=&#39;hello&#39;, age=18 WHERE role = &#39;admin&#39;;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>result.RowsAffected <span style="color:#aaa;font-style:italic">// 更新的记录数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>result.Error        <span style="color:#aaa;font-style:italic">// 更新的错误
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用-sql-表达式更新">使用 SQL 表达式更新</h3>
+<p>func Expr(expr string, args &hellip;interface{}) clause.Expr ：生成sql表达式，作为更新值或者替换<code>?</code>占位符</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// product 的 ID 是 `3`
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Model</span>(&amp;product).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;price&#34;</span>, gorm.<span style="color:#0a0">Expr</span>(<span style="color:#a50">&#34;price * ? + ?&#34;</span>, <span style="color:#099">2</span>, <span style="color:#099">100</span>))
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE &#34;products&#34; SET &#34;price&#34; = price * 2 + 100, &#34;updated_at&#34; = &#39;2013-11-17 21:34:10&#39; WHERE &#34;id&#34; = 3;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="根据子查询进行更新">根据子查询进行更新</h3>
+<p>子查询作为更新值参数，通常子查询的结果是一个值而非多个记录或者多个字段</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;company_name&#34;</span>, db.<span style="color:#0a0">Model</span>(&amp;Company{}).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name&#34;</span>).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;companies.id = users.company_id&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE &#34;users&#34; SET &#34;company_name&#34; = (SELECT name FROM companies WHERE companies.id = users.company_id);
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="不使用-hook-和时间追踪">不使用 Hook 和时间追踪</h3>
+<p>UpdateColumn、UpdateColumns不追踪更新时间</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 更新单个列
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">UpdateColumn</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;hello&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET name=&#39;hello&#39; WHERE id = 111;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 更新多个列
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">UpdateColumns</span>(User{Name: <span style="color:#a50">&#34;hello&#34;</span>, Age: <span style="color:#099">18</span>})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET name=&#39;hello&#39;, age=18 WHERE id = 111;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 更新选中的列
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;age&#34;</span>).<span style="color:#0a0">UpdateColumns</span>(User{Name: <span style="color:#a50">&#34;hello&#34;</span>, Age: <span style="color:#099">0</span>})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE users SET name=&#39;hello&#39;, age=0 WHERE id = 111;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="返回修改行的数据">返回修改行的数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 返回所有列
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">var</span> users []User
+</span></span><span style="display:flex;"><span>DB.<span style="color:#0a0">Model</span>(&amp;users).<span style="color:#0a0">Clauses</span>(clause.Returning{}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;role = ?&#34;</span>, <span style="color:#a50">&#34;admin&#34;</span>).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;salary&#34;</span>, gorm.<span style="color:#0a0">Expr</span>(<span style="color:#a50">&#34;salary * ?&#34;</span>, <span style="color:#099">2</span>))
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE `users` SET `salary`=salary * 2,`updated_at`=&#34;2021-10-28 17:37:23.19&#34; WHERE role = &#34;admin&#34; RETURNING *
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// users =&gt; []User{{ID: 1, Name: &#34;jinzhu&#34;, Role: &#34;admin&#34;, Salary: 100}, {ID: 2, Name: &#34;jinzhu.2&#34;, Role: &#34;admin&#34;, Salary: 1000}}
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 返回指定的列
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>DB.<span style="color:#0a0">Model</span>(&amp;users).<span style="color:#0a0">Clauses</span>(clause.Returning{Columns: []clause.Column{{Name: <span style="color:#a50">&#34;name&#34;</span>}, {Name: <span style="color:#a50">&#34;salary&#34;</span>}}}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;role = ?&#34;</span>, <span style="color:#a50">&#34;admin&#34;</span>).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;salary&#34;</span>, gorm.<span style="color:#0a0">Expr</span>(<span style="color:#a50">&#34;salary * ?&#34;</span>, <span style="color:#099">2</span>))
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// UPDATE `users` SET `salary`=salary * 2,`updated_at`=&#34;2021-10-28 17:37:23.19&#34; WHERE role = &#34;admin&#34; RETURNING `name`, `salary`
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// users =&gt; []User{{ID: 0, Name: &#34;jinzhu&#34;, Role: &#34;&#34;, Salary: 100}, {ID: 0, Name: &#34;jinzhu.2&#34;, Role: &#34;&#34;, Salary: 1000}}
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="检查字段是否有变更">检查字段是否有变更</h3>
+<p>Before Update Hook调用Changed</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (u *User) <span style="color:#0a0">BeforeUpdate</span>(tx *gorm.DB) (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 如果 Role 字段有变更
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">if</span> tx.Statement.<span style="color:#0a0">Changed</span>(<span style="color:#a50">&#34;Role&#34;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> errors.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;role not allowed to change&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> tx.Statement.<span style="color:#0a0">Changed</span>(<span style="color:#a50">&#34;Name&#34;</span>, <span style="color:#a50">&#34;Admin&#34;</span>) { <span style="color:#aaa;font-style:italic">// 如果 Name 或 Role 字段有变更
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    tx.Statement.<span style="color:#0a0">SetColumn</span>(<span style="color:#a50">&#34;Age&#34;</span>, <span style="color:#099">18</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 如果任意字段有变更
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">if</span> tx.Statement.<span style="color:#0a0">Changed</span>() {
+</span></span><span style="display:flex;"><span>        tx.Statement.<span style="color:#0a0">SetColumn</span>(<span style="color:#a50">&#34;RefreshedAt&#34;</span>, time.<span style="color:#0a0">Now</span>())
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在-update-时修改值">在 Update 时修改值</h3>
+<p>Before 钩子中，使用Save变更整个对象，或者使用SetColumn更新一个字段</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (user *User) <span style="color:#0a0">BeforeSave</span>(tx *gorm.DB) (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> pw, err := bcrypt.<span style="color:#0a0">GenerateFromPassword</span>(user.Password, <span style="color:#099">0</span>); err == <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    tx.Statement.<span style="color:#0a0">SetColumn</span>(<span style="color:#a50">&#34;EncryptedPassword&#34;</span>, pw)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> tx.Statement.<span style="color:#0a0">Changed</span>(<span style="color:#a50">&#34;Code&#34;</span>) {
+</span></span><span style="display:flex;"><span>    user.Age += <span style="color:#099">20</span>
+</span></span><span style="display:flex;"><span>    tx.Statement.<span style="color:#0a0">SetColumn</span>(<span style="color:#a50">&#34;Age&#34;</span>, user.Age)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;Name&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="删除">删除</h2>
+<h3 id="批量删除">批量删除</h3>
+<p>添加条件然后调用Delete(dst)方法,dst为目标表记录对象或对象切片的地址</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;email LIKE ?&#34;</span>, <span style="color:#a50">&#34;%jinzhu%&#34;</span>).<span style="color:#0a0">Delete</span>(&amp;Email{})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// DELETE from emails where email LIKE &#34;%jinzhu%&#34;;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="delete-hook">Delete Hook</h3>
+<p>BeforeDelete、AfterDelete</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (u *User) <span style="color:#0a0">BeforeDelete</span>(tx *gorm.DB) (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> u.Role == <span style="color:#a50">&#34;admin&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> errors.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;admin user not allowed to delete&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="阻止全局删除">阻止全局删除</h3>
+<p>加永真条件，或者使用原生 SQL，或者启用 AllowGlobalUpdate 模式</p>
+<h3 id="返回删除行的数据">返回删除行的数据</h3>
+<p>Clauses(clause.Returning{})</p>
+<p>Clauses(clause.Returning{Columns: []clause.Column{{Name: &ldquo;name&rdquo;}, {Name: &ldquo;salary&rdquo;}}})</p>
+<h3 id="软删除">软删除</h3>
+<p>模型包含了gorm.deletedat字段（gorm.Model 已经包含了该字段)将自动配置为软删除</p>
+<h3 id="查找被软删除的记录">查找被软删除的记录</h3>
+<p>Unscoped()方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Unscoped</span>().<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;age = 20&#34;</span>).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SELECT * FROM users WHERE age = 20;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="永久删除">永久删除</h3>
+<p>使用Unscoped()方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Unscoped</span>().<span style="color:#0a0">Delete</span>(&amp;order)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// DELETE FROM orders WHERE id=10;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="delete-flag">Delete Flag</h3>
+<p>默认为删除时间</p>
+<p>设置方法见<a href="https://gorm.io/zh_CN/docs/delete.html#Delete-Flag" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h2 id="sql-构建器">SQL 构建器</h2>
+<h3 id="原生-sql">原生 SQL</h3>
+<p>func (db *DB) Raw(sql string, values &hellip;interface{}) (tx *DB)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Raw</span>(<span style="color:#a50">&#34;SELECT id, name, age FROM users WHERE name = ?&#34;</span>, <span style="color:#099">3</span>).<span style="color:#0a0">Scan</span>(&amp;result)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>func (db *DB) Exec(sql string, values &hellip;interface{}) (tx *DB)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Exec</span>(<span style="color:#a50">&#34;DROP TABLE users&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">Exec</span>(<span style="color:#a50">&#34;UPDATE orders SET shipped_at = ? WHERE id IN ?&#34;</span>, time.<span style="color:#0a0">Now</span>(), []<span style="color:#0aa">int64</span>{<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Exec with SQL Expression
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Exec</span>(<span style="color:#a50">&#34;UPDATE users SET money = ? WHERE name = ?&#34;</span>, gorm.<span style="color:#0a0">Expr</span>(<span style="color:#a50">&#34;money * ? + ?&#34;</span>, <span style="color:#099">10000</span>, <span style="color:#099">1</span>), <span style="color:#a50">&#34;jinzhu&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dryrun-模式">DryRun 模式</h3>
+<p>不执行仅生成sql</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>stmt := db.<span style="color:#0a0">Session</span>(&amp;Session{DryRun: <span style="color:#00a">true</span>}).<span style="color:#0a0">First</span>(&amp;user, <span style="color:#099">1</span>).Statement
+</span></span><span style="display:flex;"><span>stmt.SQL.<span style="color:#0a0">String</span>() <span style="color:#aaa;font-style:italic">//=&gt; SELECT * FROM `users` WHERE `id` = $1 ORDER BY `id`
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>stmt.Vars         <span style="color:#aaa;font-style:italic">//=&gt; []interface{}{1}
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="tosql">ToSQL</h3>
+<p>返回生成的 SQL 但不执行。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>sql := DB.<span style="color:#0a0">ToSQL</span>(<span style="color:#00a">func</span>(tx *gorm.DB) *gorm.DB {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> tx.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;id = ?&#34;</span>, <span style="color:#099">100</span>).<span style="color:#0a0">Limit</span>(<span style="color:#099">10</span>).<span style="color:#0a0">Order</span>(<span style="color:#a50">&#34;age desc&#34;</span>).<span style="color:#0a0">Find</span>(&amp;[]User{})
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>sql <span style="color:#aaa;font-style:italic">//=&gt; SELECT * FROM &#34;users&#34; WHERE id = 100 AND &#34;users&#34;.&#34;deleted_at&#34; IS NULL ORDER BY age desc LIMIT 10
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="row--rows">Row &amp; Rows</h3>
+<p>获取 *sql.Row 结果</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>row := db.<span style="color:#0a0">Table</span>(<span style="color:#a50">&#34;users&#34;</span>).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name&#34;</span>, <span style="color:#a50">&#34;age&#34;</span>).<span style="color:#0a0">Row</span>()
+</span></span><span style="display:flex;"><span>row.<span style="color:#0a0">Scan</span>(&amp;name, &amp;age)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取 *sql.Rows 结果</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 使用 GORM API 构建 SQL
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>rows, err := db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name, age, email&#34;</span>).<span style="color:#0a0">Rows</span>()
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> rows.<span style="color:#0a0">Close</span>()
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> rows.<span style="color:#0a0">Next</span>() {
+</span></span><span style="display:flex;"><span>  rows.<span style="color:#0a0">Scan</span>(&amp;name, &amp;age, &amp;email)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 业务逻辑...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="将-sqlrows-扫描至-model">将 sql.Rows 扫描至 model</h3>
+<p>db.ScanRows</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>rows, err := db.<span style="color:#0a0">Model</span>(&amp;User{}).<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>).<span style="color:#0a0">Select</span>(<span style="color:#a50">&#34;name, age, email&#34;</span>).<span style="color:#0a0">Rows</span>() <span style="color:#aaa;font-style:italic">// (*sql.Rows, error)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">defer</span> rows.<span style="color:#0a0">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> user User
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> rows.<span style="color:#0a0">Next</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// ScanRows 将一行扫描至 user
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  db.<span style="color:#0a0">ScanRows</span>(rows, &amp;user)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 业务逻辑...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="连接">连接</h3>
+<p>在一条 tcp DB 连接中运行多条 SQL (不是事务)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Connection</span>(<span style="color:#00a">func</span>(tx *gorm.DB) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>  tx.<span style="color:#0a0">Exec</span>(<span style="color:#a50">&#34;SET my.role = ?&#34;</span>, <span style="color:#a50">&#34;admin&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tx.<span style="color:#0a0">First</span>(&amp;User{})
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="子句clause">子句（Clause）</h3>
+<p>GORM 内部使用 SQL builder 生成 SQL。每个操作（会话），GORM 都会创建一个 *gorm.Statement 对象。所有的 GORM API 都是在为 statement 添加、修改 子句，最后，GORM 会根据这些子句生成 SQL</p>
+<h3 id="子句构造器">子句构造器</h3>
+<p>较复杂且我觉得用不到，如果都需要子句构造器了，为什么我不直接使用原生sql（Exex()方法）呢？</p>
+<h2 id="关联">关联</h2>
+<p>开发尽量避免外键的使用</p>
+<p>这部分详见<a href="https://gorm.io/zh_CN/docs/belongs_to.html" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h2 id="context">Context</h2>
+<p>WithContext 方法</p>
+<h3 id="单会话模式">单会话模式</h3>
+<p>一个会话执行一个sql命令</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">WithContext</span>(ctx).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="持续会话模式">持续会话模式</h3>
+<p>一个会话执行多个sql命令</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>tx := db.<span style="color:#0a0">WithContext</span>(ctx)
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">First</span>(&amp;user, <span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;role&#34;</span>, <span style="color:#a50">&#34;admin&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="context-超时">Context 超时</h3>
+<p>长 Sql 查询，WithContext传入一个带超时的 context 给 db.</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>ctx, cancel := context.<span style="color:#0a0">WithTimeout</span>(context.<span style="color:#0a0">Background</span>(), <span style="color:#099">2</span>*time.Second)
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> <span style="color:#0a0">cancel</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">WithContext</span>(ctx).<span style="color:#0a0">Find</span>(&amp;users)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="hookscallbacks-中的-context">Hooks/Callbacks 中的 Context</h3>
+<p>gorm.db.Statement.Context属性</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (u *User) <span style="color:#0a0">BeforeCreate</span>(tx *gorm.DB) (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  ctx := tx.Statement.Context
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="处理错误">处理错误</h2>
+<p>GORM 提供链式 API，GORM 会设置 *gorm.DB 的 Error 字段</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">if</span> result := db.<span style="color:#0a0">Where</span>(<span style="color:#a50">&#34;name = ?&#34;</span>, <span style="color:#a50">&#34;jinzhu&#34;</span>).<span style="color:#0a0">First</span>(&amp;user); result.Error != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 处理错误...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="errrecordnotfound">ErrRecordNotFound</h3>
+<p>找不到记录时，GORM 会返回 ErrRecordNotFound 错误</p>
+<p>发生多个错误通过 errors.Is 判断错误是否为 ErrRecordNotFound</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 检查错误是否为 RecordNotFound
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := db.<span style="color:#0a0">First</span>(&amp;user, <span style="color:#099">100</span>).Error
+</span></span><span style="display:flex;"><span>errors.<span style="color:#0a0">Is</span>(err, gorm.ErrRecordNotFound)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="链式方法">链式方法</h2>
+<p>链式方法：将 Clauses 修改或添加到当前 Statement 的方法。Where, Select, Omit, Joins, Scopes, Preload, Raw（Raw不能和其他的一起用）</p>
+<p>终结方法：立即执行注册回调的方法，然后生成并执行 SQL。Create, First, Find, Take, Save, Update, Delete, Scan, Row, Rows</p>
+<p>新建会话方法：链式方法, Finisher 方法返回的 *gorm.DB 实例已经被加了各种各样的子句，不能安全地再使用，需要新建一个会话。Session（需要使用NewDB选项）、WithContext、Debug。（另外直接用db重新开启一个会话也是可以的）</p>
+<h2 id="会话">会话</h2>
+<p>gorm.DB.Session()方法传入一个Session对象地址</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Session 配置
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">type</span> Session <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  DryRun                   <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  PrepareStmt              <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  NewDB                    <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  Initialized              <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  SkipHooks                <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  SkipDefaultTransaction   <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  DisableNestedTransaction <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  AllowGlobalUpdate        <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  FullSaveAssociations     <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  QueryFields              <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>  Context                  context.Context
+</span></span><span style="display:flex;"><span>  Logger                   logger.Interface
+</span></span><span style="display:flex;"><span>  NowFunc                  <span style="color:#00a">func</span>() time.Time
+</span></span><span style="display:flex;"><span>  CreateBatchSize          <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dryrun">DryRun</h3>
+<p>生成 SQL 但不执行</p>
+<h3 id="预编译">预编译</h3>
+<p>PreparedStmt提高后续的效率</p>
+<h3 id="newdb">NewDB</h3>
+<p>NewDB 选项创建一个不带之前条件的新 DB</p>
+<p>其余选项见<a href="https://gorm.io/zh_CN/docs/session.html" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h2 id="hook钩子">Hook钩子</h2>
+<p>之前的笔记已经讲过这个内容</p>
+<p>详见<a href="https://gorm.io/zh_CN/docs/hooks.html" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h2 id="事务">事务</h2>
+<h3 id="禁用默认事务">禁用默认事务</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 全局禁用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db, err := gorm.<span style="color:#0a0">Open</span>(sqlite.<span style="color:#0a0">Open</span>(<span style="color:#a50">&#34;gorm.db&#34;</span>), &amp;gorm.Config{
+</span></span><span style="display:flex;"><span>  SkipDefaultTransaction: <span style="color:#00a">true</span>,
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 持续会话模式
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>tx := db.<span style="color:#0a0">Session</span>(&amp;Session{SkipDefaultTransaction: <span style="color:#00a">true</span>})
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">First</span>(&amp;user, <span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">Find</span>(&amp;users)
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;Age&#34;</span>, <span style="color:#099">18</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="事务-1">事务</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Transaction</span>(<span style="color:#00a">func</span>(tx *gorm.DB) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 在事务中执行一些 db 操作（从这里开始，您应该使用 &#39;tx&#39; 而不是 &#39;db&#39;）
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">if</span> err := tx.<span style="color:#0a0">Create</span>(&amp;Animal{Name: <span style="color:#a50">&#34;Giraffe&#34;</span>}).Error; err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 返回任何错误都会回滚事务
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">return</span> err
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> err := tx.<span style="color:#0a0">Create</span>(&amp;Animal{Name: <span style="color:#a50">&#34;Lion&#34;</span>}).Error; err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> err
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 返回 nil 提交事务
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="嵌套事务">嵌套事务</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">Transaction</span>(<span style="color:#00a">func</span>(tx *gorm.DB) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>  tx.<span style="color:#0a0">Create</span>(&amp;user1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tx.<span style="color:#0a0">Transaction</span>(<span style="color:#00a">func</span>(tx2 *gorm.DB) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>    tx2.<span style="color:#0a0">Create</span>(&amp;user2)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> errors.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;rollback user2&#34;</span>) <span style="color:#aaa;font-style:italic">// Rollback user2
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  tx.<span style="color:#0a0">Transaction</span>(<span style="color:#00a">func</span>(tx2 *gorm.DB) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>    tx2.<span style="color:#0a0">Create</span>(&amp;user3)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Commit user1, user3
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="手动事务">手动事务</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 开始事务
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>tx := db.<span style="color:#0a0">Begin</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 在事务中执行一些 db 操作（从这里开始，您应该使用 &#39;tx&#39; 而不是 &#39;db&#39;）
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>tx.<span style="color:#0a0">Create</span>(...)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 遇到错误时回滚事务
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>tx.<span style="color:#0a0">Rollback</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 否则，提交事务
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>tx.<span style="color:#0a0">Commit</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同一个事务需要使用同一个Session（即返回的tx）</p>
+<h3 id="savepointrollbackto">SavePoint、RollbackTo</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>tx := db.<span style="color:#0a0">Begin</span>()
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">Create</span>(&amp;user1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">SavePoint</span>(<span style="color:#a50">&#34;sp1&#34;</span>)
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">Create</span>(&amp;user2)
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">RollbackTo</span>(<span style="color:#a50">&#34;sp1&#34;</span>) <span style="color:#aaa;font-style:italic">// Rollback user2
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">Commit</span>() <span style="color:#aaa;font-style:italic">// Commit user1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="迁移">迁移</h2>
+<p>见<a href="https://gorm.io/zh_CN/docs/migration.html" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h2 id="logger">Logger</h2>
+<p>定义logger</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>newLogger := logger.<span style="color:#0a0">New</span>(
+</span></span><span style="display:flex;"><span>  log.<span style="color:#0a0">New</span>(os.Stdout, <span style="color:#a50">&#34;\r\n&#34;</span>, log.LstdFlags), <span style="color:#aaa;font-style:italic">// io writer（日志输出的目标，前缀和日志包含的内容——译者注）
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  logger.Config{
+</span></span><span style="display:flex;"><span>    SlowThreshold: time.Second,   <span style="color:#aaa;font-style:italic">// 慢 SQL 阈值
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    LogLevel:      logger.Silent, <span style="color:#aaa;font-style:italic">// 日志级别
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    IgnoreRecordNotFoundError: <span style="color:#00a">true</span>,   <span style="color:#aaa;font-style:italic">// 忽略ErrRecordNotFound（记录未找到）错误
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Colorful:      <span style="color:#00a">false</span>,         <span style="color:#aaa;font-style:italic">// 禁用彩色打印
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  },
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>会话使用logger</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 全局模式
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db, err := gorm.<span style="color:#0a0">Open</span>(sqlite.<span style="color:#0a0">Open</span>(<span style="color:#a50">&#34;test.db&#34;</span>), &amp;gorm.Config{
+</span></span><span style="display:flex;"><span>  Logger: newLogger,
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 新建会话模式
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>tx := db.<span style="color:#0a0">Session</span>(&amp;Session{Logger: newLogger})
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">First</span>(&amp;user)
+</span></span><span style="display:flex;"><span>tx.<span style="color:#0a0">Model</span>(&amp;user).<span style="color:#0a0">Update</span>(<span style="color:#a50">&#34;Age&#34;</span>, <span style="color:#099">18</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="日志级别">日志级别</h3>
+<p>Silent、Error、Warn、Info</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db, err := gorm.<span style="color:#0a0">Open</span>(sqlite.<span style="color:#0a0">Open</span>(<span style="color:#a50">&#34;test.db&#34;</span>), &amp;gorm.Config{
+</span></span><span style="display:flex;"><span>  Logger: logger.Default.<span style="color:#0a0">LogMode</span>(logger.Silent),
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="自定义-logger">自定义 Logger</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Interface <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">LogMode</span>(LogLevel) Interface
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">Info</span>(context.Context, <span style="color:#0aa">string</span>, ...<span style="color:#00a">interface</span>{})
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">Warn</span>(context.Context, <span style="color:#0aa">string</span>, ...<span style="color:#00a">interface</span>{})
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">Error</span>(context.Context, <span style="color:#0aa">string</span>, ...<span style="color:#00a">interface</span>{})
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">Trace</span>(ctx context.Context, begin time.Time, fc <span style="color:#00a">func</span>() (sql <span style="color:#0aa">string</span>, rowsAffected <span style="color:#0aa">int64</span>), err <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="迁移-1">迁移</h2>
+<p>AutoMigrate 用于自动迁移您的 schema，保持您的 schema 是最新的。AutoMigrate 会创建表、缺失的外键、约束、列和索引。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#0a0">AutoMigrate</span>(&amp;User{})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.<span style="color:#0a0">AutoMigrate</span>(&amp;User{}, &amp;Product{}, &amp;Order{})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 创建表时添加后缀
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>db.<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;gorm:table_options&#34;</span>, <span style="color:#a50">&#34;ENGINE=InnoDB&#34;</span>).<span style="color:#0a0">AutoMigrate</span>(&amp;User{})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="常规数据库接口-sqldb">常规数据库接口 sql.DB</h2>
+<p>gorm.DB.DB()方法获取一个标准库中的*sql.DB</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 获取通用数据库对象 sql.DB，然后使用其提供的功能
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>sqlDB, err := db.<span style="color:#0a0">DB</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="连接池-1">连接池</h3>
+<p>sql.DB可以设置连接池配置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 获取通用数据库对象 sql.DB ，然后使用其提供的功能
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>sqlDB, err := db.<span style="color:#0a0">DB</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SetMaxIdleConns 用于设置连接池中空闲连接的最大数量。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>sqlDB.<span style="color:#0a0">SetMaxIdleConns</span>(<span style="color:#099">10</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SetMaxOpenConns 设置打开数据库连接的最大数量。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>sqlDB.<span style="color:#0a0">SetMaxOpenConns</span>(<span style="color:#099">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// SetConnMaxLifetime 设置了连接可复用的最大时间。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>sqlDB.<span style="color:#0a0">SetConnMaxLifetime</span>(time.Hour)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="设置">设置</h2>
+<p>Set, Get, InstanceSet, InstanceGet 方法传值给 勾子 或其他方法</p>
+<p>Set, Get传递给Session</p>
+<p>InstanceSet, InstanceGet传递给同一Statement</p>
+<h2 id="数据库索引">数据库索引</h2>
+<p>index、uniqueIndex 标签</p>
+<p>这些索引将在使用 GORM 进行AutoMigrate 或 Createtable 时创建</p>
+<h3 id="唯一索引">唯一索引</h3>
+<p>uniqueIndex 标签</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> User <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    Name1 <span style="color:#0aa">string</span> <span style="color:#a50">`gorm:&#34;uniqueIndex&#34;`</span>
+</span></span><span style="display:flex;"><span>    Name2 <span style="color:#0aa">string</span> <span style="color:#a50">`gorm:&#34;uniqueIndex:idx_name,sort:desc&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="复合索引">复合索引</h3>
+<p>两个字段使用同一个索引名将创建复合索引</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// create composite index `idx_member` with columns `name`, `number`
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">type</span> User <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    Name   <span style="color:#0aa">string</span> <span style="color:#a50">`gorm:&#34;index:idx_member&#34;`</span>
+</span></span><span style="display:flex;"><span>    Number <span style="color:#0aa">string</span> <span style="color:#a50">`gorm:&#34;index:idx_member&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>字段优先级:priority</p>
+<h2 id="复合主键">复合主键</h2>
+<p>多个字段设为主键，以创建复合主键</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Product <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  ID           <span style="color:#0aa">string</span> <span style="color:#a50">`gorm:&#34;primaryKey&#34;`</span>
+</span></span><span style="display:flex;"><span>  LanguageCode <span style="color:#0aa">string</span> <span style="color:#a50">`gorm:&#34;primaryKey&#34;`</span>
+</span></span><span style="display:flex;"><span>  Code         <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>  Name         <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>autoIncrement关闭整形主键自动加1</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Product <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  CategoryID <span style="color:#0aa">uint64</span> <span style="color:#a50">`gorm:&#34;primaryKey;autoIncrement:false&#34;`</span>
+</span></span><span style="display:flex;"><span>  TypeID     <span style="color:#0aa">uint64</span> <span style="color:#a50">`gorm:&#34;primaryKey;autoIncrement:false&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/gorm/" data-title="go第三方库-Gorm" data-hashtags="go第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/gorm/" data-hashtag="go第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/gorm/" data-title="go第三方库-Gorm"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/gorm/" data-title="go第三方库-Gorm"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/gorm/" data-title="go第三方库-Gorm"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">go第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E6%9D%82%E8%AE%B0/go%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98pprof/" class="prev" rel="prev" title="golang-杂记-Go性能调优pprof"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-杂记-Go性能调优pprof</a>
+            <a href="/posts/%E6%9D%82%E9%A1%B9/windows%E9%9C%80%E8%A6%81%E6%9D%83%E9%99%90%E4%BF%AE%E6%94%B9/" class="next" rel="next" title="杂项-Windows需要权限修改">杂项-Windows需要权限修改<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-19T11:15:43+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"go第三方库-Gorm"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

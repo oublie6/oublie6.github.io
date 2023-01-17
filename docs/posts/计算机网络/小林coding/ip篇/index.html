@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>计算机网络-小林coding-IP篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="计算机网络-小林coding-IP篇" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 IP 基础知识全家桶 前菜 —— IP 基本认识 网络层实现主机与主机之间的通信，也" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/ip%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-25T22:26:04+08:00" />
+<meta property="article:modified_time" content="2022-12-25T22:26:04+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="计算机网络-小林coding-IP篇"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 IP 基础知识全家桶 前菜 —— IP 基本认识 网络层实现主机与主机之间的通信，也"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/ip%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/json/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%93%84%E6%B0%B4%E6%B1%A0%E6%8A%BD%E6%A0%B7%E7%AE%97%E6%B3%95/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "计算机网络-小林coding-IP篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/%E5%B0%8F%E6%9E%97coding\/ip%E7%AF%87\/"
+        },"genre": "posts","keywords": "小林coding系列","wordcount":  1099 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/%E5%B0%8F%E6%9E%97coding\/ip%E7%AF%87\/","datePublished": "2022-12-25T22:26:04+08:00","dateModified": "2022-12-25T22:26:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">计算机网络-小林coding-IP篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机网络</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-25">2022-12-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1099 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#ip-基础知识全家桶">IP 基础知识全家桶</a>
+      <ul>
+        <li><a href="#前菜--ip-基本认识">前菜 —— IP 基本认识</a></li>
+        <li><a href="#主菜--ip-地址的基础知识">主菜 —— IP 地址的基础知识</a>
+          <ul>
+            <li><a href="#ip-地址的分类">IP 地址的分类</a></li>
+            <li><a href="#无分类地址-cidr">无分类地址 CIDR</a></li>
+            <li><a href="#公有-ip-地址与私有-ip-地址">公有 IP 地址与私有 IP 地址</a></li>
+            <li><a href="#ip-地址与路由控制">IP 地址与路由控制</a></li>
+            <li><a href="#ip-分片与重组">IP 分片与重组</a></li>
+            <li><a href="#ipv6-基本认识">IPv6 基本认识</a></li>
+            <li><a href="#ipv4-首部与-ipv6-首部">IPv4 首部与 IPv6 首部</a></li>
+          </ul>
+        </li>
+        <li><a href="#点心--ip-协议相关技术">点心 —— IP 协议相关技术</a></li>
+      </ul>
+    </li>
+    <li><a href="#ping-的工作原理">ping 的工作原理</a>
+      <ul>
+        <li><a href="#ip协议的助手--icmp-协议">IP协议的助手 —— ICMP 协议</a></li>
+        <li><a href="#ping--查询报文类型的使用">ping —— 查询报文类型的使用</a></li>
+        <li><a href="#traceroute--差错报文类型的使用">traceroute —— 差错报文类型的使用</a></li>
+      </ul>
+    </li>
+    <li><a href="#断网了还能-ping-通-127001-吗">断网了，还能 ping 通 127.0.0.1 吗？</a>
+      <ul>
+        <li><a href="#ping回环地址和ping本机地址有什么区别">ping回环地址和ping本机地址有什么区别</a></li>
+        <li><a href="#127001-和-localhost-以及-0000-有区别吗">127.0.0.1 和 localhost 以及 0.0.0.0 有区别吗</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/network/#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E7%BE%A4%E4%BD%93" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<h2 id="ip-基础知识全家桶">IP 基础知识全家桶</h2>
+<h3 id="前菜--ip-基本认识">前菜 —— IP 基本认识</h3>
+<p>网络层实现主机与主机之间的通信，也叫点对点（end to end）通信</p>
+<p>MAC 的作用则是实现「直连」的两个设备之间通信，而 IP 则负责在「没有直连」的两个网络之间进行通信传输</p>
+<p>源IP地址和目标IP地址在传输过程中是不会变化的（前提：没有使用 NAT 网络），只有源 MAC 地址和目标 MAC 一直在变化</p>
+<h3 id="主菜--ip-地址的基础知识">主菜 —— IP 地址的基础知识</h3>
+<p>32 位 IP 地址以每 8 位为组，共分为 4 组，每组以「.」隔开</p>
+<h4 id="ip-地址的分类">IP 地址的分类</h4>
+<p>网络号和主机号</p>
+<div id="id-1"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/7.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/7.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/7.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/7.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/7.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/7.jpg" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/14.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/14.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/14.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/14.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/14.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/14.jpg" /></p>
+</div>
+<p>广播地址:主机号全 1</p>
+<ul>
+<li>在本网络内广播的叫做本地广播</li>
+<li>在不同网络之间的广播叫做直接广播</li>
+</ul>
+<h4 id="无分类地址-cidr">无分类地址 CIDR</h4>
+<p>a.b.c.d/x，其中 /x 表示前 x 位属于网络号， x 的范围是 0 ~ 32</p>
+<p>子网掩码：将子网掩码和 IP 地址按位计算 AND，就可得到网络号</p>
+<p>子网划分：将主机地址分为两个部分（子网网络地址和子网主机地址）</p>
+<h4 id="公有-ip-地址与私有-ip-地址">公有 IP 地址与私有 IP 地址</h4>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/22.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/22.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/22.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/22.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/22.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/22.jpg" /></div>
+<h4 id="ip-地址与路由控制">IP 地址与路由控制</h4>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/25.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/25.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/25.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/25.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/25.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/25.jpg" /></div>
+<p>环回地址是不会流向网络：127.0.0.1 作为环回地址，localhost 的主机名。数据包不会流向网络。</p>
+<h4 id="ip-分片与重组">IP 分片与重组</h4>
+<p>数据包大小大于 MTU 时， IP 数据包就会被分片</p>
+<div id="id-4"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/26.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/26.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/26.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/26.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/26.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/26.jpg" /></div>
+<p>某个分片丢失，则会造成整个 IP 数据报作废</p>
+<p>TCP 引入 MSS 在 TCP 层进行分片不由 IP 层分片，对于 UDP 尽量不要发送一个大于 MTU 的数据报文</p>
+<h4 id="ipv6-基本认识">IPv6 基本认识</h4>
+<p>128位，每 16 位作为一组，每组用冒号 「:」隔开</p>
+<ul>
+<li>IPv6 自动分配IP地址，即插即用。</li>
+<li>IPv6 包头包首部长度采用固定的值 40 字节，去掉了包头校验和，简化了首部结构，减轻了路由器负荷，大大提高了传输的性能。</li>
+<li>IPv6 有应对伪造 IP 地址的网络安全功能以及防止线路窃听的功能，大大提升了安全性。</li>
+</ul>
+<h4 id="ipv4-首部与-ipv6-首部">IPv4 首部与 IPv6 首部</h4>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/31.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/31.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/31.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/31.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/31.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/31.jpg" /></div>
+<h3 id="点心--ip-协议相关技术">点心 —— IP 协议相关技术</h3>
+<p>DNS</p>
+<div id="id-6"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/33.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/33.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/33.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/33.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/33.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/33.jpg" /></div>
+<p>DHCP</p>
+<div id="id-7"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/36.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/36.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/36.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/36.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/36.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/36.jpg" /></div>
+<p>NAT</p>
+<div id="id-8"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/38.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/38.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/38.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/38.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/38.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/38.jpg" /></div>
+<p>NAT 穿透技术</p>
+<p>客户端主动从 NAT 设备获取公有 IP 地址，然后自己建立端口映射条目，然后用这个条目对外通信，不需要 NAT 设备来进行转换</p>
+<p>ICMP</p>
+<div id="id-9"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/41.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/41.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/41.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/41.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/41.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/IP/41.jpg" /></div>
+<h2 id="ping-的工作原理">ping 的工作原理</h2>
+<h3 id="ip协议的助手--icmp-协议">IP协议的助手 —— ICMP 协议</h3>
+<div id="id-10"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/5.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/5.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/5.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/5.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/5.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/5.jpg" /></div>
+<h3 id="ping--查询报文类型的使用">ping —— 查询报文类型的使用</h3>
+<p>使用了 ICMP 里面的 ECHO REQUEST（类型为 8 ） 和 ECHO REPLY （类型为 0）</p>
+<div id="id-11"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/17.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/17.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/17.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/17.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/17.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/17.png" /></div>
+<h3 id="traceroute--差错报文类型的使用">traceroute —— 差错报文类型的使用</h3>
+<ol>
+<li>
+<p>故意设置特殊的 TTL，来追踪去往目的地时沿途经过的路由器</p>
+</li>
+<li>
+<p>故意设置不分片，从而确定路径的 MTU</p>
+</li>
+</ol>
+<div id="id-12"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/18.jpg"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/18.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/18.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/18.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/18.jpg"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ping/18.jpg" /></div>
+<h2 id="断网了还能-ping-通-127001-吗">断网了，还能 ping 通 127.0.0.1 吗？</h2>
+<p>能ping通，回环地址数据包直接交给软件本地网卡触发软中断，不交给真网卡</p>
+<div id="id-13"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/c1019a8be584b27c4fc8b8abda9d3cf1.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/c1019a8be584b27c4fc8b8abda9d3cf1.png, https://img-blog.csdnimg.cn/img_convert/c1019a8be584b27c4fc8b8abda9d3cf1.png 1.5x, https://img-blog.csdnimg.cn/img_convert/c1019a8be584b27c4fc8b8abda9d3cf1.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/c1019a8be584b27c4fc8b8abda9d3cf1.png"
+        title="https://img-blog.csdnimg.cn/img_convert/c1019a8be584b27c4fc8b8abda9d3cf1.png" /></div>
+<h3 id="ping回环地址和ping本机地址有什么区别">ping回环地址和ping本机地址有什么区别</h3>
+<p>ping回环地址和ping本机地址没有区别，都走 lo0，本地回环接口，也就是前面提到的**&ldquo;假网卡&rdquo;**</p>
+<h3 id="127001-和-localhost-以及-0000-有区别吗">127.0.0.1 和 localhost 以及 0.0.0.0 有区别吗</h3>
+<p>如果服务器 listen 的是 0.0.0.0，那么此时用127.0.0.1和本机地址都可以访问到服务</p>
+<p>0.0.0.0会监听本机的所有网卡，如果使用固定网卡地址只能监听该网卡地址的数据包，详见通用技术本地测试地址的区别</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/ip%E7%AF%87/" data-title="计算机网络-小林coding-IP篇" data-hashtags="小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/ip%E7%AF%87/" data-hashtag="小林coding系列"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/ip%E7%AF%87/" data-title="计算机网络-小林coding-IP篇"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/ip%E7%AF%87/" data-title="计算机网络-小林coding-IP篇"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/ip%E7%AF%87/" data-title="计算机网络-小林coding-IP篇"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/json/" class="prev" rel="prev" title="go标准库-Json"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>go标准库-Json</a>
+            <a href="/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%93%84%E6%B0%B4%E6%B1%A0%E6%8A%BD%E6%A0%B7%E7%AE%97%E6%B3%95/" class="next" rel="next" title="数据结构与算法-蓄水池抽样算法">数据结构与算法-蓄水池抽样算法<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/239b2f.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-25T22:26:04+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"计算机网络-小林coding-IP篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python教程-标准库简介 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Python教程-标准库简介" />
+<meta property="og:description" content="本系列为作者在官网学习python时做的笔记，详见python官网 操作系统接口 os 模块提供了许多与操作系统交互的函数: 1 2 3 4 5 6 &gt;&gt;&gt; import os &gt;&gt;&gt; os.getcwd() #" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-12T17:27:20+08:00" />
+<meta property="article:modified_time" content="2022-10-12T17:27:20+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python教程-标准库简介"/>
+<meta name="twitter:description" content="本系列为作者在官网学习python时做的笔记，详见python官网 操作系统接口 os 模块提供了许多与操作系统交互的函数: 1 2 3 4 5 6 &gt;&gt;&gt; import os &gt;&gt;&gt; os.getcwd() #"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B/" /><link rel="prev" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E7%B1%BB/" /><link rel="next" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B--%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python教程-标准库简介",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B\/"
+        },"genre": "posts","keywords": "Python教程","wordcount":  2222 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B\/","datePublished": "2022-10-12T17:27:20+08:00","dateModified": "2022-10-12T17:27:20+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-标准库简介</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2222 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#操作系统接口">操作系统接口</a></li>
+    <li><a href="#文件通配符">文件通配符</a></li>
+    <li><a href="#命令行参数">命令行参数</a></li>
+    <li><a href="#错误输出重定向和程序终止">错误输出重定向和程序终止</a></li>
+    <li><a href="#字符串模式匹配">字符串模式匹配</a></li>
+    <li><a href="#数学">数学</a></li>
+    <li><a href="#互联网访问">互联网访问</a></li>
+    <li><a href="#日期和时间">日期和时间</a></li>
+    <li><a href="#数据压缩">数据压缩</a></li>
+    <li><a href="#性能测量">性能测量</a></li>
+    <li><a href="#质量控制">质量控制</a></li>
+    <li><a href="#自带电池">自带电池</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列为作者在官网学习python时做的笔记，详见<a href="https://docs.python.org/zh-cn/3.8/tutorial/" target="_blank" rel="noopener noreffer ">python官网</a></p>
+<h2 id="操作系统接口">操作系统接口</h2>
+<p>os 模块提供了许多与操作系统交互的函数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">os</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; os.getcwd()      <span style="color:#aaa;font-style:italic"># Return the current working directory</span>
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;C:</span><span style="color:#a50">\\</span><span style="color:#a50">Python38&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; os.chdir(<span style="color:#a50">&#39;/server/accesslogs&#39;</span>)   <span style="color:#aaa;font-style:italic"># Change current working directory</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; os.system(<span style="color:#a50">&#39;mkdir today&#39;</span>)   <span style="color:#aaa;font-style:italic"># Run the command mkdir in the system shell</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一定要使用 import os 而不是 from os import * 。这将避免内建的 open() 函数被 os.open() 隐式替换掉，它们的使用方式大不相同。</p>
+<p>内置的 dir() 和 help() 函数可用作交互式辅助工具，用于处理大型模块，如 os:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">os</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">dir</span>(os)
+</span></span><span style="display:flex;"><span>&lt;returns a <span style="color:#0aa">list</span> of <span style="color:#0aa">all</span> module functions&gt;
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; help(os)
+</span></span><span style="display:flex;"><span>&lt;returns an extensive manual page created <span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">the</span> module<span style="color:#a50">&#39;s docstrings&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于日常文件和目录管理任务， shutil 模块提供了更易于使用的更高级别的接口:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">shutil</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; shutil.copyfile(<span style="color:#a50">&#39;data.db&#39;</span>, <span style="color:#a50">&#39;archive.db&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;archive.db&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; shutil.move(<span style="color:#a50">&#39;/build/executables&#39;</span>, <span style="color:#a50">&#39;installdir&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;installdir&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="文件通配符">文件通配符</h2>
+<p>glob 模块提供了一个在目录中使用通配符搜索创建文件列表的函数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">glob</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; glob.glob(<span style="color:#a50">&#39;*.py&#39;</span>)
+</span></span><span style="display:flex;"><span>[<span style="color:#a50">&#39;primes.py&#39;</span>, <span style="color:#a50">&#39;random.py&#39;</span>, <span style="color:#a50">&#39;quote.py&#39;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="命令行参数">命令行参数</h2>
+<p>通用实用程序脚本通常需要处理命令行参数。这些参数作为列表存储在 sys 模块的 argv 属性中。例如，以下输出来自在命令行运行 python demo.py one two three</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sys</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(sys.argv)
+</span></span><span style="display:flex;"><span>[<span style="color:#a50">&#39;demo.py&#39;</span>, <span style="color:#a50">&#39;one&#39;</span>, <span style="color:#a50">&#39;two&#39;</span>, <span style="color:#a50">&#39;three&#39;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>argparse 模块提供了一种更复杂的机制来处理命令行参数。 以下脚本可提取一个或多个文件名，并可选择要显示的行数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">argparse</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>parser = argparse.ArgumentParser(prog = <span style="color:#a50">&#39;top&#39;</span>,
+</span></span><span style="display:flex;"><span>    description = <span style="color:#a50">&#39;Show top lines from each file&#39;</span>)
+</span></span><span style="display:flex;"><span>parser.add_argument(<span style="color:#a50">&#39;filenames&#39;</span>, nargs=<span style="color:#a50">&#39;+&#39;</span>)
+</span></span><span style="display:flex;"><span>parser.add_argument(<span style="color:#a50">&#39;-l&#39;</span>, <span style="color:#a50">&#39;--lines&#39;</span>, <span style="color:#0aa">type</span>=<span style="color:#0aa">int</span>, default=<span style="color:#099">10</span>)
+</span></span><span style="display:flex;"><span>args = parser.parse_args()
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>(args)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当在通过 python top.py &ndash;lines=5 alpha.txt beta.txt 在命令行运行时，该脚本会将 args.lines 设为 5 并将 args.filenames 设为 [&lsquo;alpha.txt&rsquo;, &lsquo;beta.txt&rsquo;]。</p>
+<h2 id="错误输出重定向和程序终止">错误输出重定向和程序终止</h2>
+<p>sys 模块还具有 stdin ， stdout 和 stderr 的属性。后者对于发出警告和错误消息非常有用，即使在 stdout 被重定向后也可以看到它们:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; sys.stderr.write(<span style="color:#a50">&#39;Warning, log file not found starting a new one</span><span style="color:#a50">\n</span><span style="color:#a50">&#39;</span>)
+</span></span><span style="display:flex;"><span>Warning, log file <span style="color:#00a">not</span> found starting a new one
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>终止脚本的最直接方法是使用 sys.exit() 。</p>
+<h2 id="字符串模式匹配">字符串模式匹配</h2>
+<p>re 模块为高级字符串处理提供正则表达式工具。对于复杂的匹配和操作，正则表达式提供简洁，优化的解决方案:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">re</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; re.findall(<span style="color:#a50">r</span><span style="color:#a50">&#39;\bf[a-z]*&#39;</span>, <span style="color:#a50">&#39;which foot or hand fell fastest&#39;</span>)
+</span></span><span style="display:flex;"><span>[<span style="color:#a50">&#39;foot&#39;</span>, <span style="color:#a50">&#39;fell&#39;</span>, <span style="color:#a50">&#39;fastest&#39;</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; re.sub(<span style="color:#a50">r</span><span style="color:#a50">&#39;(\b[a-z]+) \1&#39;</span>, <span style="color:#a50">r</span><span style="color:#a50">&#39;\1&#39;</span>, <span style="color:#a50">&#39;cat in the the hat&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;cat in the hat&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当只需要简单的功能时，首选字符串方法因为它们更容易阅读和调试:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#a50">&#39;tea for too&#39;</span>.replace(<span style="color:#a50">&#39;too&#39;</span>, <span style="color:#a50">&#39;two&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;tea for two&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="数学">数学</h2>
+<p>math 模块提供对浮点数学的底层C库函数的访问:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">math</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; math.cos(math.pi / <span style="color:#099">4</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">0.70710678118654757</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; math.log(<span style="color:#099">1024</span>, <span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">10.0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>random 模块提供了进行随机选择的工具:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">random</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; random.choice([<span style="color:#a50">&#39;apple&#39;</span>, <span style="color:#a50">&#39;pear&#39;</span>, <span style="color:#a50">&#39;banana&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;apple&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; random.sample(<span style="color:#0aa">range</span>(<span style="color:#099">100</span>), <span style="color:#099">10</span>)   <span style="color:#aaa;font-style:italic"># sampling without replacement</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#099">30</span>, <span style="color:#099">83</span>, <span style="color:#099">16</span>, <span style="color:#099">4</span>, <span style="color:#099">8</span>, <span style="color:#099">81</span>, <span style="color:#099">41</span>, <span style="color:#099">50</span>, <span style="color:#099">18</span>, <span style="color:#099">33</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; random.random()    <span style="color:#aaa;font-style:italic"># random float</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">0.17970987693706186</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; random.randrange(<span style="color:#099">6</span>)    <span style="color:#aaa;font-style:italic"># random integer chosen from range(6)</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>statistics 模块计算数值数据的基本统计属性（均值，中位数，方差等）:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">statistics</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; data = [<span style="color:#099">2.75</span>, <span style="color:#099">1.75</span>, <span style="color:#099">1.25</span>, <span style="color:#099">0.25</span>, <span style="color:#099">0.5</span>, <span style="color:#099">1.25</span>, <span style="color:#099">3.5</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; statistics.mean(data)
+</span></span><span style="display:flex;"><span><span style="color:#099">1.6071428571428572</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; statistics.median(data)
+</span></span><span style="display:flex;"><span><span style="color:#099">1.25</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; statistics.variance(data)
+</span></span><span style="display:flex;"><span><span style="color:#099">1.3720238095238095</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>SciPy项目 <a href="https://scipy.org" target="_blank" rel="noopener noreffer ">https://scipy.org</a> 有许多其他模块用于数值计算。</p>
+<h2 id="互联网访问">互联网访问</h2>
+<p>有许多模块可用于访问互联网和处理互联网协议。其中两个最简单的 urllib.request 用于从URL检索数据，以及 smtplib 用于发送邮件:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">urllib.request</span> <span style="color:#00a">import</span> urlopen
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">with</span> urlopen(<span style="color:#a50">&#39;http://tycho.usno.navy.mil/cgi-bin/timer.pl&#39;</span>) <span style="color:#00a">as</span> response:
+</span></span><span style="display:flex;"><span>...     <span style="color:#00a">for</span> line <span style="color:#00a">in</span> response:
+</span></span><span style="display:flex;"><span>...         line = line.decode(<span style="color:#a50">&#39;utf-8&#39;</span>)  <span style="color:#aaa;font-style:italic"># Decoding the binary data to text.</span>
+</span></span><span style="display:flex;"><span>...         <span style="color:#00a">if</span> <span style="color:#a50">&#39;EST&#39;</span> <span style="color:#00a">in</span> line <span style="color:#00a">or</span> <span style="color:#a50">&#39;EDT&#39;</span> <span style="color:#00a">in</span> line:  <span style="color:#aaa;font-style:italic"># look for Eastern Time</span>
+</span></span><span style="display:flex;"><span>...             <span style="color:#0aa">print</span>(line)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;BR&gt;Nov. <span style="color:#099">25</span>, <span style="color:#099">09</span>:<span style="color:#099">43</span>:<span style="color:#099">32</span> PM EST
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">smtplib</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; server = smtplib.SMTP(<span style="color:#a50">&#39;localhost&#39;</span>)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; server.sendmail(<span style="color:#a50">&#39;soothsayer@example.org&#39;</span>, <span style="color:#a50">&#39;jcaesar@example.org&#39;</span>,
+</span></span><span style="display:flex;"><span>... <span style="color:#a50">&#34;&#34;&#34;To: jcaesar@example.org
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">... From: soothsayer@example.org
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">...
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">... Beware the Ides of March.
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">... &#34;&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; server.quit()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>（请注意，第二个示例需要在localhost上运行的邮件服务器。）</p>
+<h2 id="日期和时间">日期和时间</h2>
+<p>datetime 模块提供了以简单和复杂的方式操作日期和时间的类。虽然支持日期和时间算法，但实现的重点是有效的成员提取以进行输出格式化和操作。该模块还支持可感知时区的对象。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#aaa;font-style:italic"># dates are easily constructed and formatted</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">datetime</span> <span style="color:#00a">import</span> date
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; now = date.today()
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; now
+</span></span><span style="display:flex;"><span>datetime.date(<span style="color:#099">2003</span>, <span style="color:#099">12</span>, <span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; now.strftime(<span style="color:#a50">&#34;%m-</span><span style="color:#a50">%d</span><span style="color:#a50">-%y. </span><span style="color:#a50">%d</span><span style="color:#a50"> %b %Y is a %A on the </span><span style="color:#a50">%d</span><span style="color:#a50"> day of %B.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;12-02-03. 02 Dec 2003 is a Tuesday on the 02 day of December.&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#aaa;font-style:italic"># dates support calendar arithmetic</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; birthday = date(<span style="color:#099">1964</span>, <span style="color:#099">7</span>, <span style="color:#099">31</span>)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; age = now - birthday
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; age.days
+</span></span><span style="display:flex;"><span><span style="color:#099">14368</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="数据压缩">数据压缩</h2>
+<p>常见的数据存档和压缩格式由模块直接支持，包括：zlib, gzip, bz2, lzma, zipfile 和 tarfile。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">zlib</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; s = <span style="color:#a50">b</span><span style="color:#a50">&#39;witch which has which witches wrist watch&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">len</span>(s)
+</span></span><span style="display:flex;"><span><span style="color:#099">41</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; t = zlib.compress(s)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">len</span>(t)
+</span></span><span style="display:flex;"><span><span style="color:#099">37</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; zlib.decompress(t)
+</span></span><span style="display:flex;"><span><span style="color:#a50">b</span><span style="color:#a50">&#39;witch which has which witches wrist watch&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; zlib.crc32(s)
+</span></span><span style="display:flex;"><span><span style="color:#099">226805979</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="性能测量">性能测量</h2>
+<p>一些Python用户对了解同一问题的不同方法的相对性能产生了浓厚的兴趣。 Python提供了一种可以立即回答这些问题的测量工具。</p>
+<p>例如，元组封包和拆包功能相比传统的交换参数可能更具吸引力。timeit 模块可以快速演示在运行效率方面一定的优势:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">timeit</span> <span style="color:#00a">import</span> Timer
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; Timer(<span style="color:#a50">&#39;t=a; a=b; b=t&#39;</span>, <span style="color:#a50">&#39;a=1; b=2&#39;</span>).timeit()
+</span></span><span style="display:flex;"><span><span style="color:#099">0.57535828626024577</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; Timer(<span style="color:#a50">&#39;a,b = b,a&#39;</span>, <span style="color:#a50">&#39;a=1; b=2&#39;</span>).timeit()
+</span></span><span style="display:flex;"><span><span style="color:#099">0.54962537085770791</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>与 timeit 的精细粒度级别相反， profile 和 pstats 模块提供了用于在较大的代码块中识别时间关键部分的工具。</p>
+<h2 id="质量控制">质量控制</h2>
+<p>开发高质量软件的一种方法是在开发过程中为每个函数编写测试，并在开发过程中经常运行这些测试。</p>
+<p>doctest 模块提供了一个工具，用于扫描模块并验证程序文档字符串中嵌入的测试。测试构造就像将典型调用及其结果剪切并粘贴到文档字符串一样简单。这通过向用户提供示例来改进文档，并且它允许doctest模块确保代码保持对文档的真实:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">average</span>(values):
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;&#34;&#34;Computes the arithmetic mean of a list of numbers.
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">    &gt;&gt;&gt; print(average([20, 30, 70]))
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">    40.0
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> <span style="color:#0aa">sum</span>(values) / <span style="color:#0aa">len</span>(values)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">doctest</span>
+</span></span><span style="display:flex;"><span>doctest.testmod()   <span style="color:#aaa;font-style:italic"># automatically validate the embedded tests</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>unittest 模块不像 doctest 模块那样易于使用，但它允许在一个单独的文件中维护更全面的测试集:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">unittest</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">TestStatisticalFunctions</span>(unittest.TestCase):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> <span style="color:#0a0">test_average</span>(self):
+</span></span><span style="display:flex;"><span>        self.assertEqual(average([<span style="color:#099">20</span>, <span style="color:#099">30</span>, <span style="color:#099">70</span>]), <span style="color:#099">40.0</span>)
+</span></span><span style="display:flex;"><span>        self.assertEqual(<span style="color:#0aa">round</span>(average([<span style="color:#099">1</span>, <span style="color:#099">5</span>, <span style="color:#099">7</span>]), <span style="color:#099">1</span>), <span style="color:#099">4.3</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">with</span> self.assertRaises(ZeroDivisionError):
+</span></span><span style="display:flex;"><span>            average([])
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">with</span> self.assertRaises(TypeError):
+</span></span><span style="display:flex;"><span>            average(<span style="color:#099">20</span>, <span style="color:#099">30</span>, <span style="color:#099">70</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>unittest.main()  <span style="color:#aaa;font-style:italic"># Calling from the command line invokes all tests</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="自带电池">自带电池</h2>
+<p>Python有“自带电池”的理念。通过其包的复杂和强大功能可以最好地看到这一点。例如:</p>
+<ul>
+<li>xmlrpc.client 和 xmlrpc.server 模块使得实现远程过程调用变成了小菜一碟。 尽管存在于模块名称中，但用户不需要直接了解或处理 XML。</li>
+<li>email 包是一个用于管理电子邮件的库，包括MIME和其他符合 RFC 2822 规范的邮件文档。与 smtplib 和 poplib 不同（它们实际上做的是发送和接收消息），电子邮件包提供完整的工具集，用于构建或解码复杂的消息结构（包括附件）以及实现互联网编码和标头协议。</li>
+<li>json 包为解析这种流行的数据交换格式提供了强大的支持。 csv 模块支持以逗号分隔值格式直接读取和写入文件，这种格式通常为数据库和电子表格所支持。 XML 处理由 xml.etree.ElementTree ， xml.dom 和 xml.sax 包支持。这些模块和软件包共同大大简化了 Python 应用程序和其他工具之间的数据交换。</li>
+<li>sqlite3 模块是 SQLite 数据库库的包装器，提供了一个可以使用稍微非标准的 SQL 语法更新和访问的持久数据库。</li>
+<li>国际化由许多模块支持，包括 gettext ， locale ，以及 codecs 包。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B/" data-title="Python教程-标准库简介" data-hashtags="Python教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B/" data-hashtag="Python教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B/" data-title="Python教程-标准库简介"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B/" data-title="Python教程-标准库简介"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B/" data-title="Python教程-标准库简介"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python%E6%95%99%E7%A8%8B/">Python教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/python/python%E6%95%99%E7%A8%8B/%E7%B1%BB/" class="prev" rel="prev" title="Python教程-类"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Python教程-类</a>
+            <a href="/posts/python/python%E6%95%99%E7%A8%8B/%E6%A0%87%E5%87%86%E5%BA%93%E7%AE%80%E4%BB%8B--%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" class="next" rel="next" title="Python教程-标准库简介  第二部分">Python教程-标准库简介  第二部分<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-12T17:27:20+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Python教程-标准库简介"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

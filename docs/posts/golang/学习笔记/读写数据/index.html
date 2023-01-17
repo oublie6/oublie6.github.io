@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-学习笔记-读写数据 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-学习笔记-读写数据" />
+<meta property="og:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-11T18:27:08+08:00" />
+<meta property="article:modified_time" content="2022-12-11T18:27:08+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-学习笔记-读写数据"/>
+<meta name="twitter:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%8E%A5%E5%8F%A3interfaces%E4%B8%8E%E5%8F%8D%E5%B0%84reflection/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-学习笔记-读写数据",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE\/"
+        },"genre": "posts","keywords": "go学习笔记","wordcount":  1832 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE\/","datePublished": "2022-12-11T18:27:08+08:00","dateModified": "2022-12-11T18:27:08+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-读写数据</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1832 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#读取用户的输入">读取用户的输入</a></li>
+    <li><a href="#文件读写">文件读写</a>
+      <ul>
+        <li><a href="#读文件">读文件</a></li>
+        <li><a href="#compress包读取压缩文件">compress包：读取压缩文件</a></li>
+        <li><a href="#写文件">写文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#文件拷贝">文件拷贝</a></li>
+    <li><a href="#从命令行读取参数">从命令行读取参数</a>
+      <ul>
+        <li><a href="#os-包">os 包</a></li>
+        <li><a href="#flag-包">flag 包</a></li>
+      </ul>
+    </li>
+    <li><a href="#用-buffer-读取文件">用 buffer 读取文件</a></li>
+    <li><a href="#用切片读写文件">用切片读写文件</a></li>
+    <li><a href="#用-defer-关闭文件">用 defer 关闭文件</a></li>
+    <li><a href="#使用接口的实际例子fmtfprintf">使用接口的实际例子：fmt.Fprintf</a></li>
+    <li><a href="#json-数据格式">JSON 数据格式</a></li>
+    <li><a href="#用-gob-传输数据">用 Gob 传输数据</a></li>
+    <li><a href="#go-中的密码学">Go 中的密码学</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
+<h2 id="读取用户的输入">读取用户的输入</h2>
+<p>从键盘和标准输入 os.Stdin 读取输入</p>
+<p>fmt 包提供的 Scan 和 Sscan 开头的函数封装了读取过程</p>
+<p>也可以使用 bufio 包提供的缓冲读取（buffered reader）来读取数据</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>inputReader = bufio.<span style="color:#0a0">NewReader</span>(os.Stdin)
+</span></span><span style="display:flex;"><span>input, err = inputReader.<span style="color:#0a0">ReadString</span>(<span style="color:#a50">&#39;\n&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err == <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;The input was: %s\n&#34;</span>, input)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Unix和Windows的行结束符是不同的</p>
+<h2 id="文件读写">文件读写</h2>
+<h3 id="读文件">读文件</h3>
+<p>文件使用指向 os.File 类型的指针来表示的，也叫做文件句柄。标准输入 os.Stdin 和标准输出 os.Stdout，他们的类型都是 *os.File。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>inputFile, inputError := os.<span style="color:#0a0">Open</span>(<span style="color:#a50">&#34;input.dat&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> inputError != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;An error occurred on opening the inputfile\n&#34;</span> +
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;Does the file exist?\n&#34;</span> +
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;Have you got acces to it?\n&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#aaa;font-style:italic">// exit the function on error
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> inputFile.<span style="color:#0a0">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>inputReader := bufio.<span style="color:#0a0">NewReader</span>(inputFile)
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> {
+</span></span><span style="display:flex;"><span>  inputString, readerError := inputReader.<span style="color:#0a0">ReadString</span>(<span style="color:#a50">&#39;\n&#39;</span>)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;The input was: %s&#34;</span>, inputString)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> readerError == io.EOF {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>  }      
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其他类似函数：</p>
+<ol>
+<li>将整个文件的内容读到一个字符串里：<code>ioutil.ReadFile()</code></li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>inputFile := <span style="color:#a50">&#34;products.txt&#34;</span>
+</span></span><span style="display:flex;"><span>outputFile := <span style="color:#a50">&#34;products_copy.txt&#34;</span>
+</span></span><span style="display:flex;"><span>buf, err := ioutil.<span style="color:#0a0">ReadFile</span>(inputFile)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Fprintf</span>(os.Stderr, <span style="color:#a50">&#34;File Error: %s\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// panic(err.Error())
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  }
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;%s\n&#34;</span>, <span style="color:#0aa">string</span>(buf))
+</span></span><span style="display:flex;"><span>err = ioutil.<span style="color:#0a0">WriteFile</span>(outputFile, buf, <span style="color:#099">0644</span>) <span style="color:#aaa;font-style:italic">// oct, not hex
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#0aa">panic</span>(err.<span style="color:#0a0">Error</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>带缓冲的读取:二进制文件使用bufio.Reader 的 Read()</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>buf := <span style="color:#0aa">make</span>([]<span style="color:#0aa">byte</span>, <span style="color:#099">1024</span>)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>n, err := inputReader.<span style="color:#0a0">Read</span>(buf)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> (n == <span style="color:#099">0</span>) { <span style="color:#00a">break</span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>按列读取文件中的数据：FScan</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>file, err := os.<span style="color:#0a0">Open</span>(<span style="color:#a50">&#34;products2.txt&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#0aa">panic</span>(err)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> file.<span style="color:#0a0">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> col1, col2, col3 []<span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">var</span> v1, v2, v3 <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>  _, err := fmt.<span style="color:#0a0">Fscanln</span>(file, &amp;v1, &amp;v2, &amp;v3)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// scans until newline
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#00a">break</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  col1 = <span style="color:#0aa">append</span>(col1, v1)
+</span></span><span style="display:flex;"><span>  col2 = <span style="color:#0aa">append</span>(col2, v2)
+</span></span><span style="display:flex;"><span>  col3 = <span style="color:#0aa">append</span>(col3, v3)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>path 包里包含一个子包叫 filepath，这个子包提供了跨平台的函数，用于处理文件名和路径。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#a50">&#34;path/filepath&#34;</span>
+</span></span><span style="display:flex;"><span>filename := filepath.<span style="color:#0a0">Base</span>(path)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="compress包读取压缩文件">compress包：读取压缩文件</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>fName := <span style="color:#a50">&#34;MyFile.gz&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> r *bufio.Reader
+</span></span><span style="display:flex;"><span>fi, err := os.<span style="color:#0a0">Open</span>(fName)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Fprintf</span>(os.Stderr, <span style="color:#a50">&#34;%v, Can&#39;t open %s: error: %s\n&#34;</span>, os.Args[<span style="color:#099">0</span>], fName,
+</span></span><span style="display:flex;"><span>      err)
+</span></span><span style="display:flex;"><span>  os.<span style="color:#0a0">Exit</span>(<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>fz, err := gzip.<span style="color:#0a0">NewReader</span>(fi)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  r = bufio.<span style="color:#0a0">NewReader</span>(fi)
+</span></span><span style="display:flex;"><span>} <span style="color:#00a">else</span> {
+</span></span><span style="display:flex;"><span>  r = bufio.<span style="color:#0a0">NewReader</span>(fz)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> {
+</span></span><span style="display:flex;"><span>  line, err := r.<span style="color:#0a0">ReadString</span>(<span style="color:#a50">&#39;\n&#39;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>      fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;Done reading file&#34;</span>)
+</span></span><span style="display:flex;"><span>      os.<span style="color:#0a0">Exit</span>(<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(line)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>相当于对io.Reader进行了一层封装，得到gzip.Reader，之后再用bufio读取。</p>
+<h3 id="写文件">写文件</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>outputFile, outputError := os.<span style="color:#0a0">OpenFile</span>(<span style="color:#a50">&#34;output.dat&#34;</span>, os.O_WRONLY|os.O_CREATE, <span style="color:#099">0666</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> outputError != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;An error occurred with file opening or creation\n&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span>  
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> outputFile.<span style="color:#0a0">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>outputWriter := bufio.<span style="color:#0a0">NewWriter</span>(outputFile)
+</span></span><span style="display:flex;"><span>outputString := <span style="color:#a50">&#34;hello world!\n&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i:=<span style="color:#099">0</span>; i&lt;<span style="color:#099">10</span>; i++ {
+</span></span><span style="display:flex;"><span>  outputWriter.<span style="color:#0a0">WriteString</span>(outputString)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>outputWriter.<span style="color:#0a0">Flush</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>os.Open()函数内部仍然是调用OpenFile()函数，以只读打开文件。</p>
+<p>OpenFile 函数有三个参数：文件名、一个或多个标志（使用逻辑运算符“|”连接），使用的文件权限。常用标志：</p>
+<ul>
+<li>os.O_RDONLY：只读</li>
+<li>os.O_WRONLY：只写</li>
+<li>os.O_CREATE：创建：如果指定文件不存在，就创建该文件。</li>
+<li>os.O_TRUNC：截断：如果指定文件已存在，就将该文件的长度截为0。</li>
+</ul>
+<p>创建一个写入器（缓冲区）对象：<code>outputWriter := bufio.NewWriter(outputFile)</code></p>
+<p>使用一个 for 循环，将字符串写入缓冲区</p>
+<p>outputWriter.Flush()将缓存区的内容显示传输过去</p>
+<h2 id="文件拷贝">文件拷贝</h2>
+<p>io.Copy(dst, src)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>src, err := os.<span style="color:#0a0">Open</span>(srcName)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> src.<span style="color:#0a0">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dst, err := os.<span style="color:#0a0">OpenFile</span>(dstName, os.O_WRONLY|os.O_CREATE, <span style="color:#099">0644</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> dst.<span style="color:#0a0">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>io.<span style="color:#0a0">Copy</span>(dst, src)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="从命令行读取参数">从命令行读取参数</h2>
+<h3 id="os-包">os 包</h3>
+<p>os 包中有一个 string 类型的切片变量 os.Args，用来处理一些基本的命令行参数，它在程序启动后读取命令行输入的参数。os.Args[0] 放的是程序本身的名字。</p>
+<h3 id="flag-包">flag 包</h3>
+<h2 id="用-buffer-读取文件">用 buffer 读取文件</h2>
+<p>bufio.NewReader(os.Stdin)</p>
+<h2 id="用切片读写文件">用切片读写文件</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> buf [NBUF]<span style="color:#0aa">byte</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> nw, ew := os.Stdout.<span style="color:#0a0">Write</span>(buf[<span style="color:#099">0</span>:nr]); nw != nr {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Fprintf</span>(os.Stderr, <span style="color:#a50">&#34;cat: error writing: %s\n&#34;</span>, ew.<span style="color:#0a0">Error</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="用-defer-关闭文件">用 defer 关闭文件</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>f, _ := os.<span style="color:#0a0">OpenFile</span>(name, os.O_RDONLY, <span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">defer</span> f.<span style="color:#0a0">Close</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="使用接口的实际例子fmtfprintf">使用接口的实际例子：fmt.Fprintf</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Fprintf</span>(w io.Writer, format <span style="color:#0aa">string</span>, a ...<span style="color:#00a">interface</span>{}) (n <span style="color:#0aa">int</span>, err <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> Writer <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">Write</span>(p []<span style="color:#0aa">byte</span>) (n <span style="color:#0aa">int</span>, err <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="json-数据格式">JSON 数据格式</h2>
+<p>一些术语说明:</p>
+<ul>
+<li>数据结构 &ndash;&gt; 指定格式 = 序列化 或 编码（传输之前）</li>
+<li>指定格式 &ndash;&gt; 数据格式 = 反序列化 或 解码（传输之后）</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Marshal</span>(v <span style="color:#00a">interface</span>{}) ([]<span style="color:#0aa">byte</span>, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Unmarshal</span>(data []<span style="color:#0aa">byte</span>, v <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解码任意的数据：</p>
+<p>json 包使用 map[string]interface{} 和 []interface{} 储存任意的 JSON 对象和数组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>b := []<span style="color:#0aa">byte</span>(<span style="color:#a50">`{&#34;Name&#34;: &#34;Wednesday&#34;, &#34;Age&#34;: 6, &#34;Parents&#34;: [&#34;Gomez&#34;, &#34;Morticia&#34;]}`</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> f <span style="color:#00a">interface</span>{}
+</span></span><span style="display:flex;"><span>err := json.<span style="color:#0a0">Unmarshal</span>(b, &amp;f)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//f 指向的值是一个 map，key 是一个字符串，value 是自身存储作为空接口类型的值：
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// map[string]interface{} {
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//     &#34;Name&#34;: &#34;Wednesday&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//     &#34;Age&#34;:  6,
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//     &#34;Parents&#34;: []interface{} {
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//         &#34;Gomez&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//         &#34;Morticia&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//     },
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//要访问这个数据，我们可以使用类型断言
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>m := f.(<span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//通过 for range 语法和 type switch 来访问其实际类型：
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">for</span> k, v := <span style="color:#00a">range</span> m {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">switch</span> vv := v.(<span style="color:#00a">type</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">case</span> <span style="color:#0aa">string</span>:
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Println</span>(k, <span style="color:#a50">&#34;is string&#34;</span>, vv)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">case</span> <span style="color:#0aa">int</span>:
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Println</span>(k, <span style="color:#a50">&#34;is int&#34;</span>, vv)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">case</span> []<span style="color:#00a">interface</span>{}:
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Println</span>(k, <span style="color:#a50">&#34;is an array:&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i, u := <span style="color:#00a">range</span> vv {
+</span></span><span style="display:flex;"><span>        fmt.<span style="color:#0a0">Println</span>(i, u)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">default</span>:
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Println</span>(k, <span style="color:#a50">&#34;is of a type I don’t know how to handle&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解码数据到结构</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> FamilyMember <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    Name    <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    Age     <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>    Parents []<span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> m FamilyMember
+</span></span><span style="display:flex;"><span>err := json.<span style="color:#0a0">Unmarshal</span>(b, &amp;m)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编码和解码流:把 JSON 直接写入文件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewDecoder</span>(r io.Reader) *Decoder
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewEncoder</span>(w io.Writer) *Encoder
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewDecoder</span>(r io.Reader) *Decoder
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (dec *Decoder) <span style="color:#0a0">Decode</span>(v <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="用-gob-传输数据">用 Gob 传输数据</h2>
+<p>和 JSON 的使用方式一样</p>
+<h2 id="go-中的密码学">Go 中的密码学</h2>
+<ul>
+<li>hash 包：实现了 adler32、crc32、crc64 和 fnv 校验；</li>
+<li>crypto 包：实现了其它的 hash 算法，比如 md4、md5、sha1 等。以及完整地实现了 aes、blowfish、rc4、rsa、xtea 等加密算法。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" data-title="golang-学习笔记-读写数据" data-hashtags="go学习笔记"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" data-hashtag="go学习笔记"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" data-title="golang-学习笔记-读写数据"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" data-title="golang-学习笔记-读写数据"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE/" data-title="golang-学习笔记-读写数据"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">go学习笔记</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%8E%A5%E5%8F%A3interfaces%E4%B8%8E%E5%8F%8D%E5%B0%84reflection/" class="prev" rel="prev" title="golang-学习笔记-接口（Interfaces）与反射（reflection）"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-学习笔记-接口（Interfaces）与反射（reflection）</a>
+            <a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" class="next" rel="next" title="golang-学习笔记-错误处理与测试">golang-学习笔记-错误处理与测试<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-11T18:27:08+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"golang-学习笔记-读写数据"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

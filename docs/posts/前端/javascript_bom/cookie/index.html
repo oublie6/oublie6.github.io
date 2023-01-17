@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>JavaScript_BOM-Cookie - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="JavaScript_BOM-Cookie" />
+<meta property="og:description" content="本系列是作者在跟着W3school的JS教程学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。 Cookies 让您将用户信息存储" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript_bom/cookie/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-09T16:22:55+08:00" />
+<meta property="article:modified_time" content="2022-10-09T16:22:55+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="JavaScript_BOM-Cookie"/>
+<meta name="twitter:description" content="本系列是作者在跟着W3school的JS教程学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。 Cookies 让您将用户信息存储"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript_bom/cookie/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript_bom/%E8%AE%A1%E6%97%B6%E4%BA%8B%E4%BB%B6/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/web_api/%E7%AE%80%E4%BB%8B/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "JavaScript_BOM-Cookie",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/javascript_bom\/cookie\/"
+        },"genre": "posts","keywords": "JavaScript_BOM","wordcount":  1679 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/javascript_bom\/cookie\/","datePublished": "2022-10-09T16:22:55+08:00","dateModified": "2022-10-09T16:22:55+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">JavaScript_BOM-Cookie</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-09">2022-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1679 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是-cookie">什么是 Cookie？</a></li>
+    <li><a href="#使用-javascript-创建-cookie">使用 JavaScript 创建 Cookie</a></li>
+    <li><a href="#使用-javascript-读取-cookie">使用 JavaScript 读取 Cookie</a></li>
+    <li><a href="#使用-javascript-更改-cookie">使用 JavaScript 更改 Cookie</a></li>
+    <li><a href="#使用-javascript-删除-cookie">使用 JavaScript 删除 Cookie</a></li>
+    <li><a href="#cookie-字符串">Cookie 字符串</a></li>
+    <li><a href="#javascript-cookie-示例">JavaScript Cookie 示例</a>
+      <ul>
+        <li><a href="#设置-cookie-的函数">设置 Cookie 的函数</a></li>
+        <li><a href="#获取-cookie-的函数">获取 Cookie 的函数</a></li>
+        <li><a href="#检查-cookie-的函数">检查 Cookie 的函数</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://www.w3schools.com/js/default.asp" target="_blank" rel="noopener noreffer ">W3school的JS教程</a>学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。</p>
+<p>Cookies 让您将用户信息存储在网页中。</p>
+<h2 id="什么是-cookie">什么是 Cookie？</h2>
+<p>Cookie 是存储在您计算机上的小型文本文件中的数据。</p>
+<p>当 Web 服务器将网页发送到浏览器时，连接会关闭，服务器会忘记有关用户的所有信息。</p>
+<p>发明 Cookie 是为了解决“如何记住用户信息”的问题：</p>
+<ul>
+<li>当用户访问网页时，他/她的姓名可以存储在 cookie 中。</li>
+<li>下次用户访问该页面时，cookie 会“记住”他/她的名字。</li>
+</ul>
+<p>Cookie 保存在名称-值对中，例如：<code>username = John Doe</code></p>
+<p>当浏览器从服务器请求网页时，属于该页面的 cookie 会添加到请求中。通过这种方式，服务器获取必要的数据来“记住”有关用户的信息。</p>
+<p>如果您的浏览器关闭了本地 cookie 支持，则以下示例均无效。</p>
+<h2 id="使用-javascript-创建-cookie">使用 JavaScript 创建 Cookie</h2>
+<p>JavaScript 可以使用document.cookie属性创建、读取和删除 cookie。</p>
+<p>使用 JavaScript，可以像这样创建 cookie：</p>
+<pre tabindex="0"><code>document.cookie = &#34;username=John Doe&#34;;
+</code></pre><p>您还可以添加到期日期（以 UTC 时间表示）。默认情况下，关闭浏览器时会删除 cookie：</p>
+<pre tabindex="0"><code>document.cookie = &#34;username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC&#34;;
+</code></pre><p>使用路径参数，您可以告诉浏览器 cookie 属于哪个路径。默认情况下，cookie 属于当前页面。</p>
+<pre tabindex="0"><code>document.cookie = &#34;username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/&#34;;
+</code></pre><h2 id="使用-javascript-读取-cookie">使用 JavaScript 读取 Cookie</h2>
+<p>使用 JavaScript，cookie 可以这样读取：<code>let x = document.cookie;</code></p>
+<p>document.cookie将在一个字符串中返回所有 cookie，就像：cookie1=value; cookie2=值；cookie3=值；</p>
+<h2 id="使用-javascript-更改-cookie">使用 JavaScript 更改 Cookie</h2>
+<p>使用 JavaScript，您可以像创建 cookie 一样更改 cookie：</p>
+<pre tabindex="0"><code>document.cookie = &#34;username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/&#34;;
+</code></pre><p>旧的 cookie 被覆盖。</p>
+<h2 id="使用-javascript-删除-cookie">使用 JavaScript 删除 Cookie</h2>
+<p>删除 cookie 非常简单。</p>
+<p>删除 cookie 时不必指定 cookie 值。</p>
+<p>只需将 expires 参数设置为过去的日期：</p>
+<pre tabindex="0"><code>document.cookie = &#34;username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;&#34;;
+</code></pre><p>您应该定义 cookie 路径以确保删除正确的 cookie。</p>
+<p>如果您不指定路径，某些浏览器将不允许您删除 cookie。</p>
+<h2 id="cookie-字符串">Cookie 字符串</h2>
+<p>document.cookie属性看起来像一个普通的文本字符串。但事实并非如此。</p>
+<p>即使你将整个cookie字符串写入document.cookie，当你再次读出它时，你也只能看到它的名称-值对。</p>
+<p>如果您设置了新的 cookie，旧的 cookie 不会被覆盖。新的 cookie 被添加到 document.cookie 中，所以如果你再次阅读 document.cookie，你会得到类似的东西：</p>
+<p>如果要查找某个指定 cookie 的值，则必须编写一个 JavaScript 函数来搜索 cookie 字符串中的 cookie 值。</p>
+<h2 id="javascript-cookie-示例">JavaScript Cookie 示例</h2>
+<p>在接下来的示例中，我们将创建一个存储访问者姓名的 cookie。</p>
+<p>访问者第一次到达该网页时，会要求他/她填写他/她的姓名。然后将该名称存储在 cookie 中。</p>
+<p>下次访问者到达同一页面时，他/她将收到一条欢迎消息。</p>
+<p>对于示例，我们将创建 3 个 JavaScript 函数：</p>
+<ol>
+<li>设置 cookie 值的函数</li>
+<li>获取 cookie 值的函数</li>
+<li>检查 cookie 值的函数</li>
+</ol>
+<h3 id="设置-cookie-的函数">设置 Cookie 的函数</h3>
+<p>首先，我们创建一个function将访问者姓名存储在 cookie 变量中：</p>
+<pre tabindex="0"><code>function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = &#34;expires=&#34;+ d.toUTCString();
+  document.cookie = cname + &#34;=&#34; + cvalue + &#34;;&#34; + expires + &#34;;path=/&#34;;
+}
+</code></pre><p>示例解释：</p>
+<p>上述函数的参数是 cookie 的名称 (cname)、cookie 的值 (cvalue) 以及 cookie 应过期的天数 (exdays)。</p>
+<p>该函数通过将 cookie 名称、cookie 值和过期字符串相加来设置 cookie。</p>
+<h3 id="获取-cookie-的函数">获取 Cookie 的函数</h3>
+<p>然后，我们创建一个function返回指定 cookie 的值：</p>
+<pre tabindex="0"><code>function getCookie(cname) {
+  let name = cname + &#34;=&#34;;
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(&#39;;&#39;);
+  for(let i = 0; i &lt;ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == &#39; &#39;) {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return &#34;&#34;;
+}
+</code></pre><p>函数说明：</p>
+<p>将 cookiename 作为参数 (cname)。</p>
+<p>使用要搜索的文本创建一个变量 (name) (cname + &ldquo;=&quot;)。</p>
+<p>解码 cookie 字符串，以处理带有特殊字符的 cookie，例如 &lsquo;$&rsquo;</p>
+<p>将分号上的 document.cookie 拆分为一个名为 ca (ca = decodedCookie.split(&rsquo;;&rsquo;)) 的数组。</p>
+<p>循环遍历 ca 数组 (i = 0; i &lt; ca.length; i++)，并读出每个值 c = ca[i])。</p>
+<p>如果找到 cookie (c.indexOf(name) == 0)，则返回 cookie 的值 (c.substring(name.length, c.length)。</p>
+<p>如果未找到 cookie，则返回“”。</p>
+<h3 id="检查-cookie-的函数">检查 Cookie 的函数</h3>
+<p>最后，我们创建检查是否设置了 cookie 的函数。</p>
+<p>如果设置了 cookie，它将显示一个问候语。</p>
+<p>如果没有设置cookie，会显示一个提示框，询问用户名，并将用户名cookie保存365天，调用setCookie函数：</p>
+<pre tabindex="0"><code>function checkCookie() {
+  let username = getCookie(&#34;username&#34;);
+  if (username != &#34;&#34;) {
+   alert(&#34;Welcome again &#34; + username);
+  } else {
+    username = prompt(&#34;Please enter your name:&#34;, &#34;&#34;);
+    if (username != &#34;&#34; &amp;&amp; username != null) {
+      setCookie(&#34;username&#34;, username, 365);
+    }
+  }
+}
+</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-09</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript_bom/cookie/" data-title="JavaScript_BOM-Cookie" data-hashtags="JavaScript_BOM"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript_bom/cookie/" data-hashtag="JavaScript_BOM"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript_bom/cookie/" data-title="JavaScript_BOM-Cookie"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript_bom/cookie/" data-title="JavaScript_BOM-Cookie"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript_bom/cookie/" data-title="JavaScript_BOM-Cookie"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/javascript_bom/">JavaScript_BOM</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/javascript_bom/%E8%AE%A1%E6%97%B6%E4%BA%8B%E4%BB%B6/" class="prev" rel="prev" title="JavaScript_BOM-计时事件"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>JavaScript_BOM-计时事件</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/web_api/%E7%AE%80%E4%BB%8B/" class="next" rel="next" title="Web_API-简介">Web_API-简介<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

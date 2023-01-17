@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-go-zero-教程-Model - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-go-zero-教程-Model" />
+<meta property="og:description" content="go-zero官网 go-zero详细文档 本系列为作者跟着Mikaelemmmm的b站教学视频学习时做的笔记 指令 通过sql或表生成model 1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/model/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-06T12:38:49+08:00" />
+<meta property="article:modified_time" content="2023-01-06T12:38:49+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-go-zero-教程-Model"/>
+<meta name="twitter:description" content="go-zero官网 go-zero详细文档 本系列为作者跟着Mikaelemmmm的b站教学视频学习时做的笔记 指令 通过sql或表生成model 1"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/model/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/api/" /><link rel="next" href="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/templete/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-go-zero-教程-Model",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/model\/"
+        },"genre": "posts","keywords": "go-zero","wordcount":  3831 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/model\/","datePublished": "2023-01-06T12:38:49+08:00","dateModified": "2023-01-06T12:38:49+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-教程-Model</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3831 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#指令">指令</a></li>
+    <li><a href="#model文件">Model文件</a>
+      <ul>
+        <li><a href="#findone函数">FindOne函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#源码分析">源码分析</a>
+      <ul>
+        <li><a href="#template默认生成文件usermodel_gengo">template默认生成文件userModel_gen.go</a>
+          <ul>
+            <li><a href="#变量var">变量Var</a>
+              <ul>
+                <li><a href="#接口">接口</a></li>
+              </ul>
+            </li>
+            <li><a href="#表结构体">表结构体</a></li>
+            <li><a href="#函数">函数</a></li>
+            <li><a href="#方法">方法</a></li>
+            <li><a href="#带缓存model">带缓存Model</a></li>
+            <li><a href="#添加缓存步骤">添加缓存步骤</a></li>
+          </ul>
+        </li>
+        <li><a href="#索引优化">索引优化</a></li>
+        <li><a href="#事务">事务</a></li>
+        <li><a href="#自定义model文件usermodelgo">自定义model文件userModel.go</a>
+          <ul>
+            <li><a href="#类型type">类型type</a></li>
+            <li><a href="#默认生成函数">默认生成函数</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#缓存的使用">缓存的使用</a></li>
+    <li><a href="#类型转换规则">类型转换规则</a></li>
+    <li><a href="#cache和db的自定义使用">Cache和DB的自定义使用</a>
+      <ul>
+        <li><a href="#db">db</a></li>
+        <li><a href="#cache">cache</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://go-zero.dev/cn/" target="_blank" rel="noopener noreffer ">go-zero官网</a></p>
+<p><a href="https://legacy.go-zero.dev/cn/" target="_blank" rel="noopener noreffer ">go-zero详细文档</a></p>
+<p>本系列为作者跟着<a href="https://space.bilibili.com/389552232" target="_blank" rel="noopener noreffer ">Mikaelemmmm</a>的b站教学视频学习时做的笔记</p>
+<h2 id="指令">指令</h2>
+<p>通过sql或表生成model</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>goctl model mysql ddl -src=<span style="color:#a50">&#34;./*.sql&#34;</span> -dir=<span style="color:#a50">&#34;./sql/model&#34;</span> -c --style=goZero
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ goctl model mysql datasource -url=<span style="color:#a50">&#34;user:password@tcp(127.0.0.1:3306)/database&#34;</span> -table=<span style="color:#a50">&#34;*&#34;</span>  -dir=<span style="color:#a50">&#34;./model&#34;</span> --style=goZero
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>M哥推荐使用navcat先生成表再通过表生成sql和model</p>
+<p>这里我构建好了sql之后使用，注意这里没有cache所以没有-c选项：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>goctl model mysql ddl -src=<span style="color:#a50">&#34;./sql/*.sql&#34;</span> -dir=<span style="color:#a50">&#34;./GenModel&#34;</span> --style=goZero
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="model文件">Model文件</h2>
+<p>生成的文件放到哪里都行，只要能够在svcCtx里面引入即可。</p>
+<p>引入中间件通常分两步：第一步是写入中间件配置到etc/.yaml中并在internal/config/config.go文件中添加与之对应的字段。第二步是在svcCtx的结构体中添加中间件客户端的字段，然后再在New函数中返回一个客户端，引入示例：</p>
+<p>修改yaml</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#1e90ff;font-weight:bold">DB</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#1e90ff;font-weight:bold">DataSource</span>:<span style="color:#bbb"> </span>root:xxxxxx@tcp(127.0.0.1:3306)/zero-demo?charset=utf8mb4&amp;parseTime=true&amp;loc=Asia%2FShanghai<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改config.go，给Config结构体添加相应字段</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>DB <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  DataSource <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>添加中间件客户端到svcCtx结构体字段</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> ServiceContext <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	Config    config.Config
+</span></span><span style="display:flex;"><span>	UserModel model.UserModel
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>给svcCtx的New函数添加相应的字段值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewServiceContext</span>(c config.Config) *ServiceContext {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> &amp;ServiceContext{
+</span></span><span style="display:flex;"><span>		Config:    c,
+</span></span><span style="display:flex;"><span>		UserModel: model.<span style="color:#0a0">NewUserModel</span>(sqlx.<span style="color:#0a0">NewMysql</span>(c.DB.DataSource), <span style="color:#00a">nil</span>),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后就可以在handler和logic里面使用它们了</p>
+<h3 id="findone函数">FindOne函数</h3>
+<p>返回两个值，第一个时model绑定的数据库条目对象，可以直接通过.访问数据库字段，第二个是错误</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>user, err := l.svcCtx.UserModel.<span style="color:#0a0">FindOne</span>(l.ctx, req.UserId)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> &amp;&amp; err != model.ErrNotFound {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>, errors.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;查询数据失败&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> user == <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>, errors.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;用户不存在&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">return</span> &amp;types.UserInfoResp{
+</span></span><span style="display:flex;"><span>  UserId:   user.Id,
+</span></span><span style="display:flex;"><span>  Nickname: user.Nickname,
+</span></span><span style="display:flex;"><span>}, <span style="color:#00a">nil</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="源码分析">源码分析</h2>
+<h3 id="template默认生成文件usermodel_gengo">template默认生成文件userModel_gen.go</h3>
+<p>不要修改这个文件，对这个文件的修改是在模板template中进行的</p>
+<h4 id="变量var">变量Var</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//结构体字段名切片
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>userFieldNames          = builder.<span style="color:#0a0">RawFieldNames</span>(&amp;User{})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//结构体字段使用`,`连接，用于sql语句select 字段生成
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>userRows                = strings.<span style="color:#0a0">Join</span>(userFieldNames, <span style="color:#a50">&#34;,&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//清除了默认生成字段的select字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>userRowsExpectAutoSet   = strings.<span style="color:#0a0">Join</span>(stringx.<span style="color:#0a0">Remove</span>(userFieldNames, <span style="color:#a50">&#34;`id`&#34;</span>, <span style="color:#a50">&#34;`update_at`&#34;</span>, <span style="color:#a50">&#34;`updated_at`&#34;</span>, <span style="color:#a50">&#34;`update_time`&#34;</span>, <span style="color:#a50">&#34;`create_at`&#34;</span>, <span style="color:#a50">&#34;`created_at`&#34;</span>, <span style="color:#a50">&#34;`create_time`&#34;</span>), <span style="color:#a50">&#34;,&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//清除默认生成字段的update字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>userRowsWithPlaceHolder = strings.<span style="color:#0a0">Join</span>(stringx.<span style="color:#0a0">Remove</span>(userFieldNames, <span style="color:#a50">&#34;`id`&#34;</span>, <span style="color:#a50">&#34;`update_at`&#34;</span>, <span style="color:#a50">&#34;`updated_at`&#34;</span>, <span style="color:#a50">&#34;`update_time`&#34;</span>, <span style="color:#a50">&#34;`create_at`&#34;</span>, <span style="color:#a50">&#34;`created_at`&#34;</span>, <span style="color:#a50">&#34;`create_time`&#34;</span>), <span style="color:#a50">&#34;=?,&#34;</span>) + <span style="color:#a50">&#34;=?&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于有缓存的Model</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//缓存的主键前缀，通常在使用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>cacheUserDataIdPrefix     = <span style="color:#a50">&#34;cache:userData:id:&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//缓存的普通索引前缀
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>cacheUserMobilePrefix = <span style="color:#a50">&#34;cache:user:mobile:&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>go-zero针对单条数据做缓存</p>
+<h5 id="接口">接口</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>userModel <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">Insert</span>(ctx context.Context, data *User) (sql.Result, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">FindOne</span>(ctx context.Context, id <span style="color:#0aa">int64</span>) (*User, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">FindOneByMobile</span>(ctx context.Context, mobile <span style="color:#0aa">string</span>) (*User, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">Update</span>(ctx context.Context, data *User) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">Delete</span>(ctx context.Context, id <span style="color:#0aa">int64</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="表结构体">表结构体</h4>
+<p>User结构体对应表结构</p>
+<p>defaultUserModel是userModel接口的实现，其具有默认生成的方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>defaultUserModel <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  sqlc.CachedConn
+</span></span><span style="display:flex;"><span>  table <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  Id       <span style="color:#0aa">int64</span>  <span style="color:#a50">`db:&#34;id&#34;`</span>
+</span></span><span style="display:flex;"><span>  Nickname <span style="color:#0aa">string</span> <span style="color:#a50">`db:&#34;nickname&#34;`</span>
+</span></span><span style="display:flex;"><span>  Mobile   <span style="color:#0aa">string</span> <span style="color:#a50">`db:&#34;mobile&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="函数">函数</h4>
+<p>一个工厂函数，用于创建defaultUserModel对象</p>
+<p>不带缓存Model</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">newUserDataModel</span>(conn sqlx.SqlConn) *defaultUserDataModel {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> &amp;defaultUserDataModel{
+</span></span><span style="display:flex;"><span>		conn:  conn,
+</span></span><span style="display:flex;"><span>		table: <span style="color:#a50">&#34;`user_data`&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>带缓存Model</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">newUserDataModel</span>(conn sqlx.SqlConn, c cache.CacheConf) *defaultUserDataModel {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> &amp;defaultUserDataModel{
+</span></span><span style="display:flex;"><span>		CachedConn: sqlc.<span style="color:#0a0">NewConn</span>(conn, c),
+</span></span><span style="display:flex;"><span>		table:      <span style="color:#a50">&#34;`user_data`&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="方法">方法</h4>
+<p>接口中方法在defaultUserModel对象的实现</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//删除条目
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> (m *defaultUserModel) <span style="color:#0a0">Delete</span>(ctx context.Context, id <span style="color:#0aa">int64</span>) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//通过FindOne确定是否有该id的条目，如果没有直接返回数据库给出的错误
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	data, err := m.<span style="color:#0a0">FindOne</span>(ctx, id)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//如果有该条目
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#aaa;font-style:italic">//生成缓存查询字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	userIdKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserIdPrefix, id)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//生成数据库查询字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	userMobileKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserMobilePrefix, data.Mobile)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//执行带缓存命令，该命令内部自动识别执行数据库操作，并执行相应的缓存操作，只需要写数据库的逻辑即可
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	_, err = m.<span style="color:#0a0">ExecCtx</span>(ctx, <span style="color:#00a">func</span>(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>		query := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;delete from %s where `id` = ?&#34;</span>, m.table)
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> conn.<span style="color:#0a0">ExecCtx</span>(ctx, query, id)
+</span></span><span style="display:flex;"><span>	}, userIdKey, userMobileKey)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> err
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//通过主键查询
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> (m *defaultUserModel) <span style="color:#0a0">FindOne</span>(ctx context.Context, id <span style="color:#0aa">int64</span>) (*User, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//缓存查询字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	userIdKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserIdPrefix, id)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//接收的结构体，当不是查询一个的时候可以使用QueryRowsCtx接收一个切片，详见源码或文档
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#00a">var</span> resp User
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//执行QueryRowCtx查询
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	err := m.<span style="color:#0a0">QueryRowCtx</span>(ctx, &amp;resp, userIdKey, <span style="color:#00a">func</span>(ctx context.Context, conn sqlx.SqlConn, v <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>		query := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;select %s from %s where `id` = ? limit 1&#34;</span>, userRows, m.table)
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> conn.<span style="color:#0a0">QueryRowCtx</span>(ctx, v, query, id)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">switch</span> err {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">case</span> <span style="color:#00a">nil</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> &amp;resp, <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">case</span> sqlc.ErrNotFound:
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> <span style="color:#00a">nil</span>, ErrNotFound
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">default</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> <span style="color:#00a">nil</span>, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//插入条目
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> (m *defaultUserModel) <span style="color:#0a0">Insert</span>(ctx context.Context, data *User) (sql.Result, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//生成缓存主键查询字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	userIdKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserIdPrefix, data.Id)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//生成缓存mobile索引查询字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	userMobileKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserMobilePrefix, data.Mobile)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//使用ExecCtx函数执行sql查询，其内部封装了缓存操作
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	ret, err := m.<span style="color:#0a0">ExecCtx</span>(ctx, <span style="color:#00a">func</span>(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>		query := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;insert into %s (%s) values (?, ?)&#34;</span>, m.table, userRowsExpectAutoSet)
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> conn.<span style="color:#0a0">ExecCtx</span>(ctx, query, data.Nickname, data.Mobile)
+</span></span><span style="display:flex;"><span>	}, userIdKey, userMobileKey)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> ret, err
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//更新条目
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> (m *defaultUserModel) <span style="color:#0a0">Update</span>(ctx context.Context, newData *User) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//查询是否有该主键条目
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	data, err := m.<span style="color:#0a0">FindOne</span>(ctx, newData.Id)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//生成缓存主键查询字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	userIdKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserIdPrefix, data.Id)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//生成mobile索引查询字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	userMobileKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserMobilePrefix, data.Mobile)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//通过ExecCtx函数执行更新操作，内部封装了缓存操作
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	_, err = m.<span style="color:#0a0">ExecCtx</span>(ctx, <span style="color:#00a">func</span>(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>		query := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;update %s set %s where `id` = ?&#34;</span>, m.table, userRowsWithPlaceHolder)
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> conn.<span style="color:#0a0">ExecCtx</span>(ctx, query, newData.Nickname, newData.Mobile, newData.Id)
+</span></span><span style="display:flex;"><span>	}, userIdKey, userMobileKey)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> err
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//传入主键并返回该主键的缓存查询字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> (m *defaultUserModel) <span style="color:#0a0">formatPrimary</span>(primary <span style="color:#00a">interface</span>{}) <span style="color:#0aa">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserIdPrefix, primary)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//与findOne函数一样但是不走缓存，直接查数据库
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> (m *defaultUserModel) <span style="color:#0a0">queryPrimary</span>(ctx context.Context, conn sqlx.SqlConn, v, primary <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>	query := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;select %s from %s where `id` = ? limit 1&#34;</span>, userRows, m.table)
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//这里直接使用conn查询数据库，对于统一事务的查询可以使用同一个conn进行执行
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#00a">return</span> conn.<span style="color:#0a0">QueryRowCtx</span>(ctx, v, query, primary)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="带缓存model">带缓存Model</h4>
+<p>Cache仅做单条数据的缓存</p>
+<p>通常情况在etc中设置Cache和Redis，Cache是go-zero内置的配置对象，专门用于给Model服务，Redis则使用第三方redis库，作为中间件，可以做缓存也可以做其他作用，比如消息队列。</p>
+<p>带缓存的所有方法都跟不带缓存的Model不一样</p>
+<p>带缓存的数据在缓存中找不到键的值时后才去查询DB</p>
+<p>为了防止缓存雪崩，源码中对于未查到的数据会给插入一个<code>*</code>值过期时间是1分钟，后续查询该键的请求发现是<code>*</code>会直接返回。这样当多个请求打到缓存上时1分钟内只会触发一次数据库查询。</p>
+<h4 id="添加缓存步骤">添加缓存步骤</h4>
+<p>给config中的config结构体添加Cache字段</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>Cache cache.CacheConf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="索引优化">索引优化</h3>
+<p>只有唯一索引可以生成默认优化</p>
+<h3 id="事务">事务</h3>
+<p>查看sqlc的源码有如下方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (cc CachedConn) <span style="color:#0a0">TransactCtx</span>(ctx context.Context, fn <span style="color:#00a">func</span>(context.Context, sqlx.Session) <span style="color:#0aa">error</span>) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> cc.db.<span style="color:#0a0">TransactCtx</span>(ctx, fn)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用该方法来实现事务原子性，第一个参数是ctx可用于做链路追踪，第二个参数是一个函数表示事务过程，在这个函数中调用的语句当返回err为nil的时候提交，否则回滚到函数执行之前的状态。</p>
+<p>我们的可以在Model中封装这个方法来实现在logic中使用事务。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//暴露给logic开启事务
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> (m *defaultUserDataModel) <span style="color:#0a0">TransCtx</span>(ctx context.Context, fn <span style="color:#00a">func</span>(ctx context.Context, s sqlx.Session) <span style="color:#0aa">error</span>) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> m.<span style="color:#0a0">TransactCtx</span>(ctx, <span style="color:#00a">func</span>(ctx context.Context, s sqlx.Session) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> <span style="color:#0a0">fn</span>(ctx, s)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认生成Model的Insert不支持传入session，为了使用一个事务以实现原子性，需要重写Insert函数，接收一个sqlx.Session参数，并将默认执行sql的对象修改为传入的sqlx.Session对象</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (m *defaultUserModel) <span style="color:#0a0">TransInsert</span>(ctx context.Context, session sqlx.Session, data *User) (sql.Result, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>	userIdKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserIdPrefix, data.Id)
+</span></span><span style="display:flex;"><span>	userMobileKey := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;%s%v&#34;</span>, cacheUserMobilePrefix, data.Mobile)
+</span></span><span style="display:flex;"><span>	ret, err := m.<span style="color:#0a0">ExecCtx</span>(ctx, <span style="color:#00a">func</span>(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>		query := fmt.<span style="color:#0a0">Sprintf</span>(<span style="color:#a50">&#34;insert into %s (%s) values (?, ?)&#34;</span>, m.table, userRowsExpectAutoSet)
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> session.<span style="color:#0a0">ExecCtx</span>(ctx, query, data.Nickname, data.Mobile)
+</span></span><span style="display:flex;"><span>	}, userIdKey, userMobileKey)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> ret, err
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另外需要使用同一个session去执行db操作</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">if</span> err := l.svcCtx.UserModel.<span style="color:#0a0">TransCtx</span>(l.ctx, <span style="color:#00a">func</span>(ctx context.Context, session sqlx.Session) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>  user := &amp;model.User{}
+</span></span><span style="display:flex;"><span>  user.Mobile = req.Mobile
+</span></span><span style="display:flex;"><span>  user.Nickname = req.Nickname
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//添加user
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  dbResult, err := l.svcCtx.UserModel.<span style="color:#0a0">TransInsert</span>(ctx, session, user)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> err
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  userId, _ := dbResult.<span style="color:#0a0">LastInsertId</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//添加userData
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  userData := &amp;model.UserData{}
+</span></span><span style="display:flex;"><span>  userData.UserId = userId
+</span></span><span style="display:flex;"><span>  userData.Data = <span style="color:#a50">&#34;xxxx&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> _, err := l.svcCtx.UserDataModel.<span style="color:#0a0">TransInsert</span>(ctx, session, userData); err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> err
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>}); err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(err)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">nil</span>, errors.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;创建用户失败&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实只用这么一个Insert函数就可以了，判断一下如果传入的session为nil，则不使用session直接使用新的conn</p>
+<p>TransactCtx源码首先在函数体中开启事务，最后使用defer recover来实现回滚，当执行sql时出现panic或者err时候回滚该事务</p>
+<h3 id="自定义model文件usermodelgo">自定义model文件userModel.go</h3>
+<p>该文件是用于自己添加model方法的文件，该文件中的UserModel继承了默认生成文件中的userModel</p>
+<h4 id="类型type">类型type</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// UserModels是一个接口，在这里添加自定义方法声明
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	UserModel <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>		userModel
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//customUserModel因为继承了userModel_gen.go中的defaultUserModel它能够使用默认给defaultUserModel生成的所有方法，在这里添加新的自定义方法实现
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	customUserModel <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>		*defaultUserModel
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="默认生成函数">默认生成函数</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//UserModel工厂函数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">NewUserModel</span>(conn sqlx.SqlConn, c cache.CacheConf) UserModel {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> &amp;customUserModel{
+</span></span><span style="display:flex;"><span>		defaultUserModel: <span style="color:#0a0">newUserModel</span>(conn, c),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="缓存的使用">缓存的使用</h2>
+<p>对于主键字段缓存，会缓存整个结构体信息，而对于单索引字段（除全文索引）则缓存主键字段值。</p>
+<h2 id="类型转换规则">类型转换规则</h2>
+<p>见<a href="https://legacy.go-zero.dev/cn/goctl-model.html#%E7%94%A8%E6%B3%95" target="_blank" rel="noopener noreffer ">文档</a></p>
+<h2 id="cache和db的自定义使用">Cache和DB的自定义使用</h2>
+<p>userModel_gen.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>defaultUserModel <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	sqlc.CachedConn
+</span></span><span style="display:flex;"><span>	table <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>cachesql.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>CachedConn <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	db    sqlx.SqlConn
+</span></span><span style="display:flex;"><span>	cache cache.Cache
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以我们可以使用.db和.cache来使用db和cache的方法</p>
+<h3 id="db">db</h3>
+<p>sqlconn.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>SqlConn <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>	Session
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// RawDB is for other ORM to operate with, use it with caution.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#aaa;font-style:italic">// Notice: don&#39;t close it.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">RawDB</span>() (*sql.DB, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">Transact</span>(fn <span style="color:#00a">func</span>(Session) <span style="color:#0aa">error</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">TransactCtx</span>(ctx context.Context, fn <span style="color:#00a">func</span>(context.Context, Session) <span style="color:#0aa">error</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Session <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">Exec</span>(query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) (sql.Result, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">ExecCtx</span>(ctx context.Context, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) (sql.Result, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">Prepare</span>(query <span style="color:#0aa">string</span>) (StmtSession, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">PrepareCtx</span>(ctx context.Context, query <span style="color:#0aa">string</span>) (StmtSession, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">QueryRow</span>(v <span style="color:#00a">interface</span>{}, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">QueryRowCtx</span>(ctx context.Context, v <span style="color:#00a">interface</span>{}, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">QueryRowPartial</span>(v <span style="color:#00a">interface</span>{}, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">QueryRowPartialCtx</span>(ctx context.Context, v <span style="color:#00a">interface</span>{}, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">QueryRows</span>(v <span style="color:#00a">interface</span>{}, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">QueryRowsCtx</span>(ctx context.Context, v <span style="color:#00a">interface</span>{}, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">QueryRowsPartial</span>(v <span style="color:#00a">interface</span>{}, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">QueryRowsPartialCtx</span>(ctx context.Context, v <span style="color:#00a">interface</span>{}, query <span style="color:#0aa">string</span>, args ...<span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="cache">cache</h3>
+<p>cache.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>Cache <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// Del deletes cached values with keys.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">Del</span>(keys ...<span style="color:#0aa">string</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// DelCtx deletes cached values with keys.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">DelCtx</span>(ctx context.Context, keys ...<span style="color:#0aa">string</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// Get gets the cache with key and fills into v.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">Get</span>(key <span style="color:#0aa">string</span>, val <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// GetCtx gets the cache with key and fills into v.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">GetCtx</span>(ctx context.Context, key <span style="color:#0aa">string</span>, val <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// IsNotFound checks if the given error is the defined errNotFound.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">IsNotFound</span>(err <span style="color:#0aa">error</span>) <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// Set sets the cache with key and v, using c.expiry.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">Set</span>(key <span style="color:#0aa">string</span>, val <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// SetCtx sets the cache with key and v, using c.expiry.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">SetCtx</span>(ctx context.Context, key <span style="color:#0aa">string</span>, val <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// SetWithExpire sets the cache with key and v, using given expire.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">SetWithExpire</span>(key <span style="color:#0aa">string</span>, val <span style="color:#00a">interface</span>{}, expire time.Duration) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// SetWithExpireCtx sets the cache with key and v, using given expire.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">SetWithExpireCtx</span>(ctx context.Context, key <span style="color:#0aa">string</span>, val <span style="color:#00a">interface</span>{}, expire time.Duration) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// Take takes the result from cache first, if not found,
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#aaa;font-style:italic">// query from DB and set cache using c.expiry, then return the result.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">Take</span>(val <span style="color:#00a">interface</span>{}, key <span style="color:#0aa">string</span>, query <span style="color:#00a">func</span>(val <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// TakeCtx takes the result from cache first, if not found,
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#aaa;font-style:italic">// query from DB and set cache using c.expiry, then return the result.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">TakeCtx</span>(ctx context.Context, val <span style="color:#00a">interface</span>{}, key <span style="color:#0aa">string</span>, query <span style="color:#00a">func</span>(val <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// TakeWithExpire takes the result from cache first, if not found,
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#aaa;font-style:italic">// query from DB and set cache using given expire, then return the result.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">TakeWithExpire</span>(val <span style="color:#00a">interface</span>{}, key <span style="color:#0aa">string</span>, query <span style="color:#00a">func</span>(val <span style="color:#00a">interface</span>{}, expire time.Duration) <span style="color:#0aa">error</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// TakeWithExpireCtx takes the result from cache first, if not found,
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#aaa;font-style:italic">// query from DB and set cache using given expire, then return the result.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0a0">TakeWithExpireCtx</span>(ctx context.Context, val <span style="color:#00a">interface</span>{}, key <span style="color:#0aa">string</span>,
+</span></span><span style="display:flex;"><span>		query <span style="color:#00a">func</span>(val <span style="color:#00a">interface</span>{}, expire time.Duration) <span style="color:#0aa">error</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-01-06</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/model/" data-title="golang-go-zero-教程-Model" data-hashtags="go-zero"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/model/" data-hashtag="go-zero"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/model/" data-title="golang-go-zero-教程-Model"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/model/" data-title="golang-go-zero-教程-Model"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/model/" data-title="golang-go-zero-教程-Model"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go-zero/">go-zero</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/go-zero/%E6%95%99%E7%A8%8B/api/" class="prev" rel="prev" title="golang-go-zero-教程-Api"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-go-zero-教程-Api</a>
+            <a href="/posts/golang/go-zero/%E6%95%99%E7%A8%8B/templete/" class="next" rel="next" title="golang-go-zero-教程-Templete">golang-go-zero-教程-Templete<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2023-01-06T12:38:49+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"golang-go-zero-教程-Model"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

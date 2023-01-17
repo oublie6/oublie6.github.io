@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python教程-其他流程控制工具 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Python教程-其他流程控制工具" />
+<meta property="og:description" content="本系列为作者在官网学习python时做的笔记，详见python官网 if 语句 if 语句包含零个或多个 elif 子句及可选的 else 子句。关键字 &rsquo;elif&rsquo; 是 &rsquo;else if&rsquo; 的缩写，适用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-11T19:10:45+08:00" />
+<meta property="article:modified_time" content="2022-10-11T19:10:45+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python教程-其他流程控制工具"/>
+<meta name="twitter:description" content="本系列为作者在官网学习python时做的笔记，详见python官网 if 语句 if 语句包含零个或多个 elif 子句及可选的 else 子句。关键字 &rsquo;elif&rsquo; 是 &rsquo;else if&rsquo; 的缩写，适用"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/" /><link rel="prev" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/python%E9%80%9F%E8%A7%88/" /><link rel="next" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%AF%BE%E5%89%8D%E7%94%9C%E7%82%B9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python教程-其他流程控制工具",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7\/"
+        },"genre": "posts","keywords": "Python教程","wordcount":  5763 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7\/","datePublished": "2022-10-11T19:10:45+08:00","dateModified": "2022-10-11T19:10:45+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-其他流程控制工具</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-11">2022-10-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5763 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;12 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#if-语句">if 语句</a></li>
+    <li><a href="#for-语句">for 语句</a></li>
+    <li><a href="#range-函数">range() 函数</a></li>
+    <li><a href="#break-和-continue-语句以及循环中的-else-子句">break 和 continue 语句，以及循环中的 else 子句</a></li>
+    <li><a href="#pass-语句">pass 语句</a></li>
+    <li><a href="#定义函数">定义函数</a></li>
+    <li><a href="#函数定义的更多形式">函数定义的更多形式</a>
+      <ul>
+        <li><a href="#参数默认值">参数默认值</a></li>
+        <li><a href="#关键字参数">关键字参数</a></li>
+        <li><a href="#特殊参数">特殊参数</a>
+          <ul>
+            <li><a href="#位置或关键字参数">位置或关键字参数</a></li>
+            <li><a href="#仅限位置参数">仅限位置参数</a></li>
+            <li><a href="#仅限关键字参数">仅限关键字参数</a></li>
+            <li><a href="#函数示例">函数示例</a></li>
+            <li><a href="#概括">概括</a></li>
+          </ul>
+        </li>
+        <li><a href="#任意的参数列表">任意的参数列表</a></li>
+        <li><a href="#解包参数列表">解包参数列表</a></li>
+        <li><a href="#lambda-表达式">Lambda 表达式</a></li>
+        <li><a href="#文档字符串">文档字符串</a></li>
+        <li><a href="#函数标注">函数标注</a></li>
+      </ul>
+    </li>
+    <li><a href="#小插曲编码风格">小插曲：编码风格</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列为作者在官网学习python时做的笔记，详见<a href="https://docs.python.org/zh-cn/3.8/tutorial/" target="_blank" rel="noopener noreffer ">python官网</a></p>
+<h2 id="if-语句">if 语句</h2>
+<p>if 语句包含零个或多个 elif 子句及可选的 else 子句。关键字 &rsquo;elif&rsquo; 是 &rsquo;else if&rsquo; 的缩写，适用于避免过多的缩进。if &hellip; elif &hellip; elif &hellip; 序列可以当作其他语言中 switch 或 case 语句的替代品。</p>
+<h2 id="for-语句">for 语句</h2>
+<p>Python 中的 for 语句与你在 C 或 Pascal 中所用到的有所不同。 Python 中的 for 语句并不总是对算术递增的数值进行迭代（如同 Pascal），或是给予用户定义迭代步骤和暂停条件的能力（如同 C），而是对任意序列进行迭代（例如列表或字符串），条目的迭代顺序与它们在序列中出现的顺序一致。 例如（此处英文为双关语）:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#aaa;font-style:italic"># Measure some strings:</span>
+</span></span><span style="display:flex;"><span>... words = [<span style="color:#a50">&#39;cat&#39;</span>, <span style="color:#a50">&#39;window&#39;</span>, <span style="color:#a50">&#39;defenestrate&#39;</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">for</span> w <span style="color:#00a">in</span> words:
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(w, <span style="color:#0aa">len</span>(w))
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>cat <span style="color:#099">3</span>
+</span></span><span style="display:flex;"><span>window <span style="color:#099">6</span>
+</span></span><span style="display:flex;"><span>defenestrate <span style="color:#099">12</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在遍历同一个集合时修改该集合的代码可能很难获得正确的结果。通常，更直接的做法是循环遍历该集合的副本或创建新集合</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Strategy:  Iterate over a copy</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> user, status <span style="color:#00a">in</span> users.copy().items():
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> status == <span style="color:#a50">&#39;inactive&#39;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">del</span> users[user]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Strategy:  Create a new collection</span>
+</span></span><span style="display:flex;"><span>active_users = {}
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> user, status <span style="color:#00a">in</span> users.items():
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> status == <span style="color:#a50">&#39;active&#39;</span>:
+</span></span><span style="display:flex;"><span>        active_users[user] = status
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="range-函数">range() 函数</h2>
+<p>如果你确实需要遍历一个数字序列，内置函数 range() 会派上用场。它生成算术级数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">for</span> i <span style="color:#00a">in</span> <span style="color:#0aa">range</span>(<span style="color:#099">5</span>):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(i)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>给定的终止数值并不在要生成的序列里；range(10) 会生成10个值，并且是以合法的索引生成一个长度为10的序列。range也可以以另一个数字开头，或者以指定的幅度增加（甚至是负数；有时这也被叫做 &lsquo;步进&rsquo;）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0aa">range</span>(<span style="color:#099">5</span>, <span style="color:#099">10</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#099">5</span>, <span style="color:#099">6</span>, <span style="color:#099">7</span>, <span style="color:#099">8</span>, <span style="color:#099">9</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">range</span>(<span style="color:#099">0</span>, <span style="color:#099">10</span>, <span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#099">0</span>, <span style="color:#099">3</span>, <span style="color:#099">6</span>, <span style="color:#099">9</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">range</span>(-<span style="color:#099">10</span>, -<span style="color:#099">100</span>, -<span style="color:#099">30</span>)
+</span></span><span style="display:flex;"><span>  -<span style="color:#099">10</span>, -<span style="color:#099">40</span>, -<span style="color:#099">70</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要以序列的索引来迭代，您可以将 range() 和 len() 组合如下:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt; a = [<span style="color:#a50">&#39;Mary&#39;</span>, <span style="color:#a50">&#39;had&#39;</span>, <span style="color:#a50">&#39;a&#39;</span>, <span style="color:#a50">&#39;little&#39;</span>, <span style="color:#a50">&#39;lamb&#39;</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">for</span> i <span style="color:#00a">in</span> <span style="color:#0aa">range</span>(<span style="color:#0aa">len</span>(a)):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(i, a[i])
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span> Mary
+</span></span><span style="display:flex;"><span><span style="color:#099">1</span> had
+</span></span><span style="display:flex;"><span><span style="color:#099">2</span> a
+</span></span><span style="display:flex;"><span><span style="color:#099">3</span> little
+</span></span><span style="display:flex;"><span><span style="color:#099">4</span> lamb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>range() 所返回的对象在许多方面表现得像一个列表，但实际上却并不是。此对象会在你迭代它时基于所希望的序列返回连续的项，但它没有真正生成列表，这样就能节省空间。</p>
+<p>我们称这样对象为 iterable，也就是说，适合作为这样的目标对象：函数和结构期望从中获取连续的项直到所提供的项全部耗尽。 我们已经看到 for 语句就是这样一种结构，而接受可迭代对象的函数的一个例子是 sum():</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">sum</span>(<span style="color:#0aa">range</span>(<span style="color:#099">4</span>))  <span style="color:#aaa;font-style:italic"># 0 + 1 + 2 + 3</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">6</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="break-和-continue-语句以及循环中的-else-子句">break 和 continue 语句，以及循环中的 else 子句</h2>
+<p>break 语句，和 C 中的类似，用于跳出最近的 for 或 while 循环.</p>
+<p>循环语句可能带有 else 子句；它会在循环耗尽了可迭代对象 (使用 for) 或循环条件变为假值 (使用 while) 时被执行，但不会在循环被 break 语句终止时被执行。</p>
+<p>else 子句属于 for 循环， 不属于 if 语句</p>
+<p>当和循环一起使用时，else 子句与 try 语句中的 else 子句的共同点多于 if 语句中的同类子句: try 语句中的 else 子句会在未发生异常时执行，而循环中的 else 子句则会在未发生 break 时执行。</p>
+<p>continue 语句也是借鉴自 C 语言，表示继续循环中的下一次迭代:</p>
+<h2 id="pass-语句">pass 语句</h2>
+<p>pass 语句什么也不做。当语法上需要一个语句，但程序需要什么动作也不做时，可以使用它。</p>
+<p>这通常用于创建最小的类:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">MyEmptyClass</span>:
+</span></span><span style="display:flex;"><span>...     <span style="color:#00a">pass</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pass 的另一个可以使用的场合是在你编写新的代码时作为一个函数或条件子句体的占位符，允许你保持在更抽象的层次上进行思考。 pass 会被静默地忽略:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">initlog</span>(*args):
+</span></span><span style="display:flex;"><span>...     <span style="color:#00a">pass</span>   <span style="color:#aaa;font-style:italic"># Remember to implement this!</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="定义函数">定义函数</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">fib</span>(n):    <span style="color:#aaa;font-style:italic"># write Fibonacci series up to n</span>
+</span></span><span style="display:flex;"><span>...     <span style="color:#a50">&#34;&#34;&#34;Print a Fibonacci series up to n.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>...     a, b = <span style="color:#099">0</span>, <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>...     <span style="color:#00a">while</span> a &lt; n:
+</span></span><span style="display:flex;"><span>...         <span style="color:#0aa">print</span>(a, end=<span style="color:#a50">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>...         a, b = b, a+b
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>()
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#aaa;font-style:italic"># Now call the function we just defined:</span>
+</span></span><span style="display:flex;"><span>... fib(<span style="color:#099">2000</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span> <span style="color:#099">55</span> <span style="color:#099">89</span> <span style="color:#099">144</span> <span style="color:#099">233</span> <span style="color:#099">377</span> <span style="color:#099">610</span> <span style="color:#099">987</span> <span style="color:#099">1597</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>关键字 def 引入一个函数 定义。它必须后跟函数名称和带括号的形式参数列表。构成函数体的语句从下一行开始，并且必须缩进。</p>
+<p>函数体的第一个语句可以（可选的）是字符串文字；这个字符串文字是函数的文档字符串或 docstring 。</p>
+<p>函数的 执行 会引入一个用于函数局部变量的新符号表。更确切地说，函数中所有的变量赋值都将存储在局部符号表中；而变量引用会首先在局部符号表中查找，然后是外层函数的局部符号表，再然后是全局符号表，最后是内置名称的符号表。 因此，全局变量和外层函数的变量不能在函数内部直接赋值（除非是在 global 语句中定义的全局变量，或者是在 nonlocal 语句中定义的外层函数的变量），尽管它们可以被引用。</p>
+<p>在调用函数时会将实际参数（实参）引入到被调用函数的局部符号表中；因此，实参是使用 按值调用 来传递的（其中的 值 始终是对象的 引用 而不是对象的值）。 1 当一个函数调用另外一个函数时，会为该调用创建一个新的局部符号表。</p>
+<p>函数定义会将函数名称与函数对象在当前符号表中进行关联。 解释器会将该名称所指向的对象识别为用户自定义函数。 其他名称也可指向同一个函数对象并可被用来访问访函数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; fib
+</span></span><span style="display:flex;"><span>&lt;function fib at <span style="color:#099">10042</span>ed0&gt;
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f = fib
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f(<span style="color:#099">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span> <span style="color:#099">55</span> <span style="color:#099">89</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你学过其他语言，你可能会认为 fib 不是函数而是一个过程，因为它并不返回值。事实上，即使没有 return 语句的函数也会返回一个值，尽管它是一个相当无聊的值。这个值称为 None （它是内置名称）。一般来说解释器不会打印出单独的返回值 None ，如果你真想看到它，你可以使用 print()</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; fib(<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(fib(<span style="color:#099">0</span>))
+</span></span><span style="display:flex;"><span><span style="color:#00a">None</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="函数定义的更多形式">函数定义的更多形式</h2>
+<p>给函数定义有可变数目的参数也是可行的。这里有三种形式，可以组合使用。</p>
+<h3 id="参数默认值">参数默认值</h3>
+<p>最有用的形式是对一个或多个参数指定一个默认值。这样创建的函数，可以用比定义时允许的更少的参数调用，比如:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">ask_ok</span>(prompt, retries=<span style="color:#099">4</span>, reminder=<span style="color:#a50">&#39;Please try again!&#39;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">while</span> <span style="color:#00a">True</span>:
+</span></span><span style="display:flex;"><span>        ok = <span style="color:#0aa">input</span>(prompt)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> ok <span style="color:#00a">in</span> (<span style="color:#a50">&#39;y&#39;</span>, <span style="color:#a50">&#39;ye&#39;</span>, <span style="color:#a50">&#39;yes&#39;</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">return</span> <span style="color:#00a">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> ok <span style="color:#00a">in</span> (<span style="color:#a50">&#39;n&#39;</span>, <span style="color:#a50">&#39;no&#39;</span>, <span style="color:#a50">&#39;nop&#39;</span>, <span style="color:#a50">&#39;nope&#39;</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">return</span> <span style="color:#00a">False</span>
+</span></span><span style="display:flex;"><span>        retries = retries - <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> retries &lt; <span style="color:#099">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">raise</span> ValueError(<span style="color:#a50">&#39;invalid user response&#39;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#0aa">print</span>(reminder)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个函数可以通过几种方式调用:</p>
+<p>只给出必需的参数：<code>ask_ok('Do you really want to quit?')</code></p>
+<p>给出一个可选的参数：<code>ask_ok('OK to overwrite the file?', 2)</code></p>
+<p>或者给出所有的参数：<code>ask_ok('OK to overwrite the file?', 2, 'Come on, only yes or no!')</code></p>
+<p>这个示例还介绍了 in 关键字。它可以测试一个序列是否包含某个值。</p>
+<p>默认值是在 定义过程 中在函数定义处计算的，所以</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>i = <span style="color:#099">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">f</span>(arg=i):
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span>(arg)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>i = <span style="color:#099">6</span>
+</span></span><span style="display:flex;"><span>f()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>会打印 5</p>
+<p>重要警告： 默认值只会执行一次。这条规则在默认值为可变对象（列表、字典以及大多数类实例）时很重要。比如，下面的函数会存储在后续调用中传递给它的参数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">f</span>(a, L=[]):
+</span></span><span style="display:flex;"><span>    L.append(a)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> L
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>(f(<span style="color:#099">1</span>))
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>(f(<span style="color:#099">2</span>))
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>(f(<span style="color:#099">3</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这将打印出</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[<span style="color:#099">1</span>]
+</span></span><span style="display:flex;"><span>[<span style="color:#099">1</span>, <span style="color:#099">2</span>]
+</span></span><span style="display:flex;"><span>[<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你不想要在后续调用之间共享默认值，你可以这样写这个函数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">f</span>(a, L=<span style="color:#00a">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> L <span style="color:#00a">is</span> <span style="color:#00a">None</span>:
+</span></span><span style="display:flex;"><span>        L = []
+</span></span><span style="display:flex;"><span>    L.append(a)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> L
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="关键字参数">关键字参数</h3>
+<p>也可以使用形如 kwarg=value 的 关键字参数 来调用函数。</p>
+<p>关键字参数必须跟随在位置参数的后面。传递的所有关键字参数必须与函数接受的其中一个参数匹配（比如 actor 不是函数 parrot 的有效参数），它们的顺序并不重要。这也包括非可选参数，（比如 parrot(voltage=1000) 也是有效的）。不能对同一个参数多次赋值。</p>
+<p>当存在一个形式为 <code>**name</code> 的最后一个形参时，它会接收一个字典 (参见 映射类型 &mdash; dict)，其中包含除了与已有形参相对应的关键字参数以外的所有关键字参数。 这可以与一个形式为 <code>*name</code>，接收一个包含除了已有形参列表以外的位置参数的 元组 的形参 (将在下一小节介绍) 组合使用 (<code>*name</code> 必须出现在 <code>**name </code>之前。)例如，如果我们这样定义一个函数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">cheeseshop</span>(kind, *arguments, **keywords):
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;-- Do you have any&#34;</span>, kind, <span style="color:#a50">&#34;?&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;-- I&#39;m sorry, we&#39;re all out of&#34;</span>, kind)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> arg <span style="color:#00a">in</span> arguments:
+</span></span><span style="display:flex;"><span>        <span style="color:#0aa">print</span>(arg)
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;-&#34;</span> * <span style="color:#099">40</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> kw <span style="color:#00a">in</span> keywords:
+</span></span><span style="display:flex;"><span>        <span style="color:#0aa">print</span>(kw, <span style="color:#a50">&#34;:&#34;</span>, keywords[kw])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>它可以像这样调用:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cheeseshop(<span style="color:#a50">&#34;Limburger&#34;</span>, <span style="color:#a50">&#34;It&#39;s very runny, sir.&#34;</span>,
+</span></span><span style="display:flex;"><span>           <span style="color:#a50">&#34;It&#39;s really very, VERY runny, sir.&#34;</span>,
+</span></span><span style="display:flex;"><span>           shopkeeper=<span style="color:#a50">&#34;Michael Palin&#34;</span>,
+</span></span><span style="display:flex;"><span>           client=<span style="color:#a50">&#34;John Cleese&#34;</span>,
+</span></span><span style="display:flex;"><span>           sketch=<span style="color:#a50">&#34;Cheese Shop Sketch&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然它会打印:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-- Do you have any Limburger ?
+</span></span><span style="display:flex;"><span>-- I<span style="color:#a50">&#39;m sorry, we&#39;</span>re all out of Limburger
+</span></span><span style="display:flex;"><span>It<span style="color:#a50">&#39;s very runny, sir.
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">It&#39;</span>s really very, VERY runny, sir.
+</span></span><span style="display:flex;"><span>----------------------------------------
+</span></span><span style="display:flex;"><span>shopkeeper : Michael Palin
+</span></span><span style="display:flex;"><span>client : John Cleese
+</span></span><span style="display:flex;"><span>sketch : Cheese Shop Sketch
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意打印时关键字参数的顺序保证与调用函数时提供它们的顺序是相匹配的。</p>
+<h3 id="特殊参数">特殊参数</h3>
+<p>默认情况下，函数的参数传递形式可以是位置参数或是显式的关键字参数。为了确保可读性和运行效率，限制允许的参数传递形式是有意义的，这样开发者只需查看函数定义即可确定参数项是仅按位置、按位置也按关键字，还是仅按关键字传递。</p>
+<p>函数的定义看起来可以像是这样：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">f</span>(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
+</span></span><span style="display:flex;"><span>      -----------    ----------     ----------
+</span></span><span style="display:flex;"><span>        |             |                  |
+</span></span><span style="display:flex;"><span>        |        Positional <span style="color:#00a">or</span> keyword   |
+</span></span><span style="display:flex;"><span>        |                                - Keyword only
+</span></span><span style="display:flex;"><span>         -- Positional only
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这里 / 和 * 是可选的。 如果使用这些符号则表明可以通过何种形参将参数值传递给函数：仅限位置、位置或关键字，以及仅限关键字。 关键字形参也被称为命名形参。</p>
+<h4 id="位置或关键字参数">位置或关键字参数</h4>
+<p>如果函数定义中未使用 / 和 *，则参数可以按位置或按关键字传递给函数。</p>
+<h4 id="仅限位置参数">仅限位置参数</h4>
+<p>在这里还可以发现更多细节，特定形参可以被标记为 仅限位置。 如果是 仅限位置 的形参，则其位置是重要的，并且该形参不能作为关键字传入。 仅限位置形参要放在 / (正斜杠) 之前。 这个 / 被用来从逻辑上分隔仅限位置形参和其它形参。 如果函数定义中没有 /，则表示没有仅限位置形参。</p>
+<p>在 / 之后的形参可以为 位置或关键字 或 仅限关键字。</p>
+<h4 id="仅限关键字参数">仅限关键字参数</h4>
+<p>要将形参标记为 仅限关键字，即指明该形参必须以关键字参数的形式传入，应在参数列表的第一个 仅限关键字 形参之前放置一个 *。</p>
+<h4 id="函数示例">函数示例</h4>
+<p>请考虑以下示例函数定义并特别注意 / 和 * 标记:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">standard_arg</span>(arg):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(arg)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">pos_only_arg</span>(arg, /):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(arg)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">kwd_only_arg</span>(*, arg):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(arg)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">combined_example</span>(pos_only, /, standard, *, kwd_only):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(pos_only, standard, kwd_only)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一个函数定义 standard_arg 是最常见的形式，对调用方式没有任何限制，参数可以按位置也可以按关键字传入:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; standard_arg(<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; standard_arg(arg=<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第二个函数 pos_only_arg 在函数定义中带有 /，限制仅使用位置形参。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; pos_only_arg(<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; pos_only_arg(arg=<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
+</span></span><span style="display:flex;"><span>TypeError: pos_only_arg() got an unexpected keyword argument <span style="color:#a50">&#39;arg&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第三个函数 kwd_only_args 在函数定义中通过 * 指明仅允许关键字参数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; kwd_only_arg(<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
+</span></span><span style="display:flex;"><span>TypeError: kwd_only_arg() takes <span style="color:#099">0</span> positional arguments but <span style="color:#099">1</span> was given
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; kwd_only_arg(arg=<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">3</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>而最后一个则在同一函数定义中使用了全部三种调用方式:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; combined_example(<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
+</span></span><span style="display:flex;"><span>TypeError: combined_example() takes <span style="color:#099">2</span> positional arguments but <span style="color:#099">3</span> were given
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; combined_example(<span style="color:#099">1</span>, <span style="color:#099">2</span>, kwd_only=<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; combined_example(<span style="color:#099">1</span>, standard=<span style="color:#099">2</span>, kwd_only=<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; combined_example(pos_only=<span style="color:#099">1</span>, standard=<span style="color:#099">2</span>, kwd_only=<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
+</span></span><span style="display:flex;"><span>TypeError: combined_example() got an unexpected keyword argument <span style="color:#a50">&#39;pos_only&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后，请考虑这个函数定义，它的位置参数 name 和 **kwds 之间由于存在关键字名称 name 而可能产生潜在冲突:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">foo</span>(name, **kwds):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> <span style="color:#a50">&#39;name&#39;</span> <span style="color:#00a">in</span> kwds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>任何调用都不可能让它返回 True，因为关键字 &rsquo;name&rsquo; 将总是绑定到第一个形参。 例如:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; foo(<span style="color:#099">1</span>, **{<span style="color:#a50">&#39;name&#39;</span>: <span style="color:#099">2</span>})
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
+</span></span><span style="display:flex;"><span>TypeError: foo() got multiple values <span style="color:#00a">for</span> argument <span style="color:#a50">&#39;name&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但使用 / (仅限位置参数) 就可能做到，因为它允许 name 作为位置参数，也允许 &rsquo;name&rsquo; 作为关键字参数的关键字名称:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">foo</span>(name, /, **kwds):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> <span style="color:#a50">&#39;name&#39;</span> <span style="color:#00a">in</span> kwds
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; foo(<span style="color:#099">1</span>, **{<span style="color:#a50">&#39;name&#39;</span>: <span style="color:#099">2</span>})
+</span></span><span style="display:flex;"><span><span style="color:#00a">True</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>换句话说，仅限位置形参的名称可以在 **kwds 中使用而不产生歧义。</p>
+<h4 id="概括">概括</h4>
+<p>用例将确定要在函数定义中使用的参数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">f</span>(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>作为指导：</p>
+<ul>
+<li>如果你希望形参名称对用户来说不可用，则使用仅限位置形参。 这适用于形参名称没有实际意义，以及当你希望强制规定调用时的参数顺序，或是需要同时收受一些位置形参和任意关键字形参等情况。</li>
+<li>当形参名称有实际意义，以及显式指定形参名称可使函数定义更易理解，或者当你想要防止用户过于依赖传入参数的位置时，则使用仅限关键字形参。</li>
+<li>对于 API 来说，使用仅限位置形参可以防止形参名称在未来被修改时造成破坏性的 API 变动。</li>
+</ul>
+<h3 id="任意的参数列表">任意的参数列表</h3>
+<p>最后，最不常用的选项是可以使用任意数量的参数调用函数。这些参数会被包含在一个元组里（参见 元组和序列 ）。在可变数量的参数之前，可能会出现零个或多个普通参数。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">write_multiple_items</span>(file, separator, *args):
+</span></span><span style="display:flex;"><span>    file.write(separator.join(args))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一般来说，这些 可变参数 将在形式参数列表的末尾，因为它们收集传递给函数的所有剩余输入参数。出现在 *args 参数之后的任何形式参数都是 ‘仅限关键字参数’，也就是说它们只能作为关键字参数而不能是位置参数。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">concat</span>(*args, sep=<span style="color:#a50">&#34;/&#34;</span>):
+</span></span><span style="display:flex;"><span>...     <span style="color:#00a">return</span> sep.join(args)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; concat(<span style="color:#a50">&#34;earth&#34;</span>, <span style="color:#a50">&#34;mars&#34;</span>, <span style="color:#a50">&#34;venus&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;earth/mars/venus&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; concat(<span style="color:#a50">&#34;earth&#34;</span>, <span style="color:#a50">&#34;mars&#34;</span>, <span style="color:#a50">&#34;venus&#34;</span>, sep=<span style="color:#a50">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;earth.mars.venus&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="解包参数列表">解包参数列表</h3>
+<p>当参数已经在列表或元组中但要为需要单独位置参数的函数调用解包时，会发生相反的情况。例如，内置的 range() 函数需要单独的 start 和 stop 参数。如果它们不能单独使用，可以使用 * 操作符 来编写函数调用以便从列表或元组中解包参数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">list</span>(<span style="color:#0aa">range</span>(<span style="color:#099">3</span>, <span style="color:#099">6</span>))            <span style="color:#aaa;font-style:italic"># normal call with separate arguments</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#099">3</span>, <span style="color:#099">4</span>, <span style="color:#099">5</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; args = [<span style="color:#099">3</span>, <span style="color:#099">6</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">list</span>(<span style="color:#0aa">range</span>(*args))            <span style="color:#aaa;font-style:italic"># call with arguments unpacked from a list</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#099">3</span>, <span style="color:#099">4</span>, <span style="color:#099">5</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同样的方式，字典可使用 ** 操作符 来提供关键字参数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">parrot</span>(voltage, state=<span style="color:#a50">&#39;a stiff&#39;</span>, action=<span style="color:#a50">&#39;voom&#39;</span>):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;-- This parrot wouldn&#39;t&#34;</span>, action, end=<span style="color:#a50">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;if you put&#34;</span>, voltage, <span style="color:#a50">&#34;volts through it.&#34;</span>, end=<span style="color:#a50">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;E&#39;s&#34;</span>, state, <span style="color:#a50">&#34;!&#34;</span>)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; d = {<span style="color:#a50">&#34;voltage&#34;</span>: <span style="color:#a50">&#34;four million&#34;</span>, <span style="color:#a50">&#34;state&#34;</span>: <span style="color:#a50">&#34;bleedin&#39; demised&#34;</span>, <span style="color:#a50">&#34;action&#34;</span>: <span style="color:#a50">&#34;VOOM&#34;</span>}
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; parrot(**d)
+</span></span><span style="display:flex;"><span>-- This parrot wouldn<span style="color:#a50">&#39;t VOOM if you put four million volts through it. E&#39;</span>s bleedin<span style="color:#a50">&#39; demised !</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="lambda-表达式">Lambda 表达式</h3>
+<p>可以用 lambda 关键字来创建一个小的匿名函数。这个函数返回两个参数的和： lambda a, b: a+b 。Lambda函数可以在需要函数对象的任何地方使用。它们在语法上限于单个表达式。从语义上来说，它们只是正常函数定义的语法糖。与嵌套函数定义一样，lambda函数可以引用所包含域的变量:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">make_incrementor</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> <span style="color:#00a">lambda</span> x: x + n
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f = make_incrementor(<span style="color:#099">42</span>)
+</span></span><span style="display:flex;"><span>f(<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f(<span style="color:#099">1</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面的例子使用一个lambda表达式来返回一个函数。另一个用法是传递一个小函数作为参数:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; pairs = [(<span style="color:#099">1</span>, <span style="color:#a50">&#39;one&#39;</span>), (<span style="color:#099">2</span>, <span style="color:#a50">&#39;two&#39;</span>), (<span style="color:#099">3</span>, <span style="color:#a50">&#39;three&#39;</span>), (<span style="color:#099">4</span>, <span style="color:#a50">&#39;four&#39;</span>)]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; pairs.sort(key=<span style="color:#00a">lambda</span> pair: pair[<span style="color:#099">1</span>])
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; pairs
+</span></span><span style="display:flex;"><span>[(<span style="color:#099">4</span>, <span style="color:#a50">&#39;four&#39;</span>), (<span style="color:#099">1</span>, <span style="color:#a50">&#39;one&#39;</span>), (<span style="color:#099">3</span>, <span style="color:#a50">&#39;three&#39;</span>), (<span style="color:#099">2</span>, <span style="color:#a50">&#39;two&#39;</span>)]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="文档字符串">文档字符串</h3>
+<p>以下是有关文档字符串的内容和格式的一些约定。</p>
+<p>第一行应该是对象目的的简要概述。为简洁起见，它不应显式声明对象的名称或类型，因为这些可通过其他方式获得（除非名称恰好是描述函数操作的动词）。这一行应以大写字母开头，以句点结尾。</p>
+<p>如果文档字符串中有更多行，则第二行应为空白，从而在视觉上将摘要与其余描述分开。后面几行应该是一个或多个段落，描述对象的调用约定，它的副作用等。</p>
+<p>Python 解析器不会从 Python 中删除多行字符串文字的缩进，因此处理文档的工具必须在需要时删除缩进。 这是使用以下约定完成的。 文档字符串第一行 之后 的第一个非空行确定整个文档字符串的缩进量。（我们不能使用第一行，因为它通常与字符串的开头引号相邻，因此它的缩进在字符串文字中不明显。</p>
+<h3 id="函数标注">函数标注</h3>
+<p>函数标注 是关于用户自定义函数中使用的类型的完全可选元数据信息（有关详情请参阅 PEP 3107 和 PEP 484 ）。</p>
+<p>标注 以字典的形式存放在函数的 <strong>annotations</strong> 属性中，并且不会影响函数的任何其他部分。 形参标注的定义方式是在形参名后加冒号，后面跟一个表达式，该表达式会被求值为标注的值。 返回值标注的定义方式是加组合符号 -&gt;，后面跟一个表达式，该标注位于形参列表和表示 def 语句结束的冒号之间。 下面的示例有一个必须的参数，一个可选的关键字参数以及返回值都带有相应的标注:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">f</span>(ham: <span style="color:#0aa">str</span>, eggs: <span style="color:#0aa">str</span> = <span style="color:#a50">&#39;eggs&#39;</span>) -&gt; <span style="color:#0aa">str</span>:
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;Annotations:&#34;</span>, f.__annotations__)
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;Arguments:&#34;</span>, ham, eggs)
+</span></span><span style="display:flex;"><span>...     <span style="color:#00a">return</span> ham + <span style="color:#a50">&#39; and &#39;</span> + eggs
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f(<span style="color:#a50">&#39;spam&#39;</span>)
+</span></span><span style="display:flex;"><span>Annotations: {<span style="color:#a50">&#39;ham&#39;</span>: &lt;<span style="color:#00a">class</span> <span style="color:#f00;background-color:#faa">&#39;</span><span style="color:#0a0;text-decoration:underline">str</span><span style="color:#a50">&#39;&gt;, &#39;</span><span style="color:#00a">return</span><span style="color:#a50">&#39;: &lt;class &#39;</span><span style="color:#0aa">str</span><span style="color:#a50">&#39;&gt;, &#39;</span>eggs<span style="color:#a50">&#39;: &lt;class &#39;</span><span style="color:#0aa">str</span><span style="color:#a50">&#39;&gt;}</span>
+</span></span><span style="display:flex;"><span>Arguments: spam eggs
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;spam and eggs&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="小插曲编码风格">小插曲：编码风格</h2>
+<ul>
+<li>使用4个空格缩进，不要使用制表符。4个空格是一个在小缩进（允许更大的嵌套深度）和大缩进（更容易阅读）的一种很好的折中方案。制表符会引入混乱，最好不要使用它。</li>
+<li>换行，使一行不超过79个字符。这有助于使用小型显示器的用户，并且可以在较大的显示器上并排放置多个代码文件。</li>
+<li>使用空行分隔函数和类，以及函数内的较大的代码块。</li>
+<li>如果可能，把注释放到单独的一行。</li>
+<li>使用文档字符串。</li>
+<li>在运算符前后和逗号后使用空格，但不能直接在括号内使用： a = f(1, 2) + g(3, 4)。</li>
+<li>以一致的规则为你的类和函数命名；按照惯例应使用 UpperCamelCase 来命名类，而以 lowercase_with_underscores 来命名函数和方法。 始终应使用 self 来命名第一个方法参数 (有关类和方法的更多信息请参阅 初探类)。</li>
+<li>如果你的代码旨在用于国际环境，请不要使用花哨的编码。Python 默认的 UTF-8 或者纯 ASCII 在任何情况下都能有最好的表现。</li>
+<li>同样，哪怕只有很小的可能，遇到说不同语言的人阅读或维护代码，也不要在标识符中使用非ASCII字符。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/" data-title="Python教程-其他流程控制工具" data-hashtags="Python教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/" data-hashtag="Python教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/" data-title="Python教程-其他流程控制工具"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/" data-title="Python教程-其他流程控制工具"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7/" data-title="Python教程-其他流程控制工具"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python%E6%95%99%E7%A8%8B/">Python教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/python/python%E6%95%99%E7%A8%8B/python%E9%80%9F%E8%A7%88/" class="prev" rel="prev" title="Python教程-Python速览"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Python教程-Python速览</a>
+            <a href="/posts/python/python%E6%95%99%E7%A8%8B/%E8%AF%BE%E5%89%8D%E7%94%9C%E7%82%B9/" class="next" rel="next" title="Python教程-课前甜点">Python教程-课前甜点<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-11T19:10:45+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Python教程-其他流程控制工具"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

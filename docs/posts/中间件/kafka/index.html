@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>中间件-Kafka - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="中间件-Kafka" />
+<meta property="og:description" content="官方文档 CSDN luslin1711 CSDN 乾坤鸟 Docker安装Kafka教程（超详细） 简介 Kafka 结合了三个关键功能 发布（写入）和订阅（读取）事件流。 持久可靠地存储事件 流。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-23T09:10:47+08:00" />
+<meta property="article:modified_time" content="2022-12-23T09:10:47+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="中间件-Kafka"/>
+<meta name="twitter:description" content="官方文档 CSDN luslin1711 CSDN 乾坤鸟 Docker安装Kafka教程（超详细） 简介 Kafka 结合了三个关键功能 发布（写入）和订阅（读取）事件流。 持久可靠地存储事件 流。"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/" /><link rel="prev" href="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/" /><link rel="next" href="https://oublie6.github.io/posts/%E4%BA%91%E5%8E%9F%E7%94%9F/docker/portainer%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "中间件-Kafka",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E4%B8%AD%E9%97%B4%E4%BB%B6\/kafka\/"
+        },"genre": "posts","keywords": "kafka","wordcount":  1102 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E4%B8%AD%E9%97%B4%E4%BB%B6\/kafka\/","datePublished": "2022-12-23T09:10:47+08:00","dateModified": "2022-12-23T09:10:47+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">中间件-Kafka</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>中间件</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1102 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#主要概念和术语">主要概念和术语</a></li>
+    <li><a href="#docker安装">docker安装</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://kafka.apache.org/documentation/" target="_blank" rel="noopener noreffer ">官方文档</a></p>
+<p><a href="https://blog.csdn.net/luslin1711/article/details/105798571/" target="_blank" rel="noopener noreffer ">CSDN luslin1711</a></p>
+<p><a href="https://blog.csdn.net/y393016244/article/details/126405864" target="_blank" rel="noopener noreffer ">CSDN 乾坤鸟 Docker安装Kafka教程（超详细）</a></p>
+<h2 id="简介">简介</h2>
+<p>Kafka 结合了三个关键功能</p>
+<ol>
+<li>发布（写入）和订阅（读取）事件流。</li>
+<li>持久可靠地存储事件 流。</li>
+<li>在事件发生时或回顾性 地处理事件流。</li>
+</ol>
+<p>Kafka 是一个分布式系统，由通过高性能TCP 网络协议进行通信的服务器和客户端组成。可以部署在本地和云环境中的裸机硬件、虚拟机和容器上。</p>
+<p>服务器（Broker）：Kafka 作为一个或多个服务器集群运行，可以跨越多个数据中心或云区域。</p>
+<p>客户端：它们允许您编写分布式应用程序和微服务，即使在出现网络问题或机器故障的情况下，也能以容错的方式并行、大规模地读取、写入和处理事件流。</p>
+<h2 id="主要概念和术语">主要概念和术语</h2>
+<p>事件记录了世界上或您的企业中“发生了某事” 的事实。事件具有键、值、时间戳和可选的元数据标头。比如：</p>
+<p>活动键：“爱丽丝”
+事件值：“向 Bob 支付了 200 美元”
+事件时间戳：“2020 年 6 月 25 日下午 2:06”</p>
+<p>生产者是那些向 Kafka 发布（写入）事件的客户端应用程序，而消费者是那些订阅（读取和处理）这些事件的客户端应用程序。</p>
+<p>事件被组织并持久存储在主题中。主题类似于文件系统中的文件夹，事件是该文件夹中的文件。</p>
+<p>Kafka 中的主题始终是多生产者和多订阅者。</p>
+<p>事件在消费后不会被删除。可以配置每个主题保留事件时间，之后旧事件将被丢弃。</p>
+<p>主题是分区的，这意味着一个主题分布在位于不同 Kafka 代理上的多个“桶”中。</p>
+<p>当一个新事件被发布到一个主题时，它实际上被附加到主题的分区之一。</p>
+<p>具有相同事件键（例如，客户或车辆 ID）的事件将写入同一分区，并且 Kafka保证给定主题分区的任何消费者将始终以与写入事件完全相同的顺序读取该分区的事件。</p>
+<p>为了使您的数据具有容错性和高可用性，每个主题都可以被复制，甚至可以跨地理区域或数据中心，以便始终有多个代理拥有数据副本。一个常见的生产设置是复制因子 3，即你的数据总是有三个副本。这种复制是在主题分区级别执行的。</p>
+<p>Broker</p>
+<p>Kafka集群包含一个或多个服务器，这种服务器被称为broker</p>
+<p>Topic</p>
+<p>每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）</p>
+<p>Partition</p>
+<p>Partition是物理上的概念，每个Topic包含一个或多个Partition.</p>
+<p>Producer</p>
+<p>负责发布消息到Kafka broker</p>
+<p>Consumer</p>
+<p>消息消费者，向Kafka broker读取消息的客户端。</p>
+<p>Consumer Group</p>
+<p>每个Consumer属于一个特定的Consumer Group（可为每个Consumer指定group name，若不指定group name则属于默认的group）。</p>
+<h2 id="docker安装">docker安装</h2>
+<p>见<a href="https://blog.csdn.net/y393016244/article/details/126405864" target="_blank" rel="noopener noreffer ">乾坤鸟博客</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/" data-title="中间件-Kafka" data-hashtags="kafka"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/" data-hashtag="kafka"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/" data-title="中间件-Kafka"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/" data-title="中间件-Kafka"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/" data-title="中间件-Kafka"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/kafka/">kafka</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/%E5%A4%A7%E7%AB%AF%E5%B0%8F%E7%AB%AF/" class="prev" rel="prev" title="通用技术-大端小端"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>通用技术-大端小端</a>
+            <a href="/posts/%E4%BA%91%E5%8E%9F%E7%94%9F/docker/portainer%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE/" class="next" rel="next" title="云原生-docker-Portainer密码重置">云原生-docker-Portainer密码重置<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-23T09:10:47+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"中间件-Kafka"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

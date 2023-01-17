@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python教程-模块 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Python教程-模块" />
+<meta property="og:description" content="本系列为作者在官网学习python时做的笔记，详见python官网 模块是一个包含Python定义和语句的文件。文件名就是模块名后跟文件后缀 .py" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-12T10:38:29+08:00" />
+<meta property="article:modified_time" content="2022-10-12T10:38:29+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python教程-模块"/>
+<meta name="twitter:description" content="本系列为作者在官网学习python时做的笔记，详见python官网 模块是一个包含Python定义和语句的文件。文件名就是模块名后跟文件后缀 .py"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" /><link rel="prev" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" /><link rel="next" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python教程-模块",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E6%A8%A1%E5%9D%97\/"
+        },"genre": "posts","keywords": "Python教程","wordcount":  4708 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E6%A8%A1%E5%9D%97\/","datePublished": "2022-10-12T10:38:29+08:00","dateModified": "2022-10-12T10:38:29+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-模块</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4708 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#更多有关模块的信息">更多有关模块的信息</a>
+      <ul>
+        <li><a href="#以脚本的方式执行模块">以脚本的方式执行模块</a></li>
+        <li><a href="#模块搜索路径">模块搜索路径</a></li>
+        <li><a href="#编译过的python文件">“编译过的”Python文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#标准模块">标准模块</a></li>
+    <li><a href="#dir-函数">dir() 函数</a></li>
+    <li><a href="#包">包</a>
+      <ul>
+        <li><a href="#从包中导入-">从包中导入 *</a></li>
+        <li><a href="#子包参考">子包参考</a></li>
+        <li><a href="#多个目录中的包">多个目录中的包</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列为作者在官网学习python时做的笔记，详见<a href="https://docs.python.org/zh-cn/3.8/tutorial/" target="_blank" rel="noopener noreffer ">python官网</a></p>
+<p>模块是一个包含Python定义和语句的文件。文件名就是模块名后跟文件后缀 .py 。在一个模块内部，模块名（作为一个字符串）可以通过全局变量 <code>__name__</code> 的值获得。</p>
+<h2 id="更多有关模块的信息">更多有关模块的信息</h2>
+<p>模块可以包含可执行的语句以及函数定义。这些语句用于初始化模块。它们仅在模块 第一次 在 import 语句中被导入时才执行。 1 (当文件被当作脚本运行时，它们也会执行。)</p>
+<p>每个模块都有它自己的私有符号表，该表用作模块中定义的所有函数的全局符号表。因此，模块的作者可以在模块内使用全局变量，而不必担心与用户的全局变量发生意外冲突。另一方面，如果你知道自己在做什么，则可以用跟访问模块内的函数的同样标记方法，去访问一个模块的全局变量，modname.itemname。</p>
+<p>可以把其他模块导入模块。 按惯例，所有 import 语句都放在模块（或脚本）开头，但这不是必须的。 被导入的模块名存在导入方模块的全局符号表里。</p>
+<p>import 语句有一个变体，它可以把名字从一个被调模块内直接导入到现模块的符号表里。例如:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">fibo</span> <span style="color:#00a">import</span> fib, fib2
+</span></span><span style="display:flex;"><span>fib(<span style="color:#099">500</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这并不会把被调模块名引入到局部变量表里（因此在这个例子里，fibo 是未被定义的）。</p>
+<p>还有一个变体甚至可以导入模块内定义的所有名称:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">fibo</span> <span style="color:#00a">import</span> *
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; fib(<span style="color:#099">500</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span> <span style="color:#099">55</span> <span style="color:#099">89</span> <span style="color:#099">144</span> <span style="color:#099">233</span> <span style="color:#099">377</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这会调入所有非以下划线（_）开头的名称。 在多数情况下，Python程序员都不会使用这个功能，因为它在解释器中引入了一组未知的名称，而它们很可能会覆盖一些你已经定义过的东西。</p>
+<p>注意通常情况下从一个模块或者包内调入 * 的做法是不太被接受的， 因为这通常会导致代码的可读性很差。不过，在交互式编译器中为了节省打字可以这么用。</p>
+<p>如果模块名称之后带有 as，则跟在 as 之后的名称将直接绑定到所导入的模块。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">fibo</span> <span style="color:#00a">as</span> <span style="color:#0aa;text-decoration:underline">fib</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; fib.fib(<span style="color:#099">500</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span> <span style="color:#099">55</span> <span style="color:#099">89</span> <span style="color:#099">144</span> <span style="color:#099">233</span> <span style="color:#099">377</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这会和 import fibo 方式一样有效地调入模块， 唯一的区别是它以 fib 的名称存在的。</p>
+<p>这种方式也可以在用到 from 的时候使用，并会有类似的效果:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">fibo</span> <span style="color:#00a">import</span> fib <span style="color:#00a">as</span> fibonacci
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; fibonacci(<span style="color:#099">500</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span> <span style="color:#099">55</span> <span style="color:#099">89</span> <span style="color:#099">144</span> <span style="color:#099">233</span> <span style="color:#099">377</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注解 出于效率的考虑，每个模块在每个解释器会话中只被导入一次。因此，如果你更改了你的模块，则必须重新启动解释器， 或者，如果它只是一个要交互式地测试的模块，请使用 importlib.reload()，例如 import importlib; importlib.reload(modulename)。</p>
+<h3 id="以脚本的方式执行模块">以脚本的方式执行模块</h3>
+<p>当你用下面方式运行一个Python模块:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python fibo.py &lt;arguments&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这项操作将执行模块里的代码，和导入模块一样，但会把 <code>__name__</code> 赋值为 <code>&quot;__main__&quot;</code>。 也就是把下列代码添加到模块末尾：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">if</span> __name__ == <span style="color:#a50">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sys</span>
+</span></span><span style="display:flex;"><span>    fib(<span style="color:#0aa">int</span>(sys.argv[<span style="color:#099">1</span>]))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你既可以把这个文件当作脚本又可当作一个可调入的模块来使用， 因为那段解析命令行的代码只有在当模块是以“main”文件的方式执行的时候才会运行:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ python fibo.py <span style="color:#099">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果模块是被导入的，那些代码是不运行的:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">fibo</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这经常用于为模块提供一个方便的用户接口，或用于测试（以脚本的方式运行模块从而执行一些测试套件）。</p>
+<h3 id="模块搜索路径">模块搜索路径</h3>
+<p>当一个名为 spam 的模块被导入的时候，解释器首先寻找具有该名称的内置模块。如果没有找到，然后解释器从 sys.path 变量给出的目录列表里寻找名为 spam.py 的文件。sys.path 初始有这些目录地址:</p>
+<ul>
+<li>包含输入脚本的目录（或者未指定文件时的当前目录）。</li>
+<li>PYTHONPATH （一个包含目录名称的列表，它和shell变量 PATH 有一样的语法）。</li>
+<li>取决于安装的默认设置</li>
+</ul>
+<p>注解 在支持符号链接的文件系统上，包含输入脚本的目录是在追加符号链接后才计算出来的。换句话说，包含符号链接的目录并 没有 被添加到模块的搜索路径上。</p>
+<p>在初始化后，Python程序可以更改 sys.path。包含正在运行脚本的文件目录被放在搜索路径的开头处， 在标准库路径之前。这意味着将加载此目录里的脚本，而不是标准库中的同名模块。 除非有意更换，否则这是错误。更多信息请参阅 标准模块。</p>
+<h3 id="编译过的python文件">“编译过的”Python文件</h3>
+<p>为了加速模块载入，Python在 <code>__pycache__</code> 目录里缓存了每个模块的编译后版本，名称为 module.version.pyc ，其中名称中的版本字段对编译文件的格式进行编码； 它一般使用Python版本号。</p>
+<p>Python根据编译版本检查源的修改日期，以查看它是否已过期并需要重新编译。这是一个完全自动化的过程。此外，编译的模块与平台无关，因此可以在具有不同体系结构的系统之间共享相同的库。</p>
+<p>Python在两种情况下不会检查缓存。首先，对于从命令行直接载入的模块，它从来都是重新编译并且不存储编译结果；其次，如果没有源模块，它不会检查缓存。为了支持无源文件（仅编译）发行版本， 编译模块必须是在源目录下，并且绝对不能有源模块。</p>
+<p>给专业人士的一些小建议:</p>
+<ul>
+<li>你可以在Python命令中使用 -O 或者 -OO 开关， 以减小编译后模块的大小。 -O 开关去除断言语句，-OO 开关同时去除断言语句和 <strong>doc</strong> 字符串。由于有些程序可能依赖于这些，你应当只在清楚自己在做什么时才使用这个选项。“优化过的”模块有一个 opt- 标签并且通常小些。将来的发行版本或许会更改优化的效果。</li>
+<li>一个从 .pyc 文件读出的程序并不会比它从 .py 读出时运行的更快，.pyc 文件唯一快的地方在于载入速度。</li>
+<li>compileall 模块可以为一个目录下的所有模块创建.pyc文件。</li>
+<li>关于这个过程，PEP 3147 中有更多细节，包括一个决策流程图。+</li>
+</ul>
+<h2 id="标准模块">标准模块</h2>
+<p>一些模块内置于解释器中；它们提供对不属于语言核心但仍然内置的操作的访问，以提高效率或提供对系统调用等操作系统原语的访问。这些模块的集合是一个配置选项，它也取决于底层平台。例如，winreg 模块只在Windows操作系统上提供。一个特别值得注意的模块 sys，它被内嵌到每一个Python解释器中。变量 sys.ps1 和 sys.ps2 定义用作主要和辅助提示的字符串:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sys</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; sys.ps1
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;&gt;&gt;&gt; &#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; sys.ps2
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;... &#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; sys.ps1 = <span style="color:#a50">&#39;C&gt; &#39;</span>
+</span></span><span style="display:flex;"><span>C&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;Yuck!&#39;</span>)
+</span></span><span style="display:flex;"><span>Yuck<span style="color:#f00;background-color:#faa">!</span>
+</span></span><span style="display:flex;"><span>C&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这两个变量只有在编译器是交互模式下才被定义。</p>
+<p>sys.path 变量是一个字符串列表，用于确定解释器的模块搜索路径。该变量被初始化为从环境变量 PYTHONPATH 获取的默认路径，或者如果 PYTHONPATH 未设置，则从内置默认路径初始化。你可以使用标准列表操作对其进行修改:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sys</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; sys.path.append(<span style="color:#a50">&#39;/ufs/guido/lib/python&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="dir-函数">dir() 函数</h2>
+<p>内置函数 dir() 用于查找模块定义的名称。 它返回一个排序过的字符串列表:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">fibo</span>, <span style="color:#0aa;text-decoration:underline">sys</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">dir</span>(fibo)
+</span></span><span style="display:flex;"><span>[<span style="color:#a50">&#39;__name__&#39;</span>, <span style="color:#a50">&#39;fib&#39;</span>, <span style="color:#a50">&#39;fib2&#39;</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">dir</span>(sys)  
+</span></span><span style="display:flex;"><span>[<span style="color:#a50">&#39;__displayhook__&#39;</span>, <span style="color:#a50">&#39;__doc__&#39;</span>, <span style="color:#a50">&#39;__excepthook__&#39;</span>, <span style="color:#a50">&#39;__loader__&#39;</span>, <span style="color:#a50">&#39;__name__&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;__package__&#39;</span>, <span style="color:#a50">&#39;__stderr__&#39;</span>, <span style="color:#a50">&#39;__stdin__&#39;</span>, <span style="color:#a50">&#39;__stdout__&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;_clear_type_cache&#39;</span>, <span style="color:#a50">&#39;_current_frames&#39;</span>, <span style="color:#a50">&#39;_debugmallocstats&#39;</span>, <span style="color:#a50">&#39;_getframe&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;_home&#39;</span>, <span style="color:#a50">&#39;_mercurial&#39;</span>, <span style="color:#a50">&#39;_xoptions&#39;</span>, <span style="color:#a50">&#39;abiflags&#39;</span>, <span style="color:#a50">&#39;api_version&#39;</span>, <span style="color:#a50">&#39;argv&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;base_exec_prefix&#39;</span>, <span style="color:#a50">&#39;base_prefix&#39;</span>, <span style="color:#a50">&#39;builtin_module_names&#39;</span>, <span style="color:#a50">&#39;byteorder&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;call_tracing&#39;</span>, <span style="color:#a50">&#39;callstats&#39;</span>, <span style="color:#a50">&#39;copyright&#39;</span>, <span style="color:#a50">&#39;displayhook&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;dont_write_bytecode&#39;</span>, <span style="color:#a50">&#39;exc_info&#39;</span>, <span style="color:#a50">&#39;excepthook&#39;</span>, <span style="color:#a50">&#39;exec_prefix&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;executable&#39;</span>, <span style="color:#a50">&#39;exit&#39;</span>, <span style="color:#a50">&#39;flags&#39;</span>, <span style="color:#a50">&#39;float_info&#39;</span>, <span style="color:#a50">&#39;float_repr_style&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;getcheckinterval&#39;</span>, <span style="color:#a50">&#39;getdefaultencoding&#39;</span>, <span style="color:#a50">&#39;getdlopenflags&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;getfilesystemencoding&#39;</span>, <span style="color:#a50">&#39;getobjects&#39;</span>, <span style="color:#a50">&#39;getprofile&#39;</span>, <span style="color:#a50">&#39;getrecursionlimit&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;getrefcount&#39;</span>, <span style="color:#a50">&#39;getsizeof&#39;</span>, <span style="color:#a50">&#39;getswitchinterval&#39;</span>, <span style="color:#a50">&#39;gettotalrefcount&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;gettrace&#39;</span>, <span style="color:#a50">&#39;hash_info&#39;</span>, <span style="color:#a50">&#39;hexversion&#39;</span>, <span style="color:#a50">&#39;implementation&#39;</span>, <span style="color:#a50">&#39;int_info&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;intern&#39;</span>, <span style="color:#a50">&#39;maxsize&#39;</span>, <span style="color:#a50">&#39;maxunicode&#39;</span>, <span style="color:#a50">&#39;meta_path&#39;</span>, <span style="color:#a50">&#39;modules&#39;</span>, <span style="color:#a50">&#39;path&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;path_hooks&#39;</span>, <span style="color:#a50">&#39;path_importer_cache&#39;</span>, <span style="color:#a50">&#39;platform&#39;</span>, <span style="color:#a50">&#39;prefix&#39;</span>, <span style="color:#a50">&#39;ps1&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;setcheckinterval&#39;</span>, <span style="color:#a50">&#39;setdlopenflags&#39;</span>, <span style="color:#a50">&#39;setprofile&#39;</span>, <span style="color:#a50">&#39;setrecursionlimit&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;setswitchinterval&#39;</span>, <span style="color:#a50">&#39;settrace&#39;</span>, <span style="color:#a50">&#39;stderr&#39;</span>, <span style="color:#a50">&#39;stdin&#39;</span>, <span style="color:#a50">&#39;stdout&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;thread_info&#39;</span>, <span style="color:#a50">&#39;version&#39;</span>, <span style="color:#a50">&#39;version_info&#39;</span>, <span style="color:#a50">&#39;warnoptions&#39;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果没有参数，dir() 会列出你当前定义的名称:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; a = [<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>, <span style="color:#099">4</span>, <span style="color:#099">5</span>]
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">fibo</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; fib = fibo.fib
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">dir</span>()
+</span></span><span style="display:flex;"><span>[<span style="color:#a50">&#39;__builtins__&#39;</span>, <span style="color:#a50">&#39;__name__&#39;</span>, <span style="color:#a50">&#39;a&#39;</span>, <span style="color:#a50">&#39;fib&#39;</span>, <span style="color:#a50">&#39;fibo&#39;</span>, <span style="color:#a50">&#39;sys&#39;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：它列出所有类型的名称：变量，模块，函数，等等。</p>
+<p>dir() 不会列出内置函数和变量的名称。如果你想要这些，它们的定义是在标准模块 builtins 中:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">builtins</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">dir</span>(builtins)  
+</span></span><span style="display:flex;"><span>[<span style="color:#a50">&#39;ArithmeticError&#39;</span>, <span style="color:#a50">&#39;AssertionError&#39;</span>, <span style="color:#a50">&#39;AttributeError&#39;</span>, <span style="color:#a50">&#39;BaseException&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;BlockingIOError&#39;</span>, <span style="color:#a50">&#39;BrokenPipeError&#39;</span>, <span style="color:#a50">&#39;BufferError&#39;</span>, <span style="color:#a50">&#39;BytesWarning&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;ChildProcessError&#39;</span>, <span style="color:#a50">&#39;ConnectionAbortedError&#39;</span>, <span style="color:#a50">&#39;ConnectionError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;ConnectionRefusedError&#39;</span>, <span style="color:#a50">&#39;ConnectionResetError&#39;</span>, <span style="color:#a50">&#39;DeprecationWarning&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;EOFError&#39;</span>, <span style="color:#a50">&#39;Ellipsis&#39;</span>, <span style="color:#a50">&#39;EnvironmentError&#39;</span>, <span style="color:#a50">&#39;Exception&#39;</span>, <span style="color:#a50">&#39;False&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;FileExistsError&#39;</span>, <span style="color:#a50">&#39;FileNotFoundError&#39;</span>, <span style="color:#a50">&#39;FloatingPointError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;FutureWarning&#39;</span>, <span style="color:#a50">&#39;GeneratorExit&#39;</span>, <span style="color:#a50">&#39;IOError&#39;</span>, <span style="color:#a50">&#39;ImportError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;ImportWarning&#39;</span>, <span style="color:#a50">&#39;IndentationError&#39;</span>, <span style="color:#a50">&#39;IndexError&#39;</span>, <span style="color:#a50">&#39;InterruptedError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;IsADirectoryError&#39;</span>, <span style="color:#a50">&#39;KeyError&#39;</span>, <span style="color:#a50">&#39;KeyboardInterrupt&#39;</span>, <span style="color:#a50">&#39;LookupError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;MemoryError&#39;</span>, <span style="color:#a50">&#39;NameError&#39;</span>, <span style="color:#a50">&#39;None&#39;</span>, <span style="color:#a50">&#39;NotADirectoryError&#39;</span>, <span style="color:#a50">&#39;NotImplemented&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;NotImplementedError&#39;</span>, <span style="color:#a50">&#39;OSError&#39;</span>, <span style="color:#a50">&#39;OverflowError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;PendingDeprecationWarning&#39;</span>, <span style="color:#a50">&#39;PermissionError&#39;</span>, <span style="color:#a50">&#39;ProcessLookupError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;ReferenceError&#39;</span>, <span style="color:#a50">&#39;ResourceWarning&#39;</span>, <span style="color:#a50">&#39;RuntimeError&#39;</span>, <span style="color:#a50">&#39;RuntimeWarning&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;StopIteration&#39;</span>, <span style="color:#a50">&#39;SyntaxError&#39;</span>, <span style="color:#a50">&#39;SyntaxWarning&#39;</span>, <span style="color:#a50">&#39;SystemError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;SystemExit&#39;</span>, <span style="color:#a50">&#39;TabError&#39;</span>, <span style="color:#a50">&#39;TimeoutError&#39;</span>, <span style="color:#a50">&#39;True&#39;</span>, <span style="color:#a50">&#39;TypeError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;UnboundLocalError&#39;</span>, <span style="color:#a50">&#39;UnicodeDecodeError&#39;</span>, <span style="color:#a50">&#39;UnicodeEncodeError&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;UnicodeError&#39;</span>, <span style="color:#a50">&#39;UnicodeTranslateError&#39;</span>, <span style="color:#a50">&#39;UnicodeWarning&#39;</span>, <span style="color:#a50">&#39;UserWarning&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;ValueError&#39;</span>, <span style="color:#a50">&#39;Warning&#39;</span>, <span style="color:#a50">&#39;ZeroDivisionError&#39;</span>, <span style="color:#a50">&#39;_&#39;</span>, <span style="color:#a50">&#39;__build_class__&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;__debug__&#39;</span>, <span style="color:#a50">&#39;__doc__&#39;</span>, <span style="color:#a50">&#39;__import__&#39;</span>, <span style="color:#a50">&#39;__name__&#39;</span>, <span style="color:#a50">&#39;__package__&#39;</span>, <span style="color:#a50">&#39;abs&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;all&#39;</span>, <span style="color:#a50">&#39;any&#39;</span>, <span style="color:#a50">&#39;ascii&#39;</span>, <span style="color:#a50">&#39;bin&#39;</span>, <span style="color:#a50">&#39;bool&#39;</span>, <span style="color:#a50">&#39;bytearray&#39;</span>, <span style="color:#a50">&#39;bytes&#39;</span>, <span style="color:#a50">&#39;callable&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;chr&#39;</span>, <span style="color:#a50">&#39;classmethod&#39;</span>, <span style="color:#a50">&#39;compile&#39;</span>, <span style="color:#a50">&#39;complex&#39;</span>, <span style="color:#a50">&#39;copyright&#39;</span>, <span style="color:#a50">&#39;credits&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;delattr&#39;</span>, <span style="color:#a50">&#39;dict&#39;</span>, <span style="color:#a50">&#39;dir&#39;</span>, <span style="color:#a50">&#39;divmod&#39;</span>, <span style="color:#a50">&#39;enumerate&#39;</span>, <span style="color:#a50">&#39;eval&#39;</span>, <span style="color:#a50">&#39;exec&#39;</span>, <span style="color:#a50">&#39;exit&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;filter&#39;</span>, <span style="color:#a50">&#39;float&#39;</span>, <span style="color:#a50">&#39;format&#39;</span>, <span style="color:#a50">&#39;frozenset&#39;</span>, <span style="color:#a50">&#39;getattr&#39;</span>, <span style="color:#a50">&#39;globals&#39;</span>, <span style="color:#a50">&#39;hasattr&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;hash&#39;</span>, <span style="color:#a50">&#39;help&#39;</span>, <span style="color:#a50">&#39;hex&#39;</span>, <span style="color:#a50">&#39;id&#39;</span>, <span style="color:#a50">&#39;input&#39;</span>, <span style="color:#a50">&#39;int&#39;</span>, <span style="color:#a50">&#39;isinstance&#39;</span>, <span style="color:#a50">&#39;issubclass&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;iter&#39;</span>, <span style="color:#a50">&#39;len&#39;</span>, <span style="color:#a50">&#39;license&#39;</span>, <span style="color:#a50">&#39;list&#39;</span>, <span style="color:#a50">&#39;locals&#39;</span>, <span style="color:#a50">&#39;map&#39;</span>, <span style="color:#a50">&#39;max&#39;</span>, <span style="color:#a50">&#39;memoryview&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;min&#39;</span>, <span style="color:#a50">&#39;next&#39;</span>, <span style="color:#a50">&#39;object&#39;</span>, <span style="color:#a50">&#39;oct&#39;</span>, <span style="color:#a50">&#39;open&#39;</span>, <span style="color:#a50">&#39;ord&#39;</span>, <span style="color:#a50">&#39;pow&#39;</span>, <span style="color:#a50">&#39;print&#39;</span>, <span style="color:#a50">&#39;property&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;quit&#39;</span>, <span style="color:#a50">&#39;range&#39;</span>, <span style="color:#a50">&#39;repr&#39;</span>, <span style="color:#a50">&#39;reversed&#39;</span>, <span style="color:#a50">&#39;round&#39;</span>, <span style="color:#a50">&#39;set&#39;</span>, <span style="color:#a50">&#39;setattr&#39;</span>, <span style="color:#a50">&#39;slice&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;sorted&#39;</span>, <span style="color:#a50">&#39;staticmethod&#39;</span>, <span style="color:#a50">&#39;str&#39;</span>, <span style="color:#a50">&#39;sum&#39;</span>, <span style="color:#a50">&#39;super&#39;</span>, <span style="color:#a50">&#39;tuple&#39;</span>, <span style="color:#a50">&#39;type&#39;</span>, <span style="color:#a50">&#39;vars&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#a50">&#39;zip&#39;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="包">包</h2>
+<p>包是一种通过用“带点号的模块名”来构造 Python 模块命名空间的方法。 例如，模块名 A.B 表示 A 包中名为 B 的子模块。正如模块的使用使得不同模块的作者不必担心彼此的全局变量名称一样，使用加点的模块名可以使得 NumPy 或 Pillow 等多模块软件包的作者不必担心彼此的模块名称一样。</p>
+<p>假设你想为声音文件和声音数据的统一处理，设计一个模块集合（一个“包”）。由于存在很多不同的声音文件格式（通常由它们的扩展名来识别，例如：.wav， .aiff， .au），因此为了不同文件格式间的转换，你可能需要创建和维护一个不断增长的模块集合。 你可能还想对声音数据还做很多不同的处理（例如，混声，添加回声，使用均衡器功能，创造人工立体声效果）， 因此为了实现这些处理，你将另外写一个无穷尽的模块流。这是你的包的可能结构（以分层文件系统的形式表示）：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sound/                          Top-level package
+</span></span><span style="display:flex;"><span>      __init__.py               Initialize the sound package
+</span></span><span style="display:flex;"><span>      formats/                  Subpackage <span style="color:#00a">for</span> file <span style="color:#0aa">format</span> conversions
+</span></span><span style="display:flex;"><span>              __init__.py
+</span></span><span style="display:flex;"><span>              wavread.py
+</span></span><span style="display:flex;"><span>              wavwrite.py
+</span></span><span style="display:flex;"><span>              aiffread.py
+</span></span><span style="display:flex;"><span>              aiffwrite.py
+</span></span><span style="display:flex;"><span>              auread.py
+</span></span><span style="display:flex;"><span>              auwrite.py
+</span></span><span style="display:flex;"><span>              ...
+</span></span><span style="display:flex;"><span>      effects/                  Subpackage <span style="color:#00a">for</span> sound effects
+</span></span><span style="display:flex;"><span>              __init__.py
+</span></span><span style="display:flex;"><span>              echo.py
+</span></span><span style="display:flex;"><span>              surround.py
+</span></span><span style="display:flex;"><span>              reverse.py
+</span></span><span style="display:flex;"><span>              ...
+</span></span><span style="display:flex;"><span>      filters/                  Subpackage <span style="color:#00a">for</span> filters
+</span></span><span style="display:flex;"><span>              __init__.py
+</span></span><span style="display:flex;"><span>              equalizer.py
+</span></span><span style="display:flex;"><span>              vocoder.py
+</span></span><span style="display:flex;"><span>              karaoke.py
+</span></span><span style="display:flex;"><span>              ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当导入这个包时，Python搜索 sys.path 里的目录，查找包的子目录。</p>
+<p>必须要有<code> __init__.py</code> 文件才能让 Python 将包含该文件的目录当作包。 这样可以防止具有通常名称例如 string 的目录在无意中隐藏稍后在模块搜索路径上出现的有效模块。 在最简单的情况下，<code>__init__.py</code> 可以只是一个空文件，但它也可以执行包的初始化代码或设置 <code>__all__ </code>变量，具体将在后文介绍。</p>
+<p>包的用户可以从包中导入单个模块，例如:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sound.effects.echo</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这会加载子模块 sound.effects.echo 。但引用它时必须使用它的全名。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sound.effects.echo.echofilter(<span style="color:#0aa">input</span>, output, delay=<span style="color:#099">0.7</span>, atten=<span style="color:#099">4</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>导入子模块的另一种方法是</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">sound.effects</span> <span style="color:#00a">import</span> echo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这也会加载子模块 echo ，并使其在没有包前缀的情况下可用，因此可以按如下方式使用:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>echo.echofilter(<span style="color:#0aa">input</span>, output, delay=<span style="color:#099">0.7</span>, atten=<span style="color:#099">4</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另一种形式是直接导入所需的函数或变量:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">sound.effects.echo</span> <span style="color:#00a">import</span> echofilter
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同样，这也会加载子模块 echo，但这会使其函数 echofilter() 直接可用:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>echofilter(<span style="color:#0aa">input</span>, output, delay=<span style="color:#099">0.7</span>, atten=<span style="color:#099">4</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，当使用 from package import item 时，item可以是包的子模块（或子包），也可以是包中定义的其他名称，如函数，类或变量。 import 语句首先测试是否在包中定义了item；如果没有，它假定它是一个模块并尝试加载它。如果找不到它，则引发 ImportError 异常。</p>
+<p>相反，当使用 import item.subitem.subsubitem 这样的语法时，除了最后一项之外的每一项都必须是一个包；最后一项可以是模块或包，但不能是前一项中定义的类或函数或变量。</p>
+<h3 id="从包中导入-">从包中导入 *</h3>
+<p>当用户写 from sound.effects import * 会发生什么？理想情况下，人们希望这会以某种方式传递给文件系统，找到包中存在哪些子模块，并将它们全部导入。这可能需要很长时间，导入子模块可能会产生不必要的副作用，这种副作用只有在显式导入子模块时才会发生。</p>
+<p>唯一的解决方案是让包作者提供一个包的显式索引。import 语句使用下面的规范：如果一个包的 <code>__init__.py</code> 代码定义了一个名为 <code>__all__</code> 的列表，它会被视为在遇到 from package import * 时应该导入的模块名列表。在发布该包的新版本时，包作者可以决定是否让此列表保持更新。包作者如果认为从他们的包中导入 * 的操作没有必要被使用，也可以决定不支持此列表。例如，文件 <code>sound/effects/__init__.py</code> 可以包含以下代码:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>__all__ = [<span style="color:#a50">&#34;echo&#34;</span>, <span style="color:#a50">&#34;surround&#34;</span>, <span style="color:#a50">&#34;reverse&#34;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这意味着 from sound.effects import * 将导入 sound 包的三个命名子模块。</p>
+<p>如果没有定义 <code>__all__</code>，from sound.effects import * 语句 不会 从包 sound.effects 中导入所有子模块到当前命名空间；它只确保导入了包 sound.effects （可能运行任何在<code>__init__.py</code>中的初始化代码），然后导入包中定义的任何名称。 这包括<code> __init__.py</code> 定义的任何名称（以及显式加载的子模块）。它还包括由之前的 import 语句显式加载的包的任何子模块。思考下面的代码:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sound.effects.echo</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sound.effects.surround</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">sound.effects</span> <span style="color:#00a">import</span> *
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这个例子中， echo 和 surround 模块是在执行 from&hellip;import 语句时导入到当前命名空间中的，因为它们定义在 sound.effects 包中。（这在定义了 <code>__all__ </code>时也有效。）</p>
+<p>虽然某些模块被设计为在使用 import * 时只导出遵循某些模式的名称，但在生产代码中它仍然被认为是不好的做法。</p>
+<p>请记住，使用 from package import specific_submodule 没有任何问题！ 实际上，除非导入的模块需要使用来自不同包的同名子模块，否则这是推荐的表示法。</p>
+<h3 id="子包参考">子包参考</h3>
+<p>当包被构造成子包时（与示例中的 sound 包一样），你可以使用绝对导入来引用兄弟包的子模块。例如，如果模块 sound.filters.vocoder 需要在 sound.effects 包中使用 echo 模块，它可以使用 from sound.effects import echo 。</p>
+<p>你还可以使用import语句的 from module import name 形式编写相对导入。这些导入使用前导点来指示相对导入中涉及的当前包和父包。例如，从 surround 模块，你可以使用:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">.</span> <span style="color:#00a">import</span> echo
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">..</span> <span style="color:#00a">import</span> formats
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">..filters</span> <span style="color:#00a">import</span> equalizer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="多个目录中的包">多个目录中的包</h3>
+<p>包支持另一个特殊属性， <code>__path__</code> 。它被初始化为一个列表，其中包含在执行该文件中的代码之前保存包的文件 <code>__init__.py</code> 的目录的名称。这个变量可以修改；这样做会影响将来对包中包含的模块和子包的搜索。</p>
+<p>虽然通常不需要此功能，但它可用于扩展程序包中的模块集。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" data-title="Python教程-模块" data-hashtags="Python教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" data-hashtag="Python教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" data-title="Python教程-模块"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" data-title="Python教程-模块"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" data-title="Python教程-模块"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python%E6%95%99%E7%A8%8B/">Python教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/python/python%E6%95%99%E7%A8%8B/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="prev" rel="prev" title="Python教程-数据结构"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Python教程-数据结构</a>
+            <a href="/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" class="next" rel="next" title="Python教程-输入输出">Python教程-输入输出<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-12T10:38:29+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Python教程-模块"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-3深入组件 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-3深入组件" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有&lt;script setup&gt;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-16T16:14:45+08:00" />
+<meta property="article:modified_time" content="2022-12-16T16:14:45+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-3深入组件"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有&lt;script setup&gt;"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/%E6%9D%82%E8%AE%B0/js%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-3深入组件",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  3291 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6\/","datePublished": "2022-12-16T16:14:45+08:00","dateModified": "2022-12-16T16:14:45+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-3深入组件</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-16">2022-12-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3291 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#组件注册">组件注册</a>
+      <ul>
+        <li><a href="#全局注册">全局注册</a></li>
+        <li><a href="#局部注册">局部注册</a></li>
+        <li><a href="#组件名格式">组件名格式</a></li>
+      </ul>
+    </li>
+    <li><a href="#props">Props</a>
+      <ul>
+        <li><a href="#传递-prop-的细节">传递 prop 的细节</a>
+          <ul>
+            <li><a href="#prop-名字格式">Prop 名字格式</a></li>
+            <li><a href="#静态-vs-动态-prop">静态 vs. 动态 Prop</a></li>
+            <li><a href="#传递不同的值类型">传递不同的值类型</a></li>
+            <li><a href="#使用一个对象绑定多个-prop">使用一个对象绑定多个 prop</a></li>
+          </ul>
+        </li>
+        <li><a href="#单向数据流">单向数据流</a>
+          <ul>
+            <li><a href="#更改对象--数组类型的-props">更改对象 / 数组类型的 props</a></li>
+          </ul>
+        </li>
+        <li><a href="#prop-校验">Prop 校验</a>
+          <ul>
+            <li><a href="#运行时类型检查">运行时类型检查</a></li>
+          </ul>
+        </li>
+        <li><a href="#boolean-类型转换">Boolean 类型转换</a></li>
+      </ul>
+    </li>
+    <li><a href="#组件事件">组件事件</a>
+      <ul>
+        <li><a href="#触发与监听事件">触发与监听事件</a></li>
+        <li><a href="#事件参数">事件参数</a></li>
+        <li><a href="#声明触发的事件">声明触发的事件</a></li>
+        <li><a href="#事件校验">事件校验</a></li>
+        <li><a href="#配合-v-model-使用">配合 v-model 使用</a></li>
+        <li><a href="#自定义v-model修饰符">自定义v-model修饰符</a></li>
+      </ul>
+    </li>
+    <li><a href="#透传-attributes">透传 Attributes</a>
+      <ul>
+        <li><a href="#attributes-继承">Attributes 继承</a></li>
+        <li><a href="#禁用-attributes-继承">禁用 Attributes 继承</a></li>
+        <li><a href="#多根节点的-attributes-继承">多根节点的 Attributes 继承</a></li>
+        <li><a href="#在-javascript-中访问透传-attributes">在 JavaScript 中访问透传 Attributes</a></li>
+      </ul>
+    </li>
+    <li><a href="#插槽-slots">插槽 Slots</a>
+      <ul>
+        <li><a href="#插槽内容与出口">插槽内容与出口</a></li>
+        <li><a href="#渲染作用域">渲染作用域</a></li>
+        <li><a href="#默认内容">默认内容</a></li>
+        <li><a href="#具名插槽">具名插槽</a></li>
+        <li><a href="#动态插槽名">动态插槽名</a></li>
+        <li><a href="#作用域插槽">作用域插槽</a>
+          <ul>
+            <li><a href="#具名作用域插槽">具名作用域插槽</a></li>
+            <li><a href="#高级列表组件示例">高级列表组件示例</a></li>
+            <li><a href="#无渲染组件">无渲染组件</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#依赖注入">依赖注入</a>
+      <ul>
+        <li><a href="#prop-逐级透传问题">Prop 逐级透传问题</a></li>
+        <li><a href="#provide-提供">Provide (提供)</a></li>
+        <li><a href="#应用层-provide">应用层 Provide</a></li>
+        <li><a href="#inject-注入">Inject (注入)</a>
+          <ul>
+            <li><a href="#注入默认值">注入默认值</a></li>
+          </ul>
+        </li>
+        <li><a href="#和响应式数据配合使用">和响应式数据配合使用</a></li>
+        <li><a href="#使用-symbol-作注入名">使用 Symbol 作注入名</a></li>
+      </ul>
+    </li>
+    <li><a href="#异步组件">异步组件</a>
+      <ul>
+        <li><a href="#基本用法">基本用法</a></li>
+        <li><a href="#加载与错误状态">加载与错误状态</a></li>
+        <li><a href="#搭配-suspense-使用">搭配 Suspense 使用</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。本文只讲解带有<code>&lt;script setup&gt;</code>组合式API。</p>
+<h2 id="组件注册">组件注册</h2>
+<h3 id="全局注册">全局注册</h3>
+<p>app.component()</p>
+<p>在注册函数中定义组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { createApp } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> app = createApp({})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app.component(
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 注册的名字
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#a50">&#39;MyComponent&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 组件的实现
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">/* ... */</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注册被导入的 .vue 单文件组件：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> MyComponent from <span style="color:#a50">&#39;./App.vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app.component(<span style="color:#a50">&#39;MyComponent&#39;</span>, MyComponent)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>app.component() 方法可以被链式调用：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>app
+</span></span><span style="display:flex;"><span>  .component(<span style="color:#a50">&#39;ComponentA&#39;</span>, ComponentA)
+</span></span><span style="display:flex;"><span>  .component(<span style="color:#a50">&#39;ComponentB&#39;</span>, ComponentB)
+</span></span><span style="display:flex;"><span>  .component(<span style="color:#a50">&#39;ComponentC&#39;</span>, ComponentC)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="局部注册">局部注册</h3>
+<p><code>&lt;script setup&gt;</code> 的单文件组件中，导入的组件可以直接在模板中使用。局部注册的组件在后代组件中并不可用</p>
+<h3 id="组件名格式">组件名格式</h3>
+<p>PascalCase</p>
+<h2 id="props">Props</h2>
+<p>defineProps() 宏</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> props = defineProps([<span style="color:#a50">&#39;foo&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>console.log(props.foo)
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>除了数组的形式，可以使用对象的形式：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 使用 &lt;script setup&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>defineProps({
+</span></span><span style="display:flex;"><span>  title: <span style="color:#0aa">String</span>,
+</span></span><span style="display:flex;"><span>  likes: <span style="color:#0aa">Number</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="传递-prop-的细节">传递 prop 的细节</h3>
+<h4 id="prop-名字格式">Prop 名字格式</h4>
+<p>camelCase 形式</p>
+<h4 id="静态-vs-动态-prop">静态 vs. 动态 Prop</h4>
+<p>v-bind 或缩写 : 来进行动态绑定的 props</p>
+<p>父组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!--</span> 根据一个变量的值动态传入 --&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">BlogPost</span> <span style="color:#1e90ff;font-weight:bold">:title</span><span style="color:#a50">=&#34;post.title&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!--</span> 根据一个更复杂表达式的值动态传入 --&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">BlogPost</span> :<span style="color:#1e90ff">title</span>=<span style="color:#a50">&#34;post.title + &#39; by &#39; + post.author.name&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="传递不同的值类型">传递不同的值类型</h4>
+<p>任何类型的值都可以作为 props 的值被传递</p>
+<h4 id="使用一个对象绑定多个-prop">使用一个对象绑定多个 prop</h4>
+<p>使用没有参数的 v-bind绑定对象，对象的键值对将作为组件的prop</p>
+<h3 id="单向数据流">单向数据流</h3>
+<p>props单向绑定，父组件数据改变子组件状态，反之不行</p>
+<p>prop 被用于传入初始值；而子组件想在之后将其作为一个局部数据属性：新定义一个局部数据属性，从 props 上获取初始值</p>
+<p>需要对传入的 prop 值做进一步的转换：基于该 prop 值定义一个计算属性</p>
+<h4 id="更改对象--数组类型的-props">更改对象 / 数组类型的 props</h4>
+<p>对象 / 数组类型的 props可以被子组件修改，因为他们传递的是引用</p>
+<p>但是不建议这么做，会增加组件耦合性</p>
+<h3 id="prop-校验">Prop 校验</h3>
+<p>defineProps宏接收对象，props键值对的值也是对象并在对象中配置该prop。</p>
+<ul>
+<li>所有 prop 默认都是可选的，除非声明了 required: true</li>
+<li>未传递的可选 prop 有一个默认值 undefined。Boolean 类型的未传递 prop 被转换为 false</li>
+<li>声明了 default 值，传递 undefined 或者不传递props时都会改为 default 值。</li>
+</ul>
+<p>验失败后，Vue 会抛出一个控制台警告</p>
+<h4 id="运行时类型检查">运行时类型检查</h4>
+<p>type：String，Number，Boolean，Array，Object，Date，Function，Symbol</p>
+<p>instanceof实现</p>
+<h3 id="boolean-类型转换">Boolean 类型转换</h3>
+<p>boolean类型不需要值。可以把props设置为多种类型。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>defineProps({
+</span></span><span style="display:flex;"><span>  disabled: [<span style="color:#0aa">Boolean</span>, <span style="color:#0aa">Number</span>]
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="组件事件">组件事件</h2>
+<h3 id="触发与监听事件">触发与监听事件</h3>
+<p>子组件 $emit 方法触发自定义事件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- MyComponent --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;$emit(&#39;someEvent&#39;)&#34;</span>&gt;click me&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>父组件 v-on (缩写为 @) 来监听事件，也支持事件修饰符</p>
+<h3 id="事件参数">事件参数</h3>
+<p>子组件可以给 $emit 提供一个额外的参数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">click</span>=<span style="color:#a50">&#34;$emit(&#39;increaseBy&#39;, 1)&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  Increase by 1
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>父组件监听事件可以使用内联箭头函数或组件方法的第一个参数接收该值</p>
+<h3 id="声明触发的事件">声明触发的事件</h3>
+<p>defineEmits() 宏</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span>defineEmits([<span style="color:#a50">&#39;inFocus&#39;</span>, <span style="color:#a50">&#39;submit&#39;</span>])
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="事件校验">事件校验</h3>
+<p>emit事件也可以使用对象形式</p>
+<p>对象中emit键值对中值是一个函数。该函数的参数就是触发事件是的附带参数，返回一个bool值来表明是否合法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> emit = defineEmits({
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 没有校验
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  click: <span style="color:#00a">null</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 校验 submit 事件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  submit: ({ email, password }) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> (email &amp;&amp; password) {
+</span></span><span style="display:flex;"><span>      <span style="color:#00a">return</span> <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>    } <span style="color:#00a">else</span> {
+</span></span><span style="display:flex;"><span>      console.warn(<span style="color:#a50">&#39;Invalid submit event payload!&#39;</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#00a">return</span> <span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">function</span> submitForm(email, password) {
+</span></span><span style="display:flex;"><span>  emit(<span style="color:#a50">&#39;submit&#39;</span>, { email, password })
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="配合-v-model-使用">配合 v-model 使用</h3>
+<p>v-model:xxx(xxx默认值为value) 会自动转换，转换规则：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">Component</span> <span style="color:#1e90ff">v</span><span style="color:#1e90ff;font-weight:bold">-model:xxx</span><span style="color:#a50">=&#34;yyy&#34;</span> /&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>转换为</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">Component</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1e90ff">:modelXxx</span>=<span style="color:#a50">&#34;yyy&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">update:modelXxx</span>=<span style="color:#a50">&#34;newXxx =&gt; yyy = newXxx&#34;</span>
+</span></span><span style="display:flex;"><span>/&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以子组件里面需要实现：</p>
+<ol>
+<li>xxx 组件属性绑定到 modelXxx 组件props</li>
+<li>xxx 修改时触发 update:modelXxx 事件</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!--</span> CustomInput.vue --&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span>defineProps([<span style="color:#a50">&#39;modelXxx&#39;</span>])
+</span></span><span style="display:flex;"><span>defineEmits([<span style="color:#a50">&#39;update:modelXxx&#39;</span>])
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">input</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1e90ff;font-weight:bold">:value</span><span style="color:#a50">=&#34;modelXxx&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00;background-color:#faa">@</span><span style="color:#1e90ff">input</span>=<span style="color:#a50">&#34;$emit(&#39;update:modelXxx&#39;, $event.target.value)&#34;</span>
+</span></span><span style="display:flex;"><span>  /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实现之后就能在组件上使用v-model:xxx了</p>
+<p>可以绑定多个v-model：xxx</p>
+<h3 id="自定义v-model修饰符">自定义v-model修饰符</h3>
+<p>在子组件的defineProps宏中定义一个叫做 xxxModifiers(xxx默认值为model) 的 prop 。子组件中可以通过该prop查询父组件使用的修饰符</p>
+<p>父组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">MyComponent</span> <span style="color:#1e90ff">v-model:title</span><span style="color:#f00;background-color:#faa">.</span><span style="color:#1e90ff">capitalize</span>=<span style="color:#a50">&#34;myText&#34;</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>子组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> props = defineProps([<span style="color:#a50">&#39;title&#39;</span>, <span style="color:#a50">&#39;titleModifiers&#39;</span>])
+</span></span><span style="display:flex;"><span>defineEmits([<span style="color:#a50">&#39;update:title&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>console.log(props.titleModifiers) <span style="color:#aaa;font-style:italic">// { capitalize: true }
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="透传-attributes">透传 Attributes</h2>
+<h3 id="attributes-继承">Attributes 继承</h3>
+<p>“透传 attribute”指的是没有被子组件组件props 或 emits 捕获的 attribute 或者 v-on 事件监听器。</p>
+<p>template为单元素的子组件会自动将这些属性和事件监听器交给template子元素，并将其跟子元素的属性和事件监听器合并（比如class，style和id）</p>
+<h3 id="禁用-attributes-继承">禁用 Attributes 继承</h3>
+<p>被传递子组件选项中设置 inheritAttrs: false</p>
+<p><code>&lt;script setup&gt;</code>，你需要一个额外的 <code>&lt;script&gt;</code> 块来书写这个选项声明：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 使用普通的 &lt;script&gt; 来声明选项
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">export</span> <span style="color:#00a">default</span> {
+</span></span><span style="display:flex;"><span>  inheritAttrs: <span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// ...setup 部分逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在模板的表达式中，可以通过 $attrs 访问透传的属性</p>
+<p>$attrs保留了template原本的格式，@xxx 被转换为 $attrs.onXxx。</p>
+<h3 id="多根节点的-attributes-继承">多根节点的 Attributes 继承</h3>
+<p>v-bind=&quot;$attrs&quot; 将透传属性显式绑定给某个元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">main</span> <span style="color:#1e90ff">v-bind</span>=<span style="color:#a50">&#34;$attrs&#34;</span>&gt;...&lt;/<span style="color:#1e90ff;font-weight:bold">main</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>多个根节点的组件没有自动 attribute 透传行为</p>
+<p>如果没有被显式绑定$attrs，会抛出一个运行时警告</p>
+<h3 id="在-javascript-中访问透传-attributes">在 JavaScript 中访问透传 Attributes</h3>
+<p>useAttrs() API 访问一个组件的所有透传 attribute：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { useAttrs } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> attrs = useAttrs()
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="插槽-slots">插槽 Slots</h2>
+<h3 id="插槽内容与出口">插槽内容与出口</h3>
+<p>给子组件传递模板数据</p>
+<p>父组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">FancyButton</span>&gt;
+</span></span><span style="display:flex;"><span>  Click me! <span style="color:#aaa;font-style:italic">&lt;!-- 插槽内容 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">FancyButton</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>子组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">button</span> <span style="color:#1e90ff">class</span>=<span style="color:#a50">&#34;fancy-btn&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">slot</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">slot</span>&gt; <span style="color:#aaa;font-style:italic">&lt;!-- 插槽出口 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">button</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/slots.dbdaf1e8.png"
+        data-srcset="https://cn.vuejs.org/assets/slots.dbdaf1e8.png, https://cn.vuejs.org/assets/slots.dbdaf1e8.png 1.5x, https://cn.vuejs.org/assets/slots.dbdaf1e8.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/slots.dbdaf1e8.png"
+        title="https://cn.vuejs.org/assets/slots.dbdaf1e8.png" /></div>
+<h3 id="渲染作用域">渲染作用域</h3>
+<p>插槽内容无法访问子组件的数据</p>
+<h3 id="默认内容">默认内容</h3>
+<p>当父组件没有给子组件提供插槽内容的时候，使用子组件 <code>&lt;slot&gt;</code>标签里面的内容</p>
+<h3 id="具名插槽">具名插槽</h3>
+<p>子组件带 name 的插槽被称为具名插槽 (named slots)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span> <span style="color:#1e90ff">class</span>=<span style="color:#a50">&#34;container&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">header</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">slot</span> <span style="color:#1e90ff">name</span>=<span style="color:#a50">&#34;header&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">slot</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">header</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">main</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">slot</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">slot</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">main</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">footer</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#1e90ff;font-weight:bold">slot</span> <span style="color:#1e90ff">name</span>=<span style="color:#a50">&#34;footer&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">slot</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">footer</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>父组件使用含 v-slot:xxx 指令的 <code>&lt;template&gt;</code> 元素传递数据给子组件的xxx具名插槽</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">BaseLayout</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">template</span> <span style="color:#1e90ff">v-slot:header</span>&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">&lt;!-- header 插槽的内容放这里 --&gt;</span>
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">BaseLayout</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>v-slot 简写 #</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/named-slots.ebb7b207.png"
+        data-srcset="https://cn.vuejs.org/assets/named-slots.ebb7b207.png, https://cn.vuejs.org/assets/named-slots.ebb7b207.png 1.5x, https://cn.vuejs.org/assets/named-slots.ebb7b207.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/named-slots.ebb7b207.png"
+        title="https://cn.vuejs.org/assets/named-slots.ebb7b207.png" /></div>
+<h3 id="动态插槽名">动态插槽名</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">base-layout</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">template</span> <span style="color:#1e90ff">v-slot:</span><span style="color:#f00;background-color:#faa">[</span><span style="color:#1e90ff">dynamicSlotName</span><span style="color:#f00;background-color:#faa">]</span>&gt;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">&lt;!-- 缩写为 --&gt;</span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">template</span> <span style="color:#f00;background-color:#faa">#[</span><span style="color:#1e90ff">dynamicSlotName</span><span style="color:#f00;background-color:#faa">]</span>&gt;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">base-layout</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="作用域插槽">作用域插槽</h3>
+<p>子组件使用属性给父组件传数据，类似组件props的反向传输，被称为插槽props</p>
+<p>子组件，</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">&lt;!-- &lt;MyComponent&gt; 的模板 --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">slot</span> <span style="color:#1e90ff">:text</span>=<span style="color:#a50">&#34;greetingMessage&#34;</span> <span style="color:#1e90ff">:count</span>=<span style="color:#a50">&#34;1&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">slot</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">div</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>父组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">MyComponent</span> <span style="color:#1e90ff">v-slot</span>=<span style="color:#a50">&#34;slotProps&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ slotProps.text }} {{ slotProps.count }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">MyComponent</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/scoped-slots.1c6d5876.svg"
+        data-srcset="https://cn.vuejs.org/assets/scoped-slots.1c6d5876.svg, https://cn.vuejs.org/assets/scoped-slots.1c6d5876.svg 1.5x, https://cn.vuejs.org/assets/scoped-slots.1c6d5876.svg 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/scoped-slots.1c6d5876.svg"
+        title="https://cn.vuejs.org/assets/scoped-slots.1c6d5876.svg" /></div>
+<p>slot props可以在父组件中解构。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">MyComponent</span> <span style="color:#1e90ff">v-slot</span>=<span style="color:#a50">&#34;{ text, count }&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  {{ text }} {{ count }}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">MyComponent</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="具名作用域插槽">具名作用域插槽</h4>
+<p>子组件：name与具名插槽一样，多了一些插槽props属性</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">slot</span> <span style="color:#1e90ff">name</span>=<span style="color:#a50">&#34;header&#34;</span> <span style="color:#1e90ff">message</span>=<span style="color:#a50">&#34;hello&#34;</span>&gt;&lt;/<span style="color:#1e90ff;font-weight:bold">slot</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>父组件：v-slot:（#）与具名插槽相比给了一个值，可以在模板变量中使用该值能获取子组件传的数据</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">MyComponent</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">template</span> <span style="color:#f00;background-color:#faa">#</span><span style="color:#1e90ff">header</span>=<span style="color:#a50">&#34;headerProps&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    {{ headerProps }}
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">template</span> <span style="color:#f00;background-color:#faa">#</span><span style="color:#1e90ff">default</span>=<span style="color:#a50">&#34;defaultProps&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    {{ defaultProps }}
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">template</span> <span style="color:#f00;background-color:#faa">#</span><span style="color:#1e90ff">footer</span>=<span style="color:#a50">&#34;footerProps&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    {{ footerProps }}
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">MyComponent</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="高级列表组件示例">高级列表组件示例</h4>
+<p>见官网</p>
+<h4 id="无渲染组件">无渲染组件</h4>
+<p>包括了逻辑，不渲染内容，仅通过作用域插槽向父组件传送数据的组件叫无渲染组件</p>
+<h2 id="依赖注入">依赖注入</h2>
+<h3 id="prop-逐级透传问题">Prop 逐级透传问题</h3>
+<div id="id-4"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/prop-drilling.11201220.png"
+        data-srcset="https://cn.vuejs.org/assets/prop-drilling.11201220.png, https://cn.vuejs.org/assets/prop-drilling.11201220.png 1.5x, https://cn.vuejs.org/assets/prop-drilling.11201220.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/prop-drilling.11201220.png"
+        title="https://cn.vuejs.org/assets/prop-drilling.11201220.png" /></div>
+<p>麻烦，使用provide 和 inject</p>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cn.vuejs.org/assets/provide-inject.3e0505e4.png"
+        data-srcset="https://cn.vuejs.org/assets/provide-inject.3e0505e4.png, https://cn.vuejs.org/assets/provide-inject.3e0505e4.png 1.5x, https://cn.vuejs.org/assets/provide-inject.3e0505e4.png 2x"
+        data-sizes="auto"
+        alt="https://cn.vuejs.org/assets/provide-inject.3e0505e4.png"
+        title="https://cn.vuejs.org/assets/provide-inject.3e0505e4.png" /></div>
+<h3 id="provide-提供">Provide (提供)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { provide } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>provide(<span style="color:#aaa;font-style:italic">/* 注入名 */</span> <span style="color:#a50">&#39;message&#39;</span>, <span style="color:#aaa;font-style:italic">/* 值 */</span> <span style="color:#a50">&#39;hello!&#39;</span>)
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>值可以是任意类型，通常为响应式状态，以建立后代组件和提供者的响应式联系</p>
+<h3 id="应用层-provide">应用层 Provide</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { createApp } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> app = createApp({})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app.provide(<span style="color:#aaa;font-style:italic">/* 注入名 */</span> <span style="color:#a50">&#39;message&#39;</span>, <span style="color:#aaa;font-style:italic">/* 值 */</span> <span style="color:#a50">&#39;hello!&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="inject-注入">Inject (注入)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { inject } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> message = inject(<span style="color:#a50">&#39;message&#39;</span>)
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="注入默认值">注入默认值</h4>
+<p>注入时添加一个默认值，当没有提供者时使用默认值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 如果没有祖先组件提供 &#34;message&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// `value` 会是 &#34;这是默认值&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">const</span> value = inject(<span style="color:#a50">&#39;message&#39;</span>, <span style="color:#a50">&#39;这是默认值&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以使用工厂函数来创建默认值：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> value = inject(<span style="color:#a50">&#39;key&#39;</span>, () =&gt; <span style="color:#00a">new</span> ExpensiveClass())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="和响应式数据配合使用">和响应式数据配合使用</h3>
+<p>建议尽可能将任何对响应式状态的变更都保持在供给方组件中</p>
+<p>readonly()确保数据不被注入方修改</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { ref, provide, readonly } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> count = ref(<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>provide(<span style="color:#a50">&#39;read-only-count&#39;</span>, readonly(count))
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用-symbol-作注入名">使用 Symbol 作注入名</h3>
+<p>使用 Symbol 来作为注入名以避免潜在的冲突</p>
+<p>在一个单独的文件中导出这些注入名 Symbol</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// keys.js
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">export</span> <span style="color:#00a">const</span> myInjectionKey = Symbol()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 在供给方组件中
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">import</span> { provide } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { myInjectionKey } from <span style="color:#a50">&#39;./keys.js&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>provide(myInjectionKey, { <span style="color:#aaa;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">  要提供的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">*/</span> });
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 注入方组件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">import</span> { inject } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { myInjectionKey } from <span style="color:#a50">&#39;./keys.js&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> injected = inject(myInjectionKey)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="异步组件">异步组件</h2>
+<h3 id="基本用法">基本用法</h3>
+<p>defineAsyncComponent 方法懒加载</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { defineAsyncComponent } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> AsyncComp = defineAsyncComponent(() =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#00a">new</span> <span style="color:#0aa">Promise</span>((resolve, reject) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// ...从服务器获取组件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    resolve(<span style="color:#aaa;font-style:italic">/* 获取到的组件 */</span>)
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// ... 像使用其他一般组件一样使用 `AsyncComp`
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>defineAsyncComponent 方法接收一个返回 Promise 的加载函数。这个 Promise 的 resolve 回调方法应该在从服务器获得组件定义时调用。也可以调用 reject(reason) 表明加载失败。</p>
+<p>ES 模块动态导入也会返回一个 Promise，所以多数情况下我们会将它和 defineAsyncComponent 搭配使用：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">import</span> { defineAsyncComponent } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> AsyncComp = defineAsyncComponent(() =&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">import</span>(<span style="color:#a50">&#39;./components/MyComponent.vue&#39;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>AsyncComp仅在页面需要它渲染时才会调用加载内部实际组件的函数，将接收到的 props 和插槽传给内部组件</p>
+<p>异步组件也可以使用 app.component() 全局注册</p>
+<p>也可以直接在父组件中直接定义它们：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vue" data-lang="vue"><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">script</span> <span style="color:#1e90ff">setup</span>&gt;
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> { defineAsyncComponent } from <span style="color:#a50">&#39;vue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> AdminPage = defineAsyncComponent(() =&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">import</span>(<span style="color:#a50">&#39;./components/AdminPageComponent.vue&#39;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">script</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#1e90ff;font-weight:bold">AdminPage</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#1e90ff;font-weight:bold">template</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="加载与错误状态">加载与错误状态</h3>
+<p>传入一个带选项的对象而不仅仅是Promis对象</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#00a">const</span> AsyncComp = defineAsyncComponent({
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 加载函数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  loader: () =&gt; <span style="color:#00a">import</span>(<span style="color:#a50">&#39;./Foo.vue&#39;</span>),
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 加载异步组件时使用的组件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  loadingComponent: LoadingComponent,
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 展示加载组件前的延迟时间，默认为 200ms
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  delay: <span style="color:#099">200</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 加载失败后展示的组件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  errorComponent: ErrorComponent,
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 如果提供了一个 timeout 时间限制，并超时了
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#aaa;font-style:italic">// 也会显示这里配置的报错组件，默认值是：Infinity
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  timeout: <span style="color:#099">3000</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="搭配-suspense-使用">搭配 Suspense 使用</h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" data-title="Vue-3深入组件" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" data-title="Vue-3深入组件"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" data-title="Vue-3深入组件"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/3%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/" data-title="Vue-3深入组件"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/%E6%9D%82%E8%AE%B0/js%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB/" class="prev" rel="prev" title="前端-杂记-Js匿名函数和箭头函数的区别"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>前端-杂记-Js匿名函数和箭头函数的区别</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/4%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8/" class="next" rel="next" title="Vue-4逻辑复用">Vue-4逻辑复用<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/8c525f.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-16T16:14:45+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Vue-3深入组件"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

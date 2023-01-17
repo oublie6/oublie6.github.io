@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-Router-进阶-导航守卫 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-Router-进阶-导航守卫" />
+<meta property="og:description" content="本系列是作者在跟着vue-router官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 正如其名，vue-router 提供的导" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-17T12:05:48+08:00" />
+<meta property="article:modified_time" content="2022-10-17T12:05:48+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-Router-进阶-导航守卫"/>
+<meta name="twitter:description" content="本系列是作者在跟着vue-router官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 正如其名，vue-router 提供的导"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E4%B8%8D%E5%90%8C%E7%9A%84%E5%8E%86%E5%8F%B2%E6%A8%A1%E5%BC%8F/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E8%B7%AF%E7%94%B1%E5%85%83%E4%BF%A1%E6%81%AF/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-Router-进阶-导航守卫",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/vuerouter\/%E8%BF%9B%E9%98%B6\/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  2293 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/vuerouter\/%E8%BF%9B%E9%98%B6\/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB\/","datePublished": "2022-10-17T12:05:48+08:00","dateModified": "2022-10-17T12:05:48+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-Router-进阶-导航守卫</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-17">2022-10-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2293 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#全局前置守卫">全局前置守卫</a>
+      <ul>
+        <li><a href="#可选的第三个参数-next">可选的第三个参数 next</a></li>
+      </ul>
+    </li>
+    <li><a href="#全局解析守卫">全局解析守卫</a></li>
+    <li><a href="#全局后置钩子">全局后置钩子</a></li>
+    <li><a href="#路由独享的守卫">路由独享的守卫</a></li>
+    <li><a href="#组件内的守卫">组件内的守卫</a>
+      <ul>
+        <li><a href="#可用的配置-api">可用的配置 API</a></li>
+        <li><a href="#使用组合-api">使用组合 API</a></li>
+      </ul>
+    </li>
+    <li><a href="#完整的导航解析流程">完整的导航解析流程</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://router.vuejs.org/zh/introduction.html" target="_blank" rel="noopener noreffer ">vue-router官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<p>正如其名，vue-router 提供的导航守卫主要用来通过跳转或取消的方式守卫导航。这里有很多方式植入路由导航中：全局的，单个路由独享的，或者组件级的。</p>
+<h2 id="全局前置守卫">全局前置守卫</h2>
+<p>你可以使用 router.beforeEach 注册一个全局前置守卫：</p>
+<pre tabindex="0"><code>const router = createRouter({ ... })
+
+router.beforeEach((to, from) =&gt; {
+  // ...
+  // 返回 false 以取消导航
+  return false
+})
+</code></pre><p>当一个导航触发时，全局前置守卫按照创建顺序调用。守卫是异步解析执行，此时导航在所有守卫 resolve 完之前一直处于等待中。</p>
+<p>每个守卫方法接收两个参数：</p>
+<ul>
+<li>to: 即将要进入的目标 用一种标准化的方式</li>
+<li>from: 当前导航正要离开的路由 用一种标准化的方式</li>
+</ul>
+<p>可以返回的值如下:</p>
+<ul>
+<li>false: 取消当前的导航。如果浏览器的 URL 改变了(可能是用户手动或者浏览器后退按钮)，那么 URL 地址会重置到 from 路由对应的地址。</li>
+<li>一个路由地址: 通过一个路由地址跳转到一个不同的地址，就像你调用 router.push() 一样，你可以设置诸如 replace: true 或 name: &lsquo;home&rsquo; 之类的配置。当前的导航被中断，然后进行一个新的导航，就和 from 一样。</li>
+</ul>
+<pre tabindex="0"><code>router.beforeEach(async (to, from) =&gt; {
+   if (
+     // 检查用户是否已登录
+     !isAuthenticated &amp;&amp;
+     // ❗️ 避免无限重定向
+     to.name !== &#39;Login&#39;
+   ) {
+     // 将用户重定向到登录页面
+     return { name: &#39;Login&#39; }
+   }
+ })
+</code></pre><p>如果遇到了意料之外的情况，可能会抛出一个 Error。这会取消导航并且调用 router.onError() 注册过的回调。</p>
+<p>如果什么都没有，undefined 或返回 true，则导航是有效的，并调用下一个导航守卫</p>
+<p>以上所有都同 async 函数 和 Promise 工作方式一样：</p>
+<pre tabindex="0"><code>router.beforeEach(async (to, from) =&gt; {
+  // canUserAccess() 返回 `true` 或 `false`
+  const canAccess = await canUserAccess(to)
+  if (!canAccess) return &#39;/login&#39;
+})
+</code></pre><h3 id="可选的第三个参数-next">可选的第三个参数 next</h3>
+<p>在之前的 Vue Router 版本中，也是可以使用 第三个参数 next 的。这是一个常见的错误来源，可以通过 RFC 来消除错误。然而，它仍然是被支持的，这意味着你可以向任何导航守卫传递第三个参数。在这种情况下，确保 next 在任何给定的导航守卫中都被严格调用一次。它可以出现多于一次，但是只能在所有的逻辑路径都不重叠的情况下，否则钩子永远都不会被解析或报错。这里有一个在用户未能验证身份时重定向到/login的错误用例：</p>
+<pre tabindex="0"><code>// BAD
+router.beforeEach((to, from, next) =&gt; {
+  if (to.name !== &#39;Login&#39; &amp;&amp; !isAuthenticated) next({ name: &#39;Login&#39; })
+  // 如果用户未能验证身份，则 `next` 会被调用两次
+  next()
+})
+</code></pre><p>下面是正确的版本:</p>
+<pre tabindex="0"><code>// GOOD
+router.beforeEach((to, from, next) =&gt; {
+  if (to.name !== &#39;Login&#39; &amp;&amp; !isAuthenticated) next({ name: &#39;Login&#39; })
+  else next()
+})
+</code></pre><h2 id="全局解析守卫">全局解析守卫</h2>
+<p>你可以用 router.beforeResolve 注册一个全局守卫。这和 router.beforeEach 类似，因为它在 每次导航时都会触发，但是确保在导航被确认之前，同时在所有组件内守卫和异步路由组件被解析之后，解析守卫就被正确调用。这里有一个例子，确保用户可以访问自定义 meta 属性 requiresCamera 的路由：</p>
+<pre tabindex="0"><code>router.beforeResolve(async to =&gt; {
+  if (to.meta.requiresCamera) {
+    try {
+      await askForCameraPermission()
+    } catch (error) {
+      if (error instanceof NotAllowedError) {
+        // ... 处理错误，然后取消导航
+        return false
+      } else {
+        // 意料之外的错误，取消导航并把错误传给全局处理器
+        throw error
+      }
+    }
+  }
+})
+</code></pre><p>router.beforeResolve 是获取数据或执行任何其他操作（如果用户无法进入页面时你希望避免执行的操作）的理想位置。</p>
+<h2 id="全局后置钩子">全局后置钩子</h2>
+<p>你也可以注册全局后置钩子，然而和守卫不同的是，这些钩子不会接受 next 函数也不会改变导航本身：</p>
+<pre tabindex="0"><code>router.afterEach((to, from) =&gt; {
+  sendToAnalytics(to.fullPath)
+})
+</code></pre><p>它们对于分析、更改页面标题、声明页面等辅助功能以及许多其他事情都很有用。</p>
+<p>它们也反映了 navigation failures 作为第三个参数：</p>
+<pre tabindex="0"><code>router.afterEach((to, from, failure) =&gt; {
+  if (!failure) sendToAnalytics(to.fullPath)
+})
+</code></pre><p>了解更多关于 navigation failures 的信息在它的指南中。</p>
+<h2 id="路由独享的守卫">路由独享的守卫</h2>
+<p>你可以直接在路由配置上定义 beforeEnter 守卫：</p>
+<pre tabindex="0"><code>const routes = [
+  {
+    path: &#39;/users/:id&#39;,
+    component: UserDetails,
+    beforeEnter: (to, from) =&gt; {
+      // reject the navigation
+      return false
+    },
+  },
+]
+</code></pre><p>beforeEnter 守卫 只在进入路由时触发，不会在 params、query 或 hash 改变时触发。例如，从 /users/2 进入到 /users/3 或者从 /users/2#info 进入到 /users/2#projects。它们只有在 从一个不同的 路由导航时，才会被触发。</p>
+<p>你也可以将一个函数数组传递给 beforeEnter，这在为不同的路由重用守卫时很有用：</p>
+<pre tabindex="0"><code>function removeQueryParams(to) {
+  if (Object.keys(to.query).length)
+    return { path: to.path, query: {}, hash: to.hash }
+}
+
+function removeHash(to) {
+  if (to.hash) return { path: to.path, query: to.query, hash: &#39;&#39; }
+}
+
+const routes = [
+  {
+    path: &#39;/users/:id&#39;,
+    component: UserDetails,
+    beforeEnter: [removeQueryParams, removeHash],
+  },
+  {
+    path: &#39;/about&#39;,
+    component: UserDetails,
+    beforeEnter: [removeQueryParams],
+  },
+]
+</code></pre><p>请注意，你也可以通过使用路径 meta 字段和全局导航守卫来实现类似的行为。</p>
+<h2 id="组件内的守卫">组件内的守卫</h2>
+<p>最后，你可以在路由组件内直接定义路由导航守卫(传递给路由配置的)</p>
+<h3 id="可用的配置-api">可用的配置 API</h3>
+<p>你可以为路由组件添加以下配置：</p>
+<ul>
+<li>beforeRouteEnter</li>
+<li>beforeRouteUpdate</li>
+<li>beforeRouteLeave</li>
+</ul>
+<pre tabindex="0"><code>const UserDetails = {
+  template: `...`,
+  beforeRouteEnter(to, from) {
+    // 在渲染该组件的对应路由被验证前调用
+    // 不能获取组件实例 `this` ！
+    // 因为当守卫执行时，组件实例还没被创建！
+  },
+  beforeRouteUpdate(to, from) {
+    // 在当前路由改变，但是该组件被复用时调用
+    // 举例来说，对于一个带有动态参数的路径 `/users/:id`，在 `/users/1` 和 `/users/2` 之间跳转的时候，
+    // 由于会渲染同样的 `UserDetails` 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    // 因为在这种情况发生的时候，组件已经挂载好了，导航守卫可以访问组件实例 `this`
+  },
+  beforeRouteLeave(to, from) {
+    // 在导航离开渲染该组件的对应路由时调用
+    // 与 `beforeRouteUpdate` 一样，它可以访问组件实例 `this`
+  },
+}
+</code></pre><p>beforeRouteEnter 守卫 不能 访问 this，因为守卫在导航确认前被调用，因此即将登场的新组件还没被创建。</p>
+<p>不过，你可以通过传一个回调给 next 来访问组件实例。在导航被确认的时候执行回调，并且把组件实例作为回调方法的参数：</p>
+<pre tabindex="0"><code>beforeRouteEnter (to, from, next) {
+  next(vm =&gt; {
+    // 通过 `vm` 访问组件实例
+  })
+}
+</code></pre><p>注意 beforeRouteEnter 是支持给 next 传递回调的唯一守卫。对于 beforeRouteUpdate 和 beforeRouteLeave 来说，this 已经可用了，所以不支持 传递回调，因为没有必要了：</p>
+<pre tabindex="0"><code>beforeRouteUpdate (to, from) {
+  // just use `this`
+  this.name = to.params.name
+}
+</code></pre><p>这个 离开守卫 通常用来预防用户在还未保存修改前突然离开。该导航可以通过返回 false 来取消。</p>
+<pre tabindex="0"><code>beforeRouteLeave (to, from) {
+  const answer = window.confirm(&#39;Do you really want to leave? you have unsaved changes!&#39;)
+  if (!answer) return false
+}
+</code></pre><h3 id="使用组合-api">使用组合 API</h3>
+<p>如果你正在使用组合 API 和 setup 函数来编写组件，你可以通过 onBeforeRouteUpdate 和 onBeforeRouteLeave 分别添加 update 和 leave 守卫。 请参考组合 API 部分以获得更多细节。</p>
+<h2 id="完整的导航解析流程">完整的导航解析流程</h2>
+<ol>
+<li>导航被触发。</li>
+<li>在失活的组件里调用 beforeRouteLeave 守卫。</li>
+<li>调用全局的 beforeEach 守卫。</li>
+<li>在重用的组件里调用 beforeRouteUpdate 守卫(2.2+)。</li>
+<li>在路由配置里调用 beforeEnter。</li>
+<li>解析异步路由组件。</li>
+<li>在被激活的组件里调用 beforeRouteEnter。</li>
+<li>调用全局的 beforeResolve 守卫(2.5+)。</li>
+<li>导航被确认。</li>
+<li>调用全局的 afterEach 钩子。</li>
+<li>触发 DOM 更新。</li>
+<li>调用 beforeRouteEnter 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-17</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/" data-title="Vue-Router-进阶-导航守卫" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/" data-title="Vue-Router-进阶-导航守卫"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/" data-title="Vue-Router-进阶-导航守卫"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/" data-title="Vue-Router-进阶-导航守卫"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E5%9F%BA%E7%A1%80/%E4%B8%8D%E5%90%8C%E7%9A%84%E5%8E%86%E5%8F%B2%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Vue-Router-基础-不同的历史模式"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-Router-基础-不同的历史模式</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/vuerouter/%E8%BF%9B%E9%98%B6/%E8%B7%AF%E7%94%B1%E5%85%83%E4%BF%A1%E6%81%AF/" class="next" rel="next" title="Vue-Router-进阶-路由元信息">Vue-Router-进阶-路由元信息<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-17T12:05:48+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Vue-Router-进阶-导航守卫"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

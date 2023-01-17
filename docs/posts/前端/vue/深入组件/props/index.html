@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-深入组件-Props - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-深入组件-Props" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 Props 声明 一个组件需要显式声明它所接受的 props，这样" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/props/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-16T10:37:44+08:00" />
+<meta property="article:modified_time" content="2022-10-16T10:37:44+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-深入组件-Props"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 Props 声明 一个组件需要显式声明它所接受的 props，这样"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/props/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E6%B3%A8%E5%86%8C/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E7%BB%84%E4%BB%B6%E4%BA%8B%E4%BB%B6/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-深入组件-Props",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6\/props\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  2566 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6\/props\/","datePublished": "2022-10-16T10:37:44+08:00","dateModified": "2022-10-16T10:37:44+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-深入组件-Props</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2566 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#props-声明">Props 声明</a></li>
+    <li><a href="#传递-prop-的细节">传递 prop 的细节</a>
+      <ul>
+        <li><a href="#prop-名字格式">Prop 名字格式</a></li>
+        <li><a href="#静态-vs-动态-prop">静态 vs. 动态 Prop</a></li>
+        <li><a href="#传递不同的值类型">传递不同的值类型</a>
+          <ul>
+            <li><a href="#number">Number</a></li>
+            <li><a href="#boolean">Boolean</a></li>
+            <li><a href="#array">Array</a></li>
+            <li><a href="#object">Object</a></li>
+          </ul>
+        </li>
+        <li><a href="#使用一个对象绑定多个-prop">使用一个对象绑定多个 prop</a></li>
+      </ul>
+    </li>
+    <li><a href="#单向数据流">单向数据流</a>
+      <ul>
+        <li><a href="#更改对象--数组类型的-props">更改对象 / 数组类型的 props</a></li>
+      </ul>
+    </li>
+    <li><a href="#prop-校验">Prop 校验</a>
+      <ul>
+        <li><a href="#运行时类型检查">运行时类型检查</a></li>
+      </ul>
+    </li>
+    <li><a href="#boolean-类型转换">Boolean 类型转换</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<h2 id="props-声明">Props 声明</h2>
+<p>一个组件需要显式声明它所接受的 props，这样 Vue 才能知道外部传入的哪些是 props，哪些是透传 attribute 。</p>
+<p>props 需要使用 props 选项来定义：</p>
+<pre tabindex="0"><code>export default {
+  props: [&#39;foo&#39;],
+  created() {
+    // props 会暴露到 `this` 上
+    console.log(this.foo)
+  }
+}
+</code></pre><p>除了使用字符串数组来声明 prop 外，还可以使用对象的形式：</p>
+<pre tabindex="0"><code>export default {
+  props: {
+    title: String,
+    likes: Number
+  }
+}
+</code></pre><p>对于以对象形式声明中的每个属性，key 是 prop 的名称，而值则是该 prop 预期类型的构造函数。</p>
+<p>对象形式的 props 声明不仅可以一定程度上作为组件的文档，而且如果其他开发者在使用你的组件时传递了错误的类型，也会在浏览器控制台中抛出警告。</p>
+<h2 id="传递-prop-的细节">传递 prop 的细节</h2>
+<h3 id="prop-名字格式">Prop 名字格式</h3>
+<p>如果一个 prop 的名字很长，应使用 camelCase 形式，因为它们是合法的 JavaScript 标识符，可以直接在模板的表达式中使用，也可以避免在作为属性 key 名时必须加上引号。</p>
+<pre tabindex="0"><code>export default {
+  props: {
+    greetingMessage: String
+  }
+}
+</code></pre><pre tabindex="0"><code>&lt;span&gt;{{ greetingMessage }}&lt;/span&gt;
+</code></pre><p>虽然理论上你也可以在向子组件传递 props 时使用 camelCase 形式 (使用 DOM 模板时例外)，但实际上为了和 HTML attribute 对齐，我们通常会将其写为 kebab-case 形式：</p>
+<pre tabindex="0"><code>&lt;MyComponent greeting-message=&#34;hello&#34; /&gt;
+</code></pre><p>对于组件名我们推荐使用 PascalCase，因为这提高了模板的可读性，能帮助我们区分 Vue 组件和原生 HTML 元素。然而对于传递 props 来说，使用 camelCase 并没有太多优势，因此我们推荐更贴近 HTML 的书写风格。</p>
+<h3 id="静态-vs-动态-prop">静态 vs. 动态 Prop</h3>
+<p>静态值形式的 props：</p>
+<pre tabindex="0"><code>&lt;BlogPost title=&#34;My journey with Vue&#34; /&gt;
+</code></pre><p>使用 v-bind 或缩写 : 来进行动态绑定的 props：</p>
+<pre tabindex="0"><code>&lt;!-- 根据一个变量的值动态传入 --&gt;
+&lt;BlogPost :title=&#34;post.title&#34; /&gt;
+
+&lt;!-- 根据一个更复杂表达式的值动态传入 --&gt;
+&lt;BlogPost :title=&#34;post.title + &#39; by &#39; + post.author.name&#34; /&gt;
+</code></pre><h3 id="传递不同的值类型">传递不同的值类型</h3>
+<p>在上述的两个例子中，我们只传入了字符串值，但实际上任何类型的值都可以作为 props 的值被传递。</p>
+<h4 id="number">Number</h4>
+<pre tabindex="0"><code>&lt;!-- 虽然 `42` 是个常量，我们还是需要使用 v-bind --&gt;
+&lt;!-- 因为这是一个 JavaScript 表达式而不是一个字符串 --&gt;
+&lt;BlogPost :likes=&#34;42&#34; /&gt;
+
+&lt;!-- 根据一个变量的值动态传入 --&gt;
+&lt;BlogPost :likes=&#34;post.likes&#34; /&gt;
+</code></pre><h4 id="boolean">Boolean</h4>
+<pre tabindex="0"><code>&lt;!-- 仅写上 prop 但不传值，会隐式转换为 `true` --&gt;
+&lt;BlogPost is-published /&gt;
+
+&lt;!-- 虽然 `false` 是静态的值，我们还是需要使用 v-bind --&gt;
+&lt;!-- 因为这是一个 JavaScript 表达式而不是一个字符串 --&gt;
+&lt;BlogPost :is-published=&#34;false&#34; /&gt;
+
+&lt;!-- 根据一个变量的值动态传入 --&gt;
+&lt;BlogPost :is-published=&#34;post.isPublished&#34; /&gt;
+</code></pre><h4 id="array">Array</h4>
+<pre tabindex="0"><code>&lt;!-- 虽然这个数组是个常量，我们还是需要使用 v-bind --&gt;
+&lt;!-- 因为这是一个 JavaScript 表达式而不是一个字符串 --&gt;
+&lt;BlogPost :comment-ids=&#34;[234, 266, 273]&#34; /&gt;
+
+&lt;!-- 根据一个变量的值动态传入 --&gt;
+&lt;BlogPost :comment-ids=&#34;post.commentIds&#34; /&gt;
+</code></pre><h4 id="object">Object</h4>
+<pre tabindex="0"><code>&lt;!-- 虽然这个对象字面量是个常量，我们还是需要使用 v-bind --&gt;
+&lt;!-- 因为这是一个 JavaScript 表达式而不是一个字符串 --&gt;
+&lt;BlogPost
+  :author=&#34;{
+    name: &#39;Veronica&#39;,
+    company: &#39;Veridian Dynamics&#39;
+  }&#34;
+ /&gt;
+
+&lt;!-- 根据一个变量的值动态传入 --&gt;
+&lt;BlogPost :author=&#34;post.author&#34; /&gt;
+</code></pre><h3 id="使用一个对象绑定多个-prop">使用一个对象绑定多个 prop</h3>
+<p>如果你想要将一个对象的所有属性都当作 props 传入，你可以使用没有参数的 v-bind，即只使用 v-bind 而非 :prop-name。例如：</p>
+<pre tabindex="0"><code>export default {
+  data() {
+    return {
+      post: {
+        id: 1,
+        title: &#39;My Journey with Vue&#39;
+      }
+    }
+  }
+}
+</code></pre><p>以及下面的模板：</p>
+<pre tabindex="0"><code>&lt;BlogPost v-bind=&#34;post&#34; /&gt;
+</code></pre><p>而这实际上等价于：</p>
+<pre tabindex="0"><code>&lt;BlogPost :id=&#34;post.id&#34; :title=&#34;post.title&#34; /&gt;
+</code></pre><h2 id="单向数据流">单向数据流</h2>
+<p>所有的 props 都遵循着单向绑定原则，props 因父组件的更新而变化，自然地将新的状态向下流往子组件，而不会逆向传递。这避免了子组件意外修改父组件的状态的情况，不然应用的数据流将很容易变得混乱而难以理解。</p>
+<p>另外，每次父组件更新后，所有的子组件中的 props 都会被更新到最新值，这意味着你不应该在子组件中去更改一个 prop。若你这么做了，Vue 会在控制台上向你抛出警告：</p>
+<pre tabindex="0"><code>export default {
+  props: [&#39;foo&#39;],
+  created() {
+    // ❌ 警告！prop 是只读的！
+    this.foo = &#39;bar&#39;
+  }
+}
+</code></pre><p>导致你想要更改一个 prop 的需求通常来源于以下两种场景：</p>
+<ol>
+<li>prop 被用于传入初始值；而子组件想在之后将其作为一个局部数据属性。在这种情况下，最好是新定义一个局部数据属性，从 props 上获取初始值即可：</li>
+</ol>
+<pre tabindex="0"><code>export default {
+  props: [&#39;initialCounter&#39;],
+  data() {
+    return {
+      // 计数器只是将 this.initialCounter 作为初始值
+      // 像下面这样做就使 prop 和后续更新无关了
+      counter: this.initialCounter
+    }
+  }
+}
+</code></pre><ol start="2">
+<li>需要对传入的 prop 值做进一步的转换。在这种情况中，最好是基于该 prop 值定义一个计算属性：</li>
+</ol>
+<pre tabindex="0"><code>export default {
+  props: [&#39;size&#39;],
+  computed: {
+    // 该 prop 变更时计算属性也会自动更新
+    normalizedSize() {
+      return this.size.trim().toLowerCase()
+    }
+  }
+}
+</code></pre><h3 id="更改对象--数组类型的-props">更改对象 / 数组类型的 props</h3>
+<p>当对象或数组作为 props 被传入时，虽然子组件无法更改 props 绑定，但仍然可以更改对象或数组内部的值。这是因为 JavaScript 的对象和数组是按引用传递，而对 Vue 来说，禁止这样的改动虽然可能，但有很大的性能损耗，比较得不偿失。</p>
+<p>这种更改的主要缺陷是它允许了子组件以某种不明显的方式影响父组件的状态，可能会使数据流在将来变得更难以理解。在最佳实践中，你应该尽可能避免这样的更改，除非父子组件在设计上本来就需要紧密耦合。在大多数场景下，子组件应该抛出一个事件来通知父组件做出改变。</p>
+<h2 id="prop-校验">Prop 校验</h2>
+<p>Vue 组件可以更细致地声明对传入的 props 的校验要求。比如我们上面已经看到过的类型声明，如果传入的值不满足类型要求，Vue 会在浏览器控制台中抛出警告来提醒使用者。</p>
+<p>要声明对 props 的校验，你可以向 props 选项提供一个带有 props 校验选项的对象，例如：</p>
+<pre tabindex="0"><code>export default {
+  props: {
+    // 基础类型检查
+    //（给出 `null` 和 `undefined` 值则会跳过任何类型检查）
+    propA: Number,
+    // 多种可能的类型
+    propB: [String, Number],
+    // 必传，且为 String 类型
+    propC: {
+      type: String,
+      required: true
+    },
+    // Number 类型的默认值
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 对象类型的默认值
+    propE: {
+      type: Object,
+      // 对象或者数组应当用工厂函数返回。
+      // 工厂函数会收到组件所接收的原始 props
+      // 作为参数
+      default(rawProps) {
+        return { message: &#39;hello&#39; }
+      }
+    },
+    // 自定义类型校验函数
+    propF: {
+      validator(value) {
+        // The value must match one of these strings
+        return [&#39;success&#39;, &#39;warning&#39;, &#39;danger&#39;].includes(value)
+      }
+    },
+    // 函数类型的默认值
+    propG: {
+      type: Function,
+      // 不像对象或数组的默认，这不是一个工厂函数。这会是一个用来作为默认值的函数
+      default() {
+        return &#39;Default function&#39;
+      }
+    }
+  }
+}
+</code></pre><p>一些补充细节：</p>
+<ul>
+<li>所有 prop 默认都是可选的，除非声明了 required: true。</li>
+<li>除 Boolean 外的未传递的可选 prop 将会有一个默认值 undefined。</li>
+<li>Boolean 类型的未传递 prop 将被转换为 false。你应该为它设置一个 default 值来确保行为符合预期。</li>
+<li>如果声明了 default 值，那么在 prop 的值被解析为 undefined 时，无论 prop 是未被传递还是显式指明的 undefined，都会改为 default 值。</li>
+</ul>
+<p>当 prop 的校验失败后，Vue 会抛出一个控制台警告 (在开发模式下)。</p>
+<p>注意 prop 的校验是在组件实例被创建之前，所以实例的属性 (比如 data、computed 等) 将在 default 或 validator 函数中不可用。</p>
+<h3 id="运行时类型检查">运行时类型检查</h3>
+<p>校验选项中的 type 可以是下列这些原生构造函数：String Number Boolean Array Object Date Function Symbol</p>
+<p>另外，type 也可以是自定义的类或构造函数，Vue 将会通过 instanceof 来检查类型是否匹配。例如下面这个类：</p>
+<pre tabindex="0"><code>class Person {
+  constructor(firstName, lastName) {
+    this.firstName = firstName
+    this.lastName = lastName
+  }
+}
+</code></pre><p>你可以将其作为一个 prop 的类型：</p>
+<pre tabindex="0"><code>export default {
+  props: {
+    author: Person
+  }
+}
+</code></pre><p>Vue 会通过 instanceof Person 来校验 author prop 的值是否是 Person 类的一个实例。</p>
+<h2 id="boolean-类型转换">Boolean 类型转换</h2>
+<p>为了更贴近原生 boolean attributes 的行为，声明为 Boolean 类型的 props 有特别的类型转换规则。以带有如下声明的 <code>&lt;MyComponent&gt;</code> 组件为例：</p>
+<pre tabindex="0"><code>export default {
+  props: {
+    disabled: Boolean
+  }
+}
+</code></pre><p>该组件可以被这样使用：</p>
+<pre tabindex="0"><code>&lt;!-- 等同于传入 :disabled=&#34;true&#34; --&gt;
+&lt;MyComponent disabled /&gt;
+
+&lt;!-- 等同于传入 :disabled=&#34;false&#34; --&gt;
+&lt;MyComponent /&gt;
+</code></pre><p>当一个 prop 被声明为允许多种类型时，例如：</p>
+<pre tabindex="0"><code>export default {
+  props: {
+    disabled: [Boolean, Number]
+  }
+}
+</code></pre><p>无论声明类型的顺序如何，Boolean 类型的特殊转换规则都会被应用。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/props/" data-title="Vue-深入组件-Props" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/props/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/props/" data-title="Vue-深入组件-Props"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/props/" data-title="Vue-深入组件-Props"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/props/" data-title="Vue-深入组件-Props"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E6%B3%A8%E5%86%8C/" class="prev" rel="prev" title="Vue-深入组件-注册"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-深入组件-注册</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E6%B7%B1%E5%85%A5%E7%BB%84%E4%BB%B6/%E7%BB%84%E4%BB%B6%E4%BA%8B%E4%BB%B6/" class="next" rel="next" title="Vue-深入组件-组件事件">Vue-深入组件-组件事件<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

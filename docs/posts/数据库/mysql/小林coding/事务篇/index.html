@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数据库-mysql-小林coding-事务篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="数据库-mysql-小林coding-事务篇" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 事务隔离级别是怎么实现的 事务有哪些特性 ACID 原子性（Atomicity）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-07T15:02:05+08:00" />
+<meta property="article:modified_time" content="2022-12-07T15:02:05+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="数据库-mysql-小林coding-事务篇"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 事务隔离级别是怎么实现的 事务有哪些特性 ACID 原子性（Atomicity）"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E7%B4%A2%E5%BC%95%E7%AF%87/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据库-mysql-小林coding-事务篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E4%BA%8B%E5%8A%A1%E7%AF%87\/"
+        },"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  2877 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E4%BA%8B%E5%8A%A1%E7%AF%87\/","datePublished": "2022-12-07T15:02:05+08:00","dateModified": "2022-12-07T15:02:05+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-mysql-小林coding-事务篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-07">2022-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2877 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#事务隔离级别是怎么实现的">事务隔离级别是怎么实现的</a>
+      <ul>
+        <li><a href="#事务有哪些特性">事务有哪些特性</a></li>
+        <li><a href="#并行事务会引发什么问题">并行事务会引发什么问题</a></li>
+        <li><a href="#事务的隔离级别有哪些">事务的隔离级别有哪些</a></li>
+        <li><a href="#read-view-在-mvcc-里如何工作的">Read View 在 MVCC 里如何工作的</a></li>
+        <li><a href="#可重复读是如何工作的">可重复读是如何工作的</a></li>
+        <li><a href="#读提交是如何工作的">读提交是如何工作的</a></li>
+      </ul>
+    </li>
+    <li><a href="#mysql-可重复读隔离级别完全解决幻读了吗">MySQL 可重复读隔离级别，完全解决幻读了吗</a>
+      <ul>
+        <li><a href="#快照读是如何避免幻读的">快照读是如何避免幻读的</a></li>
+        <li><a href="#当前读是如何避免幻读的">当前读是如何避免幻读的</a></li>
+        <li><a href="#幻读被完全解决了吗">幻读被完全解决了吗</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/mysql/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<h2 id="事务隔离级别是怎么实现的">事务隔离级别是怎么实现的</h2>
+<h3 id="事务有哪些特性">事务有哪些特性</h3>
+<p>ACID</p>
+<ol>
+<li>原子性（Atomicity）：</li>
+</ol>
+<p>一个事务中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节，而且事务在执行过程中发生错误，会被回滚到事务开始前的状态，就像这个事务从来没有执行过一样</p>
+<p>通过 undo log（回滚日志） 来保证的</p>
+<ol start="2">
+<li>一致性（Consistency）：</li>
+</ol>
+<p>是指事务操作前和操作后，数据满足完整性约束，数据库保持一致性状态。</p>
+<p>通过持久性+原子性+隔离性来保证</p>
+<ol start="3">
+<li>隔离性（Isolation）：数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致，因为多个事务同时使用相同的数据时，不会相互干扰，每个事务都有一个完整的数据空间，对其他并发事务是隔离的</li>
+</ol>
+<p>隔离性是通过 MVCC（多版本并发控制） 或锁机制来保证的</p>
+<ol start="4">
+<li>持久性（Durability）：</li>
+</ol>
+<p>事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</p>
+<p>通过 redo log （重做日志）来保证的</p>
+<h3 id="并行事务会引发什么问题">并行事务会引发什么问题</h3>
+<p>脏读（dirty read）、不可重复读（non-repeatable read）、幻读（phantom read）</p>
+<p>脏读：如果一个事务「读到」了另一个「未提交事务修改过的数据」，就意味着发生了「脏读」现象</p>
+<p>不可重复读：在一个事务内多次读取同一个数据，如果出现前后两次读到的数据不一样的情况，就意味着发生了「不可重复读」现象。重在数值。</p>
+<p>幻读：在一个事务内多次查询某个符合查询条件的「记录数量」，如果出现前后两次查询到的记录数量不一样的情况，就意味着发生了「幻读」现象。重在数量。</p>
+<h3 id="事务的隔离级别有哪些">事务的隔离级别有哪些</h3>
+<p>并发问题严重性排序</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/d37bfa1678eb71ae7e33dc8f211d1ec1.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/d37bfa1678eb71ae7e33dc8f211d1ec1.png, https://img-blog.csdnimg.cn/img_convert/d37bfa1678eb71ae7e33dc8f211d1ec1.png 1.5x, https://img-blog.csdnimg.cn/img_convert/d37bfa1678eb71ae7e33dc8f211d1ec1.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/d37bfa1678eb71ae7e33dc8f211d1ec1.png"
+        title="https://img-blog.csdnimg.cn/img_convert/d37bfa1678eb71ae7e33dc8f211d1ec1.png" /></div>
+<ul>
+<li>读未提交（read uncommitted），指一个事务还没提交时，它做的变更就能被其他事务看到；</li>
+<li>读提交（read committed），指一个事务提交之后，它做的变更才能被其他事务看到；</li>
+<li>可重复读（repeatable read），指一个事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的，MySQL InnoDB 引擎的默认隔离级别；</li>
+<li>串行化（serializable ）；会对记录加上读写锁，在多个事务对这条记录进行读写操作时，如果发生了读写冲突的时候，后访问的事务必须等前一个事务执行完成，才能继续执行；</li>
+</ul>
+<p>按隔离水平高低排序</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/cce766a69dea725cd8f19b90db2d0430.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/cce766a69dea725cd8f19b90db2d0430.png, https://img-blog.csdnimg.cn/img_convert/cce766a69dea725cd8f19b90db2d0430.png 1.5x, https://img-blog.csdnimg.cn/img_convert/cce766a69dea725cd8f19b90db2d0430.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/cce766a69dea725cd8f19b90db2d0430.png"
+        title="https://img-blog.csdnimg.cn/img_convert/cce766a69dea725cd8f19b90db2d0430.png" /></div>
+<p>针对不同的隔离级别，并发事务时可能发生的现象也会不同</p>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/4e98ea2e60923b969790898565b4d643.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/4e98ea2e60923b969790898565b4d643.png, https://img-blog.csdnimg.cn/img_convert/4e98ea2e60923b969790898565b4d643.png 1.5x, https://img-blog.csdnimg.cn/img_convert/4e98ea2e60923b969790898565b4d643.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/4e98ea2e60923b969790898565b4d643.png"
+        title="https://img-blog.csdnimg.cn/img_convert/4e98ea2e60923b969790898565b4d643.png" /></div>
+<p>MySQL 虽然支持 4 种隔离级别，但是与SQL 标准中规定的各级隔离级别允许发生的现象却有些出入</p>
+<p>MySQL InnoDB 引擎的默认隔离级别虽然是「可重复读」，但是它很大程度上避免幻读现象（并不是完全解决了，详见<a href="https://xiaolincoding.com/mysql/transaction/phantom.html" target="_blank" rel="noopener noreffer ">这篇文章</a>）</p>
+<ul>
+<li>针对快照读（普通 select 语句），是通过 MVCC 方式解决了幻读，因为可重复读隔离级别下，事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的，即使中途有其他事务插入了一条数据，是查询不出来这条数据的，所以就很好了避免幻读问题。</li>
+<li>针对当前读（select &hellip; for update 等语句），是通过 next-key lock（记录锁+间隙锁）方式解决了幻读，因为当执行 select &hellip; for update 语句的时候，会加上 next-key lock，如果有其他事务在 next-key lock 锁范围内插入了一条记录，那么这个插入语句就会被阻塞，无法成功插入，所以就很好了避免幻读问题。</li>
+</ul>
+<p>四种隔离级别具体是如何实现</p>
+<ul>
+<li>对于「读未提交」隔离级别的事务来说，因为可以读到未提交事务修改的数据，所以直接读取最新的数据就好了；</li>
+<li>对于「串行化」隔离级别的事务来说，通过加读写锁的方式来避免并行访问；</li>
+<li>对于「读提交」和「可重复读」隔离级别的事务来说，它们是通过 Read View 来实现的，它们的区别在于创建 Read View 的时机不同，大家可以把 Read View 理解成一个数据快照，就像相机拍照那样，定格某一时刻的风景。「读提交」隔离级别是在「每个语句执行前」都会重新生成一个 Read View，而「可重复读」隔离级别是「启动事务时」生成一个 Read View，然后整个事务期间都在用这个 Read View。</li>
+</ul>
+<p>注意，执行「开始事务」命令，并不意味着启动了事务。在 MySQL 有两种开启事务的命令，分别是：</p>
+<ul>
+<li>begin/start transaction 命令；</li>
+<li>start transaction with consistent snapshot 命令；</li>
+</ul>
+<p>这两种开启事务的命令，事务的启动时机是不同的：</p>
+<ul>
+<li>执行了 begin/start transaction 命令后，并不代表事务启动了。只有在执行这个命令后，执行了增删查改操作的 SQL 语句，才是事务真正启动的时机；</li>
+<li>执行了 start transaction with consistent snapshot 命令，就会马上启动事务。</li>
+</ul>
+<h3 id="read-view-在-mvcc-里如何工作的">Read View 在 MVCC 里如何工作的</h3>
+<div id="id-4"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/readview%E7%BB%93%E6%9E%84.drawio.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/readview%E7%BB%93%E6%9E%84.drawio.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/readview%E7%BB%93%E6%9E%84.drawio.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/readview%E7%BB%93%E6%9E%84.drawio.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/readview%E7%BB%93%E6%9E%84.drawio.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/readview%E7%BB%93%E6%9E%84.drawio.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/f595d13450878acd04affa82731f76c5.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/f595d13450878acd04affa82731f76c5.png, https://img-blog.csdnimg.cn/img_convert/f595d13450878acd04affa82731f76c5.png 1.5x, https://img-blog.csdnimg.cn/img_convert/f595d13450878acd04affa82731f76c5.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/f595d13450878acd04affa82731f76c5.png"
+        title="https://img-blog.csdnimg.cn/img_convert/f595d13450878acd04affa82731f76c5.png" /></p>
+</div>
+<p>对于使用 InnoDB 存储引擎的数据库表，它的聚簇索引记录中都包含下面两个隐藏列：</p>
+<ul>
+<li>trx_id，当一个事务对某条聚簇索引记录进行改动时，就会把该事务的事务 id 记录在 trx_id 隐藏列里；</li>
+<li>roll_pointer，每次对某条聚簇索引记录进行改动时，都会把旧版本的记录写入到 undo 日志中，然后这个隐藏列是个指针，指向每一个旧版本记录，于是就可以通过它找到修改前的记录。</li>
+</ul>
+<p>在创建 Read View 后，我们可以将记录中的 trx_id 划分这三种情况：</p>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/ReadView.drawio.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/ReadView.drawio.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/ReadView.drawio.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/ReadView.drawio.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/ReadView.drawio.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB/ReadView.drawio.png" /></div>
+<p>一个事务去访问记录的时候，除了自己的更新记录总是可见之外，还有这几种情况：</p>
+<ul>
+<li>如果记录的 trx_id 值小于 Read View 中的 min_trx_id 值,表示这个版本的记录是在创建 Read View 前已经提交的事务生成的，所以该版本的记录对当前事务可见。</li>
+<li>如果记录的 trx_id 值大于等于 Read View 中的 max_trx_id 值，表示这个版本的记录是在创建 Read View 后才启动的事务生成的，所以该版本的记录对当前事务不可见。</li>
+<li>如果记录的 trx_id 值在 Read View 的 min_trx_id 和 max_trx_id 之间，需要判断 trx_id 是否在 m_ids 列表中：
+<ul>
+<li>如果记录的 trx_id 在 m_ids 列表中，表示生成该版本记录的活跃事务依然活跃着（还没提交事务），所以该版本的记录对当前事务不可见。</li>
+<li>如果记录的 trx_id 不在 m_ids列表中，表示生成该版本记录的活跃事务已经被提交，所以该版本的记录对当前事务可见。</li>
+</ul>
+</li>
+</ul>
+<p>这种通过「版本链」来控制并发事务访问同一个记录时的行为就叫 MVCC（多版本并发控制）</p>
+<h3 id="可重复读是如何工作的">可重复读是如何工作的</h3>
+<p>可重复读隔离级别是启动事务时生成一个 Read View，然后整个事务期间都在用这个 Read View。</p>
+<h3 id="读提交是如何工作的">读提交是如何工作的</h3>
+<p>读提交隔离级别是在每次读取数据时，都会生成一个新的 Read View。</p>
+<h2 id="mysql-可重复读隔离级别完全解决幻读了吗">MySQL 可重复读隔离级别，完全解决幻读了吗</h2>
+<h3 id="快照读是如何避免幻读的">快照读是如何避免幻读的</h3>
+<p>可重复读隔离级是由 MVCC（多版本并发控制）实现的，实现的方式是开始事务后（执行 begin 语句后），在执行第一个查询语句后，会创建一个 Read View，后续的查询语句利用这个 Read View，通过这个 Read View 就可以在 undo log 版本链找到事务开始时的数据，所以事务过程中每次查询的数据都是一样的，即使中途有其他事务插入了新纪录，是查询不出来这条数据的，所以就很好了避免幻读问题。</p>
+<h3 id="当前读是如何避免幻读的">当前读是如何避免幻读的</h3>
+<p>MySQL 里除了普通查询是快照读，其他都是当前读，比如 update、insert、delete，这些语句执行前都会查询最新版本的数据，然后再做进一步的操作。</p>
+<p>Innodb 引擎为了解决「可重复读」隔离级别使用「当前读」而造成的幻读问题，就引出了间隙锁。</p>
+<p>例子见<a href="https://xiaolincoding.com/mysql/transaction/phantom.html#%E5%BD%93%E5%89%8D%E8%AF%BB%E6%98%AF%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%B9%BB%E8%AF%BB%E7%9A%84" target="_blank" rel="noopener noreffer ">原文</a></p>
+<h3 id="幻读被完全解决了吗">幻读被完全解决了吗</h3>
+<p>可重复读隔离级别下虽然很大程度上避免了幻读，但是还是没有能完全解决幻读。</p>
+<p>场景：A进行快照读-&gt;B插入记录-&gt;A当前读插入的数据</p>
+<p>要避免这类特殊场景下发生幻读的现象的话，就是尽量在开启事务之后，马上执行 select &hellip; for update 这类当前读的语句，因为它会对记录加 next-key lock，从而避免其他事务插入一条新记录。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" data-title="数据库-mysql-小林coding-事务篇" data-hashtags="mysql,小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" data-hashtag="mysql"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" data-title="数据库-mysql-小林coding-事务篇"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" data-title="数据库-mysql-小林coding-事务篇"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" data-title="数据库-mysql-小林coding-事务篇"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/mysql/">mysql</a>,&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E7%B4%A2%E5%BC%95%E7%AF%87/" class="prev" rel="prev" title="数据库-mysql-小林coding-索引篇"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据库-mysql-小林coding-索引篇</a>
+            <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" class="next" rel="next" title="数据库-mysql-小林coding-锁篇">数据库-mysql-小林coding-锁篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/8c525f.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-07T15:02:05+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"数据库-mysql-小林coding-事务篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

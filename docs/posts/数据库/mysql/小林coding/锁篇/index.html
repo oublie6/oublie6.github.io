@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数据库-mysql-小林coding-锁篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="数据库-mysql-小林coding-锁篇" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 MySQL 有哪些锁 全局锁 开启全局锁 1 flush tables with read lock 整个数据库就处于只读状态了 释放" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-07T15:27:54+08:00" />
+<meta property="article:modified_time" content="2022-12-07T15:27:54+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="数据库-mysql-小林coding-锁篇"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 MySQL 有哪些锁 全局锁 开启全局锁 1 flush tables with read lock 整个数据库就处于只读状态了 释放"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/go%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据库-mysql-小林coding-锁篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E9%94%81%E7%AF%87\/"
+        },"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  1893 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E9%94%81%E7%AF%87\/","datePublished": "2022-12-07T15:27:54+08:00","dateModified": "2022-12-07T15:27:54+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-mysql-小林coding-锁篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-07">2022-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1893 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#mysql-有哪些锁">MySQL 有哪些锁</a>
+      <ul>
+        <li><a href="#全局锁">全局锁</a></li>
+        <li><a href="#表级锁">表级锁</a>
+          <ul>
+            <li><a href="#表锁">表锁</a></li>
+            <li><a href="#元数据锁mdl">元数据锁（MDL）</a></li>
+            <li><a href="#意向锁">意向锁</a></li>
+            <li><a href="#auto-inc-锁">AUTO-INC 锁</a></li>
+          </ul>
+        </li>
+        <li><a href="#行级锁">行级锁</a>
+          <ul>
+            <li><a href="#record-lock">Record Lock</a></li>
+            <li><a href="#gap-lock">Gap Lock</a></li>
+            <li><a href="#next-key-lock">Next-Key Lock</a></li>
+            <li><a href="#插入意向锁">插入意向锁</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/mysql/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<h2 id="mysql-有哪些锁">MySQL 有哪些锁</h2>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png"
+        data-srcset="https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png, https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png 1.5x, https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png"
+        title="https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png" /></div>
+<h3 id="全局锁">全局锁</h3>
+<p>开启全局锁</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>flush<span style="color:#bbb"> </span>tables<span style="color:#bbb"> </span><span style="color:#00a">with</span><span style="color:#bbb"> </span><span style="color:#00a">read</span><span style="color:#bbb"> </span><span style="color:#00a">lock</span><span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>整个数据库就处于只读状态了</p>
+<p>释放全局锁</p>
+<pre tabindex="0"><code>unlock tables
+</code></pre><p>当会话断开了，全局锁也会被自动释放。</p>
+<p>全局锁用于全库逻辑备份</p>
+<p>全局锁会暂停业务，可以使用可重复读的隔离级别在备份数据库之前开启事务进行备份。</p>
+<h3 id="表级锁">表级锁</h3>
+<h4 id="表锁">表锁</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>//<span style="color:#f00;background-color:#faa">表级别的共享锁，也就是读锁；</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">lock</span><span style="color:#bbb"> </span>tables<span style="color:#bbb"> </span>t_student<span style="color:#bbb"> </span><span style="color:#00a">read</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>//<span style="color:#f00;background-color:#faa">表级别的独占锁，也就是写锁；</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">lock</span><span style="color:#bbb"> </span>tables<span style="color:#bbb"> </span>t_stuent<span style="color:#bbb"> </span><span style="color:#00a">write</span>;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>要释放表锁，可以使用下面这条命令，会释放当前会话的所有表锁：</p>
+<pre tabindex="0"><code>unlock tables
+</code></pre><p>另外，当会话退出后，也会释放所有表锁。</p>
+<p>不过尽量避免在使用 InnoDB 引擎的表使用表锁，因为表锁的颗粒度太大，会影响并发性能，InnoDB 牛逼的地方在于实现了颗粒度更细的行级锁。</p>
+<h4 id="元数据锁mdl">元数据锁（MDL）</h4>
+<p>我们不需要显示的使用 MDL，因为当我们对数据库表进行操作时，会自动给这个表加上 MDL：</p>
+<ul>
+<li>对一张表进行 CRUD 操作时，加的是 MDL 读锁；</li>
+<li>对一张表做结构变更操作的时候，加的是 MDL 写锁；</li>
+</ul>
+<p>MDL 是为了保证当用户对表执行 CRUD 操作时，防止其他线程对这个表结构做了变更。</p>
+<p>MDL 是在事务提交后才会释放，这意味着事务执行期间，MDL 是一直持有的。</p>
+<p>长事务的MDL可能会对性能造成影响，还可能会导致数据库线程耗尽，例子见<a href="https://xiaolincoding.com/mysql/lock/mysql_lock.html#%E5%85%83%E6%95%B0%E6%8D%AE%E9%94%81" target="_blank" rel="noopener noreffer ">原文</a></p>
+<h4 id="意向锁">意向锁</h4>
+<ul>
+<li>在使用 InnoDB 引擎的表里对某些记录加上「共享锁」之前，需要先在表级别加上一个「意向共享锁」；</li>
+<li>在使用 InnoDB 引擎的表里对某些纪录加上「独占锁」之前，需要先在表级别加上一个「意向独占锁」；</li>
+</ul>
+<p>意向共享锁和意向独占锁是表级锁，不会和行级的共享锁和独占锁发生冲突，而且意向锁之间也不会发生冲突，只会和共享表锁（lock tables &hellip; read）和独占表锁（lock tables &hellip; write）发生冲突。</p>
+<p>表锁和行锁是满足读读共享、读写互斥、写写互斥的。</p>
+<p>意向锁的目的是为了快速判断表里是否有记录被加锁</p>
+<h4 id="auto-inc-锁">AUTO-INC 锁</h4>
+<p>AUTO-INC锁不是再一个事务提交后才释放，而是再执行完插入语句后就会立即释放。</p>
+<p>在 MySQL 5.1.22 版本开始，InnoDB 存储引擎提供了一种轻量级的锁来实现自增。在插入数据的时候，会为被 AUTO_INCREMENT 修饰的字段加上轻量级锁，然后给该字段赋值一个自增的值，就把这个轻量级锁释放了，而不需要等待整个插入语句执行完后才释放锁。</p>
+<p>InnoDB 存储引擎提供了个 innodb_autoinc_lock_mode 的系统变量，是用来控制选择用 AUTO-INC 锁，还是轻量级的锁。</p>
+<ul>
+<li>当 innodb_autoinc_lock_mode = 0，就采用 AUTO-INC 锁，语句执行结束后才释放锁；</li>
+<li>当 innodb_autoinc_lock_mode = 2，就采用轻量级锁，申请自增主键后就释放锁，并不需要等语句执行后才释放。</li>
+<li>当 innodb_autoinc_lock_mode = 1：
+<ul>
+<li>普通 insert 语句，自增锁在申请之后就马上释放；</li>
+<li>类似 insert … select 这样的批量插入数据的语句，自增锁还是要等语句结束后才被释放；</li>
+</ul>
+</li>
+</ul>
+<p>当 innodb_autoinc_lock_mode = 2 是性能最高的方式，但是当搭配 binlog 的日志格式是 statement 一起使用的时候，在「主从复制的场景」中会发生数据不一致的问题，例子见<a href="https://xiaolincoding.com/mysql/lock/mysql_lock.html#auto-inc-%E9%94%81" target="_blank" rel="noopener noreffer ">原文</a>。</p>
+<p>当 innodb_autoinc_lock_mode = 2 时，并且 binlog_format = row，既能提升并发性，又不会出现数据一致性问题。</p>
+<h3 id="行级锁">行级锁</h3>
+<p>普通的 select 语句是不会对记录加锁的，因为它属于快照读。如果要在查询时对记录加行锁，可以使用下面这两个方式，这种查询会加锁的语句称为锁定读。</p>
+<pre tabindex="0"><code>//对读取的记录加共享锁
+select ... lock in share mode;
+
+//对读取的记录加独占锁
+select ... for update;
+</code></pre><p>这两条语句必须在一个事务中，因为当事务提交了，锁就会被释放</p>
+<p>行级锁的类型主要有三类：</p>
+<ul>
+<li>Record Lock，记录锁，也就是仅仅把一条记录锁上；</li>
+<li>Gap Lock，间隙锁，锁定一个范围，但是不包含记录本身；</li>
+<li>Next-Key Lock：Record Lock + Gap Lock 的组合，锁定一个范围，并且锁定记录本身。</li>
+</ul>
+<h4 id="record-lock">Record Lock</h4>
+<p>Record Lock 称为记录锁，锁住的是一条记录。而且记录锁是有 S 锁和 X 锁之分的</p>
+<h4 id="gap-lock">Gap Lock</h4>
+<p>Gap Lock 称为间隙锁，只存在于可重复读隔离级别，目的是为了解决可重复读隔离级别下幻读的现象。</p>
+<p>间隙锁虽然存在 X 型间隙锁和 S 型间隙锁，但是并没有什么区别，间隙锁之间是兼容的，即两个事务可以同时持有包含共同间隙范围的间隙锁，并不存在互斥关系，因为间隙锁的目的是防止插入幻影记录而提出的。</p>
+<h4 id="next-key-lock">Next-Key Lock</h4>
+<p>Next-Key Lock 称为临键锁，是 Record Lock + Gap Lock 的组合，锁定一个范围，并且锁定记录本身。</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/%E9%94%81/%E4%B8%B4%E9%94%AE%E9%94%81.drawio.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/%E9%94%81/%E4%B8%B4%E9%94%AE%E9%94%81.drawio.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/%E9%94%81/%E4%B8%B4%E9%94%AE%E9%94%81.drawio.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/%E9%94%81/%E4%B8%B4%E9%94%AE%E9%94%81.drawio.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/%E9%94%81/%E4%B8%B4%E9%94%AE%E9%94%81.drawio.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/%E9%94%81/%E4%B8%B4%E9%94%AE%E9%94%81.drawio.png" /></div>
+<p>next-key lock 是包含间隙锁+记录锁的，如果一个事务获取了 X 型的 next-key lock，那么另外一个事务在获取相同范围的 X 型的 next-key lock 时，是会被阻塞的。</p>
+<h4 id="插入意向锁">插入意向锁</h4>
+<p>一个事务在插入一条记录的时候，需要判断插入位置是否已被其他事务加了间隙锁（next-key lock 也包含间隙锁）。</p>
+<p>如果有的话，插入操作就会发生阻塞，直到拥有间隙锁的那个事务提交为止（释放间隙锁的时刻），在此期间会生成一个插入意向锁，表明有事务想在某个区间插入新记录，但是现在处于等待状态。例子见<a href="https://xiaolincoding.com/mysql/lock/mysql_lock.html#%E6%8F%92%E5%85%A5%E6%84%8F%E5%90%91%E9%94%81" target="_blank" rel="noopener noreffer ">原文</a></p>
+<p>插入意向锁名字虽然有意向锁，但是它并不是意向锁，它是一种特殊的间隙锁，属于行级别锁。如果说间隙锁锁住的是一个区间，那么「插入意向锁」锁住的就是一个点。因而从这个角度来说，插入意向锁确实是一种特殊的间隙锁。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" data-title="数据库-mysql-小林coding-锁篇" data-hashtags="mysql,小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" data-hashtag="mysql"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" data-title="数据库-mysql-小林coding-锁篇"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" data-title="数据库-mysql-小林coding-锁篇"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E9%94%81%E7%AF%87/" data-title="数据库-mysql-小林coding-锁篇"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/mysql/">mysql</a>,&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E4%BA%8B%E5%8A%A1%E7%AF%87/" class="prev" rel="prev" title="数据库-mysql-小林coding-事务篇"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据库-mysql-小林coding-事务篇</a>
+            <a href="/posts/golang/%E6%9D%82%E8%AE%B0/go%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89/" class="next" rel="next" title="golang-杂记-Go类型别名和类型定义">golang-杂记-Go类型别名和类型定义<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/86ccfb.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-07T15:27:54+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"数据库-mysql-小林coding-锁篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

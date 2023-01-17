@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-学习笔记-结构（struct）与方法（method） - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-学习笔记-结构（struct）与方法（method）" />
+<meta property="og:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-11T16:29:04+08:00" />
+<meta property="article:modified_time" content="2022-12-11T16:29:04+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-学习笔记-结构（struct）与方法（method）"/>
+<meta name="twitter:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%8E%A5%E5%8F%A3interfaces%E4%B8%8E%E5%8F%8D%E5%B0%84reflection/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-学习笔记-结构（struct）与方法（method）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method\/"
+        },"genre": "posts","keywords": "go学习笔记","wordcount":  2140 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method\/","datePublished": "2022-12-11T16:29:04+08:00","dateModified": "2022-12-11T16:29:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-结构（struct）与方法（method）</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2140 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#结构体定义">结构体定义</a></li>
+    <li><a href="#使用自定义包中的结构体">使用自定义包中的结构体</a></li>
+    <li><a href="#带标签的结构体">带标签的结构体</a></li>
+    <li><a href="#匿名字段和内嵌结构体">匿名字段和内嵌结构体</a></li>
+    <li><a href="#方法">方法</a>
+      <ul>
+        <li><a href="#方法是什么">方法是什么</a></li>
+        <li><a href="#函数和方法的区别">函数和方法的区别</a></li>
+        <li><a href="#指针或值作为接收者">指针或值作为接收者</a></li>
+        <li><a href="#方法和未导出字段">方法和未导出字段</a></li>
+        <li><a href="#内嵌类型的方法和继承">内嵌类型的方法和继承</a></li>
+        <li><a href="#如何在类型中嵌入功能">如何在类型中嵌入功能</a></li>
+        <li><a href="#多重继承">多重继承</a></li>
+        <li><a href="#通用方法和方法命名">通用方法和方法命名</a></li>
+        <li><a href="#和其他面向对象语言比较-go-的类型和方法">和其他面向对象语言比较 Go 的类型和方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#类型的-string-方法和格式化描述符">类型的 String() 方法和格式化描述符</a></li>
+    <li><a href="#垃圾回收和-setfinalizer">垃圾回收和 SetFinalizer</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
+<p>可以通过 new 函数来创建</p>
+<p>组成结构体类型的那些数据称为 字段（fields）</p>
+<h2 id="结构体定义">结构体定义</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> identifier <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    field1 type1
+</span></span><span style="display:flex;"><span>    field2 type2
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> T <span style="color:#00a">struct</span> {a, b <span style="color:#0aa">int</span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结构体里的字段都有 名字，如果字段在代码中从来也不会被用到，那么可以命名它为 _。</p>
+<p>结构体的字段可以是任何类型</p>
+<p>使用 new 函数给一个新的结构体变量分配内存，它返回指向已分配内存的指针：var t *T = new(T)</p>
+<p>使用 fmt.Println 打印一个结构体的默认输出可以很好的显示它的内容，类似使用 %v 选项。</p>
+<p>使用点号符给字段赋值：<code>structname.fieldname = value</code>.Go 语言中这叫 选择器（selector）<code>.</code>为选择器符（selector-notation）.指针使用<code>.</code>操作会自动解引用</p>
+<p>初始化一个结构体实例：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>ms := &amp;struct1{<span style="color:#099">10</span>, <span style="color:#099">15.5</span>, <span style="color:#a50">&#34;Chris&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> ms struct1
+</span></span><span style="display:flex;"><span>ms = struct1{<span style="color:#099">10</span>, <span style="color:#099">15.5</span>, <span style="color:#a50">&#34;Chris&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>intr := Interval{end:<span style="color:#099">5</span>, start:<span style="color:#099">1</span>} 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>混合字面量语法（composite literal syntax）&amp;struct1{a, b, c} 是一种简写，底层仍然会调用 new ()，这里值的顺序必须按照字段顺序来写。</p>
+<p>结构体类型和字段的命名遵循可见性规则</p>
+<p>结构体的内存布局：结构体和它所包含的数据在内存中是以连续块的形式存在的，即使结构体中嵌套有其他的结构体</p>
+<p>递归结构体：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Node <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    data    <span style="color:#0aa">float64</span>
+</span></span><span style="display:flex;"><span>    su      *Node
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结构体转换:当为结构体定义了一个 alias 类型时，此结构体类型和它的 alias 类型都有相同的底层类型，它们可以互相转换，使用强制类型转换typeA（b）</p>
+<h2 id="使用自定义包中的结构体">使用自定义包中的结构体</h2>
+<p>大写字母开头可见</p>
+<h2 id="带标签的结构体">带标签的结构体</h2>
+<p>标签的内容不可以在一般的编程中使用，只有包 reflect 能获取它。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> TagType <span style="color:#00a">struct</span> { <span style="color:#aaa;font-style:italic">// tags
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    field1 <span style="color:#0aa">bool</span>   <span style="color:#a50">&#34;An important answer&#34;</span>
+</span></span><span style="display:flex;"><span>    field2 <span style="color:#0aa">string</span> <span style="color:#a50">&#34;The name of the thing&#34;</span>
+</span></span><span style="display:flex;"><span>    field3 <span style="color:#0aa">int</span>    <span style="color:#a50">&#34;How much there are&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tt := TagType{<span style="color:#00a">true</span>, <span style="color:#a50">&#34;Barak Obama&#34;</span>, <span style="color:#099">1</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ttType := reflect.<span style="color:#0a0">TypeOf</span>(tt)
+</span></span><span style="display:flex;"><span>ixField := ttType.<span style="color:#0a0">Field</span>(ix)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;%v\n&#34;</span>, ixField.Tag)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="匿名字段和内嵌结构体">匿名字段和内嵌结构体</h2>
+<p>结构体可以包含一个或多个 匿名（或内嵌）字段，即这些字段没有显式的名字，只有字段的类型是必须的，此时类型就是字段的名字。</p>
+<p>匿名字段本身可以是一个结构体类型，即 结构体可以包含内嵌结构体。go的继承行为</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> innerS <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    in1 <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>    in2 <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> outerS <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    b    <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>    c    <span style="color:#0aa">float32</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">int</span>  <span style="color:#aaa;font-style:italic">// anonymous field
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    innerS <span style="color:#aaa;font-style:italic">//anonymous field
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>outer := <span style="color:#0aa">new</span>(outerS)
+</span></span><span style="display:flex;"><span>outer.<span style="color:#0aa">int</span> = <span style="color:#099">60</span>
+</span></span><span style="display:flex;"><span>outer.in1 = <span style="color:#099">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 使用结构体字面量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>outer2 := outerS{<span style="color:#099">6</span>, <span style="color:#099">7.5</span>, <span style="color:#099">60</span>, innerS{<span style="color:#099">5</span>, <span style="color:#099">10</span>}}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在一个结构体中对于每一种数据类型只能有一个匿名字段</p>
+<p>命名冲突</p>
+<p>当两个字段拥有相同的名字（可能是继承来的名字）:</p>
+<ol>
+<li>外层名字会覆盖内层名字（但是两者的内存空间都保留），这提供了一种重载字段或方法的方式；</li>
+<li>如果相同的名字在同一级别出现了两次，如果这个名字被程序使用了，将会引发一个错误（不使用没关系）。没有办法来解决这种问题引起的二义性，必须由程序员自己修正。</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> A <span style="color:#00a">struct</span> {a <span style="color:#0aa">int</span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> B <span style="color:#00a">struct</span> {a, b <span style="color:#0aa">int</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> C <span style="color:#00a">struct</span> {A; B}
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> c C;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 c.a 是错误的，到底是 c.A.a 还是 c.B.a 呢？会导致编译器错误</p>
+<h2 id="方法">方法</h2>
+<h3 id="方法是什么">方法是什么</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (recv receiver_type) <span style="color:#0a0">methodName</span>(parameter_list) (return_value_list) { ... }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>recv.<span style="color:#0a0">Method1</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果方法不需要使用 recv 的值，可以用 _ 替换它，比如：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (_ receiver_type) <span style="color:#0a0">methodName</span>(parameter_list) (return_value_list) { ... }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>recv 就像是面向对象语言中的 this 或 self，仍然是值拷贝</p>
+<p>类型和作用在它上面定义的方法必须在同一个包里定义，这就是为什么不能在 int、float 或类似这些的类型上定义方法。</p>
+<p>有一个间接的方式：可以先定义该类型（比如：int 或 float）的别名类型（这里指的是不使用&quot;=&ldquo;的类型定义），然后再为别名类型定义方法。</p>
+<h3 id="函数和方法的区别">函数和方法的区别</h3>
+<p>方法没有和数据定义（结构体）混在一起：它们是正交的类型；表示（数据）和行为（方法）是独立的。</p>
+<p>没啥区别，多了个默认参数recv，另外recv可以自动进行取地址，即使用引用可以接收示例</p>
+<h3 id="指针或值作为接收者">指针或值作为接收者</h3>
+<p>鉴于性能的原因，recv 最常见的是一个指向 receiver_type 的指针（因为我们不想要一个实例的拷贝，如果按值调用的话就会是这样），特别是在 receiver 类型是结构体时，就更是如此了。</p>
+<p>如果想要方法改变接收者的数据，就在接收者的指针类型上定义该方法。否则，就在普通的值类型上定义方法。</p>
+<p>指针方法和值方法都可以在指针或非指针上被调用</p>
+<h3 id="方法和未导出字段">方法和未导出字段</h3>
+<p>可以给未导出字段添加Getter或Setter方法</p>
+<p>并发访问对象：使用sync包进行并发安全控制</p>
+<h3 id="内嵌类型的方法和继承">内嵌类型的方法和继承</h3>
+<p>当一个匿名类型被内嵌在结构体中时，匿名类型的可见方法也同样被内嵌，这在效果上等同于外层类型 继承 了这些方法：将父类型放在子类型中来实现亚型。</p>
+<h3 id="如何在类型中嵌入功能">如何在类型中嵌入功能</h3>
+<p>主要有两种方法来实现在类型中嵌入功能：</p>
+<p>A：聚合（或组合）：包含一个所需功能类型的具名字段。</p>
+<p>B：内嵌：内嵌（匿名地）所需功能类型</p>
+<h3 id="多重继承">多重继承</h3>
+<p>但是在 Go 语言中，通过在类型中嵌入所有必要的父类型，可以很简单的实现多重继承</p>
+<h3 id="通用方法和方法命名">通用方法和方法命名</h3>
+<p>约定，鸭形语言</p>
+<h3 id="和其他面向对象语言比较-go-的类型和方法">和其他面向对象语言比较 Go 的类型和方法</h3>
+<p>总结</p>
+<p>类型就是类（数据和关联的方法）</p>
+<p>代码复用通过组合和委托实现，多态通过接口的使用来实现：有时这也叫 组件编程（Component Programming）</p>
+<h2 id="类型的-string-方法和格式化描述符">类型的 String() 方法和格式化描述符</h2>
+<p>String() 方法： fmt.Printf() 中生成默认的输出：等同于使用格式化描述符 %v 产生的输出。 fmt.Print() 和 fmt.Println() 也会自动使用 String() 方法。</p>
+<p>不要在 String() 方法里面调用涉及 String() 方法的方法，会陷入无限递归。</p>
+<h2 id="垃圾回收和-setfinalizer">垃圾回收和 SetFinalizer</h2>
+<p>Go 运行时中有一个独立的进程，即垃圾收集器（GC），可以通过 runtime 包访问 GC 进程</p>
+<p>runtime.GC() 函数显式的触发 GC，</p>
+<p>给出已分配内存的总量，单位是 Kb</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> m runtime.MemStats
+</span></span><span style="display:flex;"><span>runtime.<span style="color:#0a0">ReadMemStats</span>(&amp;m)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;%d Kb\n&#34;</span>, m.Alloc / <span style="color:#099">1024</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置一个对象 obj 被从内存移除前执行一些特殊操作：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>runtime.<span style="color:#0a0">SetFinalizer</span>(obj, <span style="color:#00a">func</span>(obj *typeObj))
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" data-title="golang-学习笔记-结构（struct）与方法（method）" data-hashtags="go学习笔记"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" data-hashtag="go学习笔记"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" data-title="golang-学习笔记-结构（struct）与方法（method）"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" data-title="golang-学习笔记-结构（struct）与方法（method）"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" data-title="golang-学习笔记-结构（struct）与方法（method）"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">go学习笔记</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" class="prev" rel="prev" title="golang-学习笔记-包"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-学习笔记-包</a>
+            <a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%8E%A5%E5%8F%A3interfaces%E4%B8%8E%E5%8F%8D%E5%B0%84reflection/" class="next" rel="next" title="golang-学习笔记-接口（Interfaces）与反射（reflection）">golang-学习笔记-接口（Interfaces）与反射（reflection）<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-11T16:29:04+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"golang-学习笔记-结构（struct）与方法（method）"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

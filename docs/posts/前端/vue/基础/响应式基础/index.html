@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vue-基础-响应式基础 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Vue-基础-响应式基础" />
+<meta property="og:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 声明响应式状态 选项式 API 用 data 选项来声明组件的响应式状态" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-15T16:32:09+08:00" />
+<meta property="article:modified_time" content="2022-10-15T16:32:09+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vue-基础-响应式基础"/>
+<meta name="twitter:description" content="本系列是作者在跟着Vue官网学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。 声明响应式状态 选项式 API 用 data 选项来声明组件的响应式状态"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vue-基础-响应式基础",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E5%9F%BA%E7%A1%80\/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80\/"
+        },"genre": "posts","keywords": "Vue教程","wordcount":  1259 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/vue\/%E5%9F%BA%E7%A1%80\/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80\/","datePublished": "2022-10-15T16:32:09+08:00","dateModified": "2022-10-15T16:32:09+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vue-基础-响应式基础</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-15">2022-10-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1259 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#声明响应式状态">声明响应式状态</a>
+      <ul>
+        <li><a href="#响应式代理-vs-原始值">响应式代理 vs. 原始值</a></li>
+      </ul>
+    </li>
+    <li><a href="#声明方法">声明方法</a>
+      <ul>
+        <li><a href="#dom-更新时机">DOM 更新时机</a></li>
+        <li><a href="#深层响应性">深层响应性</a></li>
+        <li><a href="#有状态方法">有状态方法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" rel="noopener noreffer ">Vue官网</a>学习时做的笔记，可能并不详尽，读者可以到官网中查看完整内容。</p>
+<h2 id="声明响应式状态">声明响应式状态</h2>
+<p>选项式 API 用 data 选项来声明组件的响应式状态。此选项的值为返回一个对象的函数。在创建新组件实例的时候调用此函数，并将函数返回的对象用响应式系统进行包装。此对象的所有顶层属性都会被代理到组件实例 (即方法和生命周期钩子中的 this) 上。</p>
+<p>这些实例上的属性仅在实例首次创建时被添加，需要确保它们都出现在 data 函数返回的对象上。若所需的值还未准备好，在必要时也可以使用 null、undefined 或者其他一些值占位。</p>
+<p>不在 data 上定义，直接向组件实例添加新属性无法触发响应式更新。</p>
+<p>Vue 组件实例上暴露的内置 API 使用 $ 作为前缀。它同时也为内部属性保留 _ 前缀。避免在顶层 data 上使用任何以这些字符作前缀的属性。</p>
+<h3 id="响应式代理-vs-原始值">响应式代理 vs. 原始值</h3>
+<p>在 Vue 3 中，数据是基于 JavaScript Proxy（代理） 实现响应式的。使用过 Vue 2 的用户可能需要注意下面这样的边界情况：</p>
+<pre tabindex="0"><code>export default {
+  data() {
+    return {
+      someObject: {}
+    }
+  },
+  mounted() {
+    const newObject = {}
+    this.someObject = newObject
+
+    console.log(newObject === this.someObject) // false
+  }
+}
+</code></pre><p>当你在赋值后再访问 this.someObject，此值已经是原来的 newObject 的一个响应式代理。与 Vue 2 不同的是，这里原始的 newObject 不会变为响应式：请确保始终通过 this 来访问响应式状态。</p>
+<h2 id="声明方法">声明方法</h2>
+<p>要为组件添加方法，我们需要用到 methods 选项。它是一个包含所有方法的对象：</p>
+<p>Vue 自动为 methods 中的方法绑定了永远指向组件实例的 this。这确保了方法在作为事件监听器或回调函数时始终保持正确的 this。</p>
+<p>不应该在定义 methods 时使用箭头函数，因为箭头函数没有自己的 this 上下文。</p>
+<pre tabindex="0"><code>export default {
+  methods: {
+    increment: () =&gt; {
+      // 反例：无法访问此处的 `this`!
+    }
+  }
+}
+</code></pre><p>和组件实例上的其他属性一样，方法也可以在模板上被访问。在模板中它们常常被用作事件监听器：</p>
+<pre tabindex="0"><code>&lt;button @click=&#34;increment&#34;&gt;{{ count }}&lt;/button&gt;
+</code></pre><p>在上面的例子中，increment 方法会在 <code>&lt;button&gt; </code>被点击时调用。</p>
+<h3 id="dom-更新时机">DOM 更新时机</h3>
+<p>更改响应式状态后，DOM 会自动更新。DOM 的更新并不是同步的。Vue 将缓冲它们直到更新周期的 “下个时机” 以确保无论你进行了多少次状态更改，每个组件都只需要更新一次。</p>
+<p>若要等待一个状态改变后的 DOM 更新完成，可以使用 nextTick() 这个全局 API：</p>
+<pre tabindex="0"><code>import { nextTick } from &#39;vue&#39;
+
+export default {
+  methods: {
+    increment() {
+      this.count++
+      nextTick(() =&gt; {
+        // 访问更新后的 DOM
+      })
+    }
+  }
+}
+</code></pre><h3 id="深层响应性">深层响应性</h3>
+<p>在 Vue 中，状态都是默认深层响应式的。这意味着即使在更改深层次的对象或数组，你的改动也能被检测到。</p>
+<p>你也可以直接创建一个浅层响应式对象。它们仅在顶层具有响应性，一般仅在某些特殊场景中需要。</p>
+<h3 id="有状态方法">有状态方法</h3>
+<p>在某些情况下，我们可能需要动态地创建一个方法函数，比如创建一个预置防抖的事件处理器：</p>
+<pre tabindex="0"><code>import { debounce } from &#39;lodash-es&#39;
+
+export default {
+  methods: {
+    // 使用 Lodash 的防抖函数
+    click: debounce(function () {
+      // ... 对点击的响应 ...
+    }, 500)
+  }
+}
+</code></pre><p>这种方法对于被重用的组件来说是有问题的，因为这个预置防抖的函数是 有状态的：它在运行时维护着一个内部状态。如果多个组件实例都共享这同一个预置防抖的函数，那么它们之间将会互相影响。</p>
+<p>要保持每个组件实例的防抖函数都彼此独立，我们可以改为在 created 生命周期钩子中创建这个预置防抖的函数：</p>
+<pre tabindex="0"><code>export default {
+  created() {
+    // 每个实例都有了自己的预置防抖的处理函数
+    this.debouncedClick = _.debounce(this.click, 500)
+  },
+  unmounted() {
+    // 最好是在组件卸载时
+    // 清除掉防抖计时器
+    this.debouncedClick.cancel()
+  },
+  methods: {
+    click() {
+      // ... 对点击的响应 ...
+    }
+  }
+}
+</code></pre></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" data-title="Vue-基础-响应式基础" data-hashtags="Vue教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" data-hashtag="Vue教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" data-title="Vue-基础-响应式基础"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" data-title="Vue-基础-响应式基础"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9F%BA%E7%A1%80/" data-title="Vue-基础-响应式基础"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/vue%E6%95%99%E7%A8%8B/">Vue教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95/" class="prev" rel="prev" title="Vue-基础-模板语法"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-基础-模板语法</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7/" class="next" rel="next" title="Vue-基础-计算属性">Vue-基础-计算属性<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

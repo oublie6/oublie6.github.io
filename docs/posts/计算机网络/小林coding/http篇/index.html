@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>计算机网络-小林coding-HTTP篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="计算机网络-小林coding-HTTP篇" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 HTTP 常见面试题 HTTP 基本概念 HTTP ：超文本传输协议HyperText Transfer Prot" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-13T21:36:13+08:00" />
+<meta property="article:modified_time" content="2022-12-13T21:36:13+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="计算机网络-小林coding-HTTP篇"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 HTTP 常见面试题 HTTP 基本概念 HTTP ：超文本传输协议HyperText Transfer Prot"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/http/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "计算机网络-小林coding-HTTP篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/%E5%B0%8F%E6%9E%97coding\/http%E7%AF%87\/"
+        },"genre": "posts","keywords": "小林coding系列","wordcount":  2795 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/%E5%B0%8F%E6%9E%97coding\/http%E7%AF%87\/","datePublished": "2022-12-13T21:36:13+08:00","dateModified": "2022-12-13T21:36:13+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">计算机网络-小林coding-HTTP篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机网络</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-13">2022-12-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2795 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#http-常见面试题">HTTP 常见面试题</a>
+      <ul>
+        <li><a href="#http-基本概念">HTTP 基本概念</a></li>
+        <li><a href="#get-与-post">GET 与 POST</a></li>
+        <li><a href="#http-缓存技术">HTTP 缓存技术</a></li>
+        <li><a href="#http-特性">HTTP 特性</a>
+          <ul>
+            <li><a href="#http11">HTTP/1.1</a></li>
+            <li><a href="#http11-的性能">HTTP/1.1 的性能</a></li>
+          </ul>
+        </li>
+        <li><a href="#http-与-https">HTTP 与 HTTPS</a>
+          <ul>
+            <li><a href="#区别">区别</a></li>
+            <li><a href="#https-解决了-http-哪些问题">HTTPS 解决了 HTTP 哪些问题</a></li>
+            <li><a href="#tls流程">TLS流程</a></li>
+            <li><a href="#https-的应用数据是如何保证完整性的">HTTPS 的应用数据是如何保证完整性的</a></li>
+            <li><a href="#https-一定安全可靠吗">HTTPS 一定安全可靠吗</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#http11http2http3-演变">HTTP/1.1、HTTP/2、HTTP/3 演变</a>
+      <ul>
+        <li><a href="#http11-相比-http10">HTTP/1.1 相比 HTTP/1.0</a></li>
+        <li><a href="#http2-优化">HTTP/2 优化</a></li>
+        <li><a href="#http3-优化">HTTP/3 优化</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/network/#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E7%BE%A4%E4%BD%93" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<h2 id="http-常见面试题">HTTP 常见面试题</h2>
+<h3 id="http-基本概念">HTTP 基本概念</h3>
+<p>HTTP ：超文本传输协议HyperText Transfer Protocol。专门在「两点」之间「传输」文字、图片、音频、视频等「超文本」数据的「约定和规范」。</p>
+<p>HTTP 常见的状态码有哪些</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/6-%E4%BA%94%E5%A4%A7%E7%B1%BBHTTP%E7%8A%B6%E6%80%81%E7%A0%81.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/6-%E4%BA%94%E5%A4%A7%E7%B1%BBHTTP%E7%8A%B6%E6%80%81%E7%A0%81.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/6-%E4%BA%94%E5%A4%A7%E7%B1%BBHTTP%E7%8A%B6%E6%80%81%E7%A0%81.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/6-%E4%BA%94%E5%A4%A7%E7%B1%BBHTTP%E7%8A%B6%E6%80%81%E7%A0%81.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/6-%E4%BA%94%E5%A4%A7%E7%B1%BBHTTP%E7%8A%B6%E6%80%81%E7%A0%81.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/6-%E4%BA%94%E5%A4%A7%E7%B1%BBHTTP%E7%8A%B6%E6%80%81%E7%A0%81.png" /></div>
+<ul>
+<li>「204 No Content」响应头没有 body 数据</li>
+<li>「206 Partial Content」HTTP 分块下载或断点续传，表示响应返回的 body 数据并不是资源的全部，而是其中的一部分</li>
+<li>「301 Moved Permanently」表示永久重定向，说明请求的资源已经不存在了，需改用新的 URL 再次访问</li>
+<li>「302 Found」表示临时重定向，说明请求的资源还在，但暂时需要用另一个 URL 来访问</li>
+</ul>
+<p>301 和 302 都会在响应头里使用字段 Location，指明后续要跳转的 URL，浏览器会自动重定向新的 URL</p>
+<ul>
+<li>「304 Not Modified」不具有跳转的含义，表示资源未修改，重定向已存在的缓冲文件，也称缓存重定向，也就是告诉客户端可以继续使用缓存资源，用于缓存控制</li>
+<li>「403 Forbidden」表示服务器禁止访问资源，并不是客户端的请求出错</li>
+<li>「404 Not Found」表示请求的资源在服务器上不存在或未找到，所以无法提供给客户端</li>
+<li>「501 Not Implemented」表示客户端请求的功能还不支持，类似“即将开业，敬请期待”的意思</li>
+<li>「502 Bad Gateway」通常是服务器作为网关或代理时返回的错误码，表示服务器自身工作正常，访问后端服务器发生了错误</li>
+<li>「503 Service Unavailable」表示服务器当前很忙，暂时无法响应客户端，类似“网络服务正忙，请稍后重试”的意思</li>
+</ul>
+<p>HTTP 常见字段有哪些</p>
+<ul>
+<li>Host 字段：客户端请求，指定服务器的域名。</li>
+<li>Content-Length 字段：服务器回应，表明本次回应的数据长度（单位字节）</li>
+</ul>
+<p>HTTP 协议通过设置回车符、换行符作为 HTTP header 的边界，通过 Content-Length 字段作为 HTTP body 的边界，这两个方式都是为了解决“粘包”的问题（HTTP报文可能会被拆分成多个TCP报文，不知道一个HTTP报文的边界在哪）</p>
+<ul>
+<li>Connection 字段：客户端请求，使用「 HTTP 长连接」机制</li>
+</ul>
+<p>HTTP长连接即复用TCP连接，只要任意一端没有明确提出断开连接，则保持 TCP 连接状态。</p>
+<p>HTTP/1.1 版本的默认连接都是长连接，老版本需要设置该字段为Keep-Alive</p>
+<p>TCP的Keepalive是它的保活机制，即客户端每隔一段时间（小于服务器的长连接超时时间keepalive_timeout）发送一个保活报文来重置服务端的长连接超时计时器。</p>
+<ul>
+<li>Content-Type 字段：服务器回应，本次数据是什么格式，如：<code>Content-Type: text/html; charset=utf-8</code></li>
+</ul>
+<p>客户端请求的时候，可以使用 Accept 字段声明自己可以接受哪些数据格式:<code>Accept: */*</code></p>
+<ul>
+<li>Content-Encoding 字段：服务器回应，数据使用了什么压缩格式，如：<code>Content-Encoding: gzip</code></li>
+</ul>
+<p>客户端在请求时，用 Accept-Encoding 字段说明自己可以接受哪些压缩方法</p>
+<h3 id="get-与-post">GET 与 POST</h3>
+<p>GET 的语义是从服务器获取指定的资源。GET 请求的参数位置一般是写在 URL 中，URL 规定只能支持 ASCII， ，浏览器会对 URL 的长度有限制</p>
+<p>POST 的语义是根据请求载荷（报文body）对指定的资源做出处理。携带数据的位置一般是写在报文 body 中， body 中的数据可以是任意格式的数据，浏览器不会对 body 大小做限制。</p>
+<p>安全和幂等的概念</p>
+<ul>
+<li>在 HTTP 协议里，所谓的「安全」是指请求方法不会「破坏」服务器上的资源</li>
+<li>所谓的「幂等」，意思是多次执行相同的操作，结果都是「相同」的</li>
+</ul>
+<p>根据RFC规范，GET 方法一般不涉及修改数据是安全且幂等的，POST 涉及修改数据是不安全也不幂等的。可以对 GET 请求的数据做缓存，一般不会缓存 POST 请求</p>
+<p>GET 请求可以带 body 吗？</p>
+<p>RFC 规范并没有规定 GET 请求不能带 body 的。理论上，任何请求都可以带 body ，URL参数。</p>
+<h3 id="http-缓存技术">HTTP 缓存技术</h3>
+<p>两种实现：强制缓存和协商缓存</p>
+<p>强制缓存：决定是否使用缓存的主动性在于浏览器这边。两个 HTTP 响应头部（Response Header）字段实现</p>
+<ul>
+<li>Cache-Control， 是一个相对时间；</li>
+<li>Expires，是一个绝对时间；</li>
+</ul>
+<p>Cache-Control的优先级高于 Expires</p>
+<p>Cache-Control 来实现强缓存。具体的实现流程如下：</p>
+<ol>
+<li>客户端第一次请求访问服务器资源时，服务器在 Response 头部加上 Cache-Control设置过期时间大小；</li>
+<li>客户端再次请求访问服务器中的该资源时，先比较时间与 Cache-Control 中设置的过期时间，计算该资源是否过期。没有过期使用缓存，否则重新请求服务器；</li>
+<li>服务器再次收到请求后，会再次更新 Response 头部的 Cache-Control</li>
+</ol>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/1cb6bc37597e4af8adfef412bfc57a42.png"
+        data-srcset="https://img-blog.csdnimg.cn/1cb6bc37597e4af8adfef412bfc57a42.png, https://img-blog.csdnimg.cn/1cb6bc37597e4af8adfef412bfc57a42.png 1.5x, https://img-blog.csdnimg.cn/1cb6bc37597e4af8adfef412bfc57a42.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/1cb6bc37597e4af8adfef412bfc57a42.png"
+        title="https://img-blog.csdnimg.cn/1cb6bc37597e4af8adfef412bfc57a42.png" /></div>
+<p>协商缓存：与服务端协商之后，通过协商结果（304）来判断是否使用本地缓存，两种头部实现</p>
+<ul>
+<li>请求头添加If-Modified-Since字段（值为服务器返回的Last-Modified）给服务器。如果在该值之后修改了就返回新数据并将最后修改时间Last-Modified添加到响应头返回200，否则直接返回304。基于时间</li>
+<li>请求头添加If-None-Match字段（值为服务器返回的Etag）给服务器。如果在该资源变化了就返回新数据并将Etag添加到响应头返回200，否则直接返回304。基于唯一标志</li>
+</ul>
+<p>Etag 的优先级更高</p>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/http1.1%E4%BC%98%E5%8C%96/%E7%BC%93%E5%AD%98etag.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/http1.1%E4%BC%98%E5%8C%96/%E7%BC%93%E5%AD%98etag.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/http1.1%E4%BC%98%E5%8C%96/%E7%BC%93%E5%AD%98etag.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/http1.1%E4%BC%98%E5%8C%96/%E7%BC%93%E5%AD%98etag.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/http1.1%E4%BC%98%E5%8C%96/%E7%BC%93%E5%AD%98etag.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/http1.1%E4%BC%98%E5%8C%96/%E7%BC%93%E5%AD%98etag.png" /></div>
+<div id="id-4"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/http%E7%BC%93%E5%AD%98.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/http%E7%BC%93%E5%AD%98.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/http%E7%BC%93%E5%AD%98.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/http%E7%BC%93%E5%AD%98.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/http%E7%BC%93%E5%AD%98.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/http%E7%BC%93%E5%AD%98.png" /></div>
+<h3 id="http-特性">HTTP 特性</h3>
+<h4 id="http11">HTTP/1.1</h4>
+<p>优点</p>
+<ol>
+<li>简单：基本的报文格式 header + body，头部信息 key-value</li>
+<li>灵活和易于扩展：请求方法、URI/URL、状态码、头字段组成可以自定义和扩充；下层可以随意变化</li>
+<li>应用广泛和跨平台</li>
+</ol>
+<p>缺点</p>
+<ol>
+<li>无状态：解决方法Cookie，jwt</li>
+<li>明文传输：解决方法https</li>
+<li>不安全：不验证通信方的身份，无法证明报文的完整性，解决方法https</li>
+</ol>
+<h4 id="http11-的性能">HTTP/1.1 的性能</h4>
+<ol>
+<li>长连接：复用TCP</li>
+<li>管道网络传输：等待响应不阻塞发送请求（响应会按顺序发回来，先收到的请求响应会阻塞后收到的请求响应）</li>
+<li>队头阻塞：先进入发送队列的统一TCP请求被阻塞时会阻塞后进的</li>
+</ol>
+<h3 id="http-与-https">HTTP 与 HTTPS</h3>
+<h4 id="区别">区别</h4>
+<ol>
+<li>HTTP 明文传输，HTTPS 在 TCP 和 HTTP 之间加入了 SSL/TLS 安全协议加密传输</li>
+<li>HTTPS 连接建立更复杂（SSL/TLS握手）</li>
+<li>HTTP 默认80端口，HTTPS 默认443端口</li>
+<li>HTTPS的服务器需要向CA申请证书</li>
+</ol>
+<h4 id="https-解决了-http-哪些问题">HTTPS 解决了 HTTP 哪些问题</h4>
+<ul>
+<li>窃听（机密性）：信息加密（混合加密）</li>
+</ul>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/20-%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/20-%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/20-%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/20-%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/20-%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/20-%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86.png" /></div>
+<ul>
+<li>篡改（完整性）：校验机制（摘要算法+数字签名）</li>
+</ul>
+<div id="id-6"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D.png" /></p>
+</div>
+<ul>
+<li>冒充：身份证书（数字证书）</li>
+</ul>
+<div id="id-7"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/22-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" /></div>
+<h4 id="tls流程">TLS流程</h4>
+<div id="id-8"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/23-HTTPS%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/23-HTTPS%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/23-HTTPS%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/23-HTTPS%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/23-HTTPS%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP/23-HTTPS%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" /></div>
+<p>客户端验证CA流程</p>
+<div id="id-9"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png" /></div>
+<p>证书信任链验证</p>
+<div id="id-10"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E7%94%A8%E6%88%B7%E4%BF%A1%E4%BB%BB.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E7%94%A8%E6%88%B7%E4%BF%A1%E4%BB%BB.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E7%94%A8%E6%88%B7%E4%BF%A1%E4%BB%BB.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E7%94%A8%E6%88%B7%E4%BF%A1%E4%BB%BB.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E7%94%A8%E6%88%B7%E4%BF%A1%E4%BB%BB.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E7%94%A8%E6%88%B7%E4%BF%A1%E4%BB%BB.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E9%93%BE.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E9%93%BE.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E9%93%BE.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E9%93%BE.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E9%93%BE.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E9%93%BE.png" /></p>
+</div>
+<h4 id="https-的应用数据是如何保证完整性的">HTTPS 的应用数据是如何保证完整性的</h4>
+<p>TLS 在实现上分为握手协议和记录协议两层：</p>
+<ul>
+<li>TLS 握手协议就是我们前面说的 TLS 四次握手的过程，负责协商加密算法和生成对称密钥，后续用此密钥来保护应用程序数据（即 HTTP 数据）；</li>
+<li>TLS 记录协议负责保护应用程序数据并验证其完整性和来源，所以对 HTTP 数据加密是使用记录协议；</li>
+</ul>
+<h4 id="https-一定安全可靠吗">HTTPS 一定安全可靠吗</h4>
+<p>当信任了中间人服务器证书，中间人就可以窃听修改</p>
+<div id="id-11"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/https%E4%B8%AD%E9%97%B4%E4%BA%BA.drawio.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/https%E4%B8%AD%E9%97%B4%E4%BA%BA.drawio.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/https%E4%B8%AD%E9%97%B4%E4%BA%BA.drawio.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/https%E4%B8%AD%E9%97%B4%E4%BA%BA.drawio.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/https%E4%B8%AD%E9%97%B4%E4%BA%BA.drawio.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/network/http/https%E4%B8%AD%E9%97%B4%E4%BA%BA.drawio.png" /></div>
+<p>HTTPS 协议本身到目前为止还是没有任何漏洞的，即使你成功进行中间人攻击，本质上是利用了客户端的漏洞（用户点击继续访问或者被恶意导入伪造的根证书），并不是 HTTPS 不够安全。</p>
+<p>抓包工具（如charles）截取 HTTPS 数据工作原理与中间人一致的</p>
+<h2 id="http11http2http3-演变">HTTP/1.1、HTTP/2、HTTP/3 演变</h2>
+<h3 id="http11-相比-http10">HTTP/1.1 相比 HTTP/1.0</h3>
+<ul>
+<li>长连接</li>
+<li>管道（pipeline）网络传输</li>
+</ul>
+<h3 id="http2-优化">HTTP/2 优化</h3>
+<ul>
+<li>头部压缩</li>
+<li>二进制格式</li>
+<li>并发传输</li>
+<li>服务器主动推送资源</li>
+</ul>
+<h3 id="http3-优化">HTTP/3 优化</h3>
+<ul>
+<li>无队头阻塞：HTTP/3 把 HTTP 下层的 TCP 协议改成了 UDP</li>
+<li>更快的连接建立</li>
+<li>连接迁移</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-13</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" data-title="计算机网络-小林coding-HTTP篇" data-hashtags="小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" data-hashtag="小林coding系列"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" data-title="计算机网络-小林coding-HTTP篇"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" data-title="计算机网络-小林coding-HTTP篇"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" data-title="计算机网络-小林coding-HTTP篇"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" class="prev" rel="prev" title="计算机网络-小林coding-基础篇"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>计算机网络-小林coding-基础篇</a>
+            <a href="/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/http/" class="next" rel="next" title="go标准库-Http">go标准库-Http<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/c32271.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-13T21:36:13+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"计算机网络-小林coding-HTTP篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>操作系统-小林coding-内存管理 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="操作系统-小林coding-内存管理" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 内存管理 为什么要有虚拟内存 操作系统为每个进程分配独立的「虚拟地址」。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-15T14:05:19+08:00" />
+<meta property="article:modified_time" content="2023-01-15T14:05:19+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="操作系统-小林coding-内存管理"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 内存管理 为什么要有虚拟内存 操作系统为每个进程分配独立的「虚拟地址」。"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linux/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E4%BB%A4/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "操作系统-小林coding-内存管理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86\/"
+        },"genre": "posts","keywords": "小林coding系列","wordcount":  1511 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86\/","datePublished": "2023-01-15T14:05:19+08:00","dateModified": "2023-01-15T14:05:19+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-小林coding-内存管理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-15">2023-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1511 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么要有虚拟内存">为什么要有虚拟内存</a>
+      <ul>
+        <li><a href="#内存分段">内存分段</a></li>
+        <li><a href="#内存分页">内存分页</a></li>
+        <li><a href="#多级页表">多级页表</a></li>
+        <li><a href="#tlb">TLB</a></li>
+        <li><a href="#段页式内存管理">段页式内存管理</a></li>
+        <li><a href="#linux-内存布局">Linux 内存布局</a></li>
+        <li><a href="#虚拟内存有什么作用">虚拟内存有什么作用</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/os/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<p><a href="https://xiaolincoding.com/os/3_memory/vmem.html" target="_blank" rel="noopener noreffer ">内存管理</a></p>
+<h2 id="为什么要有虚拟内存">为什么要有虚拟内存</h2>
+<p>操作系统为每个进程分配独立的「虚拟地址」。</p>
+<p>操作系统会提供一种机制，将不同进程的虚拟地址和不同内存的物理地址映射起来。</p>
+<ul>
+<li>程序所使用的内存地址叫做虚拟内存地址（Virtual Memory Address）</li>
+<li>实际存在硬件里面的空间地址叫物理内存地址（Physical Memory Address）</li>
+</ul>
+<p>映射过程主要有两种方式，分别是<code>内存分段</code>和<code>内存分页</code></p>
+<h3 id="内存分段">内存分段</h3>
+<p>分段机制下的虚拟地址由两部分组成，段选择因子和段内偏移量</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/a9ed979e2ed8414f9828767592aadc21.png"
+        data-srcset="https://img-blog.csdnimg.cn/a9ed979e2ed8414f9828767592aadc21.png, https://img-blog.csdnimg.cn/a9ed979e2ed8414f9828767592aadc21.png 1.5x, https://img-blog.csdnimg.cn/a9ed979e2ed8414f9828767592aadc21.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/a9ed979e2ed8414f9828767592aadc21.png"
+        title="https://img-blog.csdnimg.cn/a9ed979e2ed8414f9828767592aadc21.png" /></div>
+<p>虚拟地址是通过段表与物理地址进行映射的</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/c5e2ab63e6ee4c8db575f3c7c9c85962.png"
+        data-srcset="https://img-blog.csdnimg.cn/c5e2ab63e6ee4c8db575f3c7c9c85962.png, https://img-blog.csdnimg.cn/c5e2ab63e6ee4c8db575f3c7c9c85962.png 1.5x, https://img-blog.csdnimg.cn/c5e2ab63e6ee4c8db575f3c7c9c85962.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/c5e2ab63e6ee4c8db575f3c7c9c85962.png"
+        title="https://img-blog.csdnimg.cn/c5e2ab63e6ee4c8db575f3c7c9c85962.png" /></div>
+<p>不足：内存碎片，内存交换的效率低（需要将整段写入换出）</p>
+<h3 id="内存分页">内存分页</h3>
+<p>分页是把整个虚拟和物理内存空间切成一段段固定尺寸的大小（页）</p>
+<p>虚拟地址与物理地址之间通过页表来映射</p>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/08a8e315fedc4a858060db5cb4a654af.png"
+        data-srcset="https://img-blog.csdnimg.cn/08a8e315fedc4a858060db5cb4a654af.png, https://img-blog.csdnimg.cn/08a8e315fedc4a858060db5cb4a654af.png 1.5x, https://img-blog.csdnimg.cn/08a8e315fedc4a858060db5cb4a654af.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/08a8e315fedc4a858060db5cb4a654af.png"
+        title="https://img-blog.csdnimg.cn/08a8e315fedc4a858060db5cb4a654af.png" /></div>
+<p>内存管理单元 （MMU）将虚拟内存地址转换成物理地址</p>
+<p>当进程访问的虚拟地址在页表中查不到时，系统会产生一个缺页异常，进入系统内核空间分配物理内存、更新进程页表，最后再返回用户空间，恢复进程的运行。</p>
+<p>采用了分页，页与页之间是紧密排列的，所以不会有外部碎片。内存分页机制会有内部内存碎片。</p>
+<p>内存空间不够操作系统将正在运行的进程中「最近没被使用」的内存页面暂时写在硬盘上，称为换出（Swap Out）。需要的时候，再加载进来，称为换入（Swap In）。</p>
+<p>一次性写入磁盘只有少数的一个页或者几个页，内存交换的效率相对段式较高。只有在程序运行中，需要用到对应虚拟内存页里面的指令和数据时，再加载到物理内存里面去。</p>
+<div id="id-4"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/388a29f45fe947e5a49240e4eff13538.png"
+        data-srcset="https://img-blog.csdnimg.cn/388a29f45fe947e5a49240e4eff13538.png, https://img-blog.csdnimg.cn/388a29f45fe947e5a49240e4eff13538.png 1.5x, https://img-blog.csdnimg.cn/388a29f45fe947e5a49240e4eff13538.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/388a29f45fe947e5a49240e4eff13538.png"
+        title="https://img-blog.csdnimg.cn/388a29f45fe947e5a49240e4eff13538.png" /></div>
+<p>在分页机制下，虚拟地址分为两部分，页号和页内偏移</p>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/7884f4d8db4949f7a5bb4bbd0f452609.png"
+        data-srcset="https://img-blog.csdnimg.cn/7884f4d8db4949f7a5bb4bbd0f452609.png, https://img-blog.csdnimg.cn/7884f4d8db4949f7a5bb4bbd0f452609.png 1.5x, https://img-blog.csdnimg.cn/7884f4d8db4949f7a5bb4bbd0f452609.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/7884f4d8db4949f7a5bb4bbd0f452609.png"
+        title="https://img-blog.csdnimg.cn/7884f4d8db4949f7a5bb4bbd0f452609.png" /></div>
+<p>内存地址转换三个步骤：</p>
+<ul>
+<li>虚拟内存地址，切分成页号和偏移量</li>
+<li>根据页号，从页表里面，查询对应的物理页号</li>
+<li>拿物理页号，加上前面的偏移量，就得到了物理内存地址</li>
+</ul>
+<p>简单的分页进程的页表空间开销会很大</p>
+<h3 id="多级页表">多级页表</h3>
+<div id="id-6"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/19296e249b2240c29f9c52be70f611d5.png"
+        data-srcset="https://img-blog.csdnimg.cn/19296e249b2240c29f9c52be70f611d5.png, https://img-blog.csdnimg.cn/19296e249b2240c29f9c52be70f611d5.png 1.5x, https://img-blog.csdnimg.cn/19296e249b2240c29f9c52be70f611d5.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/19296e249b2240c29f9c52be70f611d5.png"
+        title="https://img-blog.csdnimg.cn/19296e249b2240c29f9c52be70f611d5.png" /></div>
+<p>局部性原理</p>
+<p>对于 64 位的系统，两级分页肯定不够了，就变成了四级目录</p>
+<h3 id="tlb">TLB</h3>
+<p>把最常访问的几个页表项存储到访问速度更快的硬件 TLB（Translation Lookaside Buffer） ，通常称为页表缓存、转址旁路缓存、快表等</p>
+<h3 id="段页式内存管理">段页式内存管理</h3>
+<ul>
+<li>先将程序划分为多个有逻辑意义的段</li>
+<li>再把每个段划分为多个页</li>
+</ul>
+<p>逻辑地址结构就由段号、段内页号和页内位移三部分组成</p>
+<div id="id-7"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/8904fb89ae0c49c4b0f2f7b5a0a7b099.png"
+        data-srcset="https://img-blog.csdnimg.cn/8904fb89ae0c49c4b0f2f7b5a0a7b099.png, https://img-blog.csdnimg.cn/8904fb89ae0c49c4b0f2f7b5a0a7b099.png 1.5x, https://img-blog.csdnimg.cn/8904fb89ae0c49c4b0f2f7b5a0a7b099.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/8904fb89ae0c49c4b0f2f7b5a0a7b099.png"
+        title="https://img-blog.csdnimg.cn/8904fb89ae0c49c4b0f2f7b5a0a7b099.png" /></div>
+<h3 id="linux-内存布局">Linux 内存布局</h3>
+<p>Linux 内存主要采用的是页式内存管理，但同时也不可避免地涉及了段机制</p>
+<p>Linux 系统中操作系统本身和应用程序每个段都是从 0 地址开始的整个 4GB 虚拟空间（32 位环境下）。所以，地址空间都是线性地址空间（虚拟地址），这相当于屏蔽了处理器中的逻辑地址概念，段只被用于访问控制和内存保护。</p>
+<p>虚拟地址空间内部被分为内核空间和用户空间两部分，不同位数的系统，地址空间的范围也不同</p>
+<div id="id-8"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/3a6cb4e3f27241d3b09b4766bb0b1124.png"
+        data-srcset="https://img-blog.csdnimg.cn/3a6cb4e3f27241d3b09b4766bb0b1124.png, https://img-blog.csdnimg.cn/3a6cb4e3f27241d3b09b4766bb0b1124.png 1.5x, https://img-blog.csdnimg.cn/3a6cb4e3f27241d3b09b4766bb0b1124.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/3a6cb4e3f27241d3b09b4766bb0b1124.png"
+        title="https://img-blog.csdnimg.cn/3a6cb4e3f27241d3b09b4766bb0b1124.png" /></div>
+<p>内核空间与用户空间的区别：</p>
+<ul>
+<li>用户态，只能访问用户空间内存</li>
+<li>内核态才可以访问内核空间的内存</li>
+</ul>
+<p>每个虚拟内存中的内核地址，其实关联的都是相同的物理内存</p>
+<p>用户空间分布的情况</p>
+<div id="id-9"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/32%E4%BD%8D%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png"
+        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/32%E4%BD%8D%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/32%E4%BD%8D%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/32%E4%BD%8D%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/32%E4%BD%8D%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png"
+        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/32%E4%BD%8D%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png" /></div>
+<ul>
+<li>代码段，包括二进制可执行代码</li>
+<li>数据段，包括已初始化的静态常量和全局变量</li>
+<li>BSS 段，包括未初始化的静态变量和全局变量</li>
+<li>堆段，包括动态分配的内存，从低地址开始向上增长</li>
+<li>文件映射段，包括动态库、共享内存等，从低地址开始向上增长（跟硬件和内核版本有关 (opens new window)）</li>
+<li>栈段，包括局部变量和函数调用的上下文等。栈的大小是固定的，一般是 8 MB。系统也提供了参数，以便我们自定义大小</li>
+</ul>
+<p>代码段下面还有一段内存空间的（灰色部分），这一块区域是「保留区」。较小数值的地址不是一个合法地址，例如，我们通常在 C 的代码里会将无效的指针赋值为 NULL。因此，这里会出现一段不可访问的内存保留区，防止程序因为出现 bug，导致读或写了一些小内存地址的数据，而使得程序跑飞。</p>
+<h3 id="虚拟内存有什么作用">虚拟内存有什么作用</h3>
+<ul>
+<li>运行超过物理内存大小的程序</li>
+<li>进程隔离</li>
+<li>标记属性的比特控制内存访问</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-01-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" data-title="操作系统-小林coding-内存管理" data-hashtags="小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" data-hashtag="小林coding系列"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" data-title="操作系统-小林coding-内存管理"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" data-title="操作系统-小林coding-内存管理"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" data-title="操作系统-小林coding-内存管理"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linux/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E4%BB%A4/" class="prev" rel="prev" title="操作系统-linux-服务器命令"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>操作系统-linux-服务器命令</a>
+            <a href="/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="next" rel="next" title="操作系统-小林coding-进程管理">操作系统-小林coding-进程管理<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/766d80.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2023-01-15T14:05:19+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"操作系统-小林coding-内存管理"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-学习笔记-Map - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-学习笔记-Map" />
+<meta property="og:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-11T15:47:21+08:00" />
+<meta property="article:modified_time" content="2022-12-11T15:47:21+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-学习笔记-Map"/>
+<meta name="twitter:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E7%BB%84%E4%B8%8E%E5%88%87%E7%89%87/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-学习笔记-Map",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/map\/"
+        },"genre": "posts","keywords": "go学习笔记","wordcount":  1270 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/map\/","datePublished": "2022-12-11T15:47:21+08:00","dateModified": "2022-12-11T15:47:21+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Map</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1270 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#声明初始化和-make">声明、初始化和 make</a>
+      <ul>
+        <li><a href="#概念">概念</a></li>
+        <li><a href="#map-容量">map 容量</a></li>
+        <li><a href="#用切片作为-map-的值">用切片作为 map 的值</a></li>
+      </ul>
+    </li>
+    <li><a href="#测试键值对是否存在及删除元素">测试键值对是否存在及删除元素</a></li>
+    <li><a href="#for-range-的配套用法">for-range 的配套用法</a></li>
+    <li><a href="#map-类型的切片">map 类型的切片</a></li>
+    <li><a href="#map-的排序">map 的排序</a></li>
+    <li><a href="#将-map-的键值对调">将 map 的键值对调</a></li>
+    <li><a href="#map有容量限制吗">map有容量限制吗</a></li>
+    <li><a href="#map底层实现">map底层实现</a></li>
+    <li><a href="#哈希冲突">哈希冲突</a>
+      <ul>
+        <li><a href="#负载因子">负载因子</a></li>
+        <li><a href="#渐进式扩容">渐进式扩容</a>
+          <ul>
+            <li><a href="#增量扩容">增量扩容</a></li>
+            <li><a href="#等量扩容">等量扩容</a></li>
+          </ul>
+        </li>
+        <li><a href="#查找过程">查找过程</a></li>
+        <li><a href="#插入过程">插入过程</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
+<p><a href="https://www.bookstack.cn/read/GoExpertProgramming/chapter01-1.3-map.md" target="_blank" rel="noopener noreffer ">go专家编程</a></p>
+<h2 id="声明初始化和-make">声明、初始化和 make</h2>
+<h3 id="概念">概念</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> map1 <span style="color:#00a">map</span>[keytype]valuetype
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> map1 <span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#0aa">int</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>未初始化的 map 的值是 nil。</p>
+<p>key 可以是任意可以用 == 或者 != 操作符比较的类型，比如 string、int、float。数组、切片不能作为 key。含有数组切片的结构体不能作为 key，只包含内建类型的 struct 是可以作为 key 的。指针和接口类型可以。如果要用结构体作为 key 可以提供 Key() 和 Hash() 方法，这样可以通过结构体的域计算出唯一的数字或者字符串的 key。</p>
+<p>value 可以是任意类型的；通过使用空接口类型，我们可以存储任意值，但是使用这种类型作为值时需要先做一次类型断言</p>
+<p>map 传递给函数的代价很小：在 32 位机器上占 4 个字节，64 位机器上占 8 个字节，无论实际上存储了多少数据。通过 key 在 map 中寻找值是很快的，比线性查找快得多，但是仍然比从数组和切片的索引中直接读取要慢 100 倍；所以如果你很在乎性能的话还是建议用切片来解决问题。</p>
+<p>map 也可以用函数作为自己的值，这样就可以用来做分支结构</p>
+<p>map 是 引用类型 的： 内存用 make 方法来分配。</p>
+<p>map 的初始化：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> map1 = <span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[keytype]valuetype)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>map1 := <span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[keytype]valuetype)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不要使用 new，永远用 make 来构造 map。如果你错误的使用 new() 分配了一个引用对象，你会获得一个空引用的指针，相当于声明了一个未初始化的变量并且取了它的地址。</p>
+<h3 id="map-容量">map 容量</h3>
+<p><code>make(map[keytype]valuetype, cap)</code></p>
+<h3 id="用切片作为-map-的值">用切片作为 map 的值</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>mp1 := <span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>][]<span style="color:#0aa">int</span>)
+</span></span><span style="display:flex;"><span>mp2 := <span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]*[]<span style="color:#0aa">int</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="测试键值对是否存在及删除元素">测试键值对是否存在及删除元素</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>val1, isPresent = map1[key1]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>_, ok := map1[key1] <span style="color:#aaa;font-style:italic">// 如果key1存在则ok == true，否则ok为false
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> _, ok := map1[key1]; ok {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除 key1：<code>delete(map1, key1)</code></p>
+<p>如果 key1 不存在，该操作不会产生错误。</p>
+<h2 id="for-range-的配套用法">for-range 的配套用法</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">for</span> key, value := <span style="color:#00a">range</span> map1 {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="map-类型的切片">map 类型的切片</h2>
+<p>想获取一个 map 类型的切片，我们必须使用两次 make() 函数，第一次分配切片，第二次分配 切片中每个 map 元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>items := <span style="color:#0aa">make</span>([]<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]<span style="color:#0aa">int</span>, <span style="color:#099">5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i:= <span style="color:#00a">range</span> items {
+</span></span><span style="display:flex;"><span>    items[i] = <span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]<span style="color:#0aa">int</span>, <span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>    items[i][<span style="color:#099">1</span>] = <span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="map-的排序">map 的排序</h2>
+<p>map 默认是无序的</p>
+<p>想为 map 排序，需要将 key（或者 value）拷贝到一个切片，再对切片排序（使用 sort 包），然后可以使用切片的 for-range 方法打印出所有的 key 和 value。</p>
+<h2 id="将-map-的键值对调">将 map 的键值对调</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>invMap := <span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]<span style="color:#0aa">string</span>, <span style="color:#0aa">len</span>(barVal))
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> k, v := <span style="color:#00a">range</span> barVal {
+</span></span><span style="display:flex;"><span>    invMap[v] = k
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="map有容量限制吗">map有容量限制吗</h2>
+<p>map没有容量限制，在达到容量上限后会自动扩容</p>
+<h2 id="map底层实现">map底层实现</h2>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-02-struct_sketch.png"
+        data-srcset="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-02-struct_sketch.png, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-02-struct_sketch.png 1.5x, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-02-struct_sketch.png 2x"
+        data-sizes="auto"
+        alt="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-02-struct_sketch.png"
+        title="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-02-struct_sketch.png" /></div>
+<p>存放buckets存放hash值的低位</p>
+<h2 id="哈希冲突">哈希冲突</h2>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-03-struct_sketch.png"
+        data-srcset="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-03-struct_sketch.png, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-03-struct_sketch.png 1.5x, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-03-struct_sketch.png 2x"
+        data-sizes="auto"
+        alt="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-03-struct_sketch.png"
+        title="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-03-struct_sketch.png" /></div>
+<h3 id="负载因子">负载因子</h3>
+<p>负载因子 = 键数量/bucket数量</p>
+<h3 id="渐进式扩容">渐进式扩容</h3>
+<p>触发条件</p>
+<ul>
+<li>负载因子 &gt; 6.5时</li>
+<li>overflow数量 &gt; 2^15</li>
+</ul>
+<h4 id="增量扩容">增量扩容</h4>
+<p>当负载因子过大时，就新建一个bucket，新的bucket长度是原来的2倍，然后旧bucket数据搬迁到新的bucket。</p>
+<h4 id="等量扩容">等量扩容</h4>
+<p>buckets数量不变，重新做一遍类似增量扩容的搬迁动作，把松散的键值对重新排列一次</p>
+<h3 id="查找过程">查找过程</h3>
+<ol>
+<li>算出查询key的hash值</li>
+<li>取低位找到bucket位置</li>
+<li>取高位在tophash中找存储key对应的位置</li>
+<li>比较存储key和查询key，如果不相等到下一个overflow bucket中找</li>
+<li>搬迁过程从oldbuckets找</li>
+</ol>
+<h3 id="插入过程">插入过程</h3>
+<ol>
+<li>算出插入key的hash值</li>
+<li>查询是否有该值，有就修改value，没有就插入新的kv对</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" data-title="golang-学习笔记-Map" data-hashtags="go学习笔记"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" data-hashtag="go学习笔记"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" data-title="golang-学习笔记-Map"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" data-title="golang-学习笔记-Map"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" data-title="golang-学习笔记-Map"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">go学习笔记</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E7%BB%84%E4%B8%8E%E5%88%87%E7%89%87/" class="prev" rel="prev" title="golang-学习笔记-数组与切片"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-学习笔记-数组与切片</a>
+            <a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" class="next" rel="next" title="golang-学习笔记-包">golang-学习笔记-包<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/86ccfb.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-11T15:47:21+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"golang-学习笔记-Map"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

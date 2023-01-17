@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python教程-输入输出 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Python教程-输入输出" />
+<meta property="og:description" content="本系列为作者在官网学习python时做的笔记，详见python官网 更漂亮的输出格式 到目前为止，我们遇到了两种写入值的方法：表达式语句 和 print() 函数" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-12T11:06:02+08:00" />
+<meta property="article:modified_time" content="2022-10-12T11:06:02+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python教程-输入输出"/>
+<meta name="twitter:description" content="本系列为作者在官网学习python时做的笔记，详见python官网 更漂亮的输出格式 到目前为止，我们遇到了两种写入值的方法：表达式语句 和 print() 函数"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" /><link rel="prev" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" /><link rel="next" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E9%94%99%E8%AF%AF%E5%92%8C%E5%BC%82%E5%B8%B8/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python教程-输入输出",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA\/"
+        },"genre": "posts","keywords": "Python教程","wordcount":  4339 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA\/","datePublished": "2022-10-12T11:06:02+08:00","dateModified": "2022-10-12T11:06:02+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-输入输出</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4339 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#更漂亮的输出格式">更漂亮的输出格式</a>
+      <ul>
+        <li><a href="#格式化字符串文字">格式化字符串文字</a></li>
+      </ul>
+    </li>
+    <li><a href="#字符串的-format-方法">字符串的 format() 方法</a>
+      <ul>
+        <li><a href="#手动格式化字符串">手动格式化字符串</a></li>
+        <li><a href="#旧的字符串格式化方法">旧的字符串格式化方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#读写文件">读写文件</a>
+      <ul>
+        <li><a href="#文件对象的方法">文件对象的方法</a></li>
+        <li><a href="#使用-json-保存结构化数据">使用 json 保存结构化数据</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列为作者在官网学习python时做的笔记，详见<a href="https://docs.python.org/zh-cn/3.8/tutorial/" target="_blank" rel="noopener noreffer ">python官网</a></p>
+<h2 id="更漂亮的输出格式">更漂亮的输出格式</h2>
+<p>到目前为止，我们遇到了两种写入值的方法：表达式语句 和 print() 函数。（第三种是使用文件对象的 write() 方法；标准输出文件可以作为 sys.stdout 引用。更多相关信息可参考标准库指南。）</p>
+<p>要使用 格式化字符串字面值 ，请在字符串的开始引号或三引号之前加上一个 f 或 F 。在此字符串中，你可以在 { 和 } 字符之间写可以引用的变量或字面值的 Python 表达式。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; year = <span style="color:#099">2016</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; event = <span style="color:#a50">&#39;Referendum&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#a50">f</span><span style="color:#a50">&#39;Results of the </span><span style="color:#a50">{</span>year<span style="color:#a50">}</span><span style="color:#a50"> </span><span style="color:#a50">{</span>event<span style="color:#a50">}</span><span style="color:#a50">&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;Results of the 2016 Referendum&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>字符串的 str.format() 方法需要更多的手动操作。你仍将使用 { 和 } 来标记变量将被替换的位置，并且可以提供详细的格式化指令，但你还需要提供要格式化的信息。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; yes_votes = <span style="color:#099">42_572_654</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; no_votes = <span style="color:#099">43_132_495</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; percentage = yes_votes / (yes_votes + no_votes)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#a50">&#39;</span><span style="color:#a50">{:-9}</span><span style="color:#a50"> YES votes  </span><span style="color:#a50">{:2.2%}</span><span style="color:#a50">&#39;</span>.format(yes_votes, percentage)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39; 42572654 YES votes  49.67%&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后，你可以使用字符串切片和连接操作自己完成所有的字符串处理，以创建你可以想象的任何布局。字符串类型有一些方法可以执行将字符串填充到给定列宽的有用操作。</p>
+<p>当你不需要花哨的输出而只是想快速显示某些变量以进行调试时，可以使用 repr() or str() 函数将任何值转化为字符串。</p>
+<p>str() 函数是用于返回人类可读的值的表示，而 repr() 是用于生成解释器可读的表示（如果没有等效的语法，则会强制执行 SyntaxError）对于没有人类可读性的表示的对象， str() 将返回和 repr() 一样的值。很多值使用任一函数都具有相同的表示，比如数字或类似列表和字典的结构。特殊的是字符串有两个不同的表示。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; s = <span style="color:#a50">&#39;Hello, world.&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">str</span>(s)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;Hello, world.&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">repr</span>(s)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#34;&#39;Hello, world.&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">str</span>(<span style="color:#099">1</span>/<span style="color:#099">7</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;0.14285714285714285&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; x = <span style="color:#099">10</span> * <span style="color:#099">3.25</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; y = <span style="color:#099">200</span> * <span style="color:#099">200</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; s = <span style="color:#a50">&#39;The value of x is &#39;</span> + <span style="color:#0aa">repr</span>(x) + <span style="color:#a50">&#39;, and y is &#39;</span> + <span style="color:#0aa">repr</span>(y) + <span style="color:#a50">&#39;...&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(s)
+</span></span><span style="display:flex;"><span>The value of x <span style="color:#00a">is</span> <span style="color:#099">32.5</span>, <span style="color:#00a">and</span> y <span style="color:#00a">is</span> <span style="color:#099">40000.</span>..
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#aaa;font-style:italic"># The repr() of a string adds string quotes and backslashes:</span>
+</span></span><span style="display:flex;"><span>... hello = <span style="color:#a50">&#39;hello, world</span><span style="color:#a50">\n</span><span style="color:#a50">&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; hellos = <span style="color:#0aa">repr</span>(hello)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(hellos)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;hello, world</span><span style="color:#a50">\n</span><span style="color:#a50">&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#aaa;font-style:italic"># The argument to repr() may be any Python object:</span>
+</span></span><span style="display:flex;"><span>... <span style="color:#0aa">repr</span>((x, y, (<span style="color:#a50">&#39;spam&#39;</span>, <span style="color:#a50">&#39;eggs&#39;</span>)))
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#34;(32.5, 40000, (&#39;spam&#39;, &#39;eggs&#39;))&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>string 模块包含一个 Template 类，它提供了另一种将值替换为字符串的方法，使用类似 $x 的占位符并用字典中的值替换它们，但对格式的控制要少的多。</p>
+<h3 id="格式化字符串文字">格式化字符串文字</h3>
+<p>格式化字符串字面值 （常简称为 f-字符串）能让你在字符串前加上 f 和 F 并将表达式写成 {expression} 来在字符串中包含 Python 表达式的值。</p>
+<p>可选的格式说明符可以跟在表达式后面。这样可以更好地控制值的格式化方式。以下示例将pi舍入到小数点后三位:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">math</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">f</span><span style="color:#a50">&#39;The value of pi is approximately </span><span style="color:#a50">{</span>math.pi<span style="color:#a50">:</span><span style="color:#a50">.3f</span><span style="color:#a50">}</span><span style="color:#a50">.&#39;</span>)
+</span></span><span style="display:flex;"><span>The value of pi <span style="color:#00a">is</span> approximately <span style="color:#099">3.142</span>.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 &lsquo;:&rsquo; 后传递一个整数可以让该字段成为最小字符宽度。这在使列对齐时很有用。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; table = {<span style="color:#a50">&#39;Sjoerd&#39;</span>: <span style="color:#099">4127</span>, <span style="color:#a50">&#39;Jack&#39;</span>: <span style="color:#099">4098</span>, <span style="color:#a50">&#39;Dcab&#39;</span>: <span style="color:#099">7678</span>}
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">for</span> name, phone <span style="color:#00a">in</span> table.items():
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#a50">f</span><span style="color:#a50">&#39;</span><span style="color:#a50">{</span>name<span style="color:#a50">:</span><span style="color:#a50">10</span><span style="color:#a50">}</span><span style="color:#a50"> ==&gt; </span><span style="color:#a50">{</span>phone<span style="color:#a50">:</span><span style="color:#a50">10d</span><span style="color:#a50">}</span><span style="color:#a50">&#39;</span>)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Sjoerd     ==&gt;       <span style="color:#099">4127</span>
+</span></span><span style="display:flex;"><span>Jack       ==&gt;       <span style="color:#099">4098</span>
+</span></span><span style="display:flex;"><span>Dcab       ==&gt;       <span style="color:#099">7678</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其他的修饰符可用于在格式化之前转化值。 &lsquo;!a&rsquo; 应用 ascii() ，&rsquo;!s&rsquo; 应用 str()，还有 &lsquo;!r&rsquo; 应用 repr():</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; animals = <span style="color:#a50">&#39;eels&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">f</span><span style="color:#a50">&#39;My hovercraft is full of </span><span style="color:#a50">{</span>animals<span style="color:#a50">}</span><span style="color:#a50">.&#39;</span>)
+</span></span><span style="display:flex;"><span>My hovercraft <span style="color:#00a">is</span> full of eels.
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">f</span><span style="color:#a50">&#39;My hovercraft is full of </span><span style="color:#a50">{</span>animals<span style="color:#a50">!r}</span><span style="color:#a50">.&#39;</span>)
+</span></span><span style="display:flex;"><span>My hovercraft <span style="color:#00a">is</span> full of <span style="color:#a50">&#39;eels&#39;</span>.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有关这些格式规范的参考，请参阅参考指南 格式规格迷你语言。</p>
+<h2 id="字符串的-format-方法">字符串的 format() 方法</h2>
+<p>str.format() 方法的基本用法如下所示:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;We are the </span><span style="color:#a50">{}</span><span style="color:#a50"> who say &#34;</span><span style="color:#a50">{}</span><span style="color:#a50">!&#34;&#39;</span>.format(<span style="color:#a50">&#39;knights&#39;</span>, <span style="color:#a50">&#39;Ni&#39;</span>))
+</span></span><span style="display:flex;"><span>We are the knights who say <span style="color:#a50">&#34;Ni!&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>花括号和其中的字符（称为格式字段）将替换为传递给 str.format() 方法的对象。花括号中的数字可用来表示传递给 str.format() 方法的对象的位置。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;</span><span style="color:#a50">{0}</span><span style="color:#a50"> and </span><span style="color:#a50">{1}</span><span style="color:#a50">&#39;</span>.format(<span style="color:#a50">&#39;spam&#39;</span>, <span style="color:#a50">&#39;eggs&#39;</span>))
+</span></span><span style="display:flex;"><span>spam <span style="color:#00a">and</span> eggs
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;</span><span style="color:#a50">{1}</span><span style="color:#a50"> and </span><span style="color:#a50">{0}</span><span style="color:#a50">&#39;</span>.format(<span style="color:#a50">&#39;spam&#39;</span>, <span style="color:#a50">&#39;eggs&#39;</span>))
+</span></span><span style="display:flex;"><span>eggs <span style="color:#00a">and</span> spam
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果在 str.format() 方法中使用关键字参数，则使用参数的名称引用它们的值。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;This </span><span style="color:#a50">{food}</span><span style="color:#a50"> is </span><span style="color:#a50">{adjective}</span><span style="color:#a50">.&#39;</span>.format(
+</span></span><span style="display:flex;"><span>...       food=<span style="color:#a50">&#39;spam&#39;</span>, adjective=<span style="color:#a50">&#39;absolutely horrible&#39;</span>))
+</span></span><span style="display:flex;"><span>This spam <span style="color:#00a">is</span> absolutely horrible.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>位置和关键字参数可以任意组合:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;The story of </span><span style="color:#a50">{0}</span><span style="color:#a50">, </span><span style="color:#a50">{1}</span><span style="color:#a50">, and </span><span style="color:#a50">{other}</span><span style="color:#a50">.&#39;</span>.format(<span style="color:#a50">&#39;Bill&#39;</span>, <span style="color:#a50">&#39;Manfred&#39;</span>,
+</span></span><span style="display:flex;"><span>                                                       other=<span style="color:#a50">&#39;Georg&#39;</span>))
+</span></span><span style="display:flex;"><span>The story of Bill, Manfred, <span style="color:#00a">and</span> Georg.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你有一个非常长的格式字符串，你不想把它拆开，那么你最好是按名称而不是按位置引用变量来进行格式化。 这可以通过简单地传递字典并使用方括号 &lsquo;[]&rsquo; 访问键来完成。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; table = {<span style="color:#a50">&#39;Sjoerd&#39;</span>: <span style="color:#099">4127</span>, <span style="color:#a50">&#39;Jack&#39;</span>: <span style="color:#099">4098</span>, <span style="color:#a50">&#39;Dcab&#39;</span>: <span style="color:#099">8637678</span>}
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;Jack: </span><span style="color:#a50">{0[Jack]:d}</span><span style="color:#a50">; Sjoerd: </span><span style="color:#a50">{0[Sjoerd]:d}</span><span style="color:#a50">; &#39;</span>
+</span></span><span style="display:flex;"><span>...       <span style="color:#a50">&#39;Dcab: </span><span style="color:#a50">{0[Dcab]:d}</span><span style="color:#a50">&#39;</span>.format(table))
+</span></span><span style="display:flex;"><span>Jack: <span style="color:#099">4098</span>; Sjoerd: <span style="color:#099">4127</span>; Dcab: <span style="color:#099">8637678</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这在与内置函数 vars() 结合使用时非常有用，它会返回包含所有局部变量的字典。</p>
+<p>例如，下面几行代码生成一组整齐的列，其中包含给定的整数和它的平方以及立方:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">for</span> x <span style="color:#00a">in</span> <span style="color:#0aa">range</span>(<span style="color:#099">1</span>, <span style="color:#099">11</span>):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;</span><span style="color:#a50">{0:2d}</span><span style="color:#a50"> </span><span style="color:#a50">{1:3d}</span><span style="color:#a50"> </span><span style="color:#a50">{2:4d}</span><span style="color:#a50">&#39;</span>.format(x, x*x, x*x*x))
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span> <span style="color:#099">1</span>   <span style="color:#099">1</span>    <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>   <span style="color:#099">4</span>    <span style="color:#099">8</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">3</span>   <span style="color:#099">9</span>   <span style="color:#099">27</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">4</span>  <span style="color:#099">16</span>   <span style="color:#099">64</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">5</span>  <span style="color:#099">25</span>  <span style="color:#099">125</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">6</span>  <span style="color:#099">36</span>  <span style="color:#099">216</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">7</span>  <span style="color:#099">49</span>  <span style="color:#099">343</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">8</span>  <span style="color:#099">64</span>  <span style="color:#099">512</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">9</span>  <span style="color:#099">81</span>  <span style="color:#099">729</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">10</span> <span style="color:#099">100</span> <span style="color:#099">1000</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>关于使用 str.format() 进行字符串格式化的完整概述，请参阅 格式字符串语法 。</p>
+<h3 id="手动格式化字符串">手动格式化字符串</h3>
+<p>这是同一个平方和立方的表，手动格式化的:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">for</span> x <span style="color:#00a">in</span> <span style="color:#0aa">range</span>(<span style="color:#099">1</span>, <span style="color:#099">11</span>):
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#0aa">repr</span>(x).rjust(<span style="color:#099">2</span>), <span style="color:#0aa">repr</span>(x*x).rjust(<span style="color:#099">3</span>), end=<span style="color:#a50">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>...     <span style="color:#aaa;font-style:italic"># Note use of &#39;end&#39; on previous line</span>
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#0aa">repr</span>(x*x*x).rjust(<span style="color:#099">4</span>))
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span> <span style="color:#099">1</span>   <span style="color:#099">1</span>    <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>   <span style="color:#099">4</span>    <span style="color:#099">8</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">3</span>   <span style="color:#099">9</span>   <span style="color:#099">27</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">4</span>  <span style="color:#099">16</span>   <span style="color:#099">64</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">5</span>  <span style="color:#099">25</span>  <span style="color:#099">125</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">6</span>  <span style="color:#099">36</span>  <span style="color:#099">216</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">7</span>  <span style="color:#099">49</span>  <span style="color:#099">343</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">8</span>  <span style="color:#099">64</span>  <span style="color:#099">512</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">9</span>  <span style="color:#099">81</span>  <span style="color:#099">729</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">10</span> <span style="color:#099">100</span> <span style="color:#099">1000</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>（注意每列之间的一个空格是通过使用 print() 的方式添加的：它总是在其参数间添加空格。）</p>
+<p>字符串对象的 str.rjust() 方法通过在左侧填充空格来对给定宽度的字段中的字符串进行右对齐。类似的方法还有 str.ljust() 和 str.center() 。这些方法不会写入任何东西，它们只是返回一个新的字符串，如果输入的字符串太长，它们不会截断字符串，而是原样返回；这虽然会弄乱你的列布局，但这通常比另一种方法好，后者会在显示值时可能不准确（如果你真的想截断，你可以添加一个切片操作，例如 x.ljust(n)[:n] 。）</p>
+<p>还有另外一个方法，str.zfill() ，它会在数字字符串的左边填充零。它能识别正负号:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#a50">&#39;12&#39;</span>.zfill(<span style="color:#099">5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;00012&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#a50">&#39;-3.14&#39;</span>.zfill(<span style="color:#099">7</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;-003.14&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#a50">&#39;3.14159265359&#39;</span>.zfill(<span style="color:#099">5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;3.14159265359&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="旧的字符串格式化方法">旧的字符串格式化方法</h3>
+<p>% 运算符（求余）也可用于字符串格式化。 给定 &lsquo;string&rsquo; % values，则 string 中的 % 实例会以零个或多个 values 元素替换。 此操作通常被称为字符串插值。 例如:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">math</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;The value of pi is approximately </span><span style="color:#a50">%5.3f</span><span style="color:#a50">.&#39;</span> % math.pi)
+</span></span><span style="display:flex;"><span>The value of pi <span style="color:#00a">is</span> approximately <span style="color:#099">3.142</span>.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="读写文件">读写文件</h2>
+<p>open() 返回一个 file object，最常用的有两个参数： open(filename, mode)。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; f = <span style="color:#0aa">open</span>(<span style="color:#a50">&#39;workfile&#39;</span>, <span style="color:#a50">&#39;w&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一个参数是包含文件名的字符串。第二个参数是另一个字符串，其中包含一些描述文件使用方式的字符。mode 可以是 &lsquo;r&rsquo; ，表示文件只能读取，&lsquo;w&rsquo; 表示只能写入（已存在的同名文件会被删除），还有 &lsquo;a&rsquo; 表示打开文件以追加内容；任何写入的数据会自动添加到文件的末尾。&lsquo;r+&rsquo; 表示打开文件进行读写。mode 参数是可选的；省略时默认为 &lsquo;r&rsquo;。</p>
+<p>通常文件是以 text mode 打开的，这意味着从文件中读取或写入字符串时，都会以指定的编码方式进行编码。如果未指定编码格式，默认值与平台相关 (参见 open())。在mode 中追加的 &lsquo;b&rsquo; 则以 binary mode 打开文件：现在数据是以字节对象的形式进行读写的。这个模式应该用于所有不包含文本的文件。</p>
+<p>在文本模式下读取时，默认会把平台特定的行结束符 (Unix 上的 \n, Windows 上的 \r\n) 转换为 \n。在文本模式下写入时，默认会把出现的 \n 转换回平台特定的结束符。这样在幕后修改文件数据对文本文件来说没有问题，但是会破坏二进制数据例如 JPEG 或 EXE 文件中的数据。请一定要注意在读写此类文件时应使用二进制模式。</p>
+<p>在处理文件对象时，最好使用 with 关键字。 优点是当子句体结束后文件会正确关闭，即使在某个时刻引发了异常。 而且使用 with 相比等效的 try-finally 代码块要简短得多:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">with</span> <span style="color:#0aa">open</span>(<span style="color:#a50">&#39;workfile&#39;</span>) <span style="color:#00a">as</span> f:
+</span></span><span style="display:flex;"><span>...     read_data = f.read()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#aaa;font-style:italic"># We can check that the file has been automatically closed.</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.closed
+</span></span><span style="display:flex;"><span><span style="color:#00a">True</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你没有使用 with 关键字，则你应当调用 f.close() 来关闭文件并立即释放它所使用的任何系统资源。</p>
+<p>警告 调用 f.write() 时未使用 with 关键字或未调用 f.close() 可能 导致 f.write() 的参数没有完全写入到磁盘，即使程序是正常退出的。</p>
+<p>通过 with 语句或者调用 f.close() 关闭文件对象后，尝试使用该文件对象将自动失败。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; f.close()
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.read()
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
+</span></span><span style="display:flex;"><span>ValueError: I/O operation on closed file.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="文件对象的方法">文件对象的方法</h3>
+<p>本节中剩下的例子将假定你已创建名为 f 的文件对象。</p>
+<p>要读取文件内容，请调用 f.read(size)，它会读取一些数据并将其作为字符串（在文本模式下）或字节串对象（在二进制模式下）返回。 size 是一个可选的数值参数。 当 size 被省略或者为负数时，将读取并返回整个文件的内容；如果文件的大小是你的机器内存的两倍就会出现问题。 当取其他值时，将读取并返回至多 size 个字符（在文本模式下）或 size 个字节（在二进制模式下）。 如果已到达文件末尾，f.read() 将返回一个空字符串 (&rsquo;&rsquo;)。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; f.read()
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;This is the entire file.</span><span style="color:#a50">\n</span><span style="color:#a50">&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.read()
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>f.readline() 从文件中读取一行；换行符（\n）留在字符串的末尾，如果文件不以换行符结尾，则在文件的最后一行省略。这使得返回值明确无误；如果 f.readline() 返回一个空的字符串，则表示已经到达了文件末尾，而空行使用 &lsquo;\n&rsquo; 表示，该字符串只包含一个换行符。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; f.readline()
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;This is the first line of the file.</span><span style="color:#a50">\n</span><span style="color:#a50">&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.readline()
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;Second line of the file</span><span style="color:#a50">\n</span><span style="color:#a50">&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.readline()
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要从文件中读取行，你可以循环遍历文件对象。这是内存高效，快速的，并简化代码:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">for</span> line <span style="color:#00a">in</span> f:
+</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(line, end=<span style="color:#a50">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>This <span style="color:#00a">is</span> the first line of the file.
+</span></span><span style="display:flex;"><span>Second line of the file
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你想以列表的形式读取文件中的所有行，你也可以使用 list(f) 或 f.readlines()。</p>
+<p>f.write(string) 会把 string 的内容写入到文件中，并返回写入的字符数。:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; f.write(<span style="color:#a50">&#39;This is a test</span><span style="color:#a50">\n</span><span style="color:#a50">&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">15</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在写入其他类型的对象之前，需要先把它们转化为字符串（在文本模式下）或者字节对象（在二进制模式下）:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; value = (<span style="color:#a50">&#39;the answer&#39;</span>, <span style="color:#099">42</span>)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; s = <span style="color:#0aa">str</span>(value)  <span style="color:#aaa;font-style:italic"># convert the tuple to string</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.write(s)
+</span></span><span style="display:flex;"><span><span style="color:#099">18</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>f.tell() 返回一个整数，给出文件对象在文件中的当前位置，表示为二进制模式下时从文件开始的字节数，以及文本模式下的意义不明的数字。</p>
+<p>要改变文件对象的位置，请使用 f.seek(offset, whence)。 通过向一个参考点添加 offset 来计算位置；参考点由 whence 参数指定。 whence 的 0 值表示从文件开头起算，1 表示使用当前文件位置，2 表示使用文件末尾作为参考点。 whence 如果省略则默认值为 0，即使用文件开头作为参考点。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; f = <span style="color:#0aa">open</span>(<span style="color:#a50">&#39;workfile&#39;</span>, <span style="color:#a50">&#39;rb+&#39;</span>)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.write(<span style="color:#a50">b</span><span style="color:#a50">&#39;0123456789abcdef&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#099">16</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.seek(<span style="color:#099">5</span>)      <span style="color:#aaa;font-style:italic"># Go to the 6th byte in the file</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">5</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.read(<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">b</span><span style="color:#a50">&#39;5&#39;</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.seek(-<span style="color:#099">3</span>, <span style="color:#099">2</span>)  <span style="color:#aaa;font-style:italic"># Go to the 3rd byte before the end</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">13</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; f.read(<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a50">b</span><span style="color:#a50">&#39;d&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在文本文件（那些在模式字符串中没有 b 的打开的文件）中，只允许相对于文件开头搜索（使用 seek(0, 2) 搜索到文件末尾是个例外）并且唯一有效的 offset 值是那些能从 f.tell() 中返回的或者是零。其他 offset 值都会产生未定义的行为。</p>
+<p>文件对象有一些额外的方法，例如 isatty() 和 truncate() ，它们使用频率较低；有关文件对象的完整指南请参阅库参考。</p>
+<h3 id="使用-json-保存结构化数据">使用 json 保存结构化数据</h3>
+<p>字符串可以很轻松地写入文件并从文件中读取出来。数字可能会费点劲，因为 read() 方法只能返回字符串，这些字符串必须传递给类似 int() 的函数，它会接受类似 &lsquo;123&rsquo; 这样的字符串并返回其数字值 123。当你想保存诸如嵌套列表和字典这样更复杂的数据类型时，手动解析和序列化会变得复杂。</p>
+<p>Python 允许你使用称为 JSON (JavaScript Object Notation) 的流行数据交换格式，而不是让用户不断的编写和调试代码以将复杂的数据类型保存到文件中。名为 json 的标准模块可以采用 Python 数据层次结构，并将它们转化为字符串表示形式；这个过程称为 serializing 。从字符串表示中重建数据称为 deserializing 。在序列化和反序列化之间，表示对象的字符串可能已存储在文件或数据中，或通过网络连接发送到某个远程机器。</p>
+<p>注解 JSON格式通常被现代应用程序用于允许数据交换。许多程序员已经熟悉它，这使其成为互操作性的良好选择。</p>
+<p>如果你有一个对象 x ，你可以用一行简单的代码来查看它的 JSON 字符串表示:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">json</span>
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; json.dumps([<span style="color:#099">1</span>, <span style="color:#a50">&#39;simple&#39;</span>, <span style="color:#a50">&#39;list&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;[1, &#34;simple&#34;, &#34;list&#34;]&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>dumps() 函数的另一个变体叫做 dump() ，它只是将对象序列化为 text file 。因此，如果 f 是一个 text file 对象，我们可以这样做:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>json.dump(x, f)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要再次解码对象，如果 f 是一个打开的以供阅读的 text file 对象:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x = json.load(f)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参见 pickle - 封存模块.与 JSON 不同，pickle 是一种允许对任意复杂 Python 对象进行序列化的协议。因此，它为 Python 所特有，不能用于与其他语言编写的应用程序通信。默认情况下它也是不安全的：如果数据是由熟练的攻击者精心设计的，则反序列化来自不受信任来源的 pickle 数据可以执行任意代码。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" data-title="Python教程-输入输出" data-hashtags="Python教程"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" data-hashtag="Python教程"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" data-title="Python教程-输入输出"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" data-title="Python教程-输入输出"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" data-title="Python教程-输入输出"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python%E6%95%99%E7%A8%8B/">Python教程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/python/python%E6%95%99%E7%A8%8B/%E6%A8%A1%E5%9D%97/" class="prev" rel="prev" title="Python教程-模块"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Python教程-模块</a>
+            <a href="/posts/python/python%E6%95%99%E7%A8%8B/%E9%94%99%E8%AF%AF%E5%92%8C%E5%BC%82%E5%B8%B8/" class="next" rel="next" title="Python教程-错误和异常">Python教程-错误和异常<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-12T11:06:02+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"Python教程-输入输出"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

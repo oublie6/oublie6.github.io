@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>版本控制-git-主要-基础篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="版本控制-git-主要-基础篇" />
+<meta property="og:description" content="本文来源于LearnGitBranching官网 git commit Git 仓库中的提交记录保存的是你的目录下所有文件的快照，就像是把整个目录复制，然后再粘贴一样" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E5%9F%BA%E7%A1%80%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-15T11:40:02+08:00" />
+<meta property="article:modified_time" content="2022-10-15T11:40:02+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="版本控制-git-主要-基础篇"/>
+<meta name="twitter:description" content="本文来源于LearnGitBranching官网 git commit Git 仓库中的提交记录保存的是你的目录下所有文件的快照，就像是把整个目录复制，然后再粘贴一样"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E5%9F%BA%E7%A1%80%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/%E4%B8%9C%E5%93%A5%E7%AC%94%E8%AE%B0/" /><link rel="next" href="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E9%AB%98%E7%BA%A7%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "版本控制-git-主要-基础篇",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6\/git\/learngitbranching\/%E4%B8%BB%E8%A6%81\/%E5%9F%BA%E7%A1%80%E7%AF%87\/"
+        },"genre": "posts","keywords": "git","wordcount":  737 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6\/git\/learngitbranching\/%E4%B8%BB%E8%A6%81\/%E5%9F%BA%E7%A1%80%E7%AF%87\/","datePublished": "2022-10-15T11:40:02+08:00","dateModified": "2022-10-15T11:40:02+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">版本控制-git-主要-基础篇</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>版本控制</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-15">2022-10-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;737 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#git-commit">git commit</a></li>
+    <li><a href="#git-branch">git branch</a></li>
+    <li><a href="#分支与合并">分支与合并</a>
+      <ul>
+        <li><a href="#git-merge">git merge</a></li>
+        <li><a href="#git-rebase">git rebase</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文来源于<a href="https://learngitbranching.js.org/?locale=zh_CN" target="_blank" rel="noopener noreffer ">LearnGitBranching官网</a></p>
+<h2 id="git-commit">git commit</h2>
+<p>Git 仓库中的提交记录保存的是你的目录下所有文件的快照，就像是把整个目录复制，然后再粘贴一样，但比复制粘贴优雅许多！</p>
+<p>Git 希望提交记录尽可能地轻量，因此在你每次进行提交时，它并不会盲目地复制整个目录。条件允许的情况下，它会将当前版本与仓库中的上一个版本进行对比，并把所有的差异打包到一起作为一个提交记录。</p>
+<p>Git 还保存了提交的历史记录。这也是为什么大多数提交记录的上面都有父节点的原因</p>
+<pre tabindex="0"><code>git commit -m &#34;xxx&#34;
+</code></pre><p>在当前HEAD所在提交新建一个提交</p>
+<h2 id="git-branch">git branch</h2>
+<p>Git 的分支也非常轻量。它们只是简单地指向某个提交纪录</p>
+<p>早建分支！多用分支！</p>
+<p>这是因为即使创建再多的分支也不会造成储存或内存上的开销，并且按逻辑分解工作到不同的分支要比维护那些特别臃肿的分支简单多了。</p>
+<p>在将分支和提交记录结合起来后，我们会看到两者如何协作。现在只要记住使用分支其实就相当于在说：“我想基于这个提交以及它所有的父提交进行新的工作。”</p>
+<p>创建xxx分支</p>
+<pre tabindex="0"><code>git branch xxx
+</code></pre><p>切换分支</p>
+<pre tabindex="0"><code>git checkout &lt;name&gt;
+</code></pre><h2 id="分支与合并">分支与合并</h2>
+<p>所有合并都是以当前HEAD指向的分支为合并后的最后目标</p>
+<p>另外，合并可以用来修改分支指向的提交，比如你的分支有后续的提交（其他分支merge该分支创建的），那么在该分支下merge或者rebase新的后续提交的hash值就能使当前分支指向新的提交</p>
+<h3 id="git-merge">git merge</h3>
+<pre tabindex="0"><code>git merge xxx
+</code></pre><p>此命令会将当前HEAD指向的分支的提交和xxx分支的提交合并生成一个新的提交，然后将当前HEAD指向的分支指向新的提交</p>
+<h3 id="git-rebase">git rebase</h3>
+<pre tabindex="0"><code>git rebase xxx
+</code></pre><p>第二种合并分支的方法是 git rebase。Rebase 实际上就是取出一系列的提交记录（<code>当前分支</code>到<code>当前分支和被合并分支xxx的公共祖先的孩子提交</code>），“复制”它们，然后在另外一个地方（被合并分支xxx）逐个的放下去。</p>
+<p>Rebase 的优势就是可以创造更线性的提交历史。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-title="版本控制-git-主要-基础篇" data-hashtags="git"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-hashtag="git"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-title="版本控制-git-主要-基础篇"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-title="版本控制-git-主要-基础篇"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E5%9F%BA%E7%A1%80%E7%AF%87/" data-title="版本控制-git-主要-基础篇"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/git/">git</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/%E4%B8%9C%E5%93%A5%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="版本控制-git-东哥笔记"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>版本控制-git-东哥笔记</a>
+            <a href="/posts/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/git/learngitbranching/%E4%B8%BB%E8%A6%81/%E9%AB%98%E7%BA%A7%E7%AF%87/" class="next" rel="next" title="版本控制-git-LearnGitBranching-主要-高级篇">版本控制-git-LearnGitBranching-主要-高级篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-10-15T11:40:02+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"版本控制-git-主要-基础篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

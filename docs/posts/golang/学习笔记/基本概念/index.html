@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>golang-学习笔记-基本概念 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-学习笔记-基本概念" />
+<meta property="og:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-10T19:19:23+08:00" />
+<meta property="article:modified_time" content="2022-12-10T19:19:23+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="golang-学习笔记-基本概念"/>
+<meta name="twitter:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/go%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/go%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "golang-学习笔记-基本概念",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5\/"
+        },"genre": "posts","keywords": "go学习笔记","wordcount":  3453 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5\/","datePublished": "2022-12-10T19:19:23+08:00","dateModified": "2022-12-10T19:19:23+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-基本概念</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-10">2022-12-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3453 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#go程序基本结构和要素">go程序基本结构和要素</a>
+      <ul>
+        <li><a href="#包的概念导入与可见性">包的概念、导入与可见性</a></li>
+        <li><a href="#函数">函数</a></li>
+        <li><a href="#注释">注释</a></li>
+        <li><a href="#类型">类型</a></li>
+        <li><a href="#go-程序的一般结构">Go 程序的一般结构</a></li>
+        <li><a href="#类型转换">类型转换</a></li>
+      </ul>
+    </li>
+    <li><a href="#常量">常量</a></li>
+    <li><a href="#变量">变量</a>
+      <ul>
+        <li><a href="#值类型和引用类型">值类型和引用类型</a></li>
+        <li><a href="#打印">打印</a></li>
+        <li><a href="#使用--赋值操作符">使用 := 赋值操作符</a></li>
+        <li><a href="#init-函数">init 函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#基本类型和运算符">基本类型和运算符</a>
+      <ul>
+        <li><a href="#布尔类型-bool">布尔类型 bool</a></li>
+        <li><a href="#数字类型">数字类型</a>
+          <ul>
+            <li><a href="#整型-int-和浮点型-float">整型 int 和浮点型 float</a></li>
+            <li><a href="#复数">复数</a></li>
+            <li><a href="#位运算">位运算</a></li>
+            <li><a href="#逻辑运算符">逻辑运算符</a></li>
+            <li><a href="#算术运算符">算术运算符</a></li>
+            <li><a href="#随机数">随机数</a></li>
+          </ul>
+        </li>
+        <li><a href="#运算符与优先级">运算符与优先级</a></li>
+        <li><a href="#类型别名">类型别名</a></li>
+        <li><a href="#字符类型">字符类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#字符串">字符串</a></li>
+    <li><a href="#指针">指针</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
+<h2 id="go程序基本结构和要素">go程序基本结构和要素</h2>
+<h3 id="包的概念导入与可见性">包的概念、导入与可见性</h3>
+<p>go项目中每一个文件夹都是一个包包名为文件夹名。文件夹里面的<code>.go</code>文件都属于一个包。</p>
+<p>标准库：go内置的库</p>
+<p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
+<p>如果对一个包进行更改或重新编译，所有引用了这个包的客户端程序都必须全部重新编译。</p>
+<p>每一段代码只会被编译一次</p>
+<p>可见性规则：大写字幕开头的标识符可以被外部包使用</p>
+<h3 id="函数">函数</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">functionName</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="注释">注释</h3>
+<p>与C++一致<code>//</code>或者<code>/* */</code></p>
+<h3 id="类型">类型</h3>
+<p>类型可以是基本类型，如：int、float、bool、string；结构化的（复合的），如：struct、array、slice、map、channel；只描述类型的行为的，如：interface。</p>
+<p>结构化的类型没有真正的值，它使用 nil 作为默认值。</p>
+<p>函数也可以是一个确定的类型。</p>
+<p>type 关键字可以定义你自己的类型，见杂记中的类型定义与类型别名</p>
+<h3 id="go-程序的一般结构">Go 程序的一般结构</h3>
+<p>Go 程序的执行（程序启动）顺序如下：</p>
+<ol>
+<li>按顺序导入所有被 main 包引用的其它包，然后在每个包中执行如下流程：</li>
+<li>如果该包又导入了其它的包，则从第一步开始递归执行，但是每个包只会被导入一次。</li>
+<li>然后以相反的顺序在每个包中初始化常量和变量，如果该包含有 init 函数的话，则调用该函数。</li>
+<li>在完成这一切之后，main 也执行同样的过程，最后调用 main 函数开始执行程序。</li>
+</ol>
+<h3 id="类型转换">类型转换</h3>
+<p>在必要以及可行的情况下，一个类型的值可以被转换成另一种类型的值。所有的转换都必须显式说明，就像调用一个函数一样（类型在这里的作用可以看作是一种函数）：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>valueOfTypeB = <span style="color:#0a0">typeB</span>(valueOfTypeA)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具有相同底层类型的变量之间可以相互转换：</p>
+<h2 id="常量">常量</h2>
+<p>const 定义:<code>const Pi = 3.14159</code></p>
+<p>常量的值必须是能够在编译时就能够确定的。</p>
+<p>常量命名通常使用大驼峰命名</p>
+<p>常量还可以用作枚举：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>    Unknown = <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    Female = <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    Male = <span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>iota 可以被用作枚举值：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>    a = <span style="color:#00a">iota</span>
+</span></span><span style="display:flex;"><span>    b = <span style="color:#00a">iota</span>
+</span></span><span style="display:flex;"><span>    c = <span style="color:#00a">iota</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一个 iota 等于 0，每当 iota 在新的一行被使用时，它的值都会自动加 1；所以 a=0, b=1, c=2 可以简写为如下形式：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>    a = <span style="color:#00a">iota</span>
+</span></span><span style="display:flex;"><span>    b
+</span></span><span style="display:flex;"><span>    c
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>iota 也可以用在表达式中<code>1&lt;&lt;iota</code></p>
+<p>在每遇到一个新的常量块或单个常量声明时， iota 都会重置为 0（ 简单地讲，每遇到一次 const 关键字，iota 就重置为 0 ）。</p>
+<h2 id="变量">变量</h2>
+<p><code>var identifier type</code>或者<code>var identifier=value</code>定义变量，<code>var</code>主要用于函数外包级别的全局变量，函数体内更推荐使用<code>:=</code>让编译器自己去推导变量类型</p>
+<p>多个var也可以用括号进行简写</p>
+<p>同一类型的多个变量可以声明在同一行</p>
+<p>变量的命名规则遵循骆驼命名法</p>
+<p>当变量a和变量b之间类型相同时，才能进行如a = b的赋值</p>
+<h3 id="值类型和引用类型">值类型和引用类型</h3>
+<p>引用类型并不直接表示值内存，而是一小块指向值内存地址的内存，值类型直接指向值内存</p>
+<h3 id="打印">打印</h3>
+<p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">fmt包</a></p>
+<h3 id="使用--赋值操作符">使用 := 赋值操作符</h3>
+<p>只能被用在函数体内，而不可以用于全局变量的声明与赋值，不可以多次对于相同名称的变量使用初始化声明</p>
+<p>多变量可以在同一行进行赋值，这被称为 并行 或 同时 赋值。</p>
+<p>空白标识符 <code>_</code> 被用于抛弃值，如值 5 在：<code>_, b = 5, 7</code> 中被抛弃。<code>_</code> 实际上是一个只写变量，你不能得到它的值。</p>
+<h3 id="init-函数">init 函数</h3>
+<p>变量除了可以在全局声明中初始化，也可以在 init 函数中初始化。这是一类非常特殊的函数，它不能够被人为调用，而是在每个包完成初始化后自动执行，并且执行优先级比 main 函数高。</p>
+<p>每一个源文件都可以包含一个或多个 init 函数。初始化总是以单线程执行，并且按照包的依赖关系顺序执行。</p>
+<p>一个可能的用途是在开始执行程序之前对数据进行检验或修复，以保证程序状态的正确性。</p>
+<p>init 函数也经常被用在当一个程序开始之前调用后台执行的 goroutine，如下面这个例子当中的 backend()：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">init</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#aaa;font-style:italic">// setup preparations
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>   <span style="color:#00a">go</span> <span style="color:#0a0">backend</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="基本类型和运算符">基本类型和运算符</h2>
+<h3 id="布尔类型-bool">布尔类型 bool</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> b <span style="color:#0aa">bool</span> = <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>b:=<span style="color:#00a">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以使用相等 == 或者不等 != 运算符来进行比较并获得一个布尔型的值。</p>
+<p>只有在两个的值的类型相同的情况下才可以使用。</p>
+<p>如果值的类型是接口，它们也必须都实现了相同的接口。</p>
+<p>布尔型的常量和变量也可以通过和逻辑运算符（非 <code>!</code>、和 <code>&amp;&amp;</code>、或 <code>||</code>）结合来产生另外一个布尔值</p>
+<h3 id="数字类型">数字类型</h3>
+<h4 id="整型-int-和浮点型-float">整型 int 和浮点型 float</h4>
+<p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">格式化说明符</a></p>
+<p>数字值转换:当进行类似 a32bitInt = int32(a32Float) 的转换时，小数点后的数字将被丢弃。</p>
+<h4 id="复数">复数</h4>
+<p>Go 拥有以下复数类型：</p>
+<ul>
+<li>complex64 (32 位实数和虚数)</li>
+<li>complex128 (64 位实数和虚数)</li>
+</ul>
+<p>复数使用 re+imI 来表示，其中 re 代表实数部分，im 代表虚数部分，I 代表根号负 1。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> c1 <span style="color:#0aa">complex64</span> = <span style="color:#099">5</span> + <span style="color:#099">10i</span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;The value is: %v&#34;</span>, c1)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 输出： 5 + 10i
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果 re 和 im 的类型均为 float32，那么类型为 complex64 的复数 c 可以通过以下方式来获得：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>c = <span style="color:#0aa">complex</span>(re, im)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>函数 <code>real(c)</code> 和 <code>imag(c)</code> 可以分别获得相应的实数和虚数部分。</p>
+<h4 id="位运算">位运算</h4>
+<p>二元运算符:</p>
+<ul>
+<li>按位与 &amp;：</li>
+<li>按位或 |：</li>
+<li>按位异或 ^：</li>
+<li>位清除 &amp;^：a &amp;^ b 的效果近似于 a &amp; (^b)将b中为1的位置的位在a中置零</li>
+</ul>
+<p>一元运算符：</p>
+<ul>
+<li>按位补足 ^：</li>
+<li>位左移 &laquo;：</li>
+<li>位右移 &raquo;：</li>
+</ul>
+<p>位左移常见实现存储单位的用例，使用位左移与 iota 计数配合可优雅地实现存储单位的常量枚举：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> ByteSize <span style="color:#0aa">float64</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>    _ = <span style="color:#00a">iota</span> <span style="color:#aaa;font-style:italic">// 通过赋值给空白标识符来忽略值
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    KB ByteSize = <span style="color:#099">1</span>&lt;&lt;(<span style="color:#099">10</span>*<span style="color:#00a">iota</span>)
+</span></span><span style="display:flex;"><span>    MB
+</span></span><span style="display:flex;"><span>    GB
+</span></span><span style="display:flex;"><span>    TB
+</span></span><span style="display:flex;"><span>    PB
+</span></span><span style="display:flex;"><span>    EB
+</span></span><span style="display:flex;"><span>    ZB
+</span></span><span style="display:flex;"><span>    YB
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="逻辑运算符">逻辑运算符</h4>
+<p>Go 中拥有以下逻辑运算符：==、!=、&lt;、&lt;=、&gt;、&gt;=。</p>
+<h4 id="算术运算符">算术运算符</h4>
+<p>整数和浮点数的二元运算符有 +、-、* 和 /</p>
+<p>Go 在进行字符串拼接时允许使用对运算符 + 的重载，但 Go 本身不允许开发者进行自定义的运算符重载</p>
+<p>/ 对于整数运算而言，结果依旧为整数</p>
+<p>取余运算符只能作用于整数</p>
+<p>整数除以 0 可能导致程序崩溃，将会导致运行时的恐慌状态</p>
+<p>浮点数除以 0.0 会返回一个无穷尽的结果，使用 +Inf 表示。</p>
+<h4 id="随机数">随机数</h4>
+<p>函数 rand.Float32() 和 rand.Float64() 返回介于 [0.0, 1.0) 之间的伪随机数，其中包括 0.0 但不包括 1.0。函数 rand.Intn(n int) 返回介于 [0, n) 之间的伪随机数。</p>
+<p>使用 Seed(value) 函数来提供伪随机数的生成种子，一般情况下都会使用当前时间的纳秒级数字。</p>
+<h3 id="运算符与优先级">运算符与优先级</h3>
+<p>优先级     运算符
+7         ^ !
+6         * / % &laquo; &raquo; &amp; &amp;^
+5         + - | ^
+4         == != &lt; &lt;= &gt;= &gt;
+3         &lt;-
+2         &amp;&amp;
+1         ||</p>
+<h3 id="类型别名">类型别名</h3>
+<p>他这里不准确，见杂记类型别名和类型定义</p>
+<h3 id="字符类型">字符类型</h3>
+<p>byte 类型是 uint8 的别名，可以表示只占用 1 个字节的传统 ASCII 编码的字符。例如：<code>var ch byte = 'A'；</code>字符使用单引号括起来。</p>
+<p>在 ASCII 码表中，A 的值是 65，而使用 16 进制表示则为 41，所以下面的写法是等效的：<code>var ch byte = 65 或 var ch byte = '\x41'</code></p>
+<p>另外一种可能的写法是 \ 后面紧跟着长度为 3 的八进制数，例如：<code>\377</code>。</p>
+<p>Go 同样支持 Unicode（UTF-8），因此字符同样称为 Unicode 代码点或者 <code>runes</code>，并在内存中使用 <code>int</code> 来表示。<code>rune</code> 也是 Go 当中的一个类型，并且是 <code>int32</code> 的别名。</p>
+<h2 id="字符串">字符串</h2>
+<p>字符串是 UTF-8 字符的一个序列（当字符为 ASCII 码时则占用 1 个字节，其它字符根据需要占用 2-4 个字节）。</p>
+<p>字符串是一种值类型，且值不可变，更深入地讲，字符串是字节的定长数组。</p>
+<p>Go 支持以下 2 种形式的字面值：</p>
+<ul>
+<li>解释字符串：使用双引号括起来，其中的相关的转义字符将被替换，这些转义字符包括：\n：换行符，\r：回车符，\t：tab 键，\u 或 \U：Unicode 字符，\：反斜杠自身</li>
+<li>非解释字符串：该类字符串使用反引号括起来，支持换行，例如：  <code>``This is a raw string \n``</code> 中的 <code>\n\</code> 会被原样输出。</li>
+</ul>
+<p>和 C/C++不一样，Go 中的字符串是根据长度限定，而非特殊字符\0。</p>
+<p>string 类型的零值为长度为零的字符串，即空字符串 &quot;&quot;</p>
+<p>一般的比较运算符（==、!=、&lt;、&lt;=、&gt;=、&gt;）通过在内存中按字节比较来实现字符串的对比。你可以通过函数 len() 来获取字符串所占的字节长度，例如：len(str)。</p>
+<p>字符串的内容（纯字节）可以通过标准索引法来获取，在中括号 [] 内写入索引，索引从 0 开始计数：</p>
+<ul>
+<li>字符串 str 的第 1 个字节：str[0]</li>
+<li>第 i 个字节：str[i - 1]</li>
+<li>最后 1 个字节：str[len(str)-1]</li>
+</ul>
+<p>这种转换方案只对纯 ASCII 码的字符串有效。</p>
+<p>获取字符串中某个字节的地址的行为是非法的，例如：&amp;str[i]</p>
+<p>字符串拼接符 +</p>
+<p>可以通过以下方式来对代码中多行的字符串进行拼接：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>str := <span style="color:#a50">&#34;Beginning of the string &#34;</span> +
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;second part of the string&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于编译器行尾自动补全分号的缘故，加号 + 必须放在第一行末尾。</p>
+<p>拼接的简写形式 += 也可以用于字符串：</p>
+<p>在循环中使用加号 + 拼接字符串并不是最高效的做法，更好的办法是使用函数 strings.Join()，有没有更好地办法了？有！使用字节缓冲（bytes.Buffer）拼接更加给力</p>
+<h2 id="指针">指针</h2>
+<p>取地址符和反向引用符号与C++一致，但是不支持指针运算</p>
+<p>一个指针变量可以指向任何一个值的内存地址 它指向那个值的内存地址，在 32 位机器上占用 4 个字节，在 64 位机器上占用 8 个字节，并且与它所指向的值的大小无关。</p>
+<p>你不能得到一个文字或常量的地址</p>
+<p>空指针的反向引用会使程序崩溃</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" data-title="golang-学习笔记-基本概念" data-hashtags="go学习笔记"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" data-hashtag="go学习笔记"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" data-title="golang-学习笔记-基本概念"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" data-title="golang-学习笔记-基本概念"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" data-title="golang-学习笔记-基本概念"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">go学习笔记</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/go%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/" class="prev" rel="prev" title="golang-学习笔记-Go背景知识"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-学习笔记-Go背景知识</a>
+            <a href="/posts/golang/%E6%9D%82%E8%AE%B0/go%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/" class="next" rel="next" title="golang-杂记-Go内置函数">golang-杂记-Go内置函数<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"288ce7d75b58873d5587","clientSecret":"4a2de9270c3e7bcfead921c7e3be225d462e6cee","id":"2022-12-10T19:19:23+08:00","owner":"oublie6","repo":"https://github.com/oublie6/oublie6.github.io.git","title":"golang-学习笔记-基本概念"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>JavaScript-JavaScript数字方法 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="JavaScript-JavaScript数字方法" />
+<meta property="og:description" content="本系列是作者在跟着W3school的JS教程学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。 数字方法和属性 原始值" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-05T15:57:38+08:00" />
+<meta property="article:modified_time" content="2022-10-05T15:57:38+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="JavaScript-JavaScript数字方法"/>
+<meta name="twitter:description" content="本系列是作者在跟着W3school的JS教程学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。 数字方法和属性 原始值"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E7%BB%84/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "JavaScript-JavaScript数字方法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/javascript\/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95\/"
+        },"genre": "posts","keywords": "JavaScript","wordcount":  1052 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E5%89%8D%E7%AB%AF\/javascript\/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95\/","datePublished": "2022-10-05T15:57:38+08:00","dateModified": "2022-10-05T15:57:38+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">JavaScript-JavaScript数字方法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%89%8D%E7%AB%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>前端</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-05">2022-10-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1052 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#数字方法和属性">数字方法和属性</a></li>
+    <li><a href="#tostring-方法">toString() 方法</a></li>
+    <li><a href="#toexponential-方法">toExponential() 方法</a></li>
+    <li><a href="#tofixed-方法">toFixed() 方法</a></li>
+    <li><a href="#toprecision-方法">toPrecision() 方法</a></li>
+    <li><a href="#valueof-方法">valueOf() 方法</a></li>
+    <li><a href="#将变量转换为数字">将变量转换为数字</a>
+      <ul>
+        <li><a href="#全局-javascript-方法">全局 JavaScript 方法</a></li>
+        <li><a href="#number-方法">Number() 方法</a></li>
+        <li><a href="#parseint-方法">parseInt() 方法</a></li>
+        <li><a href="#parsefloat-方法">parseFloat() 方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#数字属性">数字属性</a>
+      <ul>
+        <li><a href="#javascript-min_value-和-max_value">JavaScript MIN_VALUE 和 MAX_VALUE</a></li>
+        <li><a href="#javascript-positive_infinity">JavaScript POSITIVE_INFINITY</a></li>
+        <li><a href="#javascript-negative_infinity">JavaScript NEGATIVE_INFINITY</a></li>
+        <li><a href="#javascript-nan---不是数字">JavaScript NaN - 不是数字</a></li>
+      </ul>
+    </li>
+    <li><a href="#数字属性不能用于变量">数字属性不能用于变量</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列是作者在跟着<a href="https://www.w3schools.com/js/default.asp" target="_blank" rel="noopener noreffer ">W3school的JS教程</a>学习时做的笔记，可能并不详尽，读者可以到W3school教程中查看完整内容。</p>
+<h2 id="数字方法和属性">数字方法和属性</h2>
+<p>原始值（如 3.14 或 2014）不能具有属性和方法（因为它们不是对象）。</p>
+<p>但是对于 JavaScript，方法和属性也可用于原始值，因为 JavaScript 在执行方法和属性时将原始值视为对象。</p>
+<h2 id="tostring-方法">toString() 方法</h2>
+<p>toString()方法以字符串形式返回一个数字。</p>
+<p>所有数字方法都可以用于任何类型的数字（文字、变量或表达式）：</p>
+<pre tabindex="0"><code>let x = 123;
+x.toString();
+(123).toString();
+(100 + 23).toString();
+</code></pre><h2 id="toexponential-方法">toExponential() 方法</h2>
+<p>toExponential()返回一个字符串，数字四舍五入并使用指数表示法写入。</p>
+<p>一个参数定义小数点后面的字符数：</p>
+<h2 id="tofixed-方法">toFixed() 方法</h2>
+<p>toFixed()返回一个字符串，其数字以指定的小数位数写入：</p>
+<p>toFixed(2)非常适合与金钱打交道。</p>
+<h2 id="toprecision-方法">toPrecision() 方法</h2>
+<p>toPrecision()返回一个字符串，其中包含一个指定长度的数字：</p>
+<h2 id="valueof-方法">valueOf() 方法</h2>
+<p>valueOf()将数字作为数字返回。</p>
+<p>在 JavaScript 中，数字可以是原始值（typeof = number）或对象（typeof = object）。</p>
+<p>该valueOf()方法在 JavaScript 内部用于将 Number 对象转换为原始值。</p>
+<p>没有理由在您的代码中使用它。</p>
+<p>所有 JavaScript 数据类型都有一个valueOf()和一个toString()方法。</p>
+<h2 id="将变量转换为数字">将变量转换为数字</h2>
+<p>有 3 种 JavaScript 方法可用于将变量转换为数字：</p>
+<ul>
+<li>Number()方法</li>
+<li>parseInt()方法</li>
+<li>parseFloat()方法</li>
+</ul>
+<p>这些方法不是数字方法，而是全局 JavaScript 方法。</p>
+<h3 id="全局-javascript-方法">全局 JavaScript 方法</h3>
+<p>JavaScript 全局方法可用于所有 JavaScript 数据类型。</p>
+<h3 id="number-方法">Number() 方法</h3>
+<p>Number()可用于将 JavaScript 变量转换为数字：</p>
+<pre tabindex="0"><code>Number(true);
+Number(false);
+Number(&#34;10&#34;);
+Number(&#34;  10&#34;);
+Number(&#34;10  &#34;);
+Number(&#34; 10  &#34;);
+Number(&#34;10.33&#34;);
+Number(&#34;10,33&#34;);
+Number(&#34;10 33&#34;);
+Number(&#34;John&#34;);
+</code></pre><p>如果无法转换数字，则返回NaN (Not a Number)。</p>
+<p>Number()还可以将日期转换为数字。</p>
+<pre tabindex="0"><code>Number(new Date(&#34;1970-01-01&#34;))
+</code></pre><p>该Number()方法返回自 1.1.1970 以来的毫秒数。</p>
+<h3 id="parseint-方法">parseInt() 方法</h3>
+<p>parseInt()解析一个字符串并返回一个整数。允许空格。仅返回第一个数字：</p>
+<pre tabindex="0"><code>parseInt(&#34;-10&#34;);
+parseInt(&#34;-10.33&#34;);
+parseInt(&#34;10&#34;);
+parseInt(&#34;10.33&#34;);
+parseInt(&#34;10 20 30&#34;);
+parseInt(&#34;10 years&#34;);
+parseInt(&#34;years 10&#34;);
+</code></pre><p>如果无法转换数字，则返回NaN (Not a Number)。</p>
+<h3 id="parsefloat-方法">parseFloat() 方法</h3>
+<p>parseFloat()解析一个字符串并返回一个数字。允许空格。仅返回第一个数字：</p>
+<p>如果无法转换数字，NaN则返回 (Not a Number)。</p>
+<h2 id="数字属性">数字属性</h2>
+<h3 id="javascript-min_value-和-max_value">JavaScript MIN_VALUE 和 MAX_VALUE</h3>
+<p>MAX_VALUE返回 JavaScript 中可能的最大数字。</p>
+<pre tabindex="0"><code>let x = Number.MAX_VALUE;
+</code></pre><p>MIN_VALUE返回 JavaScript 中可能的最小数字。</p>
+<h3 id="javascript-positive_infinity">JavaScript POSITIVE_INFINITY</h3>
+<pre tabindex="0"><code>let x = Number.POSITIVE_INFINITY;
+</code></pre><h3 id="javascript-negative_infinity">JavaScript NEGATIVE_INFINITY</h3>
+<h3 id="javascript-nan---不是数字">JavaScript NaN - 不是数字</h3>
+<pre tabindex="0"><code>let x = Number.NaN;
+</code></pre><h2 id="数字属性不能用于变量">数字属性不能用于变量</h2>
+<p>Number 属性属于 JavaScript 的 number 对象包装器Number。</p>
+<p>这些属性只能以Number.MAX_VALUE.</p>
+<p>使用myNumber .MAX_VALUE，其中myNumber是变量、表达式或值，将返回undefined：</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95/" data-title="JavaScript-JavaScript数字方法" data-hashtags="JavaScript"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95/" data-hashtag="JavaScript"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95/" data-title="JavaScript-JavaScript数字方法"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95/" data-title="JavaScript-JavaScript数字方法"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97%E6%96%B9%E6%B3%95/" data-title="JavaScript-JavaScript数字方法"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/javascript/">JavaScript</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E5%AD%97/" class="prev" rel="prev" title="JavaScript-JavaScript数字"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>JavaScript-JavaScript数字</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/javascript/javascript%E6%95%B0%E7%BB%84/" class="next" rel="next" title="JavaScript-JavaScript数组">JavaScript-JavaScript数组<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
