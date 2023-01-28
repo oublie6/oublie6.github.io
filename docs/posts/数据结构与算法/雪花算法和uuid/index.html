@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>数据结构与算法-雪花算法和uuid - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="数据结构与算法-雪花算法和uuid" />
-<meta property="og:description" content="CSDN YmaxU UUID 形式为8-4-4-4-12的32个16位字符 本地生成，没有网络消耗，入数据库的性能较差 雪花算法 Twitter提出" />
+<meta property="og:description" content="CSDN YmaxU UUID 形式为8-4-4-4-12的32个16位字符 本地生成，没有网络消耗，入数据库的性能较差 雪花算法 Twitter提出 雪花算法为什么不用自增" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E5%92%8Cuuid/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-26T10:22:48+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="数据结构与算法-雪花算法和uuid"/>
-<meta name="twitter:description" content="CSDN YmaxU UUID 形式为8-4-4-4-12的32个16位字符 本地生成，没有网络消耗，入数据库的性能较差 雪花算法 Twitter提出"/>
+<meta name="twitter:description" content="CSDN YmaxU UUID 形式为8-4-4-4-12的32个16位字符 本地生成，没有网络消耗，入数据库的性能较差 雪花算法 Twitter提出 雪花算法为什么不用自增"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E5%92%8Cuuid/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%93%84%E6%B0%B4%E6%B1%A0%E6%8A%BD%E6%A0%B7%E7%AE%97%E6%B3%95/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/gogc/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E5%92%8Cuuid\/"
-        },"genre": "posts","wordcount":  59 ,
+        },"genre": "posts","wordcount":  173 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E5%92%8Cuuid\/","datePublished": "2022-12-26T10:22:48+08:00","dateModified": "2022-12-26T10:22:48+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-雪花算法和uuid</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-26">2022-12-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;59 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-26">2022-12-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;173 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -113,6 +113,7 @@
   <ul>
     <li><a href="#uuid">UUID</a></li>
     <li><a href="#雪花算法">雪花算法</a></li>
+    <li><a href="#雪花算法为什么不用自增id">雪花算法为什么不用自增id</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://blog.csdn.net/m0_53060753/article/details/126577417" target="_blank" rel="noopener noreffer ">CSDN YmaxU</a></p>
@@ -129,6 +130,10 @@
         data-sizes="auto"
         alt="https://img-blog.csdnimg.cn/6597e40f6b444dc1bc1d4bc1f2b03abf.png"
         title="https://img-blog.csdnimg.cn/6597e40f6b444dc1bc1d4bc1f2b03abf.png" /></div>
+<h2 id="雪花算法为什么不用自增id">雪花算法为什么不用自增id</h2>
+<p><a href="https://www.cnblogs.com/chcha1/p/13331688.html" target="_blank" rel="noopener noreffer ">博客园 ZeroGirl</a></p>
+<p>数据库自增id在数据库分库分表后，在数据流较大时容易冲突，UUid将机器id也加入进去就不存在这个问题了。</p>
+<p>主键应越短越好，无序会造成每一次UUID数据的插入都会对主键地城的b+树进行很大的修改。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

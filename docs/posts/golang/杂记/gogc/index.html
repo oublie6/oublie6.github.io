@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>golang-杂记-GoGC - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="golang-杂记-GoGC" />
-<meta property="og:description" content="CSDN smartaconf golang修养之路 三色标记法 将所有对象标记为白色 将从root对象可达的对象标记为灰色然后放到队列中 从队尾取对象标记为黑色，将其引用的白" />
+<meta property="og:description" content="CSDN smartaconf golang修养之路 Go V1.3之前的标记-清除(mark and sweep)算法 暂停程序业务逻辑, 找出不可达的对象，然后做上标记，最后回收标记" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/gogc/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-27T23:42:23+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="golang-杂记-GoGC"/>
-<meta name="twitter:description" content="CSDN smartaconf golang修养之路 三色标记法 将所有对象标记为白色 将从root对象可达的对象标记为灰色然后放到队列中 从队尾取对象标记为黑色，将其引用的白"/>
+<meta name="twitter:description" content="CSDN smartaconf golang修养之路 Go V1.3之前的标记-清除(mark and sweep)算法 暂停程序业务逻辑, 找出不可达的对象，然后做上标记，最后回收标记"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E6%9D%82%E8%AE%B0/gogc/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E5%92%8Cuuid/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%9D%82%E8%AE%B0\/gogc\/"
-        },"genre": "posts","keywords": "golang杂记","wordcount":  105 ,
+        },"genre": "posts","keywords": "golang杂记","wordcount":  425 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%9D%82%E8%AE%B0\/gogc\/","datePublished": "2022-12-27T23:42:23+08:00","dateModified": "2022-12-27T23:42:23+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,24 +102,104 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-杂记-GoGC</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-27">2022-12-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;105 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-27">2022-12-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;425 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#go-v13之前的标记-清除mark-and-sweep算法">Go V1.3之前的标记-清除(mark and sweep)算法</a></li>
+    <li><a href="#go-v15的三色并发标记法">Go V1.5的三色并发标记法</a></li>
+    <li><a href="#屏障机制">屏障机制</a></li>
+    <li><a href="#go-v18的混合写屏障hybrid-write-barrier机制">Go V1.8的混合写屏障(hybrid write barrier)机制</a></li>
+  </ul>
+</nav></div>
             </div><div class="content" id="content"><p><a href="https://blog.csdn.net/weixin_45919793/article/details/123278744" target="_blank" rel="noopener noreffer ">CSDN smartaconf</a></p>
 <p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmee076rjgk7" target="_blank" rel="noopener noreffer ">golang修养之路</a></p>
-<p>三色标记法</p>
-<ol>
-<li>将所有对象标记为白色</li>
-<li>将从root对象可达的对象标记为灰色然后放到队列中</li>
-<li>从队尾取对象标记为黑色，将其引用的白色对象标记为灰色并放入队头，重复直到队列没有对象</li>
-<li>清除白色对象</li>
-</ol>
-<p>混合写屏障</p>
+<h2 id="go-v13之前的标记-清除mark-and-sweep算法">Go V1.3之前的标记-清除(mark and sweep)算法</h2>
+<p>暂停程序业务逻辑, 找出不可达的对象，然后做上标记，最后回收标记好的对象</p>
+<p>需要程序暂停！即 STW(stop the world)</p>
+<h2 id="go-v15的三色并发标记法">Go V1.5的三色并发标记法</h2>
+<div id="id-1"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/46-GC4.png"
+        data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/46-GC4.png, https://www.topgoer.cn/uploads/golangxiuyang/images/46-GC4.png 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/46-GC4.png 2x"
+        data-sizes="auto"
+        alt="https://www.topgoer.cn/uploads/golangxiuyang/images/46-GC4.png"
+        title="https://www.topgoer.cn/uploads/golangxiuyang/images/46-GC4.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/47-GC5.jpeg"
+        data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/47-GC5.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/47-GC5.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/47-GC5.jpeg 2x"
+        data-sizes="auto"
+        alt="https://www.topgoer.cn/uploads/golangxiuyang/images/47-GC5.jpeg"
+        title="https://www.topgoer.cn/uploads/golangxiuyang/images/47-GC5.jpeg" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/48-GC6.jpeg"
+        data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/48-GC6.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/48-GC6.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/48-GC6.jpeg 2x"
+        data-sizes="auto"
+        alt="https://www.topgoer.cn/uploads/golangxiuyang/images/48-GC6.jpeg"
+        title="https://www.topgoer.cn/uploads/golangxiuyang/images/48-GC6.jpeg" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/49-GC7.jpeg"
+        data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/49-GC7.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/49-GC7.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/49-GC7.jpeg 2x"
+        data-sizes="auto"
+        alt="https://www.topgoer.cn/uploads/golangxiuyang/images/49-GC7.jpeg"
+        title="https://www.topgoer.cn/uploads/golangxiuyang/images/49-GC7.jpeg" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/50-GC8.jpeg"
+        data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/50-GC8.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/50-GC8.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/50-GC8.jpeg 2x"
+        data-sizes="auto"
+        alt="https://www.topgoer.cn/uploads/golangxiuyang/images/50-GC8.jpeg"
+        title="https://www.topgoer.cn/uploads/golangxiuyang/images/50-GC8.jpeg" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/51-GC9.jpeg"
+        data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/51-GC9.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/51-GC9.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/51-GC9.jpeg 2x"
+        data-sizes="auto"
+        alt="https://www.topgoer.cn/uploads/golangxiuyang/images/51-GC9.jpeg"
+        title="https://www.topgoer.cn/uploads/golangxiuyang/images/51-GC9.jpeg" /></p>
+</div>
+<h2 id="屏障机制">屏障机制</h2>
+<div id="id-2"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/60-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%986.jpeg"
+        data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/60-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%986.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/60-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%986.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/60-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%986.jpeg 2x"
+        data-sizes="auto"
+        alt="https://www.topgoer.cn/uploads/golangxiuyang/images/60-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%986.jpeg"
+        title="https://www.topgoer.cn/uploads/golangxiuyang/images/60-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%986.jpeg" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/61-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%987.jpeg"
+        data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/61-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%987.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/61-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%987.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/61-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%987.jpeg 2x"
+        data-sizes="auto"
+        alt="https://www.topgoer.cn/uploads/golangxiuyang/images/61-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%987.jpeg"
+        title="https://www.topgoer.cn/uploads/golangxiuyang/images/61-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E9%97%AE%E9%A2%987.jpeg" /></p>
+</div>
+<p>插入屏障：强三色不变式。对于堆空间，A对象引用B对象的时候，B对象被标记为灰色。对于栈空间，回收白色对象之前STW，然后三色标记扫描。</p>
+<p>删除屏障：弱三色不变式。被删除的对象，如果自身为灰色或者白色，那么被标记为灰色。这种方式的回收精度低，一个对象即使被删除了最后一个指向它的指针也依旧可以活过这一轮，在下一轮GC中被清理掉。</p>
+<h2 id="go-v18的混合写屏障hybrid-write-barrier机制">Go V1.8的混合写屏障(hybrid write barrier)机制</h2>
+<p>弱三色不变式。屏障技术是不在栈上应用的，因为要保证栈的运行效率</p>
+<ul>
+<li>GC开始将栈上的对象全部扫描并标记为黑色(之后不再进行第二次重复扫描，无需STW)</li>
+<li>GC期间，任何在栈上创建的新对象，均为黑色</li>
+<li>被堆对象删除的堆对象标记为灰色</li>
+<li>被堆对象添加的堆对象标记为灰色（包括已存在的对象）</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -158,5 +238,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-27T23:42:23+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-杂记-GoGC"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/86ccfb.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-27T23:42:23+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-杂记-GoGC"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

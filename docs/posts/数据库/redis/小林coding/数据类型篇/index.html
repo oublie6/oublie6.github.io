@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%AF%87\/"
-        },"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  2085 ,
+        },"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  2358 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%AF%87\/","datePublished": "2022-12-22T11:35:49+08:00","dateModified": "2022-12-22T11:35:49+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-redis-小林coding-数据类型篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2085 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2358 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -123,6 +123,13 @@
     <li><a href="#物理结构">物理结构</a>
       <ul>
         <li><a href="#sds">SDS</a></li>
+        <li><a href="#链表">链表</a></li>
+        <li><a href="#压缩列表">压缩列表</a></li>
+        <li><a href="#哈希表">哈希表</a></li>
+        <li><a href="#整数集合">整数集合</a></li>
+        <li><a href="#跳表">跳表</a></li>
+        <li><a href="#quicklist">quicklist</a></li>
+        <li><a href="#listpack">listpack</a></li>
       </ul>
     </li>
   </ul>
@@ -552,6 +559,103 @@
 <p>二进制安全，可存储包含 “\0” 的数据</p>
 <p>不会发生缓冲区溢出，Redis自动判断alloc - len，当判断出缓冲区大小不够用时，Redis 会自动扩大 SDS 的空间大小</p>
 <p>小于 1 MB翻倍扩容，超过 1 MB 则 newlen + 1MB</p>
+<p>节省内存空间，取消结构体在编译过程中的优化对齐，按照实际占用字节数进行对齐</p>
+<h3 id="链表">链表</h3>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/cadf797496816eb343a19c2451437f1e.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/cadf797496816eb343a19c2451437f1e.png, https://img-blog.csdnimg.cn/img_convert/cadf797496816eb343a19c2451437f1e.png 1.5x, https://img-blog.csdnimg.cn/img_convert/cadf797496816eb343a19c2451437f1e.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/cadf797496816eb343a19c2451437f1e.png"
+        title="https://img-blog.csdnimg.cn/img_convert/cadf797496816eb343a19c2451437f1e.png" /></div>
+<h3 id="压缩列表">压缩列表</h3>
+<div id="id-6"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/a3b1f6235cf0587115b21312fe60289c.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/a3b1f6235cf0587115b21312fe60289c.png, https://img-blog.csdnimg.cn/img_convert/a3b1f6235cf0587115b21312fe60289c.png 1.5x, https://img-blog.csdnimg.cn/img_convert/a3b1f6235cf0587115b21312fe60289c.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/a3b1f6235cf0587115b21312fe60289c.png"
+        title="https://img-blog.csdnimg.cn/img_convert/a3b1f6235cf0587115b21312fe60289c.png" /></div>
+<h3 id="哈希表">哈希表</h3>
+<div id="id-7"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/dc495ffeaa3c3d8cb2e12129b3423118.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/dc495ffeaa3c3d8cb2e12129b3423118.png, https://img-blog.csdnimg.cn/img_convert/dc495ffeaa3c3d8cb2e12129b3423118.png 1.5x, https://img-blog.csdnimg.cn/img_convert/dc495ffeaa3c3d8cb2e12129b3423118.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/dc495ffeaa3c3d8cb2e12129b3423118.png"
+        title="https://img-blog.csdnimg.cn/img_convert/dc495ffeaa3c3d8cb2e12129b3423118.png" /></div>
+<h3 id="整数集合">整数集合</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#00a">typedef</span> <span style="color:#00a">struct</span> <span style="color:#0a0;text-decoration:underline">intset</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//编码方式
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#0aa">uint32_t</span> encoding;
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//集合包含的元素数量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#0aa">uint32_t</span> length;
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//保存元素的数组
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#0aa">int8_t</span> contents[];
+</span></span><span style="display:flex;"><span>} intset;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>整数集合升级:当新元素需要使用更大的编码方式时，先扩容，然后将旧元素重新赋值，最后添加新元素</p>
+<div id="id-8"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/e84b052381e240eeb8cc97d6b729968b.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/e84b052381e240eeb8cc97d6b729968b.png, https://img-blog.csdnimg.cn/img_convert/e84b052381e240eeb8cc97d6b729968b.png 1.5x, https://img-blog.csdnimg.cn/img_convert/e84b052381e240eeb8cc97d6b729968b.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/e84b052381e240eeb8cc97d6b729968b.png"
+        title="https://img-blog.csdnimg.cn/img_convert/e84b052381e240eeb8cc97d6b729968b.png" /></div>
+<h3 id="跳表">跳表</h3>
+<p>跳表是在链表基础上改进过来的，实现了一种「多层」的有序链表</p>
+<div id="id-9"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/2ae0ed790c7e7403f215acb2bd82e884.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/2ae0ed790c7e7403f215acb2bd82e884.png, https://img-blog.csdnimg.cn/img_convert/2ae0ed790c7e7403f215acb2bd82e884.png 1.5x, https://img-blog.csdnimg.cn/img_convert/2ae0ed790c7e7403f215acb2bd82e884.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/2ae0ed790c7e7403f215acb2bd82e884.png"
+        title="https://img-blog.csdnimg.cn/img_convert/2ae0ed790c7e7403f215acb2bd82e884.png" /></div>
+<blockquote>
+<p>为什么用跳表而不用平衡树</p>
+</blockquote>
+<ul>
+<li>从内存占用上来比较，跳表比平衡树更灵活一些</li>
+<li>在做范围查找的时候，跳表比平衡树操作要简单</li>
+<li>从算法实现难度上来比较，跳表比平衡树要简单得多</li>
+</ul>
+<h3 id="quicklist">quicklist</h3>
+<div id="id-10"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/f46cbe347f65ded522f1cc3fd8dba549.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/f46cbe347f65ded522f1cc3fd8dba549.png, https://img-blog.csdnimg.cn/img_convert/f46cbe347f65ded522f1cc3fd8dba549.png 1.5x, https://img-blog.csdnimg.cn/img_convert/f46cbe347f65ded522f1cc3fd8dba549.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/f46cbe347f65ded522f1cc3fd8dba549.png"
+        title="https://img-blog.csdnimg.cn/img_convert/f46cbe347f65ded522f1cc3fd8dba549.png" /></div>
+<h3 id="listpack">listpack</h3>
+<div id="id-11"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/c5fb0a602d4caaca37ff0357f05b0abf.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/c5fb0a602d4caaca37ff0357f05b0abf.png, https://img-blog.csdnimg.cn/img_convert/c5fb0a602d4caaca37ff0357f05b0abf.png 1.5x, https://img-blog.csdnimg.cn/img_convert/c5fb0a602d4caaca37ff0357f05b0abf.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/c5fb0a602d4caaca37ff0357f05b0abf.png"
+        title="https://img-blog.csdnimg.cn/img_convert/c5fb0a602d4caaca37ff0357f05b0abf.png" /></div>
+<p>listpack 没有压缩列表中记录前一个节点长度的字段了</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -590,5 +694,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/adb004.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-22T11:35:49+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-redis-小林coding-数据类型篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/c32271.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-22T11:35:49+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-redis-小林coding-数据类型篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
