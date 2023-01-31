@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF\/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98\/"
-        },"genre": "posts","wordcount":  131 ,
+        },"genre": "posts","wordcount":  315 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF\/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98\/","datePublished": "2023-01-25T20:57:03+08:00","dateModified": "2023-01-25T20:57:03+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">通用技术-跨域问题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>通用技术</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-25">2023-01-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;131 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-25">2023-01-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;315 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -120,8 +120,35 @@
 <p>当一个请求url的协议,域名,端口三者之间任意一个与当前的url不同都即为跨域</p>
 <p>跨域的安全限制，主要是针对浏览器端来说的，服务器端是不存在跨域安全限制的</p>
 <h2 id="解决跨域">解决跨域</h2>
-<p>cors:后端添加Access-Control-Allow-Origin响应头</p>
-</div><div class="post-footer" id="post-footer">
+<p>cors:在后端响应中添加Access-Control-Allow-Origin响应头</p>
+<p>go原生解决办法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>resp.<span style="color:#0a0">Header</span>().<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;Content-Type&#34;</span>, <span style="color:#a50">&#34;application/json&#34;</span>)
+</span></span><span style="display:flex;"><span>resp.<span style="color:#0a0">Header</span>().<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#a50">&#34;*&#34;</span>) <span style="color:#aaa;font-style:italic">//允许访问所有域
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 必须，设置服务器支持的所有跨域请求的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>resp.<span style="color:#0a0">Header</span>().<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#a50">&#34;POST, GET, PUT, DELETE, OPTIONS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 服务器支持的所有头信息字段，不限于浏览器在&#34;预检&#34;中请求的字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>resp.<span style="color:#0a0">Header</span>().<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#a50">&#34;content-type&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 可选，设置XMLHttpRequest的响应对象能拿到的额外字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>resp.<span style="color:#0a0">Header</span>().<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;Access-Control-Expose-Headers&#34;</span>, <span style="color:#a50">&#34;Access-Control-Allow-Headers, Token&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 可选，是否允许后续请求携带认证信息Cookir，该值只能是true，不需要则不设置
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>resp.<span style="color:#0a0">Header</span>().<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;Access-Control-Allow-Credentials&#34;</span>, <span style="color:#a50">&#34;true&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

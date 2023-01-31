@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/api\/"
-        },"genre": "posts","keywords": "go-zero","wordcount":  4441 ,
+        },"genre": "posts","keywords": "go-zero","wordcount":  4555 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/api\/","datePublished": "2023-01-06T11:40:15+08:00","dateModified": "2023-01-06T11:40:15+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-教程-Api</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4441 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4555 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -832,7 +832,36 @@
 </div>
 </div><p>与go-zero结合的时候将校验的tag加到api文件里面，不要在生成的文件里面添加，因为下次生成会覆盖之前生成的文件。如果不想每次api构建后自己都得再写一遍validator校验逻辑，可以修改模板。</p>
 <h2 id="go-zero-自带jwt鉴权">go-zero 自带jwt鉴权</h2>
-<p>详见<a href="/posts/golang/go-zero/%e6%95%99%e7%a8%8b/looklook/#%e8%87%aa%e5%ae%9a%e4%b9%89jwt%e9%aa%8c%e8%af%81%e4%b8%8d%e9%80%9a%e8%bf%87%e5%93%8d%e5%ba%94" rel="">looklook</a></p>
+<p>api文件设置jwt：xxx</p>
+<p>yaml配置文件配置xxx的相关配置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#1e90ff;font-weight:bold">Auth</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#1e90ff;font-weight:bold">AccessSecret</span>:<span style="color:#bbb"> </span>$AccessSecret<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#1e90ff;font-weight:bold">AccessExpire</span>:<span style="color:#bbb"> </span>$AccessExpire<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>后续通过jwt鉴权的请求携带的jwt信息可以在其他地方被访问</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (l *SearchLogic) <span style="color:#0a0">Search</span>(req types.SearchReq) (*types.SearchReply, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>    logx.<span style="color:#0a0">Infof</span>(<span style="color:#a50">&#34;userId: %v&#34;</span>,l.ctx.<span style="color:#0a0">Value</span>(<span style="color:#a50">&#34;userId&#34;</span>))<span style="color:#aaa;font-style:italic">// 这里的key和生成jwt token时传入的key一致
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">return</span> &amp;types.SearchReply{}, <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>详见<a href="/posts/golang/go-zero/%e6%95%99%e7%a8%8b/looklook/#%e8%87%aa%e5%ae%9a%e4%b9%89jwt%e9%aa%8c%e8%af%81%e4%b8%8d%e9%80%9a%e8%bf%87%e5%93%8d%e5%ba%94" rel="">looklook</a></p>
 <h2 id="api的兼容性httpsmpweixinqqcoms__bizmzg2odu1mti0oamid2247485663idx1snae1486f2e5aff30799ead1d6c88b6ebcchksmceabd7e0f9dc5ef6677b37fd783e433cb64f8aa714ee393690d5f10cfadea78f0e94544a67a8cur_album_id1655138838454796294scene189wechat_redirect"><a href="https://mp.weixin.qq.com/s?__biz=Mzg2ODU1MTI0OA==&amp;mid=2247485663&amp;idx=1&amp;sn=ae1486f2e5aff30799ead1d6c88b6ebc&amp;chksm=ceabd7e0f9dc5ef6677b37fd783e433cb64f8aa714ee393690d5f10cfadea78f0e94544a67a8&amp;cur_album_id=1655138838454796294&amp;scene=189#wechat_redirect" target="_blank" rel="noopener noreffer ">api的兼容性</a></h2>
 <p>定义或修改API的时候一定要考虑向前兼容：</p>
 <ul>

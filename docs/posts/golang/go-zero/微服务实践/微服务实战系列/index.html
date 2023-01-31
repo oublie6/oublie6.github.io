@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E8%B7%B5\/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%97\/"
-        },"genre": "posts","keywords": "go-zero","wordcount":  607 ,
+        },"genre": "posts","keywords": "go-zero","wordcount":  1474 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E8%B7%B5\/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%97\/","datePublished": "2023-01-08T15:57:04+08:00","dateModified": "2023-01-08T15:57:04+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-微服务实践-微服务实战系列</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-08">2023-01-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;607 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-08">2023-01-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1474 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -116,7 +116,42 @@
     <li><a href="#服务依赖">服务依赖</a></li>
     <li><a href="#并行调用">并行调用</a></li>
     <li><a href="#图片上传">图片上传</a></li>
-    <li><a href="#缓存一致性保证">缓存一致性保证</a></li>
+    <li><a href="#缓存代码怎么写">缓存代码怎么写</a>
+      <ul>
+        <li><a href="#基本使用">基本使用</a></li>
+        <li><a href="#缓存雪崩">缓存雪崩</a></li>
+        <li><a href="#缓存击穿">缓存击穿</a></li>
+        <li><a href="#缓存穿透">缓存穿透</a></li>
+      </ul>
+    </li>
+    <li><a href="#缓存一致性保证">缓存一致性保证</a>
+      <ul>
+        <li><a href="#先删缓存再更新数据库">先删缓存再更新数据库</a></li>
+        <li><a href="#先更新数据库再删除缓存">先更新数据库再删除缓存</a></li>
+        <li><a href="#重试机制">重试机制</a></li>
+        <li><a href="#并发读写">并发读写</a></li>
+      </ul>
+    </li>
+    <li><a href="#优化高并发">优化高并发</a>
+      <ul>
+        <li><a href="#本地缓存">本地缓存</a></li>
+        <li><a href="#自动识别热点数据httpsmpweixinqqcoms__bizmzg2odu1mti0oamid2247485754idx1sncb7f02c43eb02eb58b83a06210cacf11chksmceabd605f9dc5f13a62315b519b56357c4a50a5d9b37143ec9b5d0e8729907b0e01b38785643cur_album_id1655138838454796294scene190rd"><a href="https://mp.weixin.qq.com/s?__biz=Mzg2ODU1MTI0OA==&amp;mid=2247485754&amp;idx=1&amp;sn=cb7f02c43eb02eb58b83a06210cacf11&amp;chksm=ceabd605f9dc5f13a62315b519b56357c4a50a5d9b37143ec9b5d0e8729907b0e01b38785643&amp;cur_album_id=1655138838454796294&amp;scene=190#rd">自动识别热点数据</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#处理每秒上万次的下单请求">处理每秒上万次的下单请求</a>
+      <ul>
+        <li><a href="#处理热点数据">处理热点数据</a></li>
+        <li><a href="#流量削峰">流量削峰</a></li>
+        <li><a href="#保证消息只被消费一次">保证消息只被消费一次</a></li>
+      </ul>
+    </li>
+    <li><a href="#极致优化秒杀性能">极致优化秒杀性能</a>
+      <ul>
+        <li><a href="#批量数据聚合">批量数据聚合</a></li>
+        <li><a href="#降低消息的消费延迟">降低消息的消费延迟</a></li>
+        <li><a href="#保证不会超卖">保证不会超卖</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://go-zero.dev/cn/" target="_blank" rel="noopener noreffer ">go-zero官网</a></p>
@@ -278,7 +313,83 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>上传图片前需要先自行创建bucket</p>
+<h2 id="缓存代码怎么写">缓存代码怎么写</h2>
+<h3 id="基本使用">基本使用</h3>
+<p>goctl生成model时添加-c参数</p>
+<p>yaml配置文件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#1e90ff;font-weight:bold">CacheRedis</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>- <span style="color:#1e90ff;font-weight:bold">Host</span>:<span style="color:#bbb"> </span><span style="color:#099">127.0.0.1</span>:<span style="color:#099">6379</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#1e90ff;font-weight:bold">Type</span>:<span style="color:#bbb"> </span>node<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>svc添加字段</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>CategoryModel: model.<span style="color:#0a0">NewCategoryModel</span>(conn, c.CacheRedis)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="缓存雪崩">缓存雪崩</h3>
+<p>两种类型</p>
+<ol>
+<li>大量的数据同时过期：避免大量的数据设置相同的过期时间，在过期时间上加一个较小的随机数</li>
+<li>Redis出现了宕机：让数据库支持熔断，压力较大时丢弃部分请求</li>
+</ol>
+<h3 id="缓存击穿">缓存击穿</h3>
+<p>热点数据过期失效：每次查询缓存的时候使用Expire给缓存续期，不存在时singleflight查询数据库</p>
+<h3 id="缓存穿透">缓存穿透</h3>
+<p>访问的数据既不在缓存中，也不在数据库中：缓存一个空值，避免每次都透传到数据库</p>
 <h2 id="缓存一致性保证">缓存一致性保证</h2>
+<h3 id="先删缓存再更新数据库">先删缓存再更新数据库</h3>
+<p>删除和更新之间被其他线程读取会留存旧值：延时双删，更新完数据库的值后，sleep一小段时间，再进行一次缓存删除操作</p>
+<h3 id="先更新数据库再删除缓存">先更新数据库再删除缓存</h3>
+<p>推荐方式，删除缓存的动作很快</p>
+<h3 id="重试机制">重试机制</h3>
+<p>使用消息队列来保证正确删除缓存</p>
+<h3 id="并发读写">并发读写</h3>
+<p>由于读取不在缓存中的数据的过程是读取数据库然后插入缓存，所以可能会出现抹去修改的情况：将读取缓存的set cache操作换成add cache，只有在缓存不存在的时候才成功写入</p>
+<h2 id="优化高并发">优化高并发</h2>
+<h3 id="本地缓存">本地缓存</h3>
+<p>go-zero的collection中提供了Cache来实现本地缓存的功能，Cache提供了Get和Set方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>localCache, err := collection.<span style="color:#0a0">NewCache</span>(localCacheExpire)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="自动识别热点数据httpsmpweixinqqcoms__bizmzg2odu1mti0oamid2247485754idx1sncb7f02c43eb02eb58b83a06210cacf11chksmceabd605f9dc5f13a62315b519b56357c4a50a5d9b37143ec9b5d0e8729907b0e01b38785643cur_album_id1655138838454796294scene190rd"><a href="https://mp.weixin.qq.com/s?__biz=Mzg2ODU1MTI0OA==&amp;mid=2247485754&amp;idx=1&amp;sn=cb7f02c43eb02eb58b83a06210cacf11&amp;chksm=ceabd605f9dc5f13a62315b519b56357c4a50a5d9b37143ec9b5d0e8729907b0e01b38785643&amp;cur_album_id=1655138838454796294&amp;scene=190#rd" target="_blank" rel="noopener noreffer ">自动识别热点数据</a></h3>
+<p>滑动窗口统计请求次数，超过阈值升级为本地缓存</p>
+<h2 id="处理每秒上万次的下单请求">处理每秒上万次的下单请求</h2>
+<h3 id="处理热点数据">处理热点数据</h3>
+<p>优化：在内存中缓存热点数据</p>
+<p>限制：限制单用户的请求次数，超过限制直接返回错误</p>
+<p>隔离：服务隔离，即秒杀功能独立为一个服务，使用单独的Redis集群和单独的Mysql</p>
+<h3 id="流量削峰">流量削峰</h3>
+<p>消息队列</p>
+<h3 id="保证消息只被消费一次">保证消息只被消费一次</h3>
+<p>kafka是能够保证&quot;At Least Once&quot;的机制的，消息不会丢失，但有可能会导致重复消费</p>
+<p>保证在消息的生产和消费的过程是幂等的，不要出现相对加减，直接赋值</p>
+<h2 id="极致优化秒杀性能">极致优化秒杀性能</h2>
+<h3 id="批量数据聚合">批量数据聚合</h3>
+<p>批量数据聚合：减少网络IO和磁盘IO成本，将多条数据（如100条）聚合后进行处理。之前是1条对应一次网络IO和磁盘IO，现在就是100条对应1次</p>
+<h3 id="降低消息的消费延迟">降低消息的消费延迟</h3>
+<ul>
+<li>增加消费者的数量</li>
+<li>在一个消费者中增加消息处理的并行度</li>
+</ul>
+<h3 id="保证不会超卖">保证不会超卖</h3>
+<p>分布式锁</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
