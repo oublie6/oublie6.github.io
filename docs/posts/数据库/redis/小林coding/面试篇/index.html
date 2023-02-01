@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E9%9D%A2%E8%AF%95%E7%AF%87\/"
-        },"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  842 ,
+        },"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  917 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E9%9D%A2%E8%AF%95%E7%AF%87\/","datePublished": "2022-12-22T11:12:34+08:00","dateModified": "2022-12-22T11:12:34+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-redis-小林coding-面试篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;842 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;917 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -121,11 +121,8 @@
         <li><a href="#redis-60-之后为什么引入了多线程">Redis 6.0 之后为什么引入了多线程</a></li>
       </ul>
     </li>
-    <li><a href="#redis-持久化">Redis 持久化</a>
-      <ul>
-        <li><a href="#aof-日志">AOF 日志</a></li>
-      </ul>
-    </li>
+    <li><a href="#redis-持久化">Redis 持久化</a></li>
+    <li><a href="#redis内存满了会发生什么">Redis内存满了会发生什么</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/redis/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
@@ -188,7 +185,8 @@
 <li>RDB 快照：将某一时刻的内存数据，以二进制的方式写入磁盘</li>
 <li>混合持久化方式：同时使用 AOF 和 RBD</li>
 </ul>
-<h3 id="aof-日志">AOF 日志</h3>
+<h2 id="redis内存满了会发生什么">Redis内存满了会发生什么</h2>
+<p>在 Redis 的运行内存达到了某个阀值，就会触发内存淘汰机制，这个阀值就是我们设置的最大运行内存，此值在 Redis 的配置文件中可以找到，配置项为 maxmemory</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
