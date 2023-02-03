@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95\/"
-        },"genre": "posts","keywords": "go学习笔记","wordcount":  2360 ,
+        },"genre": "posts","keywords": "go学习笔记","wordcount":  3998 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95\/","datePublished": "2022-12-11T19:40:21+08:00","dateModified": "2022-12-11T19:40:21+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-错误处理与测试</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2360 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3998 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -131,9 +131,33 @@
       </ul>
     </li>
     <li><a href="#覆盖率测试">覆盖率测试</a></li>
+    <li><a href="#并行测试">并行测试</a></li>
+    <li><a href="#gomock">gomock</a>
+      <ul>
+        <li><a href="#mockgen">mockgen</a></li>
+        <li><a href="#使用方法">使用方法</a>
+          <ul>
+            <li><a href="#interface编写">interface编写</a></li>
+            <li><a href="#mock文件生成">mock文件生成</a></li>
+            <li><a href="#使用mock对象的文件">使用mock对象的文件</a></li>
+            <li><a href="#测试用例编写">测试用例编写</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#monkey">monkey</a>
+      <ul>
+        <li><a href="#对函数打桩">对函数打桩</a></li>
+        <li><a href="#对方法打桩">对方法打桩</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=Mzg2ODU1MTI0OA==&amp;mid=2247485827&amp;idx=1&amp;sn=5b022401e3581b609e3fa1a5eba22bf8&amp;chksm=ceabd6bcf9dc5faac8b5ebb9a9f57b3bcafe24f761cf0699e8330a48f010903ef9e55584e575&amp;cur_album_id=1655138838454796294&amp;scene=190#rd" target="_blank" rel="noopener noreffer ">go-zero微服务实战系列（十一、大结局）</a></p>
+<p><a href="https://github.com/golang/mock" target="_blank" rel="noopener noreffer ">github gomock</a></p>
+<p><a href="https://blog.csdn.net/weixin_30337227/article/details/121316871" target="_blank" rel="noopener noreffer ">csdn 超级强zcq</a></p>
+<p><a href="https://www.liwenzhou.com/posts/Go/unit-test-3/" target="_blank" rel="noopener noreffer ">李文周博客</a></p>
 <p>Go 检查和报告错误条件的惯有方式</p>
 <ul>
 <li>产生错误的函数会返回两个变量，一个值和一个错误码；如果后者是 nil 就是成功，非 nil 就是发生了错误。</li>
@@ -301,6 +325,7 @@
 <p>-cpu 使用几个cpu核心</p>
 <p>-count 连续跑N次</p>
 <p>-benchtime 指定运行秒数</p>
+<p><code>b.ResetTimer()</code>方法可以重置基准测试定时器，可以用于跳过耗时的初始化操作</p>
 <h2 id="测试的具体例子">测试的具体例子</h2>
 <p>even/even.go：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -552,13 +577,435 @@
 </span></span><span style="display:flex;"><span>ok      gopl.io/ch7/eval         0.032s      coverage: 68.5% of statements
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>查看HTML报告</p>
+</div><p>这里的-run选项对应一个正则表达式，匹配的函数名才会进行测试</p>
+<p>查看HTML报告</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ go tool cover -html=c.out
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="并行测试">并行测试</h2>
+<p>T 和 B 的 Run 方法允许定义子单元测试和子基准测试，而不必为每个子测试和子基准定义单独的函数。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">TestGroupedParallel</span>(t *testing.T) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> _, tc := <span style="color:#00a">range</span> tests {
+</span></span><span style="display:flex;"><span>        tc := tc <span style="color:#aaa;font-style:italic">// capture range variable
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>        t.<span style="color:#0a0">Run</span>(tc.Name, <span style="color:#00a">func</span>(t *testing.T) {
+</span></span><span style="display:flex;"><span>            <span style="color:#aaa;font-style:italic">//并行测试
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>            t.<span style="color:#0a0">Parallel</span>()
+</span></span><span style="display:flex;"><span>            ...
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>并行测试加快测试效率。</p>
+<h2 id="gomock">gomock</h2>
+<p>基于interface{}的模拟工具</p>
+<h3 id="mockgen">mockgen</h3>
+<p>mockgen工具用于根据go文件写好的interface生成相应的mock.go文件。</p>
+<p>两种使用方式：</p>
+<ul>
+<li>mockgen -source=xxxx.go [other options]：源文件模式，将文件中所有interface都生成mock</li>
+<li>mockgen packagepath Interface1,Interface2&hellip;：反射模式，根据需要将包中的指定interface生成mock</li>
+</ul>
+<p>常用选项</p>
+<ul>
+<li>-package: 指定mock类源文件的包名，默认位<code>mock_输入文件的包名</code></li>
+<li>-destination: mock类代码的输出文件，默认输出到标准输出，所以也可以使用重定向符号来输出到目标文件</li>
+</ul>
+<h3 id="使用方法">使用方法</h3>
+<p>分4步</p>
+<h4 id="interface编写">interface编写</h4>
+<p>infra/db.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> db
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> Repository <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#0a0">Create</span>(key <span style="color:#0aa">string</span>, value []<span style="color:#0aa">byte</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#0a0">Retrieve</span>(key <span style="color:#0aa">string</span>) ([]<span style="color:#0aa">byte</span>, <span style="color:#0aa">error</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#0a0">Update</span>(key <span style="color:#0aa">string</span>, value []<span style="color:#0aa">byte</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#0a0">Delete</span>(key <span style="color:#0aa">string</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="mock文件生成">mock文件生成</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mockgen -source=./infra/db.go -destination=./mock/mock_repository.go -package=mock
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="使用mock对象的文件">使用mock对象的文件</h4>
+<p>MySQL.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> MySQL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#a50">&#34;GoExample/GoMock/infra&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> MySQL <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>   DB db.Repository
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewMySQL</span>(db db.Repository) *MySQL {
+</span></span><span style="display:flex;"><span>   <span style="color:#00a">return</span> &amp;MySQL{DB: db}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (mysql *MySQL) <span style="color:#0a0">CreateData</span>(key <span style="color:#0aa">string</span>, value []<span style="color:#0aa">byte</span>) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#00a">return</span> mysql.DB.<span style="color:#0a0">Create</span>(key, value)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (mysql *MySQL) <span style="color:#0a0">GetData</span>(key <span style="color:#0aa">string</span>) ([]<span style="color:#0aa">byte</span>, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#00a">return</span> mysql.DB.<span style="color:#0a0">Retrieve</span>(key)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (mysql *MySQL) <span style="color:#0a0">DeleteData</span>(key <span style="color:#0aa">string</span>) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#00a">return</span> mysql.DB.<span style="color:#0a0">Delete</span>(key)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (mysql *MySQL) <span style="color:#0a0">UpdateData</span>(key <span style="color:#0aa">string</span>, value []<span style="color:#0aa">byte</span>) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#00a">return</span> mysql.DB.<span style="color:#0a0">Update</span>(key, value)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="测试用例编写">测试用例编写</h4>
+<ol>
+<li>导入mock相关包</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>   <span style="color:#a50">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a50">&#34;GoExample/GoMock/mock&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a50">&#34;github.com/golang/mock/gomock&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>mock控制器</li>
+</ol>
+<p>mock控制器通过NewController接口生成，是mock生态系统的顶层控制，定义了mock对象的作用域和生命周期，以及mock对象的期望。当用例结束后，控制器会检查所有剩余期望的调用是否满足条件。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>ctrl := <span style="color:#0a0">NewController</span>(t)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//1.5以上版本自动调用finish
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">defer</span> ctrl.<span style="color:#0a0">Finish</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>mock对象创建时需要注入控制器</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>mockRepo := mock_db.<span style="color:#0a0">NewMockRepository</span>(ctrl)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>mock对象的行为注入</li>
+</ol>
+<p>mock对象的行为注入，控制器通过map来维护，一个方法对应map的一项。一个方法在一个用例中可能调用多次，所以map的值类型是数组切片。当mock对象进行行为注入时，控制器会将行为Add。当该方法被调用时，控制器会将该行为Remove。</p>
+<p>返回值</p>
+<ul>
+<li>Return()：返回指定值</li>
+<li>Do(func)：执行操作，忽略返回值</li>
+<li>DoAndReturn(func)：执行并返回指定值</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Retrieve</span>(<span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(<span style="color:#00a">nil</span>, ErrAny)
+</span></span><span style="display:flex;"><span>mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Create</span>(<span style="color:#0a0">Any</span>(), <span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(<span style="color:#00a">nil</span>)
+</span></span><span style="display:flex;"><span>mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Retrieve</span>(<span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(objBytes, <span style="color:#00a">nil</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以使用Times关键字来批量注入行为：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Create</span>(<span style="color:#0a0">Any</span>(), <span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(<span style="color:#00a">nil</span>).<span style="color:#0a0">Times</span>(<span style="color:#099">5</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>调用次数</p>
+<ul>
+<li>Times() 断言 Mock 方法被调用的次数</li>
+<li>MaxTimes() 最大次数</li>
+<li>MinTimes() 最小次数</li>
+<li>AnyTimes() 任意次数（包括 0 次）</li>
+</ul>
+<ol start="4">
+<li>行为调用的保序</li>
+</ol>
+<p>默认情况下，行为调用顺序可以和mock对象行为注入顺序不一致，即不保序</p>
+<ul>
+<li>通过After关键字来实现保序</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>retrieveCall := mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Retrieve</span>(<span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(<span style="color:#00a">nil</span>, ErrAny)
+</span></span><span style="display:flex;"><span>createCall := mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Create</span>(<span style="color:#0a0">Any</span>(), <span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(<span style="color:#00a">nil</span>).<span style="color:#0a0">After</span>(retrieveCall)
+</span></span><span style="display:flex;"><span>mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Retrieve</span>(<span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(objBytes, <span style="color:#00a">nil</span>).<span style="color:#0a0">After</span>(createCall)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>通过InOrder函数来实现保序(底层仍然是使用after)</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>gomock.<span style="color:#0a0">InOrder</span>(
+</span></span><span style="display:flex;"><span>mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Retrieve</span>(<span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(<span style="color:#00a">nil</span>, ErrAny)
+</span></span><span style="display:flex;"><span>mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Create</span>(<span style="color:#0a0">Any</span>(), <span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(<span style="color:#00a">nil</span>)
+</span></span><span style="display:flex;"><span>mockRepo.<span style="color:#0a0">EXPECT</span>().<span style="color:#0a0">Retrieve</span>(<span style="color:#0a0">Any</span>()).<span style="color:#0a0">Return</span>(objBytes, <span style="color:#00a">nil</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>底层原理</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">InOrder</span>(calls ...*Call) {
+</span></span><span style="display:flex;"><span>   <span style="color:#00a">for</span> i := <span style="color:#099">1</span>; i &lt; <span style="color:#0aa">len</span>(calls); i++ {
+</span></span><span style="display:flex;"><span>      calls[i].<span style="color:#0a0">After</span>(calls[i-<span style="color:#099">1</span>])
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>mock对象的注入</li>
+</ol>
+<p>mock对象的行为都注入到控制器后，要将mock对象注入给interface，使得mock对象在测试中生效。</p>
+<h2 id="monkey">monkey</h2>
+<p>对函数和方法进行模拟，在运行时通过汇编语言重写可执行文件，将目标函数或方法的实现跳转到桩实现</p>
+<ul>
+<li>monkey不支持内联函数，在测试的时候需要通过命令行参数-gcflags=-l关闭Go语言的内联优化</li>
+<li>monkey不是线程安全的，所以不要把它用到并发的单元测试中</li>
+</ul>
+<p>monkey的使用非常简单</p>
+<h3 id="对函数打桩">对函数打桩</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>monkey.<span style="color:#0a0">Patch</span>(函数名, 函数定义)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>main_test.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;bou.ke/monkey&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">testFunc</span>() {}
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">TestAAA</span>(t *testing.T) {
+</span></span><span style="display:flex;"><span>	monkey.<span style="color:#0a0">Patch</span>(testFunc, <span style="color:#00a">func</span>() {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;test success&#34;</span>)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#0a0">testFunc</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行测试</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go <span style="color:#0aa">test</span> main_test.go -run=AAA -v -gcflags=-l
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="对方法打桩">对方法打桩</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>monkey.<span style="color:#0a0">PatchInstanceMethod</span>(reflect.Type,方法名,方法体)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>main_test.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;bou.ke/monkey&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;reflect&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> User <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	Name     <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>	Birthday <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (*User) <span style="color:#0a0">CalcAge</span>() <span style="color:#0aa">int</span> { <span style="color:#00a">return</span> <span style="color:#099">1</span> }
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">TestAAA</span>(t *testing.T) {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">var</span> u = &amp;User{
+</span></span><span style="display:flex;"><span>		Name:     <span style="color:#a50">&#34;q1mi&#34;</span>,
+</span></span><span style="display:flex;"><span>		Birthday: <span style="color:#a50">&#34;1990-12-20&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	monkey.<span style="color:#0a0">PatchInstanceMethod</span>(reflect.<span style="color:#0a0">TypeOf</span>(u), <span style="color:#a50">&#34;CalcAge&#34;</span>, <span style="color:#00a">func</span>(*User) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;test success&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	u.<span style="color:#0a0">CalcAge</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行测试</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go <span style="color:#0aa">test</span> main_test.go -run=AAA -v -gcflags=-l
 </span></span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
