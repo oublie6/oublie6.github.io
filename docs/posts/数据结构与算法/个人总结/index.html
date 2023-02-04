@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","wordcount":  658 ,
+        },"genre": "posts","wordcount":  871 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93\/","datePublished": "2022-12-28T11:49:51+08:00","dateModified": "2022-12-28T11:49:51+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-个人总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-28">2022-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;658 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-28">2022-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;871 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -114,6 +114,7 @@
     <li><a href="#max工具函数">Max工具函数</a></li>
     <li><a href="#省略自己定义全局变量">省略自己定义全局变量</a></li>
     <li><a href="#二维遍历复用逻辑代码">二维遍历复用逻辑代码</a></li>
+    <li><a href="#减少逻辑复杂度">减少逻辑复杂度</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>使用golang做题与使用其他语言做题有一些不同，golang原生的语法中的slice和map支持很多数据结构的简单构造如队列或栈，但是golang并没有提供C++ STL、Java Collection这样丰富的数据结构库，go标准库的container库仅提供了list，ring和heap（优先队列，必须掌握）。这三个库可以实现所有的数据结构但是过于复杂的数据结构实现过程会花很多时间。对于复杂的数据结构可以使用第三方库GODS来提高做题效率，比如红黑树。</p>
@@ -216,7 +217,24 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>当每一个方向都是单独的逻辑的时候可以不使用这种方法。这种方法主要是为了复用相同的逻辑。</p>
-</div><div class="post-footer" id="post-footer">
+<h2 id="减少逻辑复杂度">减少逻辑复杂度</h2>
+<p>当逻辑比较复杂时，可能是因为你考虑的逻辑粒度太细了，有的情况不会出现，那么我们就把逻辑粒度变大一点，不会出现的情况不要去管。</p>
+<p>比如你寻找链表中点时，如果逻辑粒度太细，慢指针走一步后到了nil怎么办，快指针走一步后到了nil怎么办，快指针走两步后到了nil怎么办。这样就太复杂了。在这个场景下，只会出现慢指针走一步快指针走两步的情况，如果不满足则直接跳出循环即可。这样你的逻辑就只需要考虑这一种情况</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">for</span> slow.Next!=<span style="color:#00a">nil</span>&amp;&amp;fast.Next!=<span style="color:#00a">nil</span>&amp;&amp;fast.Next.Next!=<span style="color:#00a">nil</span>{
+</span></span><span style="display:flex;"><span>  slow=slow.Next
+</span></span><span style="display:flex;"><span>  fast=fast.Next.Next
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
