@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python-第三方库-Selenium - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Python-第三方库-Selenium" />
+<meta property="og:description" content="本文是作者跟着selenium官方文档学习记录的笔记 selenium官网 概述 Selenium 组件 术语： API：应用程序编程接口。 库：包含 API 和实现它们所需的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/selenium/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-06T17:10:19+08:00" />
+<meta property="article:modified_time" content="2023-02-06T17:10:19+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python-第三方库-Selenium"/>
+<meta name="twitter:description" content="本文是作者跟着selenium官方文档学习记录的笔记 selenium官网 概述 Selenium 组件 术语： API：应用程序编程接口。 库：包含 API 和实现它们所需的"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/selenium/" /><link rel="prev" href="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/protobuf/" /><link rel="next" href="https://oublie6.github.io/posts/python/%E6%9D%82%E8%AE%B0/pip%E5%AE%89%E8%A3%85%E5%8C%85%E6%97%B6%E5%86%B2%E7%AA%81/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python-第三方库-Selenium",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/selenium\/"
+        },"genre": "posts","wordcount":  4527 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/selenium\/","datePublished": "2023-02-06T17:10:19+08:00","dateModified": "2023-02-06T17:10:19+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-Selenium</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-06">2023-02-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4527 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a>
+      <ul>
+        <li><a href="#selenium-组件">Selenium 组件</a></li>
+      </ul>
+    </li>
+    <li><a href="#网络驱动程序">网络驱动程序</a>
+      <ul>
+        <li><a href="#入门">入门</a></li>
+        <li><a href="#driver-会话">Driver 会话</a>
+          <ul>
+            <li><a href="#options">Options</a></li>
+          </ul>
+        </li>
+        <li><a href="#chrome-特定功能">Chrome 特定功能</a>
+          <ul>
+            <li><a href="#options-1">Options</a></li>
+          </ul>
+        </li>
+        <li><a href="#waits">Waits</a>
+          <ul>
+            <li><a href="#explicit-wait显式等待">Explicit wait显式等待</a></li>
+            <li><a href="#implicit-wait隐式等待">Implicit wait隐式等待</a></li>
+            <li><a href="#fluentwait">FluentWait</a></li>
+          </ul>
+        </li>
+        <li><a href="#element">Element</a>
+          <ul>
+            <li><a href="#上传文件">上传文件</a></li>
+            <li><a href="#locator-定位器">Locator 定位器</a></li>
+            <li><a href="#finder-查找元素">Finder 查找元素</a>
+              <ul>
+                <li><a href="#只查第一个匹配元素">只查第一个匹配元素</a></li>
+                <li><a href="#所有匹配元素">所有匹配元素</a></li>
+                <li><a href="#从元素中查找元素">从元素中查找元素</a></li>
+                <li><a href="#获取活动元素">获取活动元素</a></li>
+              </ul>
+            </li>
+            <li><a href="#互动">互动</a></li>
+            <li><a href="#获取元素信息">获取元素信息</a></li>
+          </ul>
+        </li>
+        <li><a href="#交互">交互</a>
+          <ul>
+            <li><a href="#导航">导航</a></li>
+            <li><a href="#警告框">警告框</a></li>
+            <li><a href="#cookie">Cookie</a></li>
+            <li><a href="#frames">Frames</a></li>
+            <li><a href="#窗口">窗口</a>
+              <ul>
+                <li><a href="#窗口和标签页">窗口和标签页</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#actions接口">Actions接口</a>
+          <ul>
+            <li><a href="#键盘操作">键盘操作</a></li>
+            <li><a href="#mouse-actions">Mouse actions</a></li>
+            <li><a href="#滚轮动作">滚轮动作</a></li>
+          </ul>
+        </li>
+        <li><a href="#双向协议">双向协议</a>
+          <ul>
+            <li><a href="#chrome开发工具协议">Chrome开发工具协议</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文是作者跟着<a href="https://www.selenium.dev/documentation/" target="_blank" rel="noopener noreffer ">selenium官方文档</a>学习记录的笔记</p>
+<p><a href="https://www.selenium.dev/" target="_blank" rel="noopener noreffer ">selenium官网</a></p>
+<h2 id="概述">概述</h2>
+<h3 id="selenium-组件">Selenium 组件</h3>
+<p>术语：</p>
+<ul>
+<li>API：应用程序编程接口。</li>
+<li>库：包含 API 和实现它们所需的代码的代码模块。库特定于每种语言绑定。</li>
+<li>Driver：负责控制实际的浏览器。特定于浏览器。</li>
+<li>Framework：一个额外的库，用于支持 WebDriver 套件。这些框架可能是 JUnit 或 NUnit 等测试框架。</li>
+</ul>
+<p>直接通信</p>
+<div id="id-1"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.selenium.dev/images/documentation/webdriver/basic_comms.png"
+        data-srcset="https://www.selenium.dev/images/documentation/webdriver/basic_comms.png, https://www.selenium.dev/images/documentation/webdriver/basic_comms.png 1.5x, https://www.selenium.dev/images/documentation/webdriver/basic_comms.png 2x"
+        data-sizes="auto"
+        alt="https://www.selenium.dev/images/documentation/webdriver/basic_comms.png"
+        title="https://www.selenium.dev/images/documentation/webdriver/basic_comms.png" /></div>
+<p>RemoteWebDriver远程通信</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.selenium.dev/images/documentation/webdriver/remote_comms.png"
+        data-srcset="https://www.selenium.dev/images/documentation/webdriver/remote_comms.png, https://www.selenium.dev/images/documentation/webdriver/remote_comms.png 1.5x, https://www.selenium.dev/images/documentation/webdriver/remote_comms.png 2x"
+        data-sizes="auto"
+        alt="https://www.selenium.dev/images/documentation/webdriver/remote_comms.png"
+        title="https://www.selenium.dev/images/documentation/webdriver/remote_comms.png" /></div>
+<p>Selenium Server 或 Selenium Grid远程通信</p>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.selenium.dev/images/documentation/webdriver/remote_comms_server.png"
+        data-srcset="https://www.selenium.dev/images/documentation/webdriver/remote_comms_server.png, https://www.selenium.dev/images/documentation/webdriver/remote_comms_server.png 1.5x, https://www.selenium.dev/images/documentation/webdriver/remote_comms_server.png 2x"
+        data-sizes="auto"
+        alt="https://www.selenium.dev/images/documentation/webdriver/remote_comms_server.png"
+        title="https://www.selenium.dev/images/documentation/webdriver/remote_comms_server.png" /></div>
+<p>框架</p>
+<div id="id-4"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://www.selenium.dev/images/documentation/webdriver/test_framework.png"
+        data-srcset="https://www.selenium.dev/images/documentation/webdriver/test_framework.png, https://www.selenium.dev/images/documentation/webdriver/test_framework.png 1.5x, https://www.selenium.dev/images/documentation/webdriver/test_framework.png 2x"
+        data-sizes="auto"
+        alt="https://www.selenium.dev/images/documentation/webdriver/test_framework.png"
+        title="https://www.selenium.dev/images/documentation/webdriver/test_framework.png" /></div>
+<p>本文只考虑直接通信</p>
+<h2 id="网络驱动程序">网络驱动程序</h2>
+<h3 id="入门">入门</h3>
+<p>安装Selenium库</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install selenium
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装浏览器驱动程序，chrome内置了浏览器驱动程序</p>
+<p>Hello World</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium</span> <span style="color:#00a">import</span> webdriver
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium.webdriver.common.by</span> <span style="color:#00a">import</span> By
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">test_eight_components</span>():
+</span></span><span style="display:flex;"><span>    driver = webdriver.Chrome()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    driver.get(<span style="color:#a50">&#34;https://www.selenium.dev/selenium/web/web-form.html&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    title = driver.title
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">assert</span> title == <span style="color:#a50">&#34;Web form&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    driver.implicitly_wait(<span style="color:#099">0.5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    text_box = driver.find_element(by=By.NAME, value=<span style="color:#a50">&#34;my-text&#34;</span>)
+</span></span><span style="display:flex;"><span>    submit_button = driver.find_element(by=By.CSS_SELECTOR, value=<span style="color:#a50">&#34;button&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    text_box.send_keys(<span style="color:#a50">&#34;Selenium&#34;</span>)
+</span></span><span style="display:flex;"><span>    submit_button.click()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    message = driver.find_element(by=By.ID, value=<span style="color:#a50">&#34;message&#34;</span>)
+</span></span><span style="display:flex;"><span>    value = message.text
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">assert</span> value == <span style="color:#a50">&#34;Received!&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    driver.quit()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="driver-会话">Driver 会话</h3>
+<p>启动和停止会话是为了打开和关闭浏览器。</p>
+<p>启动会话可以配置：</p>
+<ul>
+<li>描述您想要的会话类型的Options；默认值用于本地，但这对于远程是必需的</li>
+<li>某种形式的CommandExecutor（实现因语言而异）</li>
+<li>Listeners</li>
+</ul>
+<h4 id="options">Options</h4>
+<ol>
+<li>browserName 浏览器名称</li>
+<li>browserVersion 浏览器版本：在仅安装了 80 的系统上请求 Chrome 版本 75，则会话创建将失败</li>
+<li>pageLoadStrategy 页面加载策略：normal（默认使用，等待所有资源下载完成），eager（DOM 访问已准备就绪，但图像等其他资源可能仍在加载），none（完全不阻止 WebDriver）。document.readyState属性描述了当前文档的加载状态</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium</span> <span style="color:#00a">import</span> webdriver
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium.webdriver.chrome.options</span> <span style="color:#00a">import</span> Options
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>options = Options()
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># xxx设置页面加载策略</span>
+</span></span><span style="display:flex;"><span>options.page_load_strategy = <span style="color:#a50">&#39;xxx&#39;</span>
+</span></span><span style="display:flex;"><span>driver = webdriver.Chrome(options=options)
+</span></span><span style="display:flex;"><span>driver.get(<span style="color:#a50">&#34;http://www.google.com&#34;</span>)
+</span></span><span style="display:flex;"><span>driver.quit()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>platformName 平台名称：远程端的操作系统</li>
+<li>acceptInsecureCerts：false不信任不安全证书，true则信任</li>
+<li>timeouts 超时：</li>
+</ol>
+<ul>
+<li>Script Timeout 脚本超时：指定何时中断当前浏览上下文中正在执行的脚本。默认300,000。</li>
+<li>Page Load Timeout 页面加载超时：指定在当前浏览上下文中需要加载网页的时间间隔。默认300,000。超时抛出TimeoutException。</li>
+<li>Implicit Wait Timeout 隐式等待超时</li>
+</ul>
+<ol start="7">
+<li>unhandledPromptBehavior 未处理的提示行为：指定当前会话的状态user prompt handler。默认关闭并通知状态
+User Prompt Handler 用户提示处理程序：在远程端遇到用户提示时必须采取的操作：dismiss，accept，dismiss and notify，accept and notify，ignore</li>
+<li>setWindowRect 设置窗口大小</li>
+<li>proxy 代理：</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium</span> <span style="color:#00a">import</span> webdriver
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PROXY = <span style="color:#a50">&#34;&lt;HOST:PORT&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>webdriver.DesiredCapabilities.CHROME[<span style="color:#a50">&#39;proxy&#39;</span>] = {
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#34;httpProxy&#34;</span>: PROXY,
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#34;ftpProxy&#34;</span>: PROXY,
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#34;sslProxy&#34;</span>: PROXY,
+</span></span><span style="display:flex;"><span><span style="color:#a50">&#34;proxyType&#34;</span>: <span style="color:#a50">&#34;MANUAL&#34;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">with</span> webdriver.Chrome() <span style="color:#00a">as</span> driver:
+</span></span><span style="display:flex;"><span>    driver.get(<span style="color:#a50">&#34;https://selenium.dev&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="chrome-特定功能">Chrome 特定功能</h3>
+<h4 id="options-1">Options</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium.webdriver.chrome.options</span> <span style="color:#00a">import</span> Options
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>options = Options()
+</span></span><span style="display:flex;"><span>driver = webdriver.Chrome(options=options)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>Arguments:args参数 用于启动浏览器时使用的命令行开关列表。常用的参数包括开启最大化&ndash;start-maximized和无界面模式&ndash;headless=new，禁用gpu &ndash;disable-gpu。<a href="https://peter.sh/experiments/chromium-command-line-switches/" target="_blank" rel="noopener noreffer ">详细arguments列表</a></li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>chrome_options = Options()
+</span></span><span style="display:flex;"><span>chrome_options.add_argument(<span style="color:#a50">&#34;--headless=new&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>Add extensions 添加扩展:extensions参数接受 crx 文件</li>
+<li>Keeping browser open 保持浏览器打开：</li>
+</ol>
+<p>将detach参数设置为 true 将使浏览器在驱动程序进程退出后保持打开状态。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>chrome_options = <span style="color:#0a0">Options</span>()
+</span></span><span style="display:flex;"><span>chrome_options.<span style="color:#0a0">add_experimental_option</span>(<span style="color:#a50">&#34;detach&#34;</span>, True)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="waits">Waits</h3>
+<p>WebDriver是有阻塞API。为了克服浏览器和 WebDriver 脚本之间的竞争条件问题，大多数 Selenium 客户端都附带了一个等待包。</p>
+<h4 id="explicit-wait显式等待">Explicit wait显式等待</h4>
+<p>Selenium 客户端可以使用显式等待来暂停程序执行或冻结线程，直到您传递给它的条件得到解决。以特定频率调用条件，直到等待超时结束。这意味着只要条件返回一个假值，它就会继续尝试和等待。</p>
+<p>用等待让findElement调用等待，直到脚本中动态添加的元素被添加到 DOM 中：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium.webdriver.support.wait</span> <span style="color:#00a">import</span> WebDriverWait
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">document_initialised</span>(driver):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> driver.execute_script(<span style="color:#a50">&#34;return initialised&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>driver.navigate(<span style="color:#a50">&#34;file:///race_condition.html&#34;</span>)
+</span></span><span style="display:flex;"><span>WebDriverWait(driver, timeout=<span style="color:#099">10</span>).until(document_initialised)
+</span></span><span style="display:flex;"><span>el = driver.find_element(By.TAG_NAME, <span style="color:#a50">&#34;p&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">assert</span> el.text == <span style="color:#a50">&#34;Hello from JavaScript!&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将条件作为函数引用传入，等待将重复运行，直到其返回值为真。“真实的”返回值是任何在手头语言中计算为布尔值 true 的值，例如字符串、数字、布尔值、对象（包括WebElement）或填充的（非空）序列或列表。</p>
+<p>使用lambda表达式简化：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium.webdriver.support.wait</span> <span style="color:#00a">import</span> WebDriverWait
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>driver.navigate(<span style="color:#a50">&#34;file:///race_condition.html&#34;</span>)
+</span></span><span style="display:flex;"><span>el = WebDriverWait(driver, timeout=<span style="color:#099">3</span>).until(<span style="color:#00a">lambda</span> d: d.find_element(By.TAG_NAME,<span style="color:#a50">&#34;p&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#00a">assert</span> el.text == <span style="color:#a50">&#34;Hello from JavaScript!&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>预期条件:因为必须同步 DOM 和您的指令是很常见的事情，所以大多数客户端还带有一组预定义的预期条件。顾名思义，它们是为频繁等待操作预定义的条件。</p>
+<ul>
+<li>存在警报</li>
+<li>元素存在</li>
+<li>元素可见</li>
+<li>标题包含</li>
+<li>标题是</li>
+<li>元素陈旧</li>
+<li>可见文字</li>
+</ul>
+<p><a href="https://seleniumhq.github.io/selenium/docs/api/py/webdriver_support/selenium.webdriver.support.expected_conditions.html?highlight=expected" target="_blank" rel="noopener noreffer ">python详尽列表</a></p>
+<h4 id="implicit-wait隐式等待">Implicit wait隐式等待</h4>
+<p>WebDriver 在尝试查找任何元素时轮询 DOM 一段时间。当网页上的某些元素不能立即使用并且需要一些时间加载时，这会很有用。</p>
+<p>默认情况下，隐式等待元素出现是禁用的，需要在每个会话的基础上手动启用。</p>
+<p>不要混合使用隐式等待和显示等待，会导致不可预测的等待时间。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver = Chrome()
+</span></span><span style="display:flex;"><span>driver.implicitly_wait(<span style="color:#099">10</span>)
+</span></span><span style="display:flex;"><span>driver.get(<span style="color:#a50">&#34;http://somedomain/url_that_delays_loading&#34;</span>)
+</span></span><span style="display:flex;"><span>my_dynamic_element = driver.find_element(By.ID, <span style="color:#a50">&#34;myDynamicElement&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="fluentwait">FluentWait</h4>
+<p>FluentWait 实例定义等待条件的最长时间，以及检查条件的频率。</p>
+<p>用户可以配置等待以在等待时忽略特定类型的异常，例如在页面上搜索元素时抛出NoSuchElementException。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver = Chrome()
+</span></span><span style="display:flex;"><span>driver.get(<span style="color:#a50">&#34;http://somedomain/url_that_delays_loading&#34;</span>)
+</span></span><span style="display:flex;"><span>wait = WebDriverWait(driver, timeout=<span style="color:#099">10</span>, poll_frequency=<span style="color:#099">1</span>, ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
+</span></span><span style="display:flex;"><span>element = wait.until(EC.element_to_be_clickable((By.XPATH, <span style="color:#a50">&#34;//div&#34;</span>)))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>python中其实就是显式等待添加额外的参数</p>
+<h3 id="element">Element</h3>
+<h4 id="上传文件">上传文件</h4>
+<p>模拟操作，比如对于下面代码中的<a href="https://the-internet.herokuapp.com/upload" target="_blank" rel="noopener noreffer ">页面</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium</span> <span style="color:#00a">import</span> webdriver
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">webdriver_manager.chrome</span> <span style="color:#00a">import</span> ChromeDriverManager
+</span></span><span style="display:flex;"><span>driver = webdriver.Chrome(ChromeDriverManager().install())
+</span></span><span style="display:flex;"><span>driver.implicitly_wait(<span style="color:#099">10</span>)
+</span></span><span style="display:flex;"><span>driver.get(<span style="color:#a50">&#34;https://the-internet.herokuapp.com/upload&#34;</span>);
+</span></span><span style="display:flex;"><span>driver.find_element(By.ID,<span style="color:#a50">&#34;file-upload&#34;</span>).send_keys(<span style="color:#a50">&#34;selenium-snapshot.jpg&#34;</span>)
+</span></span><span style="display:flex;"><span>driver.find_element(By.ID,<span style="color:#a50">&#34;file-submit&#34;</span>).submit()
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span>(driver.page_source.find(<span style="color:#a50">&#34;File Uploaded!&#34;</span>)):
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;file upload success&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">else</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;file upload not successful&#34;</span>)
+</span></span><span style="display:flex;"><span>driver.quit()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="locator-定位器">Locator 定位器</h4>
+<p>识别页面上元素的方法。</p>
+<p>传统定位器；</p>
+<ul>
+<li>class name：定位类名包含搜索值的元素（不允许使用复合类名）</li>
+<li>css selector：定位与 CSS 选择器匹配的元素</li>
+<li>id：定位 ID 属性与搜索值匹配的元素</li>
+<li>name：定位 NAME 属性与搜索值匹配的元素</li>
+<li>link text：定位其可见文本与搜索值匹配的锚元素</li>
+<li>partial link text：定位其可见文本包含搜索值的锚元素。如果匹配多个元素，则只会选择第一个。</li>
+<li>tag name：定位标签名称与搜索值匹配的元素</li>
+<li>xpath：定位与 XPath 表达式匹配的元素</li>
+</ul>
+<p>相对定位器：</p>
+<ol>
+<li>Above：获取页面空间上相对目标元素“上方”符合条件的元素</li>
+<li>Below：下方</li>
+<li>Left of：左边</li>
+<li>Right of：右边</li>
+<li>Near ：相对目标元素最多50px像素的元素</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>email_locator = locate_with(By.TAG_NAME, <span style="color:#a50">&#34;input&#34;</span>).above({By.ID: <span style="color:#a50">&#34;password&#34;</span>})
+</span></span><span style="display:flex;"><span>password_locator = locate_with(By.TAG_NAME, <span style="color:#a50">&#34;input&#34;</span>).below({By.ID: <span style="color:#a50">&#34;email&#34;</span>})
+</span></span><span style="display:flex;"><span>cancel_locator = locate_with(By.TAG_NAME, <span style="color:#a50">&#34;button&#34;</span>).to_left_of({By.ID: <span style="color:#a50">&#34;submit&#34;</span>})
+</span></span><span style="display:flex;"><span>submit_locator = locate_with(By.TAG_NAME, <span style="color:#a50">&#34;button&#34;</span>).to_right_of({By.ID: <span style="color:#a50">&#34;cancel&#34;</span>})
+</span></span><span style="display:flex;"><span>email_locator = locate_with(By.TAG_NAME, <span style="color:#a50">&#34;input&#34;</span>).near({By.ID: <span style="color:#a50">&#34;lbl-email&#34;</span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="finder-查找元素">Finder 查找元素</h4>
+<p>根据提供的定位器值定位元素。</p>
+<h5 id="只查第一个匹配元素">只查第一个匹配元素</h5>
+<p>评估整个 DOM</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>vegetable = driver.find_element(By.CLASS_NAME, <span style="color:#a50">&#34;tomatoes&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>评估 DOM 的子集</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>fruits = driver.find_element(By.ID, <span style="color:#a50">&#34;fruits&#34;</span>)
+</span></span><span style="display:flex;"><span>fruit = fruits.find_element(By.CLASS_NAME,<span style="color:#a50">&#34;tomatoes&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>优化定位器：嵌套查找可能不是最有效的定位策略，因为它需要向浏览器发出两个单独的命令。使用 CSS 或 XPath 在单个命令中查找此元素。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>fruit = driver.find_element(By.CSS_SELECTOR,<span style="color:#a50">&#34;#fruits .tomatoes&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="所有匹配元素">所有匹配元素</h5>
+<p>find_elements返回一个列表</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>plants = driver.find_elements(By.TAG_NAME, <span style="color:#a50">&#34;li&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取元素：遍历列表</p>
+<h5 id="从元素中查找元素">从元素中查找元素</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium</span> <span style="color:#00a">import</span> webdriver
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium.webdriver.common.by</span> <span style="color:#00a">import</span> By
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>driver = webdriver.Chrome()
+</span></span><span style="display:flex;"><span>driver.get(<span style="color:#a50">&#34;https://www.example.com&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic"># Get element with tag name &#39;div&#39;</span>
+</span></span><span style="display:flex;"><span>element = driver.find_element(By.TAG_NAME, <span style="color:#a50">&#39;div&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic"># Get all the elements available with tag name &#39;p&#39;</span>
+</span></span><span style="display:flex;"><span>elements = element.find_elements(By.TAG_NAME, <span style="color:#a50">&#39;p&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> e <span style="color:#00a">in</span> elements:
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span>(e.text)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="获取活动元素">获取活动元素</h5>
+<p>跟踪（或）查找在当前浏览上下文中具有焦点的 DOM 元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium</span> <span style="color:#00a">import</span> webdriver
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium.webdriver.common.by</span> <span style="color:#00a">import</span> By
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>driver = webdriver.Chrome()
+</span></span><span style="display:flex;"><span>driver.get(<span style="color:#a50">&#34;https://www.google.com&#34;</span>)
+</span></span><span style="display:flex;"><span>driver.find_element(By.CSS_SELECTOR, <span style="color:#a50">&#39;[name=&#34;q&#34;]&#39;</span>).send_keys(<span style="color:#a50">&#34;webElement&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic"># Get attribute of current active element</span>
+</span></span><span style="display:flex;"><span>attr = driver.switch_to.active_element.get_attribute(<span style="color:#a50">&#34;title&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>(attr)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="互动">互动</h4>
+<p>可以在一个元素上执行的基本命令有 5 个：</p>
+<ul>
+<li>单击（适用于任何元素）:元素点击命令 执行在 元素中央</li>
+<li>发送键（仅适用于文本字段和内容可编辑元素）</li>
+<li>清除（仅适用于文本字段和内容可编辑元素）</li>
+<li>提交（仅适用于表单元素）</li>
+<li>选择（请参阅选择列表元素）</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 发送按键</span>
+</span></span><span style="display:flex;"><span>driver.find_element(By.NAME, <span style="color:#a50">&#34;q&#34;</span>).send_keys(<span style="color:#a50">&#34;webdriver&#34;</span> + Keys.ENTER)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 清除 具有 文本 类型的表单的输入元素或具有 内容可编辑 属性的元素</span>
+</span></span><span style="display:flex;"><span>element.clear()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="获取元素信息">获取元素信息</h4>
+<p>是否显示</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>element.is_displayed()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>是否启用</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>element.is_enabled()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>是否被选定</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>element.is_selected()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取元素标签名</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>element.tag_name
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>位置和大小：返回四个值，元素左上角的X轴位置，元素左上角的y轴位置，元素的高度，元素的宽度</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>res = driver.find_element(By.CSS_SELECTOR, <span style="color:#a50">&#34;h1&#34;</span>).rect
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取元素CSS值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>cssValue = driver.find_element(By.LINK_TEXT, <span style="color:#a50">&#34;More information...&#34;</span>).value_of_css_property(<span style="color:#a50">&#39;color&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>文本内容</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>text = driver.find_element(By.CSS_SELECTOR, <span style="color:#a50">&#34;h1&#34;</span>).text
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取特性或属性</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>value_info = email_txt.get_attribute(<span style="color:#a50">&#34;value&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="交互">交互</h3>
+<p>获取浏览器信息</p>
+<p>获取标题</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.title
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取当前 URL</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.current_url
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="导航">导航</h4>
+<p>打开网站</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.get(<span style="color:#a50">&#34;https://selenium.dev&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>后退</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.back()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前进</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.forward()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>刷新</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.refresh()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="警告框">警告框</h4>
+<p>Alerts 警告框：显示一条自定义消息, 以及一个用于关闭该警告的按钮</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>alert = wait.until(expected_conditions.alert_is_present())
+</span></span><span style="display:flex;"><span>text = alert.text
+</span></span><span style="display:flex;"><span>alert.accept()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Confirm 确认框 ：用户还可以选择取消消息</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.find_element(By.LINK_TEXT, <span style="color:#a50">&#34;See a sample confirm&#34;</span>).click()
+</span></span><span style="display:flex;"><span>wait.until(expected_conditions.alert_is_present())
+</span></span><span style="display:flex;"><span>alert = driver.switch_to.alert
+</span></span><span style="display:flex;"><span>text = alert.text
+</span></span><span style="display:flex;"><span>alert.dismiss()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Prompt 提示框：包括文本输入</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.find_element(By.LINK_TEXT, <span style="color:#a50">&#34;See a sample prompt&#34;</span>).click()
+</span></span><span style="display:flex;"><span>wait.until(expected_conditions.alert_is_present())
+</span></span><span style="display:flex;"><span>alert = Alert(driver)
+</span></span><span style="display:flex;"><span>alert.send_keys(<span style="color:#a50">&#34;Selenium&#34;</span>)
+</span></span><span style="display:flex;"><span>alert.accept()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="cookie">Cookie</h4>
+<p>添加 Cookie</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.add_cookie({<span style="color:#a50">&#34;name&#34;</span>: <span style="color:#a50">&#34;key&#34;</span>, <span style="color:#a50">&#34;value&#34;</span>: <span style="color:#a50">&#34;value&#34;</span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取命名的 Cookie</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.get_cookie(<span style="color:#a50">&#34;foo&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获取全部 Cookies</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.get_cookies()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除 Cookie</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.delete_cookie(<span style="color:#a50">&#34;test1&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除所有 Cookies</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.delete_all_cookies()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Same-Site Cookie属性</p>
+<ul>
+<li>Strict:cookie不会与来自第三方网站的请求一起发送</li>
+<li>Lax:cookie将与第三方网站发起的GET请求一起发送.</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.add_cookie({<span style="color:#a50">&#34;name&#34;</span>: <span style="color:#a50">&#34;foo&#34;</span>, <span style="color:#a50">&#34;value&#34;</span>: <span style="color:#a50">&#34;value&#34;</span>, <span style="color:#a50">&#39;sameSite&#39;</span>: <span style="color:#a50">&#39;Strict&#39;</span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="frames">Frames</h4>
+<p>使用 WebElement</p>
+<p>使用 WebElement 进行切换是最灵活的选择</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 获取frame元素</span>
+</span></span><span style="display:flex;"><span>iframe = driver.find_element(By.CSS_SELECTOR, <span style="color:#a50">&#34;#modal &gt; iframe&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 切换到选择的 iframe</span>
+</span></span><span style="display:flex;"><span>driver.switch_to.frame(iframe)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 单击frame里的按钮</span>
+</span></span><span style="display:flex;"><span>driver.find_element(By.TAG_NAME, <span style="color:#a50">&#39;button&#39;</span>).click()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>frame 或 iframe 具有 id 或 name 属性，则可以使用该属性直接切换进去。如果名称或 id 在页面上不是唯一的， 那么将切换到找到的第一个。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 通过 id 切换框架</span>
+</span></span><span style="display:flex;"><span>driver.switch_to.frame(<span style="color:#a50">&#39;buttonframe&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 单击按钮</span>
+</span></span><span style="display:flex;"><span>driver.find_element(By.TAG_NAME, <span style="color:#a50">&#39;button&#39;</span>).click()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用索引</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 基于索引切换到第 2 个 iframe</span>
+</span></span><span style="display:flex;"><span>iframe = driver.find_elements(By.TAG_NAME,<span style="color:#a50">&#39;iframe&#39;</span>)[<span style="color:#099">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 切换到选择的 iframe</span>
+</span></span><span style="display:flex;"><span>driver.switch_to.frame(iframe)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>离开框架</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 切回到默认内容</span>
+</span></span><span style="display:flex;"><span>driver.switch_to.default_content()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="窗口">窗口</h4>
+<h5 id="窗口和标签页">窗口和标签页</h5>
+<p>WebDriver 没有区分窗口和标签页。每个窗口都有一个唯一的标识符，该标识符在单个会话中保持持久性。获得当前窗口的窗口句柄：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.current_window_handle
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所有打开的窗口句柄</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.window_handles
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>切换窗口或标签页</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.switch_to.window(window_handle)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建新窗口(或)新标签页并且切换</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 打开新标签页并切换到新标签页</span>
+</span></span><span style="display:flex;"><span>driver.switch_to.new_window(<span style="color:#a50">&#39;tab&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 打开一个新窗口并切换到新窗口</span>
+</span></span><span style="display:flex;"><span>driver.switch_to.new_window(<span style="color:#a50">&#39;window&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>关闭窗口或标签页：如果在关闭一个窗口后忘记切换回另一个窗口句柄，WebDriver 将在当前关闭的页面上执行，并触发一个 No Such Window Exception 无此窗口异常。必须切换回有效的窗口句柄才能继续执行。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 关闭标签页或窗口</span>
+</span></span><span style="display:flex;"><span>driver.close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 切回到之前的标签页或窗口</span>
+</span></span><span style="display:flex;"><span>driver.switch_to.window(original_window)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在会话结束时退出浏览器</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.quit()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Python 的 WebDriver 现在支持 Python 上下文管理器，当使用 with 关键字时，可以在执行结束时自动退出驱动程序。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">with</span> webdriver.Firefox() <span style="color:#00a">as</span> driver:
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic"># WebDriver 代码…</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 在此缩进位置后 WebDriver 会自动退出</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>窗口管理</p>
+<p>获取窗口大小</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 分别获取每个尺寸</span>
+</span></span><span style="display:flex;"><span>width = driver.get_window_size().get(<span style="color:#a50">&#34;width&#34;</span>)
+</span></span><span style="display:flex;"><span>height = driver.get_window_size().get(<span style="color:#a50">&#34;height&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 或者存储尺寸并在以后查询它们</span>
+</span></span><span style="display:flex;"><span>size = driver.get_window_size()
+</span></span><span style="display:flex;"><span>width1 = size.get(<span style="color:#a50">&#34;width&#34;</span>)
+</span></span><span style="display:flex;"><span>height1 = size.get(<span style="color:#a50">&#34;height&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置窗口大小</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.set_window_size(<span style="color:#099">1024</span>, <span style="color:#099">768</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到窗口的位置:获取浏览器窗口左上角的坐标</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 分别获取每个尺寸</span>
+</span></span><span style="display:flex;"><span>x = driver.get_window_position().get(<span style="color:#a50">&#39;x&#39;</span>)
+</span></span><span style="display:flex;"><span>y = driver.get_window_position().get(<span style="color:#a50">&#39;y&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 或者存储尺寸并在以后查询它们</span>
+</span></span><span style="display:flex;"><span>position = driver.get_window_position()
+</span></span><span style="display:flex;"><span>x1 = position.get(<span style="color:#a50">&#39;x&#39;</span>)
+</span></span><span style="display:flex;"><span>y1 = position.get(<span style="color:#a50">&#39;y&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置窗口位置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 将窗口移动到主显示器的左上角</span>
+</span></span><span style="display:flex;"><span>driver.set_window_position(<span style="color:#099">0</span>, <span style="color:#099">0</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最大化窗口</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.maximize_window()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最小化窗口</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.minimize_window()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>全屏窗口</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.fullscreen_window()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>屏幕截图</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>driver.save_screenshot(<span style="color:#a50">&#39;./image.png&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>元素屏幕截图</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>element.screenshot(<span style="color:#a50">&#39;./image.png&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行脚本</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>header = driver.find_element(By.CSS_SELECTOR, <span style="color:#a50">&#34;h1&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>driver.execute_script(<span style="color:#a50">&#39;return arguments[0].innerText&#39;</span>, header)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打印页面</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>base64code = driver.print_page(print_options)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="actions接口">Actions接口</h3>
+<p>除了高级元素交互之外, Actions 接口 还提供了对指定输入设备 可以执行的确切操作的精细控制. Selenium为3种输入源提供了接口： 键盘设备的键输入, 鼠标, 笔或触摸设备的输入, 以及滚轮设备的滚轮输入</p>
+<p>暂停</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>clickable = driver.find_element(By.ID, <span style="color:#a50">&#34;clickable&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .pause(<span style="color:#099">1</span>)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>释放所有Actions</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ActionBuilder(driver).clear_actions()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="键盘操作">键盘操作</h4>
+<p>按键，<a href="https://www.w3.org/TR/webdriver/#keyboard-actions" target="_blank" rel="noopener noreffer ">完整按键列表</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .key_down(Keys.SHIFT)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>释放按键</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .key_down(Keys.SHIFT)\
+</span></span><span style="display:flex;"><span>    .key_up(Keys.SHIFT)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>键入活跃元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .send_keys(<span style="color:#a50">&#34;abc&#34;</span>)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>键入指定元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>text_input = driver.find_element(By.ID, <span style="color:#a50">&#34;textInput&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .send_keys_to_element(text_input, <span style="color:#a50">&#34;abc&#34;</span>)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>复制粘贴：模仿CV</p>
+<h4 id="mouse-actions">Mouse actions</h4>
+<p>Click and hold</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>clickable = driver.find_element(By.ID, <span style="color:#a50">&#34;clickable&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .click_and_hold(clickable)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>单击并释放</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>clickable = driver.find_element(By.ID, <span style="color:#a50">&#34;click&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .click(clickable)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>交替按钮点击：0 — 左键（默认），2 — 右键，3 — X1（后退）按钮，4 — X2（前进）按钮</p>
+<p>上下文点击：移动到元素的中心与按下和释放鼠标右键（按钮 2）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>clickable = driver.find_element(By.ID, <span style="color:#a50">&#34;clickable&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .context_click(clickable)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>后退点击</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>action = ActionBuilder(driver)
+</span></span><span style="display:flex;"><span>action.pointer_action.pointer_down(MouseButton.BACK)
+</span></span><span style="display:flex;"><span>action.pointer_action.pointer_up(MouseButton.BACK)
+</span></span><span style="display:flex;"><span>action.perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>向前点击</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>action = ActionBuilder(driver)
+</span></span><span style="display:flex;"><span>action.pointer_action.pointer_down(MouseButton.FORWARD)
+</span></span><span style="display:flex;"><span>action.pointer_action.pointer_up(MouseButton.FORWARD)
+</span></span><span style="display:flex;"><span>action.perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>双击</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>clickable = driver.find_element(By.ID, <span style="color:#a50">&#34;clickable&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .double_click(clickable)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>移动到元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>hoverable = driver.find_element(By.ID, <span style="color:#a50">&#34;hover&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .move_to_element(hoverable)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>按偏移量移动</p>
+<p>从元素偏移（左上原点）：当元素不完全在视口内时，此方法无法正常工作</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>mouse_tracker = driver.find_element(By.ID, <span style="color:#a50">&#34;mouse-tracker&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .move_to_element_with_offset(mouse_tracker, <span style="color:#099">8</span>, <span style="color:#099">0</span>)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从视口偏移</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>action = ActionBuilder(driver)
+</span></span><span style="display:flex;"><span>action.pointer_action.move_to_location(<span style="color:#099">8</span>, <span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>action.perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当前指针位置的偏移量</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .move_by_offset( <span style="color:#099">13</span>, <span style="color:#099">15</span>)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>拖放元素：在源元素上执行单击并按住，移动到目标元素的位置，然后释放鼠标</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>draggable = driver.find_element(By.ID, <span style="color:#a50">&#34;draggable&#34;</span>)
+</span></span><span style="display:flex;"><span>droppable = driver.find_element(By.ID, <span style="color:#a50">&#34;droppable&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .drag_and_drop(draggable, droppable)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>按偏移拖放</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>draggable = driver.find_element(By.ID, <span style="color:#a50">&#34;draggable&#34;</span>)
+</span></span><span style="display:flex;"><span>start = draggable.location
+</span></span><span style="display:flex;"><span>finish = driver.find_element(By.ID, <span style="color:#a50">&#34;droppable&#34;</span>).location
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .drag_and_drop_by_offset(draggable, finish[<span style="color:#a50">&#39;x&#39;</span>] - start[<span style="color:#a50">&#39;x&#39;</span>], finish[<span style="color:#a50">&#39;y&#39;</span>] - start[<span style="color:#a50">&#39;y&#39;</span>])\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="滚轮动作">滚轮动作</h4>
+<p>滚动到元素</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>iframe = driver.find_element(By.TAG_NAME, <span style="color:#a50">&#34;iframe&#34;</span>)
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .scroll_to_element(iframe)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>按给定数量滚动</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>footer = driver.find_element(By.TAG_NAME, <span style="color:#a50">&#34;footer&#34;</span>)
+</span></span><span style="display:flex;"><span>delta_y = footer.rect[<span style="color:#a50">&#39;y&#39;</span>]
+</span></span><span style="display:flex;"><span>ActionChains(driver)\
+</span></span><span style="display:flex;"><span>    .scroll_by_amount(<span style="color:#099">0</span>, delta_y)\
+</span></span><span style="display:flex;"><span>    .perform()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="双向协议">双向协议</h3>
+<h4 id="chrome开发工具协议">Chrome开发工具协议</h4>
+<p>模拟地理位置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium</span> <span style="color:#00a">import</span> webdriver
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium.webdriver.chrome.service</span> <span style="color:#00a">import</span> Service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">geoLocationTest</span>():
+</span></span><span style="display:flex;"><span>    driver = webdriver.Chrome()
+</span></span><span style="display:flex;"><span>    Map_coordinates = <span style="color:#0aa">dict</span>({
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;latitude&#34;</span>: <span style="color:#099">41.8781</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;longitude&#34;</span>: -<span style="color:#099">87.6298</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;accuracy&#34;</span>: <span style="color:#099">100</span>
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    driver.execute_cdp_cmd(<span style="color:#a50">&#34;Emulation.setGeolocationOverride&#34;</span>, Map_coordinates)
+</span></span><span style="display:flex;"><span>    driver.get(<span style="color:#a50">&#34;&lt;your site url&gt;&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>收集性能指标</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">selenium</span> <span style="color:#00a">import</span> webdriver
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>driver = webdriver.Chrome()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>driver.get(<span style="color:#a50">&#39;https://www.duckduckgo.com&#39;</span>)
+</span></span><span style="display:flex;"><span>driver.execute_cdp_cmd(<span style="color:#a50">&#39;Performance.enable&#39;</span>, {})
+</span></span><span style="display:flex;"><span>t = driver.execute_cdp_cmd(<span style="color:#a50">&#39;Performance.getMetrics&#39;</span>, {})
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>(t)
+</span></span><span style="display:flex;"><span>driver.quit()
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-02-06</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/selenium/" data-title="Python-第三方库-Selenium"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/selenium/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/selenium/" data-title="Python-第三方库-Selenium"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/selenium/" data-title="Python-第三方库-Selenium"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/selenium/" data-title="Python-第三方库-Selenium"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/protobuf/" class="prev" rel="prev" title="通用技术-Protobuf"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>通用技术-Protobuf</a>
+            <a href="/posts/python/%E6%9D%82%E8%AE%B0/pip%E5%AE%89%E8%A3%85%E5%8C%85%E6%97%B6%E5%86%B2%E7%AA%81/" class="next" rel="next" title="Python-杂记-Pip安装包时冲突">Python-杂记-Pip安装包时冲突<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/adb004.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-02-06T17:10:19+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"Python-第三方库-Selenium"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
