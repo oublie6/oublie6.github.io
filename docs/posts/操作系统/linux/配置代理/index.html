@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86\/"
-        },"genre": "posts","keywords": "linux","wordcount":  262 ,
+        },"genre": "posts","keywords": "linux","wordcount":  480 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86\/","datePublished": "2022-12-18T14:15:35+08:00","dateModified": "2022-12-18T14:15:35+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-linux-配置代理</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-18">2022-12-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;262 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-18">2022-12-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;480 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -112,7 +112,11 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#ubuntu配置代理">ubuntu配置代理</a></li>
-    <li><a href="#kali">kali</a></li>
+    <li><a href="#kali">kali</a>
+      <ul>
+        <li><a href="#socks">SOCKS</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>分为用户代理和所有用户的代理配置</p>
@@ -151,7 +155,16 @@
 <p>注意主机防火墙的问题</p>
 <p>对于连接到charles的虚拟机还需要安装证书</p>
 <p><a href="https://blog.csdn.net/weixin_54156407/article/details/120294029" target="_blank" rel="noopener noreffer ">CSDN 滋滋ɷ</a></p>
-<h2 id="kali">kali</h2>
+<p>当配置的代理服务器需要身份验证时配置为以下形式：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">HTTPS_PROXY</span>=<span style="color:#a50">&#34;http://user:password@host&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="kali">kali</h2>
 <p>kali使用proxychains4或者proxychains，仅需要配置proxychains4.conf即可。</p>
 <p>使用代理运行程序时将命令放到proxychains4后面即可。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -162,7 +175,36 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>proxychains msfconsole
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><p>要为特定方案和主机提供代理，请使用 scheme://hostname形式作为键。这将匹配对给定方案和确切主机名的任何请求。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>proxies = {<span style="color:#a50">&#39;http://10.20.1.128&#39;</span>: <span style="color:#a50">&#39;http://10.10.1.10:5323&#39;</span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用代理进行 https 连接通常需要您的本地计算机信任代理的根证书，请求信任的证书列表可以通过以下方式找到</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#0aa">print</span>(DEFAULT_CA_BUNDLE_PATH)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将REQUESTS_CA_BUNDLE （或CURL_CA_BUNDLE）环境变量设置为另一个文件路径来覆盖此默认证书包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">REQUESTS_CA_BUNDLE</span>=<span style="color:#a50">&#34;/usr/local/myproxy_info/cacert.pem&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="socks">SOCKS</h3>
+<p>Requests 还支持使用 SOCKS 协议的代理</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

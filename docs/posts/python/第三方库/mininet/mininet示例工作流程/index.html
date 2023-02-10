@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Python-第三方库-mininet-Mininet示例工作流程 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Python-第三方库-mininet-Mininet示例工作流程" />
-<meta property="og:description" content="mininet官网 创建网络 使用单个命令创建网络 在 OpenFlow/Stanford 参考控制器的控制下使用 Open vSwitch 交换机启动深度为 2 和扇出为 8 的树状拓扑结构的网络（即 64 台主机连接" />
+<meta property="og:description" content="mininet官网 mininet官网文档 mininet官网api mininet官网工作流 创建网络 使用单个命令创建网络 在 OpenFlow/Stanford 参考控制器的控制下使" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-29T11:12:25+08:00" />
@@ -15,9 +15,9 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="Python-第三方库-mininet-Mininet示例工作流程"/>
-<meta name="twitter:description" content="mininet官网 创建网络 使用单个命令创建网络 在 OpenFlow/Stanford 参考控制器的控制下使用 Open vSwitch 交换机启动深度为 2 和扇出为 8 的树状拓扑结构的网络（即 64 台主机连接"/>
+<meta name="twitter:description" content="mininet官网 mininet官网文档 mininet官网api mininet官网工作流 创建网络 使用单个命令创建网络 在 OpenFlow/Stanford 参考控制器的控制下使"/>
 <meta name="application-name" content="LoveIt">
-<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" /><link rel="prev" href="https://oublie6.github.io/posts/python/%E6%9D%82%E8%AE%B0/functools.partial/" /><link rel="next" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E6%BC%94%E7%BB%83/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%BA%BF%E6%AE%B5%E6%A0%91/" /><link rel="next" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E6%BC%94%E7%BB%83/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/mininet\/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B\/"
-        },"genre": "posts","keywords": "mininet","wordcount":  661 ,
+        },"genre": "posts","keywords": "mininet, Python第三方库","wordcount":  696 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/mininet\/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B\/","datePublished": "2022-11-29T11:12:25+08:00","dateModified": "2022-11-29T11:12:25+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-mininet-Mininet示例工作流程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-29">2022-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;661 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-29">2022-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;696 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -118,7 +118,10 @@
     <li><a href="#在硬件上运行">在硬件上运行</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p><a href="http://mininet.org/sample-workflow/" target="_blank" rel="noopener noreffer ">mininet官网</a></p>
+            </div><div class="content" id="content"><p><a href="http://mininet.org/" target="_blank" rel="noopener noreffer ">mininet官网</a></p>
+<p><a href="https://github.com/mininet/mininet/wiki/Documentation" target="_blank" rel="noopener noreffer ">mininet官网文档</a></p>
+<p><a href="https://mininet.org/api/annotated.html" target="_blank" rel="noopener noreffer ">mininet官网api</a></p>
+<p><a href="http://mininet.org/sample-workflow/" target="_blank" rel="noopener noreffer ">mininet官网工作流</a></p>
 <h2 id="创建网络">创建网络</h2>
 <p>使用单个命令创建网络</p>
 <p>在 OpenFlow/Stanford 参考控制器的控制下使用 Open vSwitch 交换机启动深度为 2 和扇出为 8 的树状拓扑结构的网络（即 64 台主机连接到 9 台交换机），并运行pingall测试以检查每对节点之间的连接性.</p>
@@ -155,19 +158,19 @@ net.stop()
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-title="Python-第三方库-mininet-Mininet示例工作流程" data-hashtags="mininet"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-hashtag="mininet"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-title="Python-第三方库-mininet-Mininet示例工作流程"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-title="Python-第三方库-mininet-Mininet示例工作流程"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-title="Python-第三方库-mininet-Mininet示例工作流程"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-title="Python-第三方库-mininet-Mininet示例工作流程" data-hashtags="mininet,Python第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-hashtag="mininet"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-title="Python-第三方库-mininet-Mininet示例工作流程"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-title="Python-第三方库-mininet-Mininet示例工作流程"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E7%A4%BA%E4%BE%8B%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-title="Python-第三方库-mininet-Mininet示例工作流程"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/mininet/">mininet</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/mininet/">mininet</a>,&nbsp;<a href="/tags/python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">Python第三方库</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/python/%E6%9D%82%E8%AE%B0/functools.partial/" class="prev" rel="prev" title="Python-杂记-Functools.partial"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Python-杂记-Functools.partial</a>
+    <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%BA%BF%E6%AE%B5%E6%A0%91/" class="prev" rel="prev" title="数据结构与算法-线段树"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据结构与算法-线段树</a>
             <a href="/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mininet/mininet%E6%BC%94%E7%BB%83/" class="next" rel="next" title="Python-第三方库-mininet-Mininet演练">Python-第三方库-mininet-Mininet演练<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="comments"><div id="gitalk" class="comment"></div><noscript>

@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python-第三方库-Requests - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客"><meta property="og:title" content="Python-第三方库-Requests" />
+<meta property="og:description" content="github官网 官网文档 Requests允许您非常轻松地发送 HTTP/1.1 请求。无需手动将查询字符串添加到您的 URL，或对您的 POST 数据进行表单编码。Kee" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/requests/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-10T10:38:55+08:00" />
+<meta property="article:modified_time" content="2023-02-10T10:38:55+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python-第三方库-Requests"/>
+<meta name="twitter:description" content="github官网 官网文档 Requests允许您非常轻松地发送 HTTP/1.1 请求。无需手动将查询字符串添加到您的 URL，或对您的 POST 数据进行表单编码。Kee"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/requests/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/go-zero/dtm/" /><link rel="next" href="https://oublie6.github.io/posts/python/python%E6%95%99%E7%A8%8B/%E8%A1%A5%E5%85%85/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python-第三方库-Requests",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/requests\/"
+        },"genre": "posts","keywords": "Python第三方库","wordcount":  4060 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/requests\/","datePublished": "2023-02-10T10:38:55+08:00","dateModified": "2023-02-10T10:38:55+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-Requests</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-10">2023-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4060 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#快速入门">快速入门</a>
+      <ul>
+        <li><a href="#发出请求">发出请求</a>
+          <ul>
+            <li><a href="#在-url-中传递参数">在 URL 中传递参数</a></li>
+          </ul>
+        </li>
+        <li><a href="#响应内容">响应内容</a></li>
+        <li><a href="#二进制响应内容">二进制响应内容</a></li>
+        <li><a href="#json-响应内容">JSON 响应内容</a></li>
+        <li><a href="#原始响应内容">原始响应内容</a></li>
+        <li><a href="#自定义标题">自定义标题</a></li>
+        <li><a href="#更复杂的-post-请求">更复杂的 POST 请求</a></li>
+        <li><a href="#添加文件">添加文件</a></li>
+        <li><a href="#响应状态代码">响应状态代码</a></li>
+        <li><a href="#响应头">响应头</a></li>
+        <li><a href="#cookie">cookie</a></li>
+        <li><a href="#重定向和历史">重定向和历史</a></li>
+        <li><a href="#超时">超时</a></li>
+        <li><a href="#错误和异常">错误和异常</a></li>
+      </ul>
+    </li>
+    <li><a href="#高级用法">高级用法</a>
+      <ul>
+        <li><a href="#会话对象">会话对象</a></li>
+        <li><a href="#请求和响应对象">请求和响应对象</a></li>
+        <li><a href="#准备好的请求">准备好的请求</a></li>
+        <li><a href="#ssl-证书验证">SSL 证书验证</a></li>
+        <li><a href="#客户端证书">客户端证书</a></li>
+        <li><a href="#ca-证书">CA 证书</a></li>
+        <li><a href="#正文内容工作流程">正文内容工作流程</a></li>
+        <li><a href="#保持活动">保持活动</a></li>
+        <li><a href="#流媒体上传">流媒体上传</a></li>
+        <li><a href="#块编码请求">块编码请求</a></li>
+        <li><a href="#发送多个多部分编码文件">发送多个多部分编码文件</a></li>
+        <li><a href="#事件挂钩hook">事件挂钩Hook</a></li>
+        <li><a href="#自定义认证">自定义认证</a></li>
+        <li><a href="#流媒体请求">流媒体请求</a></li>
+        <li><a href="#代理">代理</a></li>
+        <li><a href="#阻塞还是非阻塞">阻塞还是非阻塞</a></li>
+        <li><a href="#超时-1">超时</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://github.com/psf/requests" target="_blank" rel="noopener noreffer ">github官网</a></p>
+<p><a href="https://requests.readthedocs.io/en/latest/" target="_blank" rel="noopener noreffer ">官网文档</a></p>
+<p>Requests允许您非常轻松地发送 HTTP/1.1 请求。无需手动将查询字符串添加到您的 URL，或对您的 POST 数据进行表单编码。Keep-alive 和 HTTP 连接池是 100% 自动的，基于urllib3。</p>
+<h2 id="安装">安装</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install requests
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="快速入门">快速入门</h2>
+<h3 id="发出请求">发出请求</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;https://api.github.com/events&#39;</span>)
+</span></span><span style="display:flex;"><span>r = requests.post(<span style="color:#a50">&#39;https://httpbin.org/post&#39;</span>, data={<span style="color:#a50">&#39;key&#39;</span>: <span style="color:#a50">&#39;value&#39;</span>})
+</span></span><span style="display:flex;"><span>r = requests.put(<span style="color:#a50">&#39;https://httpbin.org/put&#39;</span>, data={<span style="color:#a50">&#39;key&#39;</span>: <span style="color:#a50">&#39;value&#39;</span>})
+</span></span><span style="display:flex;"><span>r = requests.delete(<span style="color:#a50">&#39;https://httpbin.org/delete&#39;</span>)
+</span></span><span style="display:flex;"><span>r = requests.head(<span style="color:#a50">&#39;https://httpbin.org/get&#39;</span>)
+</span></span><span style="display:flex;"><span>r = requests.options(<span style="color:#a50">&#39;https://httpbin.org/get&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="在-url-中传递参数">在 URL 中传递参数</h4>
+<p>针对<code>httpbin.org/get?key=val</code>类型参数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>payload = {<span style="color:#a50">&#39;key1&#39;</span>: <span style="color:#a50">&#39;value1&#39;</span>, <span style="color:#a50">&#39;key2&#39;</span>: <span style="color:#a50">&#39;value2&#39;</span>}
+</span></span><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;https://httpbin.org/get&#39;</span>, params=payload)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打印url</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#0aa">print</span>(r.url)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>任何值为None的字典键都不会添加到 URL 的查询字符串中</p>
+<h3 id="响应内容">响应内容</h3>
+<p>读取服务器响应的内容</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.text<span style="color:#aaa;font-style:italic">#&#39;[{&#34;repository&#34;:{&#34;open_issues&#34;:0,&#34;url&#34;:&#34;https://github.com/...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认提交给服务器的编码类型是unicode，可以修改服务器编码类型</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.encoding<span style="color:#aaa;font-style:italic">#&#39;utf-8&#39;</span>
+</span></span><span style="display:flex;"><span>r.encoding = <span style="color:#a50">&#39;ISO-8859-1&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="二进制响应内容">二进制响应内容</h3>
+<p>非文本请求，以字节形式访问响应主体</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.content<span style="color:#aaa;font-style:italic">#b&#39;[{&#34;repository&#34;:{&#34;open_issues&#34;:0,&#34;url&#34;:&#34;https://github.com/...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认解码格式是gzip</p>
+<p>如果安装了像brotli或brotlicffi这样的 Brotli 库，br 传输编码会自动为您解码</p>
+<p>例如，要从请求返回的二进制数据创建图像</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">PIL</span> <span style="color:#00a">import</span> Image
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">io</span> <span style="color:#00a">import</span> BytesIO
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>i = Image.open(BytesIO(r.content))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="json-响应内容">JSON 响应内容</h3>
+<p>requests 内置了 JSON 解码器</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.json()<span style="color:#aaa;font-style:italic">#[{&#39;repository&#39;: {&#39;open_issues&#39;: 0, &#39;url&#39;: &#39;https://github.com/...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果解码失败，r.json()引发异常，抛出requests.exceptions.JSONDecodeError。例如，如果响应获得 204（无内容），或者如果响应包含无效的 JSON。</p>
+<h3 id="原始响应内容">原始响应内容</h3>
+<p>从服务器获取原始套接字响应，进行流式传输，设置stream=True</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;https://api.github.com/events&#39;</span>, stream=<span style="color:#00a">True</span>)
+</span></span><span style="display:flex;"><span>r.raw<span style="color:#aaa;font-style:italic">#&lt;urllib3.response.HTTPResponse object at 0x101194810&gt;</span>
+</span></span><span style="display:flex;"><span>r.raw.read(<span style="color:#099">10</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>保存流式传输到文件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">with</span> <span style="color:#0aa">open</span>(filename, <span style="color:#a50">&#39;wb&#39;</span>) <span style="color:#00a">as</span> fd:
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> chunk <span style="color:#00a">in</span> r.iter_content(chunk_size=<span style="color:#099">128</span>):
+</span></span><span style="display:flex;"><span>        fd.write(chunk)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="自定义标题">自定义标题</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>url = <span style="color:#a50">&#39;https://api.github.com/some/endpoint&#39;</span>
+</span></span><span style="display:flex;"><span>headers = {<span style="color:#a50">&#39;user-agent&#39;</span>: <span style="color:#a50">&#39;my-app/0.0.1&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r = requests.get(url, headers=headers)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="更复杂的-post-请求">更复杂的 POST 请求</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>payload_dict = {<span style="color:#a50">&#39;key1&#39;</span>: [<span style="color:#a50">&#39;value1&#39;</span>, <span style="color:#a50">&#39;value2&#39;</span>]}
+</span></span><span style="display:flex;"><span>r2 = requests.post(<span style="color:#a50">&#39;https://httpbin.org/post&#39;</span>, data=payload_dict)
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>(r1.text)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>data 可以传入 字符串 和 字典。字典将自动编码为json字符串</p>
+<h3 id="添加文件">添加文件</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>url = <span style="color:#a50">&#39;https://httpbin.org/post&#39;</span>
+</span></span><span style="display:flex;"><span>files = {<span style="color:#a50">&#39;file&#39;</span>: <span style="color:#0aa">open</span>(<span style="color:#a50">&#39;report.xls&#39;</span>, <span style="color:#a50">&#39;rb&#39;</span>)}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r = requests.post(url, files=files)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>显式设置文件名、内容类型和标题</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>url = <span style="color:#a50">&#39;https://httpbin.org/post&#39;</span>
+</span></span><span style="display:flex;"><span>files = {<span style="color:#a50">&#39;file&#39;</span>: (<span style="color:#a50">&#39;report.xls&#39;</span>, <span style="color:#0aa">open</span>(<span style="color:#a50">&#39;report.xls&#39;</span>, <span style="color:#a50">&#39;rb&#39;</span>), <span style="color:#a50">&#39;application/vnd.ms-excel&#39;</span>, {<span style="color:#a50">&#39;Expires&#39;</span>: <span style="color:#a50">&#39;0&#39;</span>})}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r = requests.post(url, files=files)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发送要作为文件接收的字符串</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>url = <span style="color:#a50">&#39;https://httpbin.org/post&#39;</span>
+</span></span><span style="display:flex;"><span>files = {<span style="color:#a50">&#39;file&#39;</span>: (<span style="color:#a50">&#39;report.csv&#39;</span>, <span style="color:#a50">&#39;some,data,to,send</span><span style="color:#a50">\n</span><span style="color:#a50">another,row,to,send</span><span style="color:#a50">\n</span><span style="color:#a50">&#39;</span>)}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r = requests.post(url, files=files)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>非常大的文件作为multipart/form-data 请求发送需要流式传输该请求。默认情况下，requests不支持这个，但是有一个单独的包 <a href="https://toolbelt.readthedocs.io/en/latest/" target="_blank" rel="noopener noreffer ">requests-toolbelt</a>支持。</p>
+<h3 id="响应状态代码">响应状态代码</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;https://httpbin.org/get&#39;</span>)
+</span></span><span style="display:flex;"><span>r.status_code<span style="color:#aaa;font-style:italic">#200</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>内置的状态码查找对象</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.status_code == requests.codes.ok<span style="color:#aaa;font-style:italic">#True</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>判断状态码是否正常的工具函数，如果错误将抛出requests.exceptions.HTTPError异常，否则返回None</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.raise_for_status()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="响应头">响应头</h3>
+<p>返回一个字典</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.headers
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="cookie">cookie</h3>
+<p>响应的cookie</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.cookies
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将自己的 cookie 发送到服务器</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>url = <span style="color:#a50">&#39;https://httpbin.org/cookies&#39;</span>
+</span></span><span style="display:flex;"><span>cookies = <span style="color:#0aa">dict</span>(cookies_are=<span style="color:#a50">&#39;working&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r = requests.get(url, cookies=cookies)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用cookieJar管理cookie</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>jar = requests.cookies.RequestsCookieJar()
+</span></span><span style="display:flex;"><span>jar.set(<span style="color:#a50">&#39;tasty_cookie&#39;</span>, <span style="color:#a50">&#39;yum&#39;</span>, domain=<span style="color:#a50">&#39;httpbin.org&#39;</span>, path=<span style="color:#a50">&#39;/cookies&#39;</span>)
+</span></span><span style="display:flex;"><span>jar.set(<span style="color:#a50">&#39;gross_cookie&#39;</span>, <span style="color:#a50">&#39;blech&#39;</span>, domain=<span style="color:#a50">&#39;httpbin.org&#39;</span>, path=<span style="color:#a50">&#39;/elsewhere&#39;</span>)
+</span></span><span style="display:flex;"><span>url = <span style="color:#a50">&#39;https://httpbin.org/cookies&#39;</span>
+</span></span><span style="display:flex;"><span>r = requests.get(url, cookies=jar)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="重定向和历史">重定向和历史</h3>
+<p>可以通过历史重定向的请求</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;http://github.com/&#39;</span>)
+</span></span><span style="display:flex;"><span>r.url<span style="color:#aaa;font-style:italic">#&#39;https://github.com/</span>
+</span></span><span style="display:flex;"><span>r.status_code<span style="color:#aaa;font-style:italic">#200</span>
+</span></span><span style="display:flex;"><span>r.history<span style="color:#aaa;font-style:italic">#[&lt;Response [301]&gt;]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>GET、OPTIONS、POST、PUT、PATCH 或 DELETE默认启用重定向，使用allow_redirects参数禁用重定向处理</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;http://github.com/&#39;</span>, allow_redirects=<span style="color:#00a">False</span>)
+</span></span><span style="display:flex;"><span>r.status_code<span style="color:#aaa;font-style:italic">#301</span>
+</span></span><span style="display:flex;"><span>r.history<span style="color:#aaa;font-style:italic">#[]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>HEAD默认禁用重定向，使用allow_redirects参数启用重定向处理</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r = requests.head(<span style="color:#a50">&#39;http://github.com/&#39;</span>, allow_redirects=<span style="color:#00a">True</span>)
+</span></span><span style="display:flex;"><span>r.url<span style="color:#aaa;font-style:italic">#&#39;https://github.com/</span>
+</span></span><span style="display:flex;"><span>r.status_code<span style="color:#aaa;font-style:italic">#200</span>
+</span></span><span style="display:flex;"><span>r.history<span style="color:#aaa;font-style:italic">#[&lt;Response [301]&gt;]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="超时">超时</h3>
+<p>几乎所有生产代码都应在几乎所有请求中使用此参数。不这样做可能会导致您的程序无限期挂起。这个超时不是整个交互过程超时，而是接收第一个字节超时</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>requests.get(<span style="color:#a50">&#39;https://github.com/&#39;</span>, timeout=<span style="color:#099">0.001</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="错误和异常">错误和异常</h3>
+<p>Requests 显式引发的所有异常都继承自 requests.exceptions.RequestException.</p>
+<ul>
+<li>出现网络问题（例如 DNS 故障、拒绝连接等），引发ConnectionError异常</li>
+<li>HTTP 请求返回不成功的状态代码，引发HTTPError异常</li>
+<li>请求超时，引发Timeout异常</li>
+<li>请求超过配置的最大重定向数， 引发TooManyRedirects异常</li>
+</ul>
+<h2 id="高级用法">高级用法</h2>
+<h3 id="会话对象">会话对象</h3>
+<p>Session 对象允许您跨请求保留某些参数。它还会在 Session 实例发出的所有请求中保留 cookie，并将使用urllib3的连接池。底层的 TCP 连接将被重用，这可能会显着提高性能。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>s = requests.Session()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>s.get(<span style="color:#a50">&#39;https://httpbin.org/cookies/set/sessioncookie/123456789&#39;</span>)
+</span></span><span style="display:flex;"><span>r = s.get(<span style="color:#a50">&#39;https://httpbin.org/cookies&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>会话也可用于向请求方法提供默认数据：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>s.auth = (<span style="color:#a50">&#39;user&#39;</span>, <span style="color:#a50">&#39;pass&#39;</span>)
+</span></span><span style="display:flex;"><span>s.headers.update({<span style="color:#a50">&#39;x-test&#39;</span>: <span style="color:#a50">&#39;true&#39;</span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>传递给请求方法级字典都将与设置的会话级值合并，方法级参数覆盖会话参数</p>
+<p>会话也可以用作上下文管理器：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">with</span> requests.Session() <span style="color:#00a">as</span> s:
+</span></span><span style="display:flex;"><span>    s.get(<span style="color:#a50">&#39;https://httpbin.org/cookies/set/sessioncookie/123456789&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从字典参数中删除一个值:在单次请求中会话级字典的键，只需在方法级参数中将该键的值设置为None</p>
+<h3 id="请求和响应对象">请求和响应对象</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r.headers<span style="color:#aaa;font-style:italic">#响应头</span>
+</span></span><span style="display:flex;"><span>r.request.headers<span style="color:#aaa;font-style:italic">#请求头</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="准备好的请求">准备好的请求</h3>
+<p>每次API 调用或会话调用发送的请求其实就是一个PreparedRequest对象，r.request也是这个对象。所以通过在发送前修改这个对象能够实现对正文或标头（或其他任何内容）做一些额外的工作</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>req = Request(<span style="color:#a50">&#39;POST&#39;</span>, url, data=data, headers=headers)
+</span></span><span style="display:flex;"><span>prepped = req.prepare()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># do something with prepped.body</span>
+</span></span><span style="display:flex;"><span>prepped.body = <span style="color:#a50">&#39;No, I want exactly this as the body.&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># do something with prepped.headers</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">del</span> prepped.headers[<span style="color:#a50">&#39;Content-Type&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>resp = s.send(prepped,
+</span></span><span style="display:flex;"><span>    stream=stream,
+</span></span><span style="display:flex;"><span>    verify=verify,
+</span></span><span style="display:flex;"><span>    proxies=proxies,
+</span></span><span style="display:flex;"><span>    cert=cert,
+</span></span><span style="display:flex;"><span>    timeout=timeout
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面的代码无法使用session对象配置的会话级属性，使用Session.prepare_request()替换Request.prepare()</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>prepped = s.prepare_request(req)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="ssl-证书验证">SSL 证书验证</h3>
+<p>默认情况下，启用 SSL 验证，如果无法验证证书，Requests 将抛出 SSLError：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>requests.get(<span style="color:#a50">&#39;https://requestb.in&#39;</span>)<span style="color:#aaa;font-style:italic">#requests.exceptions.SSLError: hostname &#39;requestb.in&#39; doesn&#39;t match either of &#39;*.herokuapp.com&#39;, &#39;herokuapp.com&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以将verify路径传递给带有受信任 CA 证书的 CA_BUNDLE 文件或目录</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>requests.get(<span style="color:#a50">&#39;https://github.com&#39;</span>, verify=<span style="color:#a50">&#39;/path/to/certfile&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>s = requests.Session()
+</span></span><span style="display:flex;"><span>s.verify = <span style="color:#a50">&#39;/path/to/certfile&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果verify设置为目录路径，则必须使用 OpenSSL 提供的实用程序c_rehash处理该目录。</p>
+<p>当verify设置为时False，请求将接受服务器提供的任何 TLS 证书，并将忽略主机名不匹配和/或过期的证书</p>
+<h3 id="客户端证书">客户端证书</h3>
+<p>指定本地证书用作客户端证书，使用单个文件（包含私钥和证书）或两个文件路径的元组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>requests.get(<span style="color:#a50">&#39;https://kennethreitz.org&#39;</span>, cert=(<span style="color:#a50">&#39;/path/client.cert&#39;</span>, <span style="color:#a50">&#39;/path/client.key&#39;</span>))
+</span></span><span style="display:flex;"><span>&lt;Response [<span style="color:#099">200</span>]&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>s = requests.Session()
+</span></span><span style="display:flex;"><span>s.cert = <span style="color:#a50">&#39;/path/client.cert&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>指定错误的路径或无效的证书，抛出 SSLError</p>
+<p>本地证书的私钥必须未加密。目前，Requests 不支持使用加密密钥</p>
+<h3 id="ca-证书">CA 证书</h3>
+<p>Requests 使用包certifi中的证书。当certifi未安装时，这会导致在使用明显较旧版本的 Requests 时出现极其过时的证书包。为了安全起见，我们建议经常升级 certifi！</p>
+<h3 id="正文内容工作流程">正文内容工作流程</h3>
+<p>默认情况下，当您发出请求时，会立即下载响应正文。</p>
+<p>覆盖此行为并推迟下载响应主体，直到您使用stream参数访问Response.content 属性：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>tarball_url = <span style="color:#a50">&#39;https://github.com/psf/requests/tarball/main&#39;</span>
+</span></span><span style="display:flex;"><span>r = requests.get(tarball_url, stream=<span style="color:#00a">True</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时只有响应标头已被下载并且连接保持打开状态，可以根据响应头信息决定下载正文：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">if</span> <span style="color:#0aa">int</span>(r.headers[<span style="color:#a50">&#39;content-length&#39;</span>]) &lt; TOO_LONG:
+</span></span><span style="display:flex;"><span>  content = r.content
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以使用Response.iter_content() 和Response.iter_lines()方法进一步控制工作流</p>
+<p>如果您在发出请求时设置stream为True，除非您消耗所有数据或调用Response.close，否则 Requests 无法将连接释放回池中 。这可能导致连接效率低下。在使用stream=True时部分阅读了请求正文（或根本没有阅读），您应该在with声明中发出请求以确保它始终关闭：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">with</span> requests.get(<span style="color:#a50">&#39;https://httpbin.org/get&#39;</span>, stream=<span style="color:#00a">True</span>) <span style="color:#00a">as</span> r:
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic"># Do things with the response here.</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="保持活动">保持活动</h3>
+<p>keep-alive 在一个会话中是 100% 自动的</p>
+<h3 id="流媒体上传">流媒体上传</h3>
+<p>Requests 支持流式上传，这允许您发送大型流或文件而无需将它们读入内存。要流式传输和上传，只需为您的身体提供一个类似文件的对象：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">with</span> <span style="color:#0aa">open</span>(<span style="color:#a50">&#39;massive-body&#39;</span>, <span style="color:#a50">&#39;rb&#39;</span>) <span style="color:#00a">as</span> f:
+</span></span><span style="display:flex;"><span>    requests.post(<span style="color:#a50">&#39;http://some.url/streamed&#39;</span>, data=f)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="块编码请求">块编码请求</h3>
+<p>Requests 还支持传出和传入请求的分块传输编码，要发送块编码的请求，只需为您的正文提供一个生成器（或任何没有长度的迭代器）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">gen</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">yield</span> <span style="color:#a50">&#39;hi&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">yield</span> <span style="color:#a50">&#39;there&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>requests.post(<span style="color:#a50">&#39;http://some.url/chunked&#39;</span>, data=gen())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于分块编码的响应，最好使用 Response.iter_content()并设置stream=True</p>
+<h3 id="发送多个多部分编码文件">发送多个多部分编码文件</h3>
+<p>将文件设置为(form_field_name, file_info)元组列表：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>url = <span style="color:#a50">&#39;https://httpbin.org/post&#39;</span>
+</span></span><span style="display:flex;"><span>multiple_files = [
+</span></span><span style="display:flex;"><span>    (<span style="color:#a50">&#39;images&#39;</span>, (<span style="color:#a50">&#39;foo.png&#39;</span>, <span style="color:#0aa">open</span>(<span style="color:#a50">&#39;foo.png&#39;</span>, <span style="color:#a50">&#39;rb&#39;</span>), <span style="color:#a50">&#39;image/png&#39;</span>)),
+</span></span><span style="display:flex;"><span>    (<span style="color:#a50">&#39;images&#39;</span>, (<span style="color:#a50">&#39;bar.png&#39;</span>, <span style="color:#0aa">open</span>(<span style="color:#a50">&#39;bar.png&#39;</span>, <span style="color:#a50">&#39;rb&#39;</span>), <span style="color:#a50">&#39;image/png&#39;</span>))]
+</span></span><span style="display:flex;"><span>r = requests.post(url, files=multiple_files)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="事件挂钩hook">事件挂钩Hook</h3>
+<p>Requests 有一个挂钩系统，您可以使用它来操作部分请求过程或信号事件处理</p>
+<p>您可以通过将字典传递给请求参数来为每个请求分配一个挂钩函数。回调函数必须处理自己的异常。如果回调函数返回一个值，将替换传入的数据。如果函数不返回任何内容，则没有影响。可以向单个请求添加多个挂钩。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">print_url</span>(r, *args, **kwargs):
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span>(r.url)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">record_hook</span>(r, *args, **kwargs):
+</span></span><span style="display:flex;"><span>    r.hook_called = <span style="color:#00a">True</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> r
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;https://httpbin.org/&#39;</span>, hooks={<span style="color:#a50">&#39;response&#39;</span>: [print_url, record_hook]})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以向Session实例添加挂钩</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>s = requests.Session()
+</span></span><span style="display:flex;"><span>s.hooks[<span style="color:#a50">&#39;response&#39;</span>].append(print_url)
+</span></span><span style="display:flex;"><span>s.get(<span style="color:#a50">&#39;https://httpbin.org/&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="自定义认证">自定义认证</h3>
+<p>Requests 允许指定自己的身份验证机制</p>
+<p>身份验证实现是AuthBase的子类。Requests 在requests.auth中提供了两种常见的身份验证方案实现：HTTPBasicAuth和HTTPDigestAuth</p>
+<ul>
+<li>class requests.auth.HTTPBasicAuth(username, password)：Attaches HTTP Basic Authentication to the given Request object.</li>
+<li>lass requests.auth.HTTPDigestAuth(username, password)：Attaches HTTP Digest Authentication to the given Request object.</li>
+</ul>
+<p>自定义身份认证：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">requests.auth</span> <span style="color:#00a">import</span> AuthBase
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">PizzaAuth</span>(AuthBase):
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;&#34;&#34;Attaches HTTP Pizza Authentication to the given Request object.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> __init__(self, username):
+</span></span><span style="display:flex;"><span>        <span style="color:#aaa;font-style:italic"># setup any auth-related data here</span>
+</span></span><span style="display:flex;"><span>        self.username = username
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> __call__(self, r):
+</span></span><span style="display:flex;"><span>        <span style="color:#aaa;font-style:italic"># modify and return the request</span>
+</span></span><span style="display:flex;"><span>        r.headers[<span style="color:#a50">&#39;X-Pizza&#39;</span>] = self.username
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> r
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>requests.get(<span style="color:#a50">&#39;http://pizzabin.org/admin&#39;</span>, auth=PizzaAuth(<span style="color:#a50">&#39;kenneth&#39;</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实就是在__call__方法里面修改请求头</p>
+<h3 id="流媒体请求">流媒体请求</h3>
+<p>Response.iter_lines()您可以轻松地迭代流式 API。只需设置stream True并迭代响应 iter_lines：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">json</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;https://httpbin.org/stream/20&#39;</span>, stream=<span style="color:#00a">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> line <span style="color:#00a">in</span> r.iter_lines():
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic"># filter out keep-alive new lines</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> line:
+</span></span><span style="display:flex;"><span>        decoded_line = line.decode(<span style="color:#a50">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#0aa">print</span>(json.loads(decoded_line))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将decode_unicode=True与 Response.iter_lines()或Response.iter_content() 一起使用时，如果服务器不提供后备编码，需要指定编码：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;https://httpbin.org/stream/20&#39;</span>, stream=<span style="color:#00a">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> r.encoding <span style="color:#00a">is</span> <span style="color:#00a">None</span>:
+</span></span><span style="display:flex;"><span>    r.encoding = <span style="color:#a50">&#39;utf-8&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> line <span style="color:#00a">in</span> r.iter_lines(decode_unicode=<span style="color:#00a">True</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> line:
+</span></span><span style="display:flex;"><span>        <span style="color:#0aa">print</span>(json.loads(line))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="代理">代理</h3>
+<p>使用proxies参数配置单独的请求或Session：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>proxies = {
+</span></span><span style="display:flex;"><span>  <span style="color:#a50">&#39;http&#39;</span>: <span style="color:#a50">&#39;http://10.10.1.10:3128&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a50">&#39;https&#39;</span>: <span style="color:#a50">&#39;http://10.10.1.10:1080&#39;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>requests.get(<span style="color:#a50">&#39;http://example.org&#39;</span>, proxies=proxies)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>session = requests.Session()
+</span></span><span style="display:flex;"><span>session.proxies.update(proxies)
+</span></span><span style="display:flex;"><span>session.get(<span style="color:#a50">&#39;http://example.org&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>session.proxies的行为可能与预期不同。提供的值将被环境代理（由urllib.request.getproxies返回的那些）覆盖。为确保在存在环境代理的情况下使用代理，请明确指定proxies所有单独请求的参数。</p>
+<p>代理有HTTP Basic Auth时，需要使用账号密码配置proxy为如下形式：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># http://user:password@host/</span>
+</span></span><span style="display:flex;"><span>proxies = {<span style="color:#a50">&#39;http&#39;</span>: <span style="color:#a50">&#39;http://user:pass@10.10.1.10:3128/&#39;</span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要为特定方案和主机提供代理，请使用 scheme://hostname形式作为键。这将匹配对给定方案和确切主机名的任何请求。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>proxies = {<span style="color:#a50">&#39;http://10.20.1.128&#39;</span>: <span style="color:#a50">&#39;http://10.10.1.10:5323&#39;</span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用代理进行 https 连接通常需要您的本地计算机信任代理的根证书，请求信任的证书列表可以通过以下方式找到</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#0aa">print</span>(DEFAULT_CA_BUNDLE_PATH)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将REQUESTS_CA_BUNDLE （或CURL_CA_BUNDLE）环境变量设置为另一个文件路径来覆盖此默认证书包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">REQUESTS_CA_BUNDLE</span>=<span style="color:#a50">&#34;/usr/local/myproxy_info/cacert.pem&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>SOCKS</p>
+<p>Requests 还支持使用 SOCKS 协议的代理</p>
+<p>需要安装第三方库</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python -m pip install requests[socks]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装这些依赖项后，使用 SOCKS 代理就像使用 HTTP 代理一样简单：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>proxies = {
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#39;http&#39;</span>: <span style="color:#a50">&#39;socks5://user:pass@host:port&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#39;https&#39;</span>: <span style="color:#a50">&#39;socks5://user:pass@host:port&#39;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="阻塞还是非阻塞">阻塞还是非阻塞</h3>
+<p>Requests 不提供任何类型的非阻塞 IO</p>
+<h3 id="超时-1">超时</h3>
+<p>默认只配置connect超时，但是也可以通过第二个参数配置read超时</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r = requests.get(<span style="color:#a50">&#39;https://github.com&#39;</span>, timeout=(<span style="color:#099">3.05</span>, <span style="color:#099">27</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-02-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/requests/" data-title="Python-第三方库-Requests" data-hashtags="Python第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/requests/" data-hashtag="Python第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/requests/" data-title="Python-第三方库-Requests"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/requests/" data-title="Python-第三方库-Requests"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/requests/" data-title="Python-第三方库-Requests"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">Python第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/go-zero/dtm/" class="prev" rel="prev" title="golang-go-zero-Dtm"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-go-zero-Dtm</a>
+            <a href="/posts/python/python%E6%95%99%E7%A8%8B/%E8%A1%A5%E5%85%85/" class="next" rel="next" title="Python教程-补充">Python教程-补充<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-02-10T10:38:55+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"Python-第三方库-Requests"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
