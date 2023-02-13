@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/labuladong\/%E7%AC%AC%E9%9B%B6%E7%AB%A0\/"
-        },"genre": "posts","keywords": "labuladong系列","wordcount":  2387 ,
+        },"genre": "posts","keywords": "labuladong系列","wordcount":  2561 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/labuladong\/%E7%AC%AC%E9%9B%B6%E7%AB%A0\/","datePublished": "2022-12-29T19:11:57+08:00","dateModified": "2022-12-29T19:11:57+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-labuladong-第零章</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-29">2022-12-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2387 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-29">2022-12-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2561 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -147,6 +147,7 @@
     </li>
     <li><a href="#解法代码分层">解法代码分层</a></li>
     <li><a href="#递归debug">递归Debug</a></li>
+    <li><a href="#一个方法解决n和问题">一个方法解决n和问题</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://labuladong.github.io/algo/" target="_blank" rel="noopener noreffer ">labuladong的算法小抄</a>学习的时候结合golang做的笔记。感谢东哥。</p>
@@ -835,11 +836,125 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="一个方法解决n和问题">一个方法解决n和问题</h2>
+<p>2和问题，排序+对撞指针</p>
+<p>n和问题，排序+穷举（减小问题规模）+对撞指针</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">fourSum</span>(nums []<span style="color:#0aa">int</span>, target <span style="color:#0aa">int</span>) [][]<span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    l:=<span style="color:#0aa">len</span>(nums)
+</span></span><span style="display:flex;"><span>    sort.<span style="color:#0a0">Ints</span>(nums)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    n:=<span style="color:#099">4</span>
+</span></span><span style="display:flex;"><span>    onpath:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,<span style="color:#099">0</span>,n-<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#0aa">make</span>([][]<span style="color:#0aa">int</span>,<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> rec <span style="color:#00a">func</span> (<span style="color:#0aa">int</span>,<span style="color:#0aa">int</span>,<span style="color:#0aa">int</span>)
+</span></span><span style="display:flex;"><span>    rec=<span style="color:#00a">func</span> (i,n,t <span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#aaa;font-style:italic">//fmt.Println(onpath,len(onpath),n)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>        <span style="color:#00a">if</span> i&gt;=l{<span style="color:#00a">return</span>}
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> n==<span style="color:#099">2</span>{
+</span></span><span style="display:flex;"><span>            left,right:=i,l-<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">for</span> left&lt;right{
+</span></span><span style="display:flex;"><span>                <span style="color:#00a">if</span> nums[left]+nums[right]&lt;t{
+</span></span><span style="display:flex;"><span>                    left++
+</span></span><span style="display:flex;"><span>                    <span style="color:#00a">for</span> left&lt;right&amp;&amp;(left==<span style="color:#099">0</span>||nums[left]==nums[left-<span style="color:#099">1</span>]){left++}
+</span></span><span style="display:flex;"><span>                }<span style="color:#00a">else</span> <span style="color:#00a">if</span> nums[left]+nums[right]&gt;t{
+</span></span><span style="display:flex;"><span>                    right--
+</span></span><span style="display:flex;"><span>                    <span style="color:#00a">for</span> right&gt;left&amp;&amp;(right==l||nums[right]==nums[right+<span style="color:#099">1</span>]){right--}
+</span></span><span style="display:flex;"><span>                }<span style="color:#00a">else</span>{
+</span></span><span style="display:flex;"><span>                    tmp:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,<span style="color:#099">2</span>,<span style="color:#099">4</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#0aa">copy</span>(tmp,onpath)
+</span></span><span style="display:flex;"><span>                    tmp=<span style="color:#0aa">append</span>(tmp,nums[left],nums[right])                    
+</span></span><span style="display:flex;"><span>                    ans=<span style="color:#0aa">append</span>(ans,tmp)
+</span></span><span style="display:flex;"><span>                    left++
+</span></span><span style="display:flex;"><span>                    right--
+</span></span><span style="display:flex;"><span>                    <span style="color:#00a">for</span> left&lt;right&amp;&amp;(left==<span style="color:#099">0</span>||nums[left]==nums[left-<span style="color:#099">1</span>]){left++}
+</span></span><span style="display:flex;"><span>                    <span style="color:#00a">for</span> right&gt;left&amp;&amp;(right==l-<span style="color:#099">1</span>||nums[right]==nums[right+<span style="color:#099">1</span>]){right--}
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }<span style="color:#00a">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">for</span> i&lt;l{
+</span></span><span style="display:flex;"><span>                onpath=<span style="color:#0aa">append</span>(onpath,nums[i])
+</span></span><span style="display:flex;"><span>                <span style="color:#0a0">rec</span>(i+<span style="color:#099">1</span>,n-<span style="color:#099">1</span>,t-nums[i])
+</span></span><span style="display:flex;"><span>                onpath=onpath[:<span style="color:#0aa">len</span>(onpath)-<span style="color:#099">1</span>]
+</span></span><span style="display:flex;"><span>                i++
+</span></span><span style="display:flex;"><span>                <span style="color:#00a">for</span> i&lt;l&amp;&amp;(i==<span style="color:#099">0</span>||nums[i]==nums[i-<span style="color:#099">1</span>]){i++}
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">rec</span>(<span style="color:#099">0</span>,n,target)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>n数之和只需要修改函数中的n即可</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-12-29</span>
+                <span>Updated on 2022-12-29
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
@@ -862,11 +977,40 @@
 <div id="comments"><div id="gitalk" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
             </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
                 <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>

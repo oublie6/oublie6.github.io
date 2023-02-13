@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/mininet\/mininet%E7%AE%80%E4%BB%8B\/"
-        },"genre": "posts","keywords": "mininet, Python第三方库","wordcount":  11062 ,
+        },"genre": "posts","keywords": "mininet, Python第三方库","wordcount":  10894 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/mininet\/mininet%E7%AE%80%E4%BB%8B\/","datePublished": "2022-11-29T11:18:06+08:00","dateModified": "2022-11-29T11:18:06+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-mininet-Mininet简介</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-29">2022-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;11062 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;23 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-29">2022-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10894 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;22 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -685,14 +685,20 @@
 </div><p>请注意，此实现略有不同，因为它将时间管理从pmonitor()辅助函数中提取出来，但这使得ping能够在它被中断后捕获它的输出。</p>
 <p>当然，您不必使用pmonitor()- 您可以使用 Popen.communicate()（只要您没有太多文件描述符）或select.poll()以及任何其他有效的机制。</p>
 <h3 id="重要共享文件系统">重要：共享文件系统！</h3>
-<p>要记住的一件事是，默认情况下 Mininet 主机共享底层服务器的根文件系统。通常这是一件非常好的事情，因为为每个 Mininet 主机创建一个单独的文件系统是一件非常痛苦的事情（而且很慢）（如果你愿意，你可以这样做，然后 chroot 进去！）</p>
-<p>共享根文件系统还意味着您几乎不需要在 Mininet 主机之间复制数据，因为它已经存在。</p>
-<p>然而，这样做的一个副作用是主机共享 Mininet 服务器的 /etc目录。这意味着如果您需要对程序进行特定配置（例如httpd），那么您可能需要为每个 Mininet 主机创建不同的配置文件，并将它们指定为您正在运行的程序的启动选项。</p>
-<p>另一个副作用是，如果您尝试在多个主机上的同一目录中创建同一文件，则可能会发生文件冲突。</p>
-<p>如果您需要每个主机的私有目录，您可以将它们指定为Host的选项，例如：</p>
-<pre tabindex="0"><code>h = Host( &#39;h1&#39;, privateDirs=[ &#39;/some/directory&#39; ] )
-</code></pre><p>有关详细信息，请参阅examples/bind.py。</p>
-<h3 id="主机配置方法">主机配置方法</h3>
+<p>要记住的一件事是，默认情况下 Mininet 主机共享底层服务器的根文件系统。</p>
+<p>共享根文件系统还意味着不需要在 Mininet 主机之间复制数据，因为可以直接访问。</p>
+<p>然而，一个副作用是主机共享 Mininet 服务器的 /etc目录。、如果您需要对程序进行特定配置（例如httpd），那么您可能需要为每个 Mininet 主机创建不同的配置文件，并将它们指定为您正在运行的程序的启动选项。</p>
+<p>另一个副作用是，尝试在多个主机上的同一目录中创建同一文件，会发生文件冲突。</p>
+<p>如果需要每个主机的私有目录，将它们指定为Host的选项，例如：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>h = Host( <span style="color:#a50">&#39;h1&#39;</span>, privateDirs=[ <span style="color:#a50">&#39;/some/directory&#39;</span> ] )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="主机配置方法">主机配置方法</h3>
 <p>Mininet hosts 提供了一些方便的网络配置方法：</p>
 <ol>
 <li>IP(): 返回主机或特定接口的 IP 地址。</li>
@@ -702,53 +708,122 @@
 <li>setMAC()：设置主机或特定接口的MAC地址</li>
 </ol>
 <p>例如：</p>
-<pre tabindex="0"><code>    print( &#34;Host&#34;, h1.name, &#34;has IP address&#34;, h1.IP(), &#34;and MAC address&#34;, h1.MAC() )
-</code></pre><p>在任何情况下，如果您不提供特定接口（例如h1-eth0 或接口对象），该方法将使用主机的默认接口。以上函数定义在 mininet/node.py 中。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#0aa">print</span>( <span style="color:#a50">&#34;Host&#34;</span>, h1.name, <span style="color:#a50">&#34;has IP address&#34;</span>, h1.IP(), <span style="color:#a50">&#34;and MAC address&#34;</span>, h1.MAC() )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在任何情况下，如果您不提供特定接口（例如h1-eth0 或接口对象），该方法将使用主机的默认接口。</p>
 <h3 id="在-mininet-中命名">在 Mininet 中命名</h3>
-<p>为了有效地使用 Mininet，了解其主机、交换机和接口的命名方案非常重要。通常，主机被称为h1..hN，交换机被称为s1..sN。我们建议您遵循此约定或类似约定。为清楚起见，属于节点的接口以节点名称开头命名，例如h1-eth0是主机h1的默认接口，s1-eth1是交换机s1的第一个数据端口。主机接口仅在主机内部可见，但交换机数据端口在“根”命名空间中可见（您可以ip link show在 Mininet 运行时通过在另一个窗口中键入来查看它们。）因此，很容易检查交换机接口，但检查主机接口有点棘手（主要使用host.cmd())。</p>
+<p>主机被称为h1..hN，交换机被称为s1..sN。属于节点的接口以节点名称开头命名，例如h1-eth0是主机h1的默认接口，s1-eth1是交换机s1的第一个数据端口。主机接口仅在主机内部可见，交换机数据端口在“root”命名空间中可见。因此，很容易检查交换机接口，但检查主机接口有点棘手（主要使用host.cmd())。</p>
 <h3 id="命令行界面">命令行界面</h3>
-<p>Mininet 包括一个可以在网络上调用的命令行界面 (CLI)，并提供各种有用的命令，以及显示 xterm 窗口和在网络中的各个节点上运行命令的能力。您可以通过将网络对象传递给CLI()构造函数来在网络上调用 CLI：</p>
-<pre tabindex="0"><code>from mininet.topo import SingleSwitchTopo
-from mininet.net import Mininet
-from mininet.cli import CLI
-
-net = Mininet(SingleSwitchTopo(2))
-net.start()
-CLI(net)
-net.stop()
-</code></pre><p>启动 CLI 可用于调试网络，因为它允许您查看网络拓扑（使用net命令）、测试连接性（使用pingall命令）以及向各个主机发送命令。</p>
-<pre tabindex="0"><code>*** Starting CLI:
-mininet&gt; net
-c0
-s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0
-h1 h1-eth0:s1-eth1
-h2 h2-eth0:s1-eth2
-mininet&gt; pingall
-*** Ping: testing ping reachability
-h1 -&gt; h2
-h2 -&gt; h1
-*** Results: 0% dropped (0/2 lost)
-mininet&gt; h1 ip link show
-746: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN
-	link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-749: h1-eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
-	link/ether d6:13:2d:6f:98:95 brd ff:ff:ff:ff:ff:ff
-</code></pre><h3 id="mn使用--custom文件自定义">mn使用&ndash;custom文件自定义</h3>
-<p>除了用 Python 编写完整的 Mininet 脚本外，您还可以使用&ndash;custom选项扩展mn命令行工具。该选项允许您使用mn来调用您自己的自定义拓扑、交换机、主机、控制器或链接类。您还可以定义和调用自己的系统测试，并添加新的 Mininet CLI 命令。</p>
+<p>Mininet 包括一个可以在网络上调用的命令行界面 (CLI)，并提供各种有用的命令，以及显示 xterm 窗口和在网络中的各个节点上运行命令的能力。可以通过将网络对象传递给CLI()构造函数来在网络上调用 CLI：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">mininet.topo</span> <span style="color:#00a">import</span> SingleSwitchTopo
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">mininet.net</span> <span style="color:#00a">import</span> Mininet
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">mininet.cli</span> <span style="color:#00a">import</span> CLI
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>net = Mininet(SingleSwitchTopo(<span style="color:#099">2</span>))
+</span></span><span style="display:flex;"><span>net.start()
+</span></span><span style="display:flex;"><span>CLI(net)
+</span></span><span style="display:flex;"><span>net.stop()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动 CLI 可用于调试网络，因为它允许您查看网络拓扑（使用net命令）、测试连接性（使用pingall命令）以及向各个主机发送命令。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>*** Starting CLI:
+</span></span><span style="display:flex;"><span>mininet&gt; net
+</span></span><span style="display:flex;"><span>c0
+</span></span><span style="display:flex;"><span>s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0
+</span></span><span style="display:flex;"><span>h1 h1-eth0:s1-eth1
+</span></span><span style="display:flex;"><span>h2 h2-eth0:s1-eth2
+</span></span><span style="display:flex;"><span>mininet&gt; pingall
+</span></span><span style="display:flex;"><span>*** Ping: testing ping reachability
+</span></span><span style="display:flex;"><span>h1 -&gt; h2
+</span></span><span style="display:flex;"><span>h2 -&gt; h1
+</span></span><span style="display:flex;"><span>*** Results: 0% dropped (0/2 lost)
+</span></span><span style="display:flex;"><span>mininet&gt; h1 ip link show
+</span></span><span style="display:flex;"><span>746: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#099">16436</span> qdisc noqueue state UNKNOWN
+</span></span><span style="display:flex;"><span>	link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>749: h1-eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#099">1500</span> qdisc pfifo_fast state UP qlen <span style="color:#099">1000</span>
+</span></span><span style="display:flex;"><span>	link/ether d6:13:2d:6f:98:95 brd ff:ff:ff:ff:ff:ff
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="mn使用--custom文件自定义">mn使用&ndash;custom文件自定义</h3>
+<p>除了用 Python 编写完整的 Mininet 脚本外，还可以使用&ndash;custom选项扩展mn命令行工具。该选项允许您使用mn来调用您自己的自定义拓扑、交换机、主机、控制器或链接类。您还可以定义和调用自己的系统测试，并添加新的 Mininet CLI 命令。</p>
 <p>要添加可以使用mn命令调用的新功能，您需要根据选项类型在&ndash;custom文件中定义一个字典。DICT的键是将其短名称传递给了适当的选项，并且值是相应的子类，构造函数或函数：</p>
 <p><a href="https://github.com/mininet/mininet/wiki/Introduction-to-Mininet#customizing-mn-using---custom-files" target="_blank" rel="noopener noreffer ">图表</a></p>
 <p>例如：</p>
-<pre tabindex="0"><code>class MyTopo( Topo ):
-   def build( self, ...):
-def myTest( net ):
-...
-topos = { &#39;mytopo&#39;: MyTopo }
-tests = { &#39;mytest&#39;: myTest }
-</code></pre><p>这会将 MyTopo 类（或构造函数）添加到 topos 字典中，允许它与&ndash;topo选项以及新测试一起使用mytest。请注意，测试函数是使用顶级Mininet对象调用的，您可以将字符串或数字参数传递给MyTopo：</p>
-<pre tabindex="0"><code>sudo mn --custom mytopo.py --topo mytopo,3
-</code></pre><p>您还可以指定多个自定义文件：</p>
-<pre tabindex="0"><code>sudo mn --custom mytopo.py,mytest.py --topo mytopo,3 --test mytest
-</code></pre><p>这将mytopo用作默认拓扑并调用mytest测试。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">MyTopo</span>( Topo ):
+</span></span><span style="display:flex;"><span>   <span style="color:#00a">def</span> <span style="color:#0a0">build</span>( self, ...):
+</span></span><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">myTest</span>( net ):
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>topos = { <span style="color:#a50">&#39;mytopo&#39;</span>: MyTopo }
+</span></span><span style="display:flex;"><span>tests = { <span style="color:#a50">&#39;mytest&#39;</span>: myTest }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这会将 MyTopo 类（或构造函数）添加到 topos 字典中，允许它与&ndash;topo选项以及新测试一起使用mytest。请注意，测试函数是使用顶级Mininet对象调用的，您可以将字符串或数字参数传递给MyTopo：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo mn --custom mytopo.py --topo mytopo,3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>您还可以指定多个自定义文件：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo mn --custom mytopo.py,mytest.py --topo mytopo,3 --test mytest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这将mytopo用作默认拓扑并调用mytest测试。</p>
 <p>这是启动 Mininet、运行端到端系统测试（或多个测试）以及关闭 Mininet 的非常方便的单行命令。如果发生异常，标准的 Mininet 清理代码将被调用，就像mn通常在这种情况下所做的那样。</p>
 <h4 id="--custom在文件中添加新的-cli-命令">&ndash;custom在文件中添加新的 CLI 命令</h4>
 <p>在文件中添加新的 CLI 命令很容易&ndash;custom：</p>
@@ -758,12 +833,23 @@ tests = { &#39;mytest&#39;: myTest }
     output( &#39;mycmd invoked for&#39;, net, &#39;with line&#39;, line, &#39;\n&#39;  )
 CLI.do_mycmd = mycmd
 </code></pre><p>mycmd会向 Mininet CLI 添加一个命令：</p>
-<pre tabindex="0"><code>sudo mn --custom mycmd.py -v output
-mininet&gt; help mycmd
-mycmd is an example command to extend the Mininet CLI
-mininet&gt; mycmd foo
-mycmd invoked for &lt;mininet.net.Mininet object at 0x7fd7235fb9d0&gt; with line foo
-</code></pre><p>请注意，您添加到 CLI 的命令函数名称应该有do_前缀。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo mn --custom mycmd.py -v output
+</span></span><span style="display:flex;"><span>mininet&gt; <span style="color:#0aa">help</span> mycmd
+</span></span><span style="display:flex;"><span>mycmd is an example <span style="color:#0aa">command</span> to extend the Mininet CLI
+</span></span><span style="display:flex;"><span>mininet&gt; mycmd foo
+</span></span><span style="display:flex;"><span>mycmd invoked <span style="color:#00a">for</span> &lt;mininet.net.Mininet object at 0x7fd7235fb9d0&gt; with line foo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，您添加到 CLI 的命令函数名称应该有do_前缀。</p>
 <h3 id="其他示例">其他示例</h3>
 <p>Mininet 脚本的其他示例可以在mininet/examples.</p>
 <p>这些示例旨在提供教育意义，因为它们展示了可以使用 Mininet API 的不同方式。我们鼓励您尝试阅读Python 代码并自己运行示例。如果它们由于某种原因不起作用，看看您是否能找出原因！</p>
@@ -782,20 +868,39 @@ mycmd invoked for &lt;mininet.net.Mininet object at 0x7fd7235fb9d0&gt; with line
 <p>当您开始考虑创建完整的网络时，事情就会变得有趣起来。可以使用任何 API 级别创建完整网络（如示例中所示），但通常您会希望选择中级 API（例如Mininet.add*()）或高级 API ( Topo.add*()) 来创建您的网络。</p>
 <p>以下是使用每个 API 级别创建网络的示例：</p>
 <h4 id="低级-api节点和链接">低级 API：节点和链接</h4>
-<pre tabindex="0"><code>h1 = Host( &#39;h1&#39; )                                                                                                     
-h2 = Host( &#39;h2&#39; )                                                                                                     
-s1 = OVSSwitch( &#39;s1&#39;, inNamespace=False )                                                                             
-c0 = Controller( &#39;c0&#39;, inNamespace=False )                                                                            
-Link( h1, s1 )                                                                                                        
-Link( h2, s1 )                                                                                                        
-h1.setIP( &#39;10.1/8&#39; )                                                                                                  
-h2.setIP( &#39;10.2/8&#39; )                                                                                                  
-c0.start()                                                                                                            
-s1.start( [ c0 ] )                                                                                                    
-print( h1.cmd( &#39;ping -c1&#39;, h2.IP() ) )
-s1.stop()                                                                                                             
-c0.stop() 
-</code></pre><h4 id="中级-api网络对象">中级 API：网络对象</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>h1 = Host( <span style="color:#a50">&#39;h1&#39;</span> )                                                                                                     
+</span></span><span style="display:flex;"><span>h2 = Host( <span style="color:#a50">&#39;h2&#39;</span> )                                                                                                     
+</span></span><span style="display:flex;"><span>s1 = OVSSwitch( <span style="color:#a50">&#39;s1&#39;</span>, inNamespace=<span style="color:#00a">False</span> )                                                                             
+</span></span><span style="display:flex;"><span>c0 = Controller( <span style="color:#a50">&#39;c0&#39;</span>, inNamespace=<span style="color:#00a">False</span> )                                                                            
+</span></span><span style="display:flex;"><span>Link( h1, s1 )                                                                                                        
+</span></span><span style="display:flex;"><span>Link( h2, s1 )                                                                                                        
+</span></span><span style="display:flex;"><span>h1.setIP( <span style="color:#a50">&#39;10.1/8&#39;</span> )                                                                                                  
+</span></span><span style="display:flex;"><span>h2.setIP( <span style="color:#a50">&#39;10.2/8&#39;</span> )                                                                                                  
+</span></span><span style="display:flex;"><span>c0.start()                                                                                                            
+</span></span><span style="display:flex;"><span>s1.start( [ c0 ] )                                                                                                    
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>( h1.cmd( <span style="color:#a50">&#39;ping -c1&#39;</span>, h2.IP() ) )
+</span></span><span style="display:flex;"><span>s1.stop()                                                                                                             
+</span></span><span style="display:flex;"><span>c0.stop() 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="中级-api网络对象">中级 API：网络对象</h4>
 <pre tabindex="0"><code>net = Mininet()
 h1 = net.addHost( &#39;h1&#39; )
 h2 = net.addHost( &#39;h2&#39; )
@@ -978,7 +1083,21 @@ git pull --rebase
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-11-29</span>
+                <span>Updated on 2022-11-29
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
@@ -1001,11 +1120,40 @@ git pull --rebase
 <div id="comments"><div id="gitalk" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
             </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.102.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://oublie6.github.io/" target="_blank">oublie</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
                 <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
