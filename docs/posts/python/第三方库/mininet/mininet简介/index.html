@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/mininet\/mininet%E7%AE%80%E4%BB%8B\/"
-        },"genre": "posts","keywords": "mininet, Python第三方库","wordcount":  10894 ,
+        },"genre": "posts","keywords": "mininet, Python第三方库","wordcount":  10993 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/mininet\/mininet%E7%AE%80%E4%BB%8B\/","datePublished": "2022-11-29T11:18:06+08:00","dateModified": "2022-11-29T11:18:06+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-mininet-Mininet简介</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-29">2022-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10894 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-29">2022-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10993 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;22 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -827,12 +827,23 @@
 <p>这是启动 Mininet、运行端到端系统测试（或多个测试）以及关闭 Mininet 的非常方便的单行命令。如果发生异常，标准的 Mininet 清理代码将被调用，就像mn通常在这种情况下所做的那样。</p>
 <h4 id="--custom在文件中添加新的-cli-命令">&ndash;custom在文件中添加新的 CLI 命令</h4>
 <p>在文件中添加新的 CLI 命令很容易&ndash;custom：</p>
-<pre tabindex="0"><code>def mycmd( self, line ):
-    &#34;mycmd is an example command to extend the Mininet CLI&#34;
-    net = self.mn
-    output( &#39;mycmd invoked for&#39;, net, &#39;with line&#39;, line, &#39;\n&#39;  )
-CLI.do_mycmd = mycmd
-</code></pre><p>mycmd会向 Mininet CLI 添加一个命令：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>def mycmd( self, line ):
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;mycmd is an example command to extend the Mininet CLI&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a00">net</span> = self.mn
+</span></span><span style="display:flex;"><span>    output( <span style="color:#a50">&#39;mycmd invoked for&#39;</span>, net, <span style="color:#a50">&#39;with line&#39;</span>, line, <span style="color:#a50">&#39;\n&#39;</span>  )
+</span></span><span style="display:flex;"><span>CLI.do_mycmd = mycmd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>mycmd会向 Mininet CLI 添加一个命令：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -901,50 +912,108 @@ CLI.do_mycmd = mycmd
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="中级-api网络对象">中级 API：网络对象</h4>
-<pre tabindex="0"><code>net = Mininet()
-h1 = net.addHost( &#39;h1&#39; )
-h2 = net.addHost( &#39;h2&#39; )
-s1 = net.addSwitch( &#39;s1&#39; )
-c0 = net.addController( &#39;c0&#39; )
-net.addLink( h1, s1 )
-net.addLink( h2, s1 )
-net.start()
-print( h1.cmd( &#39;ping -c1&#39;, h2.IP() ) )
-CLI( net )
-net.stop()
-</code></pre><h4 id="高级-api拓扑模板">高级 API：拓扑模板</h4>
-<pre tabindex="0"><code>class SingleSwitchTopo( Topo ):                                                                                               
-    &#34;Single Switch Topology&#34;                                                                                                  
-    def build( self, count=1 ):                                                                                      
-        hosts = [ self.addHost( &#39;h%d&#39; % i )                                                                                   
-                  for i in range( 1, count + 1 ) ]                                                                                
-        s1 = self.addSwitch( &#39;s1&#39; )                                                                                           
-        for h in hosts:                                                                                                       
-            self.addLink( h, s1 )                                                                                             
-
-net = Mininet( topo=SingleSwitchTopo( 3 ) )                                                                               
-net.start()                                                                                                               
-CLI( net )                                                                                                                
-net.stop()   
-</code></pre><p>如您所见，中级 API 对于本示例实际上是最简单和最简洁的，因为它不需要创建拓扑类。低级和中级 API 灵活而强大，但与高级TopoAPI 及其拓扑模板相比，重用起来可能不太方便。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>net = Mininet()
+</span></span><span style="display:flex;"><span>h1 = net.addHost( <span style="color:#a50">&#39;h1&#39;</span> )
+</span></span><span style="display:flex;"><span>h2 = net.addHost( <span style="color:#a50">&#39;h2&#39;</span> )
+</span></span><span style="display:flex;"><span>s1 = net.addSwitch( <span style="color:#a50">&#39;s1&#39;</span> )
+</span></span><span style="display:flex;"><span>c0 = net.addController( <span style="color:#a50">&#39;c0&#39;</span> )
+</span></span><span style="display:flex;"><span>net.addLink( h1, s1 )
+</span></span><span style="display:flex;"><span>net.addLink( h2, s1 )
+</span></span><span style="display:flex;"><span>net.start()
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>( h1.cmd( <span style="color:#a50">&#39;ping -c1&#39;</span>, h2.IP() ) )
+</span></span><span style="display:flex;"><span>CLI( net )
+</span></span><span style="display:flex;"><span>net.stop()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="高级-api拓扑模板">高级 API：拓扑模板</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">SingleSwitchTopo</span>( Topo ):                                                                                               
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;Single Switch Topology&#34;</span>                                                                                                  
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> <span style="color:#0a0">build</span>( self, count=<span style="color:#099">1</span> ):                                                                                      
+</span></span><span style="display:flex;"><span>        hosts = [ self.addHost( <span style="color:#a50">&#39;h</span><span style="color:#a50">%d</span><span style="color:#a50">&#39;</span> % i )                                                                                   
+</span></span><span style="display:flex;"><span>                  <span style="color:#00a">for</span> i <span style="color:#00a">in</span> <span style="color:#0aa">range</span>( <span style="color:#099">1</span>, count + <span style="color:#099">1</span> ) ]                                                                                
+</span></span><span style="display:flex;"><span>        s1 = self.addSwitch( <span style="color:#a50">&#39;s1&#39;</span> )                                                                                           
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> h <span style="color:#00a">in</span> hosts:                                                                                                       
+</span></span><span style="display:flex;"><span>            self.addLink( h, s1 )                                                                                             
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>net = Mininet( topo=SingleSwitchTopo( <span style="color:#099">3</span> ) )                                                                               
+</span></span><span style="display:flex;"><span>net.start()                                                                                                               
+</span></span><span style="display:flex;"><span>CLI( net )                                                                                                                
+</span></span><span style="display:flex;"><span>net.stop()   
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如您所见，中级 API 对于本示例实际上是最简单和最简洁的，因为它不需要创建拓扑类。低级和中级 API 灵活而强大，但与高级TopoAPI 及其拓扑模板相比，重用起来可能不太方便。</p>
 <p>另请注意，在 2.2.0 之前的 Mininet 版本中，高层Topo不支持节点之间的多链接，但低层 API 支持。目前Topo也不关心哪些开关由哪些控制器控制（您可以使用自定义Switch子类来执行此操作，如上所述。）使用中级和低级 API，您可以根据需要手动启动开关，将适当的控制器列表传递给每个交换机。</p>
 <h4 id="mininet-api-文档">Mininet API 文档</h4>
 <p>Mininet 包含每个模块和 API 调用的 Python 文档字符串。这些可以从 Python 的常规help()机制访问。例如，</p>
-<pre tabindex="0"><code>	python
-	&gt;&gt;&gt; from mininet.node import Host
-	&gt;&gt;&gt; help(Host.IP)
-	Help on method IP in module mininet.node:
-	
-	IP(self, intf=None) unbound mininet.node.Host method
-		Return IP address of a node or specific interface.
-</code></pre><p>同样的文档也可以在 Mininet 网站 <a href="http://api.mininet.org" target="_blank" rel="noopener noreffer ">http://api.mininet.org</a>上找到。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">mininet.node</span> <span style="color:#00a">import</span> Host
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; help(Host.IP)
+</span></span><span style="display:flex;"><span>Help on method IP <span style="color:#00a">in</span> module mininet.node:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>IP(self, intf=<span style="color:#00a">None</span>) unbound mininet.node.Host method
+</span></span><span style="display:flex;"><span>    Return IP address of a node <span style="color:#00a">or</span> specific interface.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同样的文档也可以在 Mininet 网站 <a href="http://api.mininet.org" target="_blank" rel="noopener noreffer ">http://api.mininet.org</a>上找到。</p>
 <p>您可能希望自己使用以下方法生成 HTML（和 PDF）文档doxypy：</p>
-<pre tabindex="0"><code>sudo apt-get install doxypy
-cd ~/mininet
-make doc
-cd doc
-python -m SimpleHTTPServer
-</code></pre><p>此时，您可以将 Web 浏览器指向运行 Mininet 的主机的端口 8000，并浏览每个 Mininet 类的文档。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt-get install doxypy
+</span></span><span style="display:flex;"><span><span style="color:#0aa">cd</span> ~/mininet
+</span></span><span style="display:flex;"><span>make doc
+</span></span><span style="display:flex;"><span><span style="color:#0aa">cd</span> doc
+</span></span><span style="display:flex;"><span>python -m SimpleHTTPServer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时，您可以将 Web 浏览器指向运行 Mininet 的主机的端口 8000，并浏览每个 Mininet 类的文档。</p>
 <h4 id="测试性能">测试性能</h4>
 <p>这些是推荐的，尽管您可以自由使用您熟悉的任何工具。</p>
 <ol>
@@ -960,76 +1029,179 @@ python -m SimpleHTTPServer
 <h4 id="openflow控制器">OpenFlow控制器</h4>
 <p>如果您在mn未指定控制器的情况下运行该命令，它将选择一个默认控制器，例如Controller或OVSController，具体取决于可用的控制器。</p>
 <p>这相当于：</p>
-<pre tabindex="0"><code>$ sudo mn --controller default
-</code></pre><p>该控制器实现了一个简单的以太网学习交换机，并支持多达 16 个单独的交换机。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ sudo mn --controller default
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>该控制器实现了一个简单的以太网学习交换机，并支持多达 16 个单独的交换机。</p>
 <p>如果您在脚本中调用Mininet()构造函数而不指定控制器类，默认情况下它将使用Controller()类来创建 Stanford/OpenFlow 参考控制器的实例，controller. ovs-controller把你的交换机变成简单的学习交换机，但是如果你使用Mininet的 install.sh -f脚本安装controller，补丁版本controller应该支持大量的交换机（理论上最多4096个，但你可能会更早地用完你的计算资源.) 您还可以通过mn指定&ndash;controller ref来选择参考控制器。</p>
 <p>如果你想使用你自己的控制器，你可以很容易地创建一个自定义的子类Controller()并将它传递到 Mininet 中。可以在mininet.controller.NOX()中看到一个示例，它使用一组作为选项传入的模块调用 NOX classic。</p>
 <p>下面是创建和使用自定义 POXController子类的简单示例：</p>
-<pre tabindex="0"><code>#!/usr/bin/python                                                                                      
-                                                                                                       
-from mininet.net import Mininet                                                                        
-from mininet.node import Controller                                                                    
-from mininet.topo import SingleSwitchTopo                                                              
-from mininet.log import setLogLevel                                                                    
-                                                                                                       
-import os                                                                                              
-                                                                                                       
-class POXBridge( Controller ):                                                                         
-    &#34;Custom Controller class to invoke POX forwarding.l2_learning&#34;                                     
-    def start( self ):                                                                                 
-        &#34;Start POX learning switch&#34;                                                                    
-        self.pox = &#39;%s/pox/pox.py&#39; % os.environ[ &#39;HOME&#39; ]                                              
-        self.cmd( self.pox, &#39;forwarding.l2_learning &amp;&#39; )                                               
-    def stop( self ):                                                                                  
-        &#34;Stop POX&#34;                                                                                     
-        self.cmd( &#39;kill %&#39; + self.pox )                                                                
-                                                                                                       
-controllers = { &#39;poxbridge&#39;: POXBridge }                                                               
-                                                                                                       
-if __name__ == &#39;__main__&#39;:                                                                             
-    setLogLevel( &#39;info&#39; )                                                                              
-    net = Mininet( topo=SingleSwitchTopo( 2 ), controller=POXBridge )                                  
-    net.start()                                                                                        
-    net.pingAll()                                                                                      
-    net.stop()      
-</code></pre><p>请注意，上面的脚本是这样编写的，因此它也可以用作mn自定义参数以用于不同的拓扑和测试以及 Mininet CLI：</p>
-<pre tabindex="0"><code>$ sudo mn --custom poxbridge.py --controller poxbridge --topo tree,2,2 --test pingall -v output
-*** Ping: testing ping reachability
-h1 -&gt; h2 h3 h4 
-h2 -&gt; h1 h3 h4 
-h3 -&gt; h1 h2 h4 
-h4 -&gt; h1 h2 h3 
-*** Results: 0% dropped (0/12 lost)
-</code></pre><p>如果查看mininet/node.py中NOX类的实现，您会注意到它实际上可以接受选项以允许根据从构造函数或mn命令行传递给它的参数启动不同的模块。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">#!/usr/bin/python                                                                                      </span>
+</span></span><span style="display:flex;"><span>                                                                                                       
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">mininet.net</span> <span style="color:#00a">import</span> Mininet                                                                        
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">mininet.node</span> <span style="color:#00a">import</span> Controller                                                                    
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">mininet.topo</span> <span style="color:#00a">import</span> SingleSwitchTopo                                                              
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">mininet.log</span> <span style="color:#00a">import</span> setLogLevel                                                                    
+</span></span><span style="display:flex;"><span>                                                                                                       
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">os</span>                                                                                              
+</span></span><span style="display:flex;"><span>                                                                                                       
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">POXBridge</span>( Controller ):                                                                         
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;Custom Controller class to invoke POX forwarding.l2_learning&#34;</span>                                     
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> <span style="color:#0a0">start</span>( self ):                                                                                 
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;Start POX learning switch&#34;</span>                                                                    
+</span></span><span style="display:flex;"><span>        self.pox = <span style="color:#a50">&#39;</span><span style="color:#a50">%s</span><span style="color:#a50">/pox/pox.py&#39;</span> % os.environ[ <span style="color:#a50">&#39;HOME&#39;</span> ]                                              
+</span></span><span style="display:flex;"><span>        self.cmd( self.pox, <span style="color:#a50">&#39;forwarding.l2_learning &amp;&#39;</span> )                                               
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> <span style="color:#0a0">stop</span>( self ):                                                                                  
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;Stop POX&#34;</span>                                                                                     
+</span></span><span style="display:flex;"><span>        self.cmd( <span style="color:#a50">&#39;kill %&#39;</span> + self.pox )                                                                
+</span></span><span style="display:flex;"><span>                                                                                                       
+</span></span><span style="display:flex;"><span>controllers = { <span style="color:#a50">&#39;poxbridge&#39;</span>: POXBridge }                                                               
+</span></span><span style="display:flex;"><span>                                                                                                       
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> __name__ == <span style="color:#a50">&#39;__main__&#39;</span>:                                                                             
+</span></span><span style="display:flex;"><span>    setLogLevel( <span style="color:#a50">&#39;info&#39;</span> )                                                                              
+</span></span><span style="display:flex;"><span>    net = Mininet( topo=SingleSwitchTopo( <span style="color:#099">2</span> ), controller=POXBridge )                                  
+</span></span><span style="display:flex;"><span>    net.start()                                                                                        
+</span></span><span style="display:flex;"><span>    net.pingAll()                                                                                      
+</span></span><span style="display:flex;"><span>    net.stop()      
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，上面的脚本是这样编写的，因此它也可以用作mn自定义参数以用于不同的拓扑和测试以及 Mininet CLI：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ sudo mn --custom poxbridge.py --controller poxbridge --topo tree,2,2 --test pingall -v output
+</span></span><span style="display:flex;"><span>*** Ping: testing ping reachability
+</span></span><span style="display:flex;"><span>h1 -&gt; h2 h3 h4 
+</span></span><span style="display:flex;"><span>h2 -&gt; h1 h3 h4 
+</span></span><span style="display:flex;"><span>h3 -&gt; h1 h2 h4 
+</span></span><span style="display:flex;"><span>h4 -&gt; h1 h2 h3 
+</span></span><span style="display:flex;"><span>*** Results: 0% dropped (0/12 lost)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果查看mininet/node.py中NOX类的实现，您会注意到它实际上可以接受选项以允许根据从构造函数或mn命令行传递给它的参数启动不同的模块。</p>
 <h4 id="外部-openflow-控制器">外部 OpenFlow 控制器</h4>
 <p>自定义Controller()子类是自动启动和关闭控制器的最方便的方法。创建start()和stop()方法很容易，这样 Mininet 将根据需要自动启动和停止您的控制器。</p>
 <p>但是，您可能会发现将 Mininet 连接到已经在其他地方运行的现有控制器很有用，例如 LAN 上的某个地方、另一个 VM 中或笔记本电脑上。</p>
 <p>您可以使用Mininet的RemoteController：</p>
-<pre tabindex="0"><code>from functools import partial
-net = Mininet( topo=topo, controller=partial( RemoteController, ip=&#39;127.0.0.1&#39;, port=6633 ) )
-</code></pre><p>或者如果你喜欢：</p>
-<pre tabindex="0"><code>net = Mininet( topo=topo, controller=lambda name: RemoteController( name, ip=&#39;127.0.0.1&#39; ) )
-</code></pre><p>甚至</p>
-<pre tabindex="0"><code>net = Mininet( topo=topo, controller=None)
-net.addController( &#39;c0&#39;, controller=RemoteController, ip=&#39;127.0.0.1&#39;, port=6633 )
-</code></pre><p>请注意，在这种情况下， controller（如host和switch）是一个构造函数，而不是一个对象（但请参阅下面的附加信息！）您可以使用partial或lambda在线创建自定义构造函数，或者您可以传入自己的函数（必须采用name参数并返回控制器对象）或类（例如RemoteController的子类）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">functools</span> <span style="color:#00a">import</span> partial
+</span></span><span style="display:flex;"><span>net = Mininet( topo=topo, controller=partial( RemoteController, ip=<span style="color:#a50">&#39;127.0.0.1&#39;</span>, port=<span style="color:#099">6633</span> ) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或者如果你喜欢：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>net = Mininet( topo=topo, controller=<span style="color:#00a">lambda</span> name: RemoteController( name, ip=<span style="color:#a50">&#39;127.0.0.1&#39;</span> ) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>甚至</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>net = Mininet( topo=topo, controller=<span style="color:#00a">None</span>)
+</span></span><span style="display:flex;"><span>net.addController( <span style="color:#a50">&#39;c0&#39;</span>, controller=RemoteController, ip=<span style="color:#a50">&#39;127.0.0.1&#39;</span>, port=<span style="color:#099">6633</span> )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，在这种情况下， controller（如host和switch）是一个构造函数，而不是一个对象（但请参阅下面的附加信息！）您可以使用partial或lambda在线创建自定义构造函数，或者您可以传入自己的函数（必须采用name参数并返回控制器对象）或类（例如RemoteController的子类）</p>
 <p>您还可以创建多个控制器并创建一个自定义Switch()子类，根据需要连接到不同的控制器：</p>
-<pre tabindex="0"><code>
-c0 = Controller( &#39;c0&#39; )  # local controller
-c1 = RemoteController( &#39;c1&#39;, ip=&#39;127.0.0.2&#39; )  # external controller
-cmap = { &#39;s1&#39;: c0, &#39;s2&#39;: c1, &#39;s3&#39;: c1 }
-
-class MultiSwitch( OVSSwitch ):
-    &#34;Custom Switch() subclass that connects to different controllers&#34;
-    def start( self, controllers ):
-        return OVSSwitch.start( self, [ cmap[ self.name ] ] )
-</code></pre><p>您还可以从mn命令行指定外部控制器：</p>
-<pre tabindex="0"><code>$ sudo mn --controller remote,ip=192.168.51.101
-</code></pre><h4 id="通过传入控制器对象滥用-api">通过传入控制器对象滥用 API</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>c0 = Controller( <span style="color:#a50">&#39;c0&#39;</span> )  <span style="color:#aaa;font-style:italic"># local controller</span>
+</span></span><span style="display:flex;"><span>c1 = RemoteController( <span style="color:#a50">&#39;c1&#39;</span>, ip=<span style="color:#a50">&#39;127.0.0.2&#39;</span> )  <span style="color:#aaa;font-style:italic"># external controller</span>
+</span></span><span style="display:flex;"><span>cmap = { <span style="color:#a50">&#39;s1&#39;</span>: c0, <span style="color:#a50">&#39;s2&#39;</span>: c1, <span style="color:#a50">&#39;s3&#39;</span>: c1 }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">MultiSwitch</span>( OVSSwitch ):
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;Custom Switch() subclass that connects to different controllers&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> <span style="color:#0a0">start</span>( self, controllers ):
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> OVSSwitch.start( self, [ cmap[ self.name ] ] )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>您还可以从mn命令行指定外部控制器：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ sudo mn --controller remote,ip=192.168.51.101
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="通过传入控制器对象滥用-api">通过传入控制器对象滥用 API</h4>
 <p>在 Mininet 2.2.0 及更高版本中，您可以选择传入Controller 对象而不是构造函数（甚至是对象列表）。添加此选项是因为尽管 API 明确指定需要构造函数，但人们仍在这样做.</p>
 <p>这使您可以执行以下操作：</p>
-<pre tabindex="0"><code>net = Mininet( topo, controller=RemoteController( &#39;c0&#39;, ip=&#39;127.0.0.1&#39; ) )
-</code></pre><p>并获得您想要的行为。仍然允许构造函数。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>net = Mininet( topo, controller=RemoteController( <span style="color:#a50">&#39;c0&#39;</span>, ip=<span style="color:#a50">&#39;127.0.0.1&#39;</span> ) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>并获得您想要的行为。仍然允许构造函数。</p>
 <h4 id="多路径路由">多路径路由</h4>
 <p>重要的是要记住，以太网桥（也称为学习交换机）会淹没在其 MAC 表中丢失的数据包。它们还会像 ARP 和 DHCP 请求一样泛滥广播。这意味着，如果您的网络中有环路或多条路径，它无法将默认ovs-controller与充当学习交换机/以太网桥的controller控制器|NOX的pyswitch|POX的l2_learning一起使用。</p>
 <p>尽管这个问题很明显，但它已成为一个 常见问题。</p>
@@ -1040,18 +1212,40 @@ class MultiSwitch( OVSSwitch ):
 <h3 id="更新-mininet">更新 Mininet</h3>
 <p>如果我们需要对 Mininet 进行更改或添加以修复错误或其他问题，并且您已经从源代码安装了 Mininet，您可能希望更新您的 Mininet 副本。这可以使用以下两种方法之一轻松完成：</p>
 <p>使用指向 Mininet 源代码树的符号链接更新（使更新 Mininet 的 python 代码变得容易）：</p>
-<pre tabindex="0"><code>cd ~/mininet
-    git checkout master # assuming you want to update to the current master branch
-sudo make develop # this only needs to be done initially and when mnexec.c changes
-git fetch
-git pull --rebase
-</code></pre><p>更新将 Mininet 源代码复制到 /usr/lib/python&hellip;（允许您删除或移动 Mininet 源代码树）：</p>
-<pre tabindex="0"><code>cd ~/mininet
-    git checkout master # assuming you want to update to the current master branch
-git fetch
-git pull --rebase
-    sudo make install
-</code></pre><h3 id="学习python">学习Python</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#0aa">cd</span> ~/mininet
+</span></span><span style="display:flex;"><span>    git checkout master <span style="color:#aaa;font-style:italic"># assuming you want to update to the current master branch</span>
+</span></span><span style="display:flex;"><span>sudo make develop <span style="color:#aaa;font-style:italic"># this only needs to be done initially and when mnexec.c changes</span>
+</span></span><span style="display:flex;"><span>git fetch
+</span></span><span style="display:flex;"><span>git pull --rebase
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>更新将 Mininet 源代码复制到 /usr/lib/python&hellip;（允许您删除或移动 Mininet 源代码树）：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#0aa">cd</span> ~/mininet
+</span></span><span style="display:flex;"><span>    git checkout master <span style="color:#aaa;font-style:italic"># assuming you want to update to the current master branch</span>
+</span></span><span style="display:flex;"><span>git fetch
+</span></span><span style="display:flex;"><span>git pull --rebase
+</span></span><span style="display:flex;"><span>    sudo make install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="学习python">学习Python</h3>
 <p>Mininet 是用 Python 编写的，允许基于 Python 的用户脚本与其交互。幸运的是，Python 是最容易理解、学习和使用的计算机语言之一，因为它的（大部分）可读语法、与其他面向对象语言的相似性以及许多有用的库。一旦您适应了它的怪癖（显着缩进、强制使用self、运行时错误检查等），您可能会欣赏它作为一种非常快速（如果有时很脏）的方式来编写有用的脚本和代码。</p>
 <p>互联网上有大量免费的 Python 教程，从书籍到完整的课程。http://docs.python.org上的 Python 文档 也将很快成为您的朋友（如果您还没有的话）。</p>
 <p>除了帮助查找 Python 教程外，Google 在寻找 Python 问题的答案方面似乎也做得非常好，其中许多问题都在http://stackoverflow.com上得到了解答。</p>
