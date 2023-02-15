@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E6%A8%A1%E5%9D%97\/"
-        },"genre": "posts","keywords": "Python教程","wordcount":  5001 ,
+        },"genre": "posts","keywords": "Python教程","wordcount":  3197 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E6%A8%A1%E5%9D%97\/","datePublished": "2022-10-12T10:38:29+08:00","dateModified": "2022-10-12T10:38:29+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-模块</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5001 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3197 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -127,19 +127,17 @@
         <li><a href="#多个目录中的包">多个目录中的包</a></li>
       </ul>
     </li>
-    <li><a href="#python--m">python -m</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列为作者在官网学习python时做的笔记，详见<a href="https://docs.python.org/zh-cn/3.8/tutorial/" target="_blank" rel="noopener noreffer ">python官网</a></p>
 <p><a href="https://docs.python.org/zh-cn/3.8/library/index.html" target="_blank" rel="noopener noreffer ">python标准库官方文档</a>，查阅标准库相关的内容</p>
 <p><a href="https://docs.python.org/zh-cn/3.8/reference/index.html" target="_blank" rel="noopener noreffer ">python语言参考</a>，查看python语法，该文档是简洁的，但试图做到准确和完整。非必要的内建对象类型和内建函数、模块的语义描述在 Python 标准库 中。</p>
 <p>标准库和语言参考涵盖了python的所有内容，他们是互补的，如果在语言参考中没有找到需要的内容那么就一定在便准库文档中。</p>
-<p>模块是一个包含Python定义和语句的文件。文件名就是模块名后跟文件后缀 .py 。在一个模块内部，模块名（作为一个字符串）可以通过全局变量 <code>__name__</code> 的值获得。</p>
 <h2 id="更多有关模块的信息">更多有关模块的信息</h2>
-<p>模块可以包含可执行的语句以及函数定义。这些语句用于初始化模块。它们仅在模块 第一次 在 import 语句中被导入时才执行。 1 (当文件被当作脚本运行时，它们也会执行。)</p>
-<p>每个模块都有它自己的私有符号表，该表用作模块中定义的所有函数的全局符号表。因此，模块的作者可以在模块内使用全局变量，而不必担心与用户的全局变量发生意外冲突。另一方面，如果你知道自己在做什么，则可以用跟访问模块内的函数的同样标记方法，去访问一个模块的全局变量，modname.itemname。</p>
-<p>可以把其他模块导入模块。 按惯例，所有 import 语句都放在模块（或脚本）开头，但这不是必须的。 被导入的模块名存在导入方模块的全局符号表里。</p>
-<p>import 语句有一个变体，它可以把名字从一个被调模块内直接导入到现模块的符号表里。例如:</p>
+<p>模块可以包含可执行的语句以及函数定义。这些语句用于初始化模块。它们仅在模块 第一次 在 import 语句中被导入时才执行。(当文件被当作脚本运行时(模块的<code>__name__</code>属性为<code>main</code>)，它们也会执行。)</p>
+<p>每个模块都有它自己的私有符号表，不必担心模块内全局变量与用户的全局变量发生意外冲突。另一方面，可以用跟访问模块内的函数的同样标记方法，去访问一个模块的全局变量，modname.itemname。</p>
+<p>可以把其他模块导入模块。被导入的模块名存在导入方模块的全局符号表里。</p>
+<p>可以把名字从一个被调模块内直接导入到现模块的符号表里。例如:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -151,7 +149,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这并不会把被调模块名引入到局部变量表里（因此在这个例子里，fibo 是未被定义的）。</p>
-<p>还有一个变体甚至可以导入模块内定义的所有名称:</p>
+<p>还可以导入模块内定义的所有名称:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -164,9 +162,8 @@
 </span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span> <span style="color:#099">55</span> <span style="color:#099">89</span> <span style="color:#099">144</span> <span style="color:#099">233</span> <span style="color:#099">377</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这会调入所有非以下划线（_）开头的名称。 在多数情况下，Python程序员都不会使用这个功能，因为它在解释器中引入了一组未知的名称，而它们很可能会覆盖一些你已经定义过的东西。</p>
-<p>注意通常情况下从一个模块或者包内调入 * 的做法是不太被接受的， 因为这通常会导致代码的可读性很差。不过，在交互式编译器中为了节省打字可以这么用。</p>
-<p>如果模块名称之后带有 as，则跟在 as 之后的名称将直接绑定到所导入的模块。</p>
+</div><p>这会调入所有非以下划线（_）开头的名称。不推荐使用，有覆盖你本地变量的风险。在交互式编译器中为了节省打字可以这么用。</p>
+<p>如果模块名称之后带有 as，则跟在 as 之后的名称将直接绑定到所导入的模块（原来的模块名不会被导入）。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -179,8 +176,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span> <span style="color:#099">55</span> <span style="color:#099">89</span> <span style="color:#099">144</span> <span style="color:#099">233</span> <span style="color:#099">377</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这会和 import fibo 方式一样有效地调入模块， 唯一的区别是它以 fib 的名称存在的。</p>
-<p>这种方式也可以在用到 from 的时候使用，并会有类似的效果:</p>
+</div><p>这种方式也可以在用到 from 的时候使用:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -193,8 +189,18 @@
 </span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span> <span style="color:#099">55</span> <span style="color:#099">89</span> <span style="color:#099">144</span> <span style="color:#099">233</span> <span style="color:#099">377</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>注解 出于效率的考虑，每个模块在每个解释器会话中只被导入一次。因此，如果你更改了你的模块，则必须重新启动解释器， 或者，如果它只是一个要交互式地测试的模块，请使用 importlib.reload()，例如 import importlib; importlib.reload(modulename)。</p>
-<h3 id="以脚本的方式执行模块">以脚本的方式执行模块</h3>
+</div><p>每个模块在每个解释器会话中只被导入一次。如果你更改了你的模块，则必须重新启动解释器。如果它只是一个要交互式地测试的模块，可以使用 importlib.reload()</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">importlib</span>
+</span></span><span style="display:flex;"><span>importlib.reload(modulename)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="以脚本的方式执行模块">以脚本的方式执行模块</h3>
 <p>当你用下面方式运行一个Python模块:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -204,7 +210,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python fibo.py &lt;arguments&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这项操作将执行模块里的代码，和导入模块一样，但会把 <code>__name__</code> 赋值为 <code>&quot;__main__&quot;</code>。 也就是把下列代码添加到模块末尾：</p>
+</div><p>这项操作将执行模块里的代码，而且会把 <code>__name__</code> 赋值为 <code>&quot;__main__&quot;</code>。 也就是会运行下面的代码：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -215,17 +221,6 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">if</span> __name__ == <span style="color:#a50">&#34;__main__&#34;</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sys</span>
 </span></span><span style="display:flex;"><span>    fib(<span style="color:#0aa">int</span>(sys.argv[<span style="color:#099">1</span>]))
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>你既可以把这个文件当作脚本又可当作一个可调入的模块来使用， 因为那段解析命令行的代码只有在当模块是以“main”文件的方式执行的时候才会运行:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ python fibo.py <span style="color:#099">50</span>
-</span></span><span style="display:flex;"><span><span style="color:#099">0</span> <span style="color:#099">1</span> <span style="color:#099">1</span> <span style="color:#099">2</span> <span style="color:#099">3</span> <span style="color:#099">5</span> <span style="color:#099">8</span> <span style="color:#099">13</span> <span style="color:#099">21</span> <span style="color:#099">34</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果模块是被导入的，那些代码是不运行的:</p>
@@ -239,26 +234,28 @@
 </span></span><span style="display:flex;"><span>&gt;&gt;&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这经常用于为模块提供一个方便的用户接口，或用于测试（以脚本的方式运行模块从而执行一些测试套件）。</p>
-<h3 id="模块搜索路径">模块搜索路径</h3>
+</div><h3 id="模块搜索路径">模块搜索路径</h3>
 <p>当一个名为 spam 的模块被导入的时候，解释器首先寻找具有该名称的内置模块。如果没有找到，然后解释器从 sys.path 变量给出的目录列表里寻找名为 spam.py 的文件。sys.path 初始有这些目录地址:</p>
 <ul>
 <li>包含输入脚本的目录（或者未指定文件时的当前目录）。</li>
 <li>PYTHONPATH （一个包含目录名称的列表，它和shell变量 PATH 有一样的语法）。</li>
 <li>取决于安装的默认设置</li>
 </ul>
-<p>注解 在支持符号链接的文件系统上，包含输入脚本的目录是在追加符号链接后才计算出来的。换句话说，包含符号链接的目录并 没有 被添加到模块的搜索路径上。</p>
-<p>在初始化后，Python程序可以更改 sys.path。包含正在运行脚本的文件目录被放在搜索路径的开头处， 在标准库路径之前。这意味着将加载此目录里的脚本，而不是标准库中的同名模块。 除非有意更换，否则这是错误。更多信息请参阅 标准模块。</p>
+<p>在初始化后，Python程序可以更改 sys.path。除非有意更换，否则这是错误。</p>
 <h3 id="编译过的python文件">“编译过的”Python文件</h3>
-<p>为了加速模块载入，Python在 <code>__pycache__</code> 目录里缓存了每个模块的编译后版本，名称为 module.version.pyc ，其中名称中的版本字段对编译文件的格式进行编码； 它一般使用Python版本号。</p>
-<p>Python根据编译版本检查源的修改日期，以查看它是否已过期并需要重新编译。这是一个完全自动化的过程。此外，编译的模块与平台无关，因此可以在具有不同体系结构的系统之间共享相同的库。</p>
-<p>Python在两种情况下不会检查缓存。首先，对于从命令行直接载入的模块，它从来都是重新编译并且不存储编译结果；其次，如果没有源模块，它不会检查缓存。为了支持无源文件（仅编译）发行版本， 编译模块必须是在源目录下，并且绝对不能有源模块。</p>
+<p>为了加速模块载入，Python在 <code>${PYTHON_HOME}/Lib/__pycache__</code> 目录里缓存了每个模块的编译后版本，名称为 <code>module.version.pyc</code> ，其中名称中的版本字段对编译文件的格式进行编码； 它一般使用Python版本号。如<code>telnetlib.cpython-38.pyc</code></p>
+<p>Python根据编译版本检查源的修改日期，以查看它是否已过期并需要重新编译。这是一个完全自动化的过程。</p>
+<p>编译的模块与平台无关，因此可以在具有不同体系结构的系统之间共享相同的库。</p>
+<p>Python在两种情况下不会检查缓存而是直接编译:</p>
+<ul>
+<li>从命令行直接载入的模块</li>
+<li>没有源模块</li>
+</ul>
 <p>给专业人士的一些小建议:</p>
 <ul>
-<li>你可以在Python命令中使用 -O 或者 -OO 开关， 以减小编译后模块的大小。 -O 开关去除断言语句，-OO 开关同时去除断言语句和 <strong>doc</strong> 字符串。由于有些程序可能依赖于这些，你应当只在清楚自己在做什么时才使用这个选项。“优化过的”模块有一个 opt- 标签并且通常小些。将来的发行版本或许会更改优化的效果。</li>
+<li>你可以在Python命令中使用 -O 或者 -OO 开关， 以减小编译后模块的大小。 -O 开关去除断言语句，-OO 开关同时去除断言语句和 <strong>doc</strong> 字符串。</li>
 <li>一个从 .pyc 文件读出的程序并不会比它从 .py 读出时运行的更快，.pyc 文件唯一快的地方在于载入速度。</li>
 <li>compileall 模块可以为一个目录下的所有模块创建.pyc文件。</li>
-<li>关于这个过程，PEP 3147 中有更多细节，包括一个决策流程图。+</li>
 </ul>
 <h2 id="标准模块">标准模块</h2>
 <p>一些模块内置于解释器中；它们提供对不属于语言核心但仍然内置的操作的访问，以提高效率或提供对系统调用等操作系统原语的访问。这些模块的集合是一个配置选项，它也取决于底层平台。例如，winreg 模块只在Windows操作系统上提供。一个特别值得注意的模块 sys，它被内嵌到每一个Python解释器中。变量 sys.ps1 和 sys.ps2 定义用作主要和辅助提示的字符串:</p>
@@ -287,7 +284,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这两个变量只有在编译器是交互模式下才被定义。</p>
-<p>sys.path 变量是一个字符串列表，用于确定解释器的模块搜索路径。该变量被初始化为从环境变量 PYTHONPATH 获取的默认路径，或者如果 PYTHONPATH 未设置，则从内置默认路径初始化。你可以使用标准列表操作对其进行修改:</p>
+<p>sys.path 变量是一个字符串列表，用于确定解释器的模块搜索路径。该变量被初始化为从环境变量 PYTHONPATH 获取的默认路径，或者如果 PYTHONPATH 未设置，则从内置默认路径初始化。可以使用标准列表操作对其进行修改:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -436,62 +433,9 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="包">包</h2>
-<p>包是一种通过用“带点号的模块名”来构造 Python 模块命名空间的方法。 例如，模块名 A.B 表示 A 包中名为 B 的子模块。正如模块的使用使得不同模块的作者不必担心彼此的全局变量名称一样，使用加点的模块名可以使得 NumPy 或 Pillow 等多模块软件包的作者不必担心彼此的模块名称一样。</p>
-<p>假设你想为声音文件和声音数据的统一处理，设计一个模块集合（一个“包”）。由于存在很多不同的声音文件格式（通常由它们的扩展名来识别，例如：.wav， .aiff， .au），因此为了不同文件格式间的转换，你可能需要创建和维护一个不断增长的模块集合。 你可能还想对声音数据还做很多不同的处理（例如，混声，添加回声，使用均衡器功能，创造人工立体声效果）， 因此为了实现这些处理，你将另外写一个无穷尽的模块流。这是你的包的可能结构（以分层文件系统的形式表示）：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sound/                          Top-level package
-</span></span><span style="display:flex;"><span>      __init__.py               Initialize the sound package
-</span></span><span style="display:flex;"><span>      formats/                  Subpackage <span style="color:#00a">for</span> file <span style="color:#0aa">format</span> conversions
-</span></span><span style="display:flex;"><span>              __init__.py
-</span></span><span style="display:flex;"><span>              wavread.py
-</span></span><span style="display:flex;"><span>              wavwrite.py
-</span></span><span style="display:flex;"><span>              aiffread.py
-</span></span><span style="display:flex;"><span>              aiffwrite.py
-</span></span><span style="display:flex;"><span>              auread.py
-</span></span><span style="display:flex;"><span>              auwrite.py
-</span></span><span style="display:flex;"><span>              ...
-</span></span><span style="display:flex;"><span>      effects/                  Subpackage <span style="color:#00a">for</span> sound effects
-</span></span><span style="display:flex;"><span>              __init__.py
-</span></span><span style="display:flex;"><span>              echo.py
-</span></span><span style="display:flex;"><span>              surround.py
-</span></span><span style="display:flex;"><span>              reverse.py
-</span></span><span style="display:flex;"><span>              ...
-</span></span><span style="display:flex;"><span>      filters/                  Subpackage <span style="color:#00a">for</span> filters
-</span></span><span style="display:flex;"><span>              __init__.py
-</span></span><span style="display:flex;"><span>              equalizer.py
-</span></span><span style="display:flex;"><span>              vocoder.py
-</span></span><span style="display:flex;"><span>              karaoke.py
-</span></span><span style="display:flex;"><span>              ...
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>当导入这个包时，Python搜索 sys.path 里的目录，查找包的子目录。</p>
-<p>必须要有<code> __init__.py</code> 文件才能让 Python 将包含该文件的目录当作包。 这样可以防止具有通常名称例如 string 的目录在无意中隐藏稍后在模块搜索路径上出现的有效模块。 在最简单的情况下，<code>__init__.py</code> 可以只是一个空文件，但它也可以执行包的初始化代码或设置 <code>__all__ </code>变量，具体将在后文介绍。</p>
+<p>包是目录，模块是py文件</p>
+<p>包是一种通过用“带点号的模块名”来构造 Python 模块命名空间的方法。</p>
+<p>必须要有<code> __init__.py</code> 文件才能让 Python 将包含该文件的目录当作包。 在最简单的情况下，<code>__init__.py</code> 可以只是一个空文件，但它也可以执行包的初始化代码或设置 <code>__all__ </code>变量，</p>
 <p>包的用户可以从包中导入单个模块，例如:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -501,7 +445,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sound.effects.echo</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这会加载子模块 sound.effects.echo 。但引用它时必须使用它的全名。</p>
+</div><p>这会加载子模块 sound.effects.echo ，但引用它时必须使用它的全名。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -519,7 +463,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">sound.effects</span> <span style="color:#00a">import</span> echo
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这也会加载子模块 echo ，并使其在没有包前缀的情况下可用，因此可以按如下方式使用:</p>
+</div><p>这也会加载子模块 echo ，并使其在没有包前缀的情况下可用:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -537,7 +481,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">sound.effects.echo</span> <span style="color:#00a">import</span> echofilter
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>同样，这也会加载子模块 echo，但这会使其函数 echofilter() 直接可用:</p>
+</div><p>同样，这也会加载子模块 echo，但函数 echofilter() 直接可用:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -546,11 +490,11 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>echofilter(<span style="color:#0aa">input</span>, output, delay=<span style="color:#099">0.7</span>, atten=<span style="color:#099">4</span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>请注意，当使用 from package import item 时，item可以是包的子模块（或子包），也可以是包中定义的其他名称，如函数，类或变量。 import 语句首先测试是否在包中定义了item；如果没有，它假定它是一个模块并尝试加载它。如果找不到它，则引发 ImportError 异常。</p>
-<p>相反，当使用 import item.subitem.subsubitem 这样的语法时，除了最后一项之外的每一项都必须是一个包；最后一项可以是模块或包，但不能是前一项中定义的类或函数或变量。</p>
+</div><p>请注意，当使用<code> from package import item</code> 时，item可以是包的子模块（或子包），也可以是包中定义的其他名称，如函数，类或变量。 import 语句首先测试是否在包中定义了item；如果没有，它假定它是一个模块并尝试加载它。如果找不到它，则引发 ImportError 异常。</p>
+<p>相反，当使用 <code>import item.subitem.subsubitem</code> 最后一项不能是前一项中定义的类或函数或变量。</p>
 <h3 id="从包中导入-">从包中导入 *</h3>
-<p>当用户写 from sound.effects import * 会发生什么？理想情况下，人们希望这会以某种方式传递给文件系统，找到包中存在哪些子模块，并将它们全部导入。这可能需要很长时间，导入子模块可能会产生不必要的副作用，这种副作用只有在显式导入子模块时才会发生。</p>
-<p>唯一的解决方案是让包作者提供一个包的显式索引。import 语句使用下面的规范：如果一个包的 <code>__init__.py</code> 代码定义了一个名为 <code>__all__</code> 的列表，它会被视为在遇到 from package import * 时应该导入的模块名列表。在发布该包的新版本时，包作者可以决定是否让此列表保持更新。包作者如果认为从他们的包中导入 * 的操作没有必要被使用，也可以决定不支持此列表。例如，文件 <code>sound/effects/__init__.py</code> 可以包含以下代码:</p>
+<p><code>from sound.effects import *</code> 找到包中存在哪些子模块，并将它们全部导入。这可能需要很长时间。</p>
+<p>如果一个包的 <code>__init__.py</code> 代码定义的名为 <code>__all__</code> 的列表会被视为在遇到<code> from package import *</code> 时应该导入的模块名列表。例如，文件 <code>sound/effects/__init__.py</code> 可以包含以下代码:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -559,25 +503,10 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>__all__ = [<span style="color:#a50">&#34;echo&#34;</span>, <span style="color:#a50">&#34;surround&#34;</span>, <span style="color:#a50">&#34;reverse&#34;</span>]
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这意味着 from sound.effects import * 将导入 sound 包的三个命名子模块。</p>
-<p>如果没有定义 <code>__all__</code>，from sound.effects import * 语句 不会 从包 sound.effects 中导入所有子模块到当前命名空间；它只确保导入了包 sound.effects （可能运行任何在<code>__init__.py</code>中的初始化代码），然后导入包中定义的任何名称。 这包括<code> __init__.py</code> 定义的任何名称（以及显式加载的子模块）。它还包括由之前的 import 语句显式加载的包的任何子模块。思考下面的代码:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sound.effects.echo</span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">sound.effects.surround</span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">sound.effects</span> <span style="color:#00a">import</span> *
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>在这个例子中， echo 和 surround 模块是在执行 from&hellip;import 语句时导入到当前命名空间中的，因为它们定义在 sound.effects 包中。（这在定义了 <code>__all__ </code>时也有效。）</p>
-<p>虽然某些模块被设计为在使用 import * 时只导出遵循某些模式的名称，但在生产代码中它仍然被认为是不好的做法。</p>
-<p>请记住，使用 from package import specific_submodule 没有任何问题！ 实际上，除非导入的模块需要使用来自不同包的同名子模块，否则这是推荐的表示法。</p>
+</div><p>这意味着 <code>from sound.effects import *</code> 将导入 sound 包的三个命名子模块。</p>
+<p>如果没有定义 <code>__all__</code>，<code>from sound.effects import *</code> 语句 不会 从包 sound.effects 中导入所有子模块到当前命名空间；它只确保导入了包 sound.effects 任何在<code>__init__.py</code>中的初始化代码定义的任何名称。 这包括<code> __init__.py</code> 定义的任何名称（以及显式加载的子模块）:</p>
 <h3 id="子包参考">子包参考</h3>
-<p>当包被构造成子包时（与示例中的 sound 包一样），你可以使用绝对导入来引用兄弟包的子模块。例如，如果模块 sound.filters.vocoder 需要在 sound.effects 包中使用 echo 模块，它可以使用 from sound.effects import echo 。</p>
+<p>当包被构造成子包时（与示例中的 sound 包一样），你可以使用绝对导入（相对项目目录而言）来引用兄弟包的子模块。例如，如果模块 sound.filters.vocoder 需要在 sound.effects 包中使用 echo 模块，它可以使用 from sound.effects import echo 。</p>
 <p>你还可以使用import语句的 from module import name 形式编写相对导入。这些导入使用前导点来指示相对导入中涉及的当前包和父包。例如，从 surround 模块，你可以使用:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -591,20 +520,10 @@
 </span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">..filters</span> <span style="color:#00a">import</span> equalizer
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="多个目录中的包">多个目录中的包</h3>
+</div><p>推荐使用绝对导入</p>
+<h3 id="多个目录中的包">多个目录中的包</h3>
 <p>包支持另一个特殊属性， <code>__path__</code> 。它被初始化为一个列表，其中包含在执行该文件中的代码之前保存包的文件 <code>__init__.py</code> 的目录的名称。这个变量可以修改；这样做会影响将来对包中包含的模块和子包的搜索。</p>
 <p>虽然通常不需要此功能，但它可用于扩展程序包中的模块集。</p>
-<h2 id="python--m">python -m</h2>
-<p><a href="https://blog.csdn.net/qq_45562973/article/details/122678347" target="_blank" rel="noopener noreffer ">csdn 洛蕾</a></p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-m mod : run library module as a script (terminates option list)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>把模块当成脚本来运行。对于python -m module_name，Python会检索sys.path，查找名字为module_name的模块或者包，并将其内容当成主程序入口来执行，换句话说在执行时，该脚本的__name__是__main__。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

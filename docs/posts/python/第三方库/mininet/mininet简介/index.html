@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/mininet\/mininet%E7%AE%80%E4%BB%8B\/"
-        },"genre": "posts","keywords": "mininet, Python第三方库","wordcount":  10993 ,
+        },"genre": "posts","keywords": "mininet, Python第三方库","wordcount":  10930 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/mininet\/mininet%E7%AE%80%E4%BB%8B\/","datePublished": "2022-11-29T11:18:06+08:00","dateModified": "2022-11-29T11:18:06+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-mininet-Mininet简介</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-29">2022-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10993 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-29">2022-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10930 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;22 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -466,8 +466,8 @@
 </div>
 </div><p>重要方法和参数：</p>
 <p>self.addHost(name, cpu=f):这允许您指定将分配给虚拟主机的整个系统 CPU 资源的一部分。</p>
-<p>self.addLink( node1, node2, bw=10, delay=&lsquo;5ms&rsquo;, max_queue_size=1000, loss=10, use_htb=True)：添加具有带宽、延迟和丢失特性的双向链接，使用分层令牌桶速率限制器和 netem 延迟/丢失模拟器，最大队列大小为 1000 个数据包。该参数bw以Mbit为单位的数字表示；delay表示为带有单位的字符串（例如“5ms”、“100us”、“1s”）；loss以百分比表示（介于 0 和 100 之间）；max_queue_size以数据包表示。</p>
-<p>您可能会发现创建Python 字典非常有用，这样可以轻松地将相同的参数传递给多个方法调用，例如：</p>
+<p>self.addLink( node1, node2, bw=10, delay=&lsquo;5ms&rsquo;, max_queue_size=1000, loss=10, use_htb=True)：添加具有带宽、延迟和丢失特性的双向链接，使用分层令牌桶速率限制器和 netem 延迟/丢失模拟器，队列最大为 1000 个数据包。bw参数是Mbit为单位的数字表示；delay表示为带有单位的字符串（例如“5ms”、“100us”、“1s”）；loss以百分比表示（介于 0 和 100 之间）；max_queue_size以数据包表示。</p>
+<p>使用 Python 字典来复用相同的参数，例如：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -480,10 +480,10 @@
 </span></span><span style="display:flex;"><span>self.addLink(node1, node2, **linkopts)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>net.get()：按名称检索节点（主机或交换机）对象。如果您想向主机发送命令（例如使用 host.cmd()）并获取其输出，这一点很重要。</p>
+</div><p>net.get()：按名称检索节点（主机或交换机）对象。可以通过节点对象向主机发送命令（例如使用 host.cmd()）并获取其输出。</p>
 <p>另外，可以简单地使用中括号（例如net[&lsquo;h1&rsquo;]）按名称检索给定的节点。</p>
 <h3 id="在主机中运行程序">在主机中运行程序</h3>
-<p>要在主机中运行命令并获取输出，请使用cmd()方法。</p>
+<p>cmd()方法在主机中运行命令并获取输出。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -531,8 +531,8 @@
 </span></span><span style="display:flex;"><span>f.close()
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>使用 shell 的输出重定向功能将输出发送到/tmp/date.out，使用 shell 的后台执行功能在后台&amp;运行命令，并使用作业控制kill %while关闭在后台运行的程序。如果你让作业在后台运行，它们不能保证在 Mininet 退出时停止（无论是有意还是由于错误），所以确保你完全停止所有作业。定期使用 ps 命令来确保没有僵尸作业。</p>
-<p>拥有一个 shell 进程可以让您轻松执行其他任务。例如，您可以使用以下命令找出后台命令的 PID</p>
+</div><p>使用 shell 的输出重定向功能将输出发送到/tmp/date.out，使用 shell 的后台执行功能在后台&amp;运行命令，并使用作业控制kill %while关闭在后台运行的程序。后台运行的作业不能保证在 Mininet 退出时停止（无论是有意还是由于错误）。定期使用 ps 命令来确保没有僵尸作业。</p>
+<p>拥有一个 shell 进程可以让您轻松执行其他任务。例如，可以使用以下命令找出后台命令的 PID</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1

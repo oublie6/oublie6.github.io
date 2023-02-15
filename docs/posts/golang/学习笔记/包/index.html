@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E5%8C%85\/"
-        },"genre": "posts","keywords": "go学习笔记","wordcount":  1421 ,
+        },"genre": "posts","keywords": "go学习笔记","wordcount":  1746 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E5%8C%85\/","datePublished": "2022-12-11T16:11:56+08:00","dateModified": "2022-12-11T16:11:56+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-包</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1421 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1746 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -123,6 +123,7 @@
       </ul>
     </li>
     <li><a href="#标准库概述">标准库概述</a></li>
+    <li><a href="#使用github开发自己的模块并发布">使用github开发自己的模块并发布</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
@@ -267,6 +268,12 @@
 <li>runtime: Go 程序运行时的交互操作，例如垃圾回收和协程创建</li>
 <li>reflect: 实现通过程序运行时反射，让程序操作任意类型的变量</li>
 </ul>
+<h2 id="使用github开发自己的模块并发布">使用github开发自己的模块并发布</h2>
+<p>在本地新建项目，模块名为<code>github.com/username/modelname</code>，开发完后发布到github上</p>
+<p><a href="https://blog.csdn.net/weixin_44412085/article/details/127833380" target="_blank" rel="noopener noreffer ">CSDN 倦~ Go的多模块开发</a></p>
+<p>本地开发多模块项目时，本地依赖的项目需要推送到远程仓库才能得到更新，相当于推送到仓库再下载到pkg里面</p>
+<p>后来有了go mod replace，可以在开发时先将本地依赖修改为本地的包，后面再吧go.sum里面的replace删掉再发布</p>
+<p>go1.18推出了go work，workspace空目录里面新建的模块，然后再workspace目录使用<code>go work init</code>初始化，并使用<code>go work use 模块名</code>添加需要本地开发的多模块，之后加入work的模块都会本地引用，goland也会自动识别。开发和发布可以无缝衔接。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

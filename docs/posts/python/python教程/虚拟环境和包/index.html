@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%92%8C%E5%8C%85\/"
-        },"genre": "posts","keywords": "Python教程","wordcount":  1684 ,
+        },"genre": "posts","keywords": "Python教程","wordcount":  1072 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%92%8C%E5%8C%85\/","datePublished": "2022-10-12T20:52:24+08:00","dateModified": "2022-10-12T20:52:24+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-虚拟环境和包</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1684 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1072 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -126,175 +126,55 @@
 <p>这个问题的解决方案是创建一个 virtual environment，一个目录树，其中安装有特定Python版本，以及许多其他包。</p>
 <p>然后，不同的应用将可以使用不同的虚拟环境。 要解决先前需求相冲突的例子，应用程序 A 可以拥有自己的 安装了 1.0 版本的虚拟环境，而应用程序 B 则拥有安装了 2.0 版本的另一个虚拟环境。 如果应用程序 B 要求将某个库升级到 3.0 版本，也不会影响应用程序 A 的环境。</p>
 <h2 id="创建虚拟环境">创建虚拟环境</h2>
-<p>用于创建和管理虚拟环境的模块称为 venv。venv 通常会安装你可用的最新版本的 Python。如果您的系统上有多个版本的 Python，您可以通过运行 python3 或您想要的任何版本来选择特定的Python版本。</p>
-<p>要创建虚拟环境，请确定要放置它的目录，并将 venv 模块作为脚本运行目录路径:</p>
+<p>该部分为venv的使用，详见<a href="https://docs.python.org/zh-cn/3.8/tutorial/venv.html#creating-virtual-environments" target="_blank" rel="noopener noreffer ">原文</a>，更推荐使用anaconda来管理多版本的python。</p>
+<h2 id="使用pip管理包">使用pip管理包</h2>
+<p>默认情况下 pip 将从 <a href="https://pypi.org" target="_blank" rel="noopener noreffer ">Python Package Index</a>安装软件包</p>
+<p>pip 有许多子命令: &ldquo;install&rdquo;, &ldquo;uninstall&rdquo;, &ldquo;freeze&rdquo; 等等。 （请在 <a href="https://docs.python.org/zh-cn/3.8/installing/index.html#installing-index" target="_blank" rel="noopener noreffer ">安装 Python 模块</a> 指南页查看完整的 pip 文档。）</p>
+<p>pip下载的包位置位于：<code>${PYTHON_HOME}\Lib\site-packages</code>，当安装包出现问题时可以直接去这个文件夹删除包再重新安装，这个目录类似于golang 在 go mod 包管理下的<code>${GOROOT}/pkg/mod</code>目录</p>
+<p>通过指定包的名称来安装最新版本的包：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python3 -m venv tutorial-env
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install novas
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果它不存在，这将创建 tutorial-env 目录，并在其中创建包含Python解释器，标准库和各种支持文件的副本的目录。</p>
-<p>虚拟环境的常用目录位置是 .venv。 这个名称通常会令该目录在你的终端中保持隐藏，从而避免需要对所在目录进行额外解释的一般名称。 它还能防止与某些工具所支持的 .env 环境变量定义文件发生冲突。</p>
-<p>创建虚拟环境后，您可以激活它。</p>
-<p>在Windows上，运行:</p>
+</div><p>通过提供包名称后跟 == 和版本号来安装特定版本的包：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>tutorial-env<span style="color:#a50">\S</span>cripts<span style="color:#a50">\a</span>ctivate.bat
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install <span style="color:#a00">requests</span>==2.6.0
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在Unix或MacOS上，运行:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#0aa">source</span> tutorial-env/bin/activate
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>（这个脚本是为bash shell编写的。如果你使用 csh 或 fish shell，你应该改用 activate.csh 或 activate.fish 脚本。）</p>
-<p>激活虚拟环境将改变你所用终端的提示符，以显示你正在使用的虚拟环境，并修改环境以使 python 命令所运行的将是已安装的特定 Python 版本。 例如：</p>
+</div><p>重复运行install命令，pip 会注意到已经安装了所请求的版本并且什么都不做。</p>
+<p>添加 <code>--upgrade</code> 选项将软件包升级到最新版本或者替换版本（使用 == 标记版本）：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ <span style="color:#0aa">source</span> ~/envs/tutorial-env/bin/activate
-</span></span><span style="display:flex;"><span>(tutorial-env) $ python
-</span></span><span style="display:flex;"><span>Python 3.5.1 (default, May  <span style="color:#099">6</span> 2016, 10:59:36)
-</span></span><span style="display:flex;"><span>  ...
-</span></span><span style="display:flex;"><span>&gt;&gt;&gt; import sys
-</span></span><span style="display:flex;"><span>&gt;&gt;&gt; sys.path
-</span></span><span style="display:flex;"><span>[<span style="color:#a50">&#39;&#39;</span>, <span style="color:#a50">&#39;/usr/local/lib/python35.zip&#39;</span>, ...,
-</span></span><span style="display:flex;"><span><span style="color:#a50">&#39;~/envs/tutorial-env/lib/python3.5/site-packages&#39;</span>]
-</span></span><span style="display:flex;"><span>&gt;&gt;&gt;
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="使用pip管理包">使用pip管理包</h2>
-<p>你可以使用一个名为 pip 的程序来安装、升级和移除软件包。 默认情况下 pip 将从 Python Package Index <a href="https://pypi.org" target="_blank" rel="noopener noreffer ">https://pypi.org</a> 安装软件包。 你可以在你的 web 浏览器中查看 Python Package Index。</p>
-<p>pip 有许多子命令: &ldquo;install&rdquo;, &ldquo;uninstall&rdquo;, &ldquo;freeze&rdquo; 等等。 （请在 安装 Python 模块 指南页查看完整的 pip 文档。）</p>
-<p>您可以通过指定包的名称来安装最新版本的包：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>(tutorial-env) $ pip install novas
-</span></span><span style="display:flex;"><span>Collecting novas
-</span></span><span style="display:flex;"><span>  Downloading novas-3.1.1.3.tar.gz (136kB)
-</span></span><span style="display:flex;"><span>Installing collected packages: novas
-</span></span><span style="display:flex;"><span>  Running setup.py install <span style="color:#00a">for</span> novas
-</span></span><span style="display:flex;"><span>Successfully installed novas-3.1.1.3
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>您还可以通过提供包名称后跟 == 和版本号来安装特定版本的包：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>(tutorial-env) $ pip install <span style="color:#a00">requests</span>==2.6.0
-</span></span><span style="display:flex;"><span>Collecting <span style="color:#a00">requests</span>==2.6.0
-</span></span><span style="display:flex;"><span>  Using cached requests-2.6.0-py2.py3-none-any.whl
-</span></span><span style="display:flex;"><span>Installing collected packages: requests
-</span></span><span style="display:flex;"><span>Successfully installed requests-2.6.0
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>如果你重新运行这个命令，pip 会注意到已经安装了所请求的版本并且什么都不做。您可以提供不同的版本号来获取该版本，或者您可以运行 pip install &ndash;upgrade 将软件包升级到最新版本：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>(tutorial-env) $ pip install --upgrade requests
-</span></span><span style="display:flex;"><span>Collecting requests
-</span></span><span style="display:flex;"><span>Installing collected packages: requests
-</span></span><span style="display:flex;"><span>  Found existing installation: requests 2.6.0
-</span></span><span style="display:flex;"><span>    Uninstalling requests-2.6.0:
-</span></span><span style="display:flex;"><span>      Successfully uninstalled requests-2.6.0
-</span></span><span style="display:flex;"><span>Successfully installed requests-2.7.0
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install --upgrade requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pip install --upgrade <span style="color:#a00">requests</span>==x.x.x
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>pip uninstall 后跟一个或多个包名称将从虚拟环境中删除包。</p>
 <p>pip show 将显示有关特定包的信息：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>(tutorial-env) $ pip show requests
-</span></span><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span>Metadata-Version: 2.0
-</span></span><span style="display:flex;"><span>Name: requests
-</span></span><span style="display:flex;"><span>Version: 2.7.0
-</span></span><span style="display:flex;"><span>Summary: Python HTTP <span style="color:#00a">for</span> Humans.
-</span></span><span style="display:flex;"><span>Home-page: http://python-requests.org
-</span></span><span style="display:flex;"><span>Author: Kenneth Reitz
-</span></span><span style="display:flex;"><span>Author-email: me@kennethreitz.com
-</span></span><span style="display:flex;"><span>License: Apache 2.0
-</span></span><span style="display:flex;"><span>Location: /Users/akuchling/envs/tutorial-env/lib/python3.4/site-packages
-</span></span><span style="display:flex;"><span>Requires:
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>pip list 将显示虚拟环境中安装的所有软件包：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>(tutorial-env) $ pip list
-</span></span><span style="display:flex;"><span>novas (3.1.1.3)
-</span></span><span style="display:flex;"><span>numpy (1.9.2)
-</span></span><span style="display:flex;"><span>pip (7.0.3)
-</span></span><span style="display:flex;"><span>requests (2.7.0)
-</span></span><span style="display:flex;"><span>setuptools (16.0)
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip show requests
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>pip freeze` 将生成一个类似的已安装包列表，但输出使用 pip install 期望的格式。一个常见的约定是将此列表放在 requirements.txt 文件中：</p>
+</div><p>pip list 显示虚拟环境中安装的所有软件包：</p>
+<p>pip freeze 使用 pip install 期望的格式输出一个类似的已安装包列表。一个常见的约定是将此列表放在 requirements.txt 文件中：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -311,35 +191,16 @@
 </span></span><span style="display:flex;"><span><span style="color:#a00">requests</span>==2.7.0
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后可以将 requirements.txt 提交给版本控制并作为应用程序的一部分提供。然后用户可以使用 install -r 安装所有必需的包：</p>
+</div><p>可以将 requirements.txt 提交给版本控制并作为应用程序的一部分。然后用户可以使用 install -r 安装所有必需的包：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>(tutorial-env) $ pip install -r requirements.txt
-</span></span><span style="display:flex;"><span>Collecting <span style="color:#a00">novas</span>==3.1.1.3 (from -r requirements.txt (line 1))
-</span></span><span style="display:flex;"><span>  ...
-</span></span><span style="display:flex;"><span>Collecting <span style="color:#a00">numpy</span>==1.9.2 (from -r requirements.txt (line 2))
-</span></span><span style="display:flex;"><span>  ...
-</span></span><span style="display:flex;"><span>Collecting <span style="color:#a00">requests</span>==2.7.0 (from -r requirements.txt (line 3))
-</span></span><span style="display:flex;"><span>  ...
-</span></span><span style="display:flex;"><span>Installing collected packages: novas, numpy, requests
-</span></span><span style="display:flex;"><span>  Running setup.py install <span style="color:#00a">for</span> novas
-</span></span><span style="display:flex;"><span>Successfully installed novas-3.1.1.3 numpy-1.9.2 requests-2.7.0
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install -r requirements.txt
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>pip 有更多选择。有关 pip 的完整文档，请参阅 安装 Python 模块 指南。当您编写一个包并希望在 Python 包索引中使它可用时，请参考 分发 Python 模块 指南。</p>
-</div><div class="post-footer" id="post-footer">
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
