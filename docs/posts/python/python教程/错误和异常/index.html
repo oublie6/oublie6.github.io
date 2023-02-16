@@ -28,10 +28,10 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E9%94%99%E8%AF%AF%E5%92%8C%E5%BC%82%E5%B8%B8\/"
-        },"genre": "posts","keywords": "Python教程","wordcount":  3608 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python教程","wordcount":  2871 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E9%94%99%E8%AF%AF%E5%92%8C%E5%BC%82%E5%B8%B8\/","datePublished": "2022-10-12T12:25:48+08:00","dateModified": "2022-10-12T12:25:48+08:00","publisher": {
             "@type": "Organization",
-            "name": ""},"author": {
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
                 "@type": "Person",
                 "name": "oublie"
             },"description": ""
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-错误和异常</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3608 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2871 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -126,46 +126,26 @@
 <p>标准库和语言参考涵盖了python的所有内容，他们是互补的，如果在语言参考中没有找到需要的内容那么就一定在便准库文档中。</p>
 <p>（至少）有两种可区分的错误：语法错误 和 异常。</p>
 <h2 id="语法错误">语法错误</h2>
-<p>语法错误又称解析错误，可能是你在学习Python 时最容易遇到的错误:</p>
-<p>解析器会输出出现语法错误的那一行，并显示一个“箭头”，指向这行里面检测到的第一个错误。 错误是由箭头指示的位置 上面 的 token 引起的（或者至少是在这里被检测出的）</p>
+<p>语法错误又称解析错误，解析器会输出出现语法错误的那一行，并显示一个“箭头”，指向这行里面检测到的第一个错误。 错误是由箭头指示的位置 上面 的 token 引起的（或者至少是在这里被检测出的）</p>
 <h2 id="异常">异常</h2>
-<p>即使语句或表达式在语法上是正确的，但在尝试执行时，它仍可能会引发错误。 在执行时检测到的错误被称为 异常，异常不一定会导致严重后果：你将很快学会如何在 Python 程序中处理它们。 但是，大多数异常并不会被程序处理，此时会显示如下所示的错误信息:</p>
+<p>即使语句或表达式在语法上是正确的，但在尝试执行时，它仍可能会引发错误。 在执行时检测到的错误被称为 异常，异常不一定会导致严重后果。 不被程序处理异常，会直接让终止程序并打印错误信息:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#099">10</span> * (<span style="color:#099">1</span>/<span style="color:#099">0</span>)
 </span></span><span style="display:flex;"><span>Traceback (most recent call last):
 </span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
 </span></span><span style="display:flex;"><span>ZeroDivisionError: division by zero
-</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#099">4</span> + spam*<span style="color:#099">3</span>
-</span></span><span style="display:flex;"><span>Traceback (most recent call last):
-</span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
-</span></span><span style="display:flex;"><span>NameError: name <span style="color:#a50">&#39;spam&#39;</span> <span style="color:#00a">is</span> <span style="color:#00a">not</span> defined
-</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#a50">&#39;2&#39;</span> + <span style="color:#099">2</span>
-</span></span><span style="display:flex;"><span>Traceback (most recent call last):
-</span></span><span style="display:flex;"><span>  File <span style="color:#a50">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>, <span style="color:#00a">in</span> &lt;module&gt;
-</span></span><span style="display:flex;"><span>TypeError: Can<span style="color:#a50">&#39;t convert &#39;</span><span style="color:#0aa">int</span><span style="color:#a50">&#39; object to str implicitly</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>错误信息的最后一行告诉我们程序遇到了什么类型的错误。异常有不同的类型，而其类型名称将会作为错误信息的一部分中打印出来：上述示例中的异常类型依次是：ZeroDivisionError， NameError 和 TypeError。作为异常类型打印的字符串是发生的内置异常的名称。对于所有内置异常都是如此，但对于用户定义的异常则不一定如此（虽然这是一个有用的规范）。标准的异常类型是内置的标识符（而不是保留关键字）。</p>
-<p>这一行的剩下的部分根据异常类型及其原因提供详细信息。</p>
-<p>错误信息的前一部分以堆栈回溯的形式显示发生异常时的上下文。通常它包含列出源代码行的堆栈回溯；但是它不会显示从标准输入中读取的行。</p>
-<p>内置异常 列出了内置异常和它们的含义。</p>
+</div><p>错误信息的前一部分以堆栈回溯的形式显示发生异常时的上下文。</p>
+<p><a href="https://docs.python.org/zh-cn/3.8/library/exceptions.html#bltin-exceptions" target="_blank" rel="noopener noreffer ">内置异常</a> 列出了内置异常和它们的含义。</p>
 <h2 id="处理异常">处理异常</h2>
-<p>可以编写处理所选异常的程序。请看下面的例子，它会要求用户一直输入，直到输入的是一个有效的整数，但允许用户中断程序（使用 Control-C 或操作系统支持的其他操作）；请注意用户引起的中断可以通过引发 KeyboardInterrupt 异常来指示。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -204,51 +184,9 @@
 </span></span><span style="display:flex;"><span>...     <span style="color:#00a">pass</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果发生的异常和 except 子句中的类是同一个类或者是它的基类，则异常和 except 子句中的类是兼容的（但反过来则不成立 &mdash; 列出派生类的 except 子句与基类不兼容）。 例如，下面的代码将依次打印 B, C, D</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">B</span>(Exception):
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">pass</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">C</span>(B):
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">pass</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">D</span>(C):
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">pass</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> cls <span style="color:#00a">in</span> [B, C, D]:
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">try</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#00a">raise</span> cls()
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">except</span> D:
-</span></span><span style="display:flex;"><span>        <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;D&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">except</span> C:
-</span></span><span style="display:flex;"><span>        <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;C&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">except</span> B:
-</span></span><span style="display:flex;"><span>        <span style="color:#0aa">print</span>(<span style="color:#a50">&#34;B&#34;</span>)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>请注意如果 except 子句被颠倒（把 except B 放到第一个），它将打印 B，B，B &mdash; 即第一个匹配的 except 子句被触发。</p>
-<p>最后的 except 子句可以省略异常名，以用作通配符。但请谨慎使用，因为以这种方式很容易掩盖真正的编程错误！它还可用于打印错误消息，然后重新引发异常（同样允许调用者处理异常）:</p>
+</div><p>如果发生的异常和 except 子句中的类是同一个类或者是它的基类，则异常和 except 子句中的类是兼容的（反过来则不成立 &mdash; 派生类的 except 子句与基类不兼容）</p>
+<p>可以使用as关键字给异常一个别名</p>
+<p>最后的 except 子句可以省略异常名，以用作通配符。不推荐，该方式很容易掩盖真正的编程错误！不过可用于打印错误消息，然后重新引发异常（同样允许调用者处理异常）:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -304,8 +242,7 @@
 </span></span><span style="display:flex;"><span>        f.close()
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>使用 else 子句比向 try 子句添加额外的代码要好，因为它避免了意外捕获非 try &hellip; except 语句保护的代码引发的异常。</p>
-<p>发生异常时，它可能具有关联值，也称为异常 参数 。参数的存在和类型取决于异常类型。</p>
+</div><p>发生异常时，它可能具有关联值，也称为异常 参数 。参数的存在和类型取决于异常类型。</p>
 <p>except 子句可以在异常名称后面指定一个变量。这个变量和一个异常实例绑定，它的参数存储在 instance.args 中。为了方便起见，异常实例定义了 <strong>str</strong>() ，因此可以直接打印参数而无需引用 .args 。也可以在抛出之前首先实例化异常，并根据需要向其添加任何属性。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -346,33 +283,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果异常有参数，则它们将作为未处理异常的消息的最后一部分（&lsquo;详细信息&rsquo;）打印。</p>
-<p>异常处理程序不仅处理 try 子句中遇到的异常，还处理 try 子句中调用（即使是间接地）的函数内部发生的异常。例如:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">def</span> <span style="color:#0a0">this_fails</span>():
-</span></span><span style="display:flex;"><span>...     x = <span style="color:#099">1</span>/<span style="color:#099">0</span>
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>&gt;&gt;&gt; <span style="color:#00a">try</span>:
-</span></span><span style="display:flex;"><span>...     this_fails()
-</span></span><span style="display:flex;"><span>... <span style="color:#00a">except</span> ZeroDivisionError <span style="color:#00a">as</span> err:
-</span></span><span style="display:flex;"><span>...     <span style="color:#0aa">print</span>(<span style="color:#a50">&#39;Handling run-time error:&#39;</span>, err)
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>Handling run-time error: division by zero
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="抛出异常">抛出异常</h2>
-<p>raise 语句允许程序员强制发生指定的异常。例如:</p>
+<h2 id="抛出异常">抛出异常</h2>
+<p>raise 语句允许程序员强制发生指定的异常:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -387,16 +299,8 @@
 </span></span><span style="display:flex;"><span>NameError: HiThere
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>raise 唯一的参数就是要抛出的异常。这个参数必须是一个异常实例或者是一个异常类（派生自 Exception 的类）。如果传递的是一个异常类，它将通过调用没有参数的构造函数来隐式实例化:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#00a">raise</span> ValueError  <span style="color:#aaa;font-style:italic"># shorthand for &#39;raise ValueError()&#39;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>如果你需要确定是否引发了异常但不打算处理它，则可以使用更简单的 raise 语句形式重新引发异常</p>
+</div><p>raise 唯一的参数就是要抛出的异常。这个参数必须是一个异常实例或者是一个异常类（派生自 Exception 的类）。</p>
+<p>如果你需要确定是否引发了异常但不打算处理它，可以使用更简单的 raise 语句形式重新引发异常</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
