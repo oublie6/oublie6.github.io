@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>go标准库-Math - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="go标准库-Math" />
+<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc math包 Constants 1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/math/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-24T09:55:17+08:00" />
+<meta property="article:modified_time" content="2022-12-24T09:55:17+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="go标准库-Math"/>
+<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc math包 Constants 1"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/math/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E7%BC%93%E5%AD%98%E7%AF%87/" /><link rel="next" href="https://oublie6.github.io/posts/golang/gin/%E7%AE%80%E4%BB%8B/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "go标准库-Math",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/math\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  669 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/math\/","datePublished": "2022-12-24T09:55:17+08:00","dateModified": "2022-12-24T09:55:17+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Math</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-24">2022-12-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;669 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#math包">math包</a>
+      <ul>
+        <li><a href="#constants">Constants</a></li>
+        <li><a href="#重要函数">重要函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#mathrand">math/rand</a>
+      <ul>
+        <li><a href="#func-intnn-int-int">func Intn(n int) int</a></li>
+        <li><a href="#以时间为种子的随机数">以时间为种子的随机数</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
+<p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
+<p>go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc</p>
+<h2 id="math包">math包</h2>
+<h3 id="constants">Constants</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>    E   = <span style="color:#099">2.71828182845904523536028747135266249775724709369995957496696763</span> <span style="color:#aaa;font-style:italic">// A001113
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Pi  = <span style="color:#099">3.14159265358979323846264338327950288419716939937510582097494459</span> <span style="color:#aaa;font-style:italic">// A000796
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Phi = <span style="color:#099">1.61803398874989484820458683436563811772030917980576286213544862</span> <span style="color:#aaa;font-style:italic">// A001622
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Sqrt2   = <span style="color:#099">1.41421356237309504880168872420969807856967187537694807317667974</span> <span style="color:#aaa;font-style:italic">// A002193
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    SqrtE   = <span style="color:#099">1.64872127070012814684865078781416357165377610071014801157507931</span> <span style="color:#aaa;font-style:italic">// A019774
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    SqrtPi  = <span style="color:#099">1.77245385090551602729816748334114518279754945612238712821380779</span> <span style="color:#aaa;font-style:italic">// A002161
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    SqrtPhi = <span style="color:#099">1.27201964951406896425242246173749149171560804184009624861664038</span> <span style="color:#aaa;font-style:italic">// A139339
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Ln2    = <span style="color:#099">0.693147180559945309417232121458176568075500134360255254120680009</span> <span style="color:#aaa;font-style:italic">// A002162
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Log2E  = <span style="color:#099">1</span> / Ln2
+</span></span><span style="display:flex;"><span>    Ln10   = <span style="color:#099">2.30258509299404568401799145468436420760110148862877297603332790</span> <span style="color:#aaa;font-style:italic">// A002392
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Log10E = <span style="color:#099">1</span> / Ln10
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>    MaxFloat32             = <span style="color:#099">3.40282346638528859811704183484516925440e+38</span>  <span style="color:#aaa;font-style:italic">// 2**127 * (2**24 - 1) / 2**23
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    SmallestNonzeroFloat32 = <span style="color:#099">1.401298464324817070923729583289916131280e-45</span> <span style="color:#aaa;font-style:italic">// 1 / 2**(127 - 1 + 23)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    MaxFloat64             = <span style="color:#099">1.797693134862315708145274237317043567981e+308</span> <span style="color:#aaa;font-style:italic">// 2**1023 * (2**53 - 1) / 2**52
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    SmallestNonzeroFloat64 = <span style="color:#099">4.940656458412465441765687928682213723651e-324</span> <span style="color:#aaa;font-style:italic">// 1 / 2**(1023 - 1 + 52)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>	intSize = <span style="color:#099">32</span> &lt;&lt; (^<span style="color:#0aa">uint</span>(<span style="color:#099">0</span>) &gt;&gt; <span style="color:#099">63</span>) <span style="color:#aaa;font-style:italic">// 32 or 64
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>	MaxInt    = <span style="color:#099">1</span>&lt;&lt;(intSize-<span style="color:#099">1</span>) - <span style="color:#099">1</span>  <span style="color:#aaa;font-style:italic">// MaxInt32 or MaxInt64 depending on intSize.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MinInt    = -<span style="color:#099">1</span> &lt;&lt; (intSize - <span style="color:#099">1</span>) <span style="color:#aaa;font-style:italic">// MinInt32 or MinInt64 depending on intSize.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxInt8   = <span style="color:#099">1</span>&lt;&lt;<span style="color:#099">7</span> - <span style="color:#099">1</span>            <span style="color:#aaa;font-style:italic">// 127
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MinInt8   = -<span style="color:#099">1</span> &lt;&lt; <span style="color:#099">7</span>             <span style="color:#aaa;font-style:italic">// -128
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxInt16  = <span style="color:#099">1</span>&lt;&lt;<span style="color:#099">15</span> - <span style="color:#099">1</span>           <span style="color:#aaa;font-style:italic">// 32767
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MinInt16  = -<span style="color:#099">1</span> &lt;&lt; <span style="color:#099">15</span>            <span style="color:#aaa;font-style:italic">// -32768
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxInt32  = <span style="color:#099">1</span>&lt;&lt;<span style="color:#099">31</span> - <span style="color:#099">1</span>           <span style="color:#aaa;font-style:italic">// 2147483647
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MinInt32  = -<span style="color:#099">1</span> &lt;&lt; <span style="color:#099">31</span>            <span style="color:#aaa;font-style:italic">// -2147483648
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxInt64  = <span style="color:#099">1</span>&lt;&lt;<span style="color:#099">63</span> - <span style="color:#099">1</span>           <span style="color:#aaa;font-style:italic">// 9223372036854775807
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MinInt64  = -<span style="color:#099">1</span> &lt;&lt; <span style="color:#099">63</span>            <span style="color:#aaa;font-style:italic">// -9223372036854775808
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxUint   = <span style="color:#099">1</span>&lt;&lt;intSize - <span style="color:#099">1</span>      <span style="color:#aaa;font-style:italic">// MaxUint32 or MaxUint64 depending on intSize.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxUint8  = <span style="color:#099">1</span>&lt;&lt;<span style="color:#099">8</span> - <span style="color:#099">1</span>            <span style="color:#aaa;font-style:italic">// 255
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxUint16 = <span style="color:#099">1</span>&lt;&lt;<span style="color:#099">16</span> - <span style="color:#099">1</span>           <span style="color:#aaa;font-style:italic">// 65535
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxUint32 = <span style="color:#099">1</span>&lt;&lt;<span style="color:#099">32</span> - <span style="color:#099">1</span>           <span style="color:#aaa;font-style:italic">// 4294967295
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	MaxUint64 = <span style="color:#099">1</span>&lt;&lt;<span style="color:#099">64</span> - <span style="color:#099">1</span>           <span style="color:#aaa;font-style:italic">// 18446744073709551615
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="重要函数">重要函数</h3>
+<ul>
+<li>
+<p>func Ceil(x float64) float64：返回不小于x的最小整数（的浮点值）</p>
+</li>
+<li>
+<p>func Floor(x float64) float64：返回不大于x的最大整数（的浮点值）</p>
+</li>
+<li>
+<p>func Trunc(x float64) float64：返回x的整数部分（的浮点值）</p>
+</li>
+<li>
+<p>func Modf(f float64) (int float64, frac float64)：返回f的整数部分和小数部分，结果的正负号都和f相同</p>
+</li>
+<li>
+<p>func Abs(x float64) float64：返回x的绝对值</p>
+</li>
+<li>
+<p>func Round(x float64) float64：四舍五入</p>
+</li>
+<li>
+<p>func Max(x, y float64) float64：返回x和y中最大值</p>
+</li>
+<li>
+<p>func Min(x, y float64) float64：返回x和y中最小值</p>
+</li>
+<li>
+<p>func Sqrt(x float64) float64：返回x的二次方根</p>
+</li>
+<li>
+<p>func Sin(x float64) float64</p>
+</li>
+<li>
+<p>func Cos(x float64) float64</p>
+</li>
+<li>
+<p>func Tan(x float64) float64</p>
+</li>
+<li>
+<p>func Log2 ：求2为底的对数</p>
+</li>
+<li>
+<p>func Pow(x, y float64) float64：返回x**y</p>
+</li>
+</ul>
+<h2 id="mathrand">math/rand</h2>
+<h3 id="func-intnn-int-int">func Intn(n int) int</h3>
+<p>返回一个取值范围在[0,n)的伪随机int值，如果n&lt;=0会panic。</p>
+<h3 id="以时间为种子的随机数">以时间为种子的随机数</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>r := rand.<span style="color:#0a0">New</span>(rand.<span style="color:#0a0">NewSource</span>(time.<span style="color:#0a0">Now</span>().<span style="color:#0a0">UnixNano</span>()))
+</span></span><span style="display:flex;"><span>r.<span style="color:#0a0">Intn</span>(max)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-24
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/math/" data-title="go标准库-Math" data-hashtags="go标准库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/math/" data-hashtag="go标准库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/math/" data-title="go标准库-Math"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/math/" data-title="go标准库-Math"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/math/" data-title="go标准库-Math"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E6%A0%87%E5%87%86%E5%BA%93/">go标准库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E7%BC%93%E5%AD%98%E7%AF%87/" class="prev" rel="prev" title="数据库-redis-小林coding-缓存篇"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据库-redis-小林coding-缓存篇</a>
+            <a href="/posts/golang/gin/%E7%AE%80%E4%BB%8B/" class="next" rel="next" title="golang-gin-简介">golang-gin-简介<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-24T09:55:17+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"go标准库-Math"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

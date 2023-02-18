@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/sync\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  276 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  548 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/sync\/","datePublished": "2023-01-28T11:00:27+08:00","dateModified": "2023-01-28T11:00:27+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Sync</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-28">2023-01-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;276 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-28">2023-01-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;548 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -115,6 +115,7 @@
     <li><a href="#type-mutex">type Mutex</a></li>
     <li><a href="#type-rwmutex">type RWMutex</a></li>
     <li><a href="#type-waitgroup">type WaitGroup</a></li>
+    <li><a href="#map">Map</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
@@ -154,7 +155,47 @@
 <li>func (wg *WaitGroup) Done()</li>
 <li>func (wg *WaitGroup) Wait()</li>
 </ul>
-</div><div class="post-footer" id="post-footer">
+<h2 id="map">Map</h2>
+<p><a href="https://blog.csdn.net/xiaohenghengmua/article/details/111693723" target="_blank" rel="noopener noreffer ">CSDN 一把把把把住了</a></p>
+<p>read 和 dirty 两个字段将读写分离</p>
+<ul>
+<li>读取时会先查询 read，不存在再查询 dirty，写入时则只写入 dirty</li>
+<li>读取 read 并不需要加锁，而读或写 dirty 都需要加锁</li>
+<li>misses 字段来统计 read 被穿透的次数（被穿透指需要读 dirty 的情况），超过一定次数则将 dirty 数据同步到 read 上</li>
+<li>对于删除数据则直接通过标记来延迟删除</li>
+</ul>
+<p>sync.Map 使用方法：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> ma sync.Map<span style="color:#aaa;font-style:italic">// 该类型是开箱即用，只需要声明既可
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>ma.<span style="color:#0a0">Store</span>(<span style="color:#a50">&#34;key&#34;</span>, <span style="color:#a50">&#34;value&#34;</span>) <span style="color:#aaa;font-style:italic">// 存储值
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>ma.<span style="color:#0a0">Delete</span>(<span style="color:#a50">&#34;key&#34;</span>) <span style="color:#aaa;font-style:italic">//删除值
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>ma.<span style="color:#0a0">LoadOrStore</span>(<span style="color:#a50">&#34;key&#34;</span>, <span style="color:#a50">&#34;value&#34;</span>)<span style="color:#aaa;font-style:italic">// 获取值，如果没有则存储
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>fmt.<span style="color:#0a0">Println</span>(ma.<span style="color:#0a0">Load</span>(<span style="color:#a50">&#34;key&#34;</span>))<span style="color:#aaa;font-style:italic">//获取值
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>ma.<span style="color:#0a0">Range</span>(<span style="color:#00a">func</span>(key, value <span style="color:#00a">interface</span>{}) <span style="color:#0aa">bool</span> {
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;key:%s ,value:%s \n&#34;</span>, key, value)
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//如果返回：false，则退出循环，
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">return</span> <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
