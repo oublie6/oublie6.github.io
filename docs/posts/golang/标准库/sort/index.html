@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>go标准库-Sort - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="go标准库-Sort" />
-<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc godoc sort func Ints(a []int) In" />
+<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc godoc sort type Interface 具有这" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/sort/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-04T13:17:40+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="go标准库-Sort"/>
-<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc godoc sort func Ints(a []int) In"/>
+<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc godoc sort type Interface 具有这"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/sort/" /><link rel="prev" href="https://oublie6.github.io/posts/p4/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/reflect/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/sort\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  477 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  492 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/sort\/","datePublished": "2022-12-04T13:17:40+08:00","dateModified": "2022-12-04T13:17:40+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Sort</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-04">2022-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;477 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-04">2022-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;492 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -111,84 +111,106 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#func-intsa-int">func Ints(a []int)</a></li>
-    <li><a href="#func-searchintsa-int-x-int-int">func SearchInts(a []int, x int) int</a></li>
-    <li><a href="#func-reversedata-interface-interface">func Reverse(data Interface) Interface</a></li>
-    <li><a href="#func-searchn-int-f-funcint-bool-int">func Search(n int, f func(int) bool) int</a></li>
-    <li><a href="#func-slicex-any-less-funci-j-int-bool">func Slice(x any, less func(i, j int) bool)</a></li>
-    <li><a href="#func-slicestablex-any--less-funci-j-int--bool-">func SliceStable(x any , less func(i, j int ) bool )</a></li>
-    <li><a href="#type-intslice-int">type IntSlice []int</a></li>
+    <li><a href="#type-interface">type Interface</a></li>
+    <li><a href="#常用函数">常用函数</a></li>
+    <li><a href="#type-intslice">type IntSlice</a></li>
+    <li><a href="#type-float64slice">type Float64Slice</a></li>
+    <li><a href="#type-stringslice">type StringSlice</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
 <p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
 <p>go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc</p>
 <p><a href="https://pkg.go.dev/sort" target="_blank" rel="noopener noreffer ">godoc sort</a></p>
-<h2 id="func-intsa-int">func Ints(a []int)</h2>
-<p>Ints函数将a排序为递增顺序。</p>
-<h2 id="func-searchintsa-int-x-int-int">func SearchInts(a []int, x int) int</h2>
-<p>SearchInts在递增顺序的a中搜索x，返回x的索引。如果查找不到，返回值是x应该插入a的位置（以保证a的递增顺序），返回值可以是len(a)。</p>
-<h2 id="func-reversedata-interface-interface">func Reverse(data Interface) Interface</h2>
-<p>Reverse包装一个Interface接口并返回一个新的Interface接口，对该接口排序可生成递减序列。</p>
+<h2 id="type-interface">type Interface</h2>
+<p>具有这三个方法的结构体可以使用这个库的所有函数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Interface <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Len方法返回集合中的元素个数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#0a0">Len</span>() <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Less方法报告索引i的元素是否比索引j的元素小
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#0a0">Less</span>(i, j <span style="color:#0aa">int</span>) <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Swap方法交换索引i和j的两个元素
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#0a0">Swap</span>(i, j <span style="color:#0aa">int</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="常用函数">常用函数</h2>
+<ul>
+<li>
+<p>func Sort(data Interface)：Sort排序data。</p>
+</li>
+<li>
+<p>func Stable(data Interface)：相当于稳定的Sort</p>
+</li>
+<li>
+<p>func IsSorted(data Interface) bool：报告data是否已经被排序。</p>
+</li>
+<li>
+<p>func Reverse(data Interface) Interface：Reverse包装一个Interface接口并返回一个新的Interface接口，对该接口排序可生成递减序列。常用方法：<code>sort.Sort(sort.Reverse(sort.IntSlice(s)))</code></p>
+</li>
+<li>
+<p>func Ints(a []int)：将a排序为递增顺序</p>
+</li>
+<li>
+<p>func Float64s(a []float64)：将a排序为递增顺序</p>
+</li>
+<li>
+<p>func Strings(a []string)：将a排序为递增顺序</p>
+</li>
+</ul>
+<h2 id="type-intslice">type IntSlice</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>sort.<span style="color:#0a0">Sort</span>(sort.<span style="color:#0a0">Reverse</span>(sort.<span style="color:#0a0">IntSlice</span>(s)))
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> IntSlice []<span style="color:#0aa">int</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="func-searchn-int-f-funcint-bool-int">func Search(n int, f func(int) bool) int</h2>
-<p>Search函数采用二分法搜索找到[0, n)区间内最小的满足f(i)==true的值i。Search函数会返回满足f(i)==true的最小值i。</p>
-<h2 id="func-slicex-any-less-funci-j-int-bool">func Slice(x any, less func(i, j int) bool)</h2>
-<p>给定提供的 less 函数，Slice 对切片 x 进行排序。如果 x 不是切片，它会panic。不能保证排序是稳定的</p>
-<h2 id="func-slicestablex-any--less-funci-j-int--bool-">func SliceStable(x any , less func(i, j int ) bool )</h2>
-<p>与Slice功能相同但保证排序稳定</p>
-<h2 id="type-intslice-int">type IntSlice []int</h2>
-<p>使用该数据结构实现优先队列</p>
+</div><p>除了Interface的三个方法外，还有2个方法</p>
+<ul>
+<li>func (p IntSlice) Sort()</li>
+<li>func (p IntSlice) Search(x int) int</li>
+</ul>
+<h2 id="type-float64slice">type Float64Slice</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> PriorityQueue <span style="color:#00a">struct</span> {
-</span></span><span style="display:flex;"><span>	sort.IntSlice
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (h *PriorityQueue) <span style="color:#0a0">Push</span>(x <span style="color:#00a">interface</span>{}) {
-</span></span><span style="display:flex;"><span>	h.IntSlice = <span style="color:#0aa">append</span>(h.IntSlice, x.(<span style="color:#0aa">int</span>))
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (h *PriorityQueue) <span style="color:#0a0">Pop</span>() <span style="color:#00a">interface</span>{} {
-</span></span><span style="display:flex;"><span>	l := <span style="color:#0aa">len</span>(h.IntSlice)
-</span></span><span style="display:flex;"><span>	ret := h.IntSlice[l-<span style="color:#099">1</span>]
-</span></span><span style="display:flex;"><span>	h.IntSlice = h.IntSlice[:l-<span style="color:#099">1</span>]
-</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> ret
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (h *PriorityQueue) <span style="color:#0a0">HPush</span>(x <span style="color:#0aa">int</span>) { heap.<span style="color:#0a0">Push</span>(h, x) }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (h *PriorityQueue) <span style="color:#0a0">HPop</span>() <span style="color:#0aa">int</span> { <span style="color:#00a">return</span> heap.<span style="color:#0a0">Pop</span>(h).(<span style="color:#0aa">int</span>) }
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Float64Slice []<span style="color:#0aa">float64</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><ul>
+<li>func (p Float64Slice) Sort()</li>
+<li>func (p Float64Slice) Search(x float64) int</li>
+</ul>
+<h2 id="type-stringslice">type StringSlice</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> StringSlice []<span style="color:#0aa">string</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>func (p StringSlice) Sort()</li>
+<li>func (p StringSlice) Search(x string) int</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
