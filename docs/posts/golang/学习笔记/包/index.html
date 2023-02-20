@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>golang-学习笔记-包 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="golang-学习笔记-包" />
-<meta property="og:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语" />
+<meta property="og:description" content="go官方文档 go语言参考 在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-11T16:11:56+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="golang-学习笔记-包"/>
-<meta name="twitter:description" content="在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着电子书重新复习go语"/>
+<meta name="twitter:description" content="go官方文档 go语言参考 在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8C%85/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/map/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E5%8C%85\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  1746 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  2582 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E5%8C%85\/","datePublished": "2022-12-11T16:11:56+08:00","dateModified": "2022-12-11T16:11:56+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-包</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1746 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2582 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -122,26 +122,35 @@
         <li><a href="#工作区结构">工作区结构</a></li>
       </ul>
     </li>
+    <li><a href="#internal包">internal包</a></li>
     <li><a href="#标准库概述">标准库概述</a></li>
     <li><a href="#使用github开发自己的模块并发布">使用github开发自己的模块并发布</a></li>
+    <li><a href="#go-mod包管理">go mod包管理</a>
+      <ul>
+        <li><a href="#历史">历史</a></li>
+        <li><a href="#配置">配置</a></li>
+        <li><a href="#go-mod命令">go mod命令</a></li>
+        <li><a href="#使用replace替换无法直接获取的package">使用replace替换无法直接获取的package</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
+            </div><div class="content" id="content"><p><a href="https://go.dev/doc/" target="_blank" rel="noopener noreffer ">go官方文档</a>
+<a href="https://go.dev/ref/spec" target="_blank" rel="noopener noreffer ">go语言参考</a></p>
+<p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
 <h2 id="包和文件">包和文件</h2>
 <p>Go语言中的包和其他语言的库或模块的概念类似，目的都是为了支持模块化、封装、单独编译和代码重用。</p>
 <p>一个包的源代码保存在一个或多个以.go为文件后缀名的源文件中，通常一个包所在目录路径的后缀是包的导入路径</p>
 <p>每个包都对应一个独立的名字空间</p>
 <p>包还可以让我们通过控制哪些名字是外部可见的来隐藏内部实现信息：大写可见</p>
 <h2 id="包简介">包简介</h2>
-<p>每个包一般都定义了一个不同的名字空间用于它内部的每个标识符的访问。</p>
-<p>每个包还通过控制包内名字的可见性和是否导出来实现封装特性。</p>
 <h2 id="导入路径">导入路径</h2>
 <p>每个包是由一个全局唯一的字符串所标识的导入路径定位（支持相对路径和绝对路径以及网络资源）</p>
-<p>默认的包名就是包导入路径名的最后一段，因此即使两个包的导入路径不同，它们依然可能有一个相同的包名。</p>
+<p>默认的包名就是包导入路径名的最后一段，因此两个包的导入路径不同，可能有一个相同的包名。</p>
 <p>也有三种例外情况：</p>
 <ul>
 <li>main包本身的导入路径是无关紧要的。名字为main的包是给go build（§10.7.3）构建命令一个信息，这个包编译完之后必须调用连接器生成一个可执行程序</li>
-<li>所有以_test为后缀包名的测试外部扩展包都由go test命令独立编译，普通包和测试的外部扩展包是相互独立的。</li>
+<li>以_test为后缀包名的测试外部扩展包都由go test命令独立编译，普通包和测试的外部扩展包是相互独立的。</li>
 <li>一些依赖版本号的管理工具会在导入路径后追加版本号信息，例如&quot;gopkg.in/yaml.v2&quot;。这种情况下包的名字并不包含版本号后缀，而是yaml。</li>
 </ul>
 <h2 id="导入声明">导入声明</h2>
@@ -160,7 +169,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="包的匿名导入">包的匿名导入</h2>
-<p>如果只是导入一个包而并不使用导入的包将会导致一个编译错误。但是有时候我们只是想利用导入包而产生的副作用：它会计算包级变量的初始化表达式和执行导入包的init初始化函数（§2.6.2）。</p>
+<p>如果只是导入一个包而并不使用导入的包将会导致一个编译错误。匿名导入执行包级变量的初始化表达式和执行导入包的init初始化函数。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -197,7 +206,10 @@
     pkg/
         darwin_amd64/
         ...
-</code></pre><p>注意，后面出现go mod 包管理方式。可以不使用GOPATH变量，在任意位置创建项目。</p>
+</code></pre><p>go mod 包管理方式使用同一个GOPATH变量存储下载的包和编译的可执行文件，并支持在任意位置创建项目。</p>
+<h2 id="internal包">internal包</h2>
+<p>Go语言1.4版本后增加了 Internal packages 特征用于控制包的导入，即internal package只能被特定的包导入。</p>
+<p>内部包的规范约定：导入路径包含internal关键字的包，只允许internal的父级目录及父级目录的子包导入，其它包无法导入。</p>
 <h2 id="标准库概述">标准库概述</h2>
 <ul>
 <li>unsafe: 包含了一些打破 Go 语言“类型安全”的命令，一般的程序中不会被使用，可用在 C/C++ 程序的调用中。</li>
@@ -274,6 +286,64 @@
 <p>本地开发多模块项目时，本地依赖的项目需要推送到远程仓库才能得到更新，相当于推送到仓库再下载到pkg里面</p>
 <p>后来有了go mod replace，可以在开发时先将本地依赖修改为本地的包，后面再吧go.sum里面的replace删掉再发布</p>
 <p>go1.18推出了go work，workspace空目录里面新建的模块，然后再workspace目录使用<code>go work init</code>初始化，并使用<code>go work use 模块名</code>添加需要本地开发的多模块，之后加入work的模块都会本地引用，goland也会自动识别。开发和发布可以无缝衔接。</p>
+<h2 id="go-mod包管理">go mod包管理</h2>
+<p><a href="https://www.jb51.net/article/257196.htm" target="_blank" rel="noopener noreffer ">脚本之家</a></p>
+<h3 id="历史">历史</h3>
+<p>使用go path问题</p>
+<ul>
+<li>代码开发必须在go path src目录下，不然，就有问题。</li>
+<li>依赖手动管理</li>
+<li>依赖包没有版本可言</li>
+</ul>
+<p>go path不算包管理工具</p>
+<p>govendor</p>
+<ul>
+<li>解决了包依赖，一个配置文件就管理</li>
+<li>依赖包全都下载到项目vendor下，每个项目都把有一份。</li>
+</ul>
+<p>gomod</p>
+<p>go modules 是 golang 1.11 新加的特性</p>
+<p>模块是相关Go包的集合。modules是源代码交换和版本控制的单元。 go命令直接支持使用modules，包括记录和解析对其他模块的依赖性。modules替换旧的基于GOPATH的方法来指定在给定构建中使用哪些源文件。</p>
+<h3 id="配置">配置</h3>
+<p>GO111MODULE 有三个值：off, on和auto（默认值）。</p>
+<ul>
+<li>GO111MODULE=off，go命令行将不会支持module功能，寻找依赖包的方式将会沿用旧版本那种通过vendor目录或者GOPATH模式来查找。</li>
+<li>GO111MODULE=on，go命令行会使用modules，而一点也不会去GOPATH目录下查找。</li>
+<li>GO111MODULE=auto，默认值，go命令行将会根据当前目录来决定是否启用module功能。这种情况下可以分为两种情形：当前目录在GOPATH/src之外且该目录包含go.mod文件，当前文件在包含go.mod文件的目录下面。</li>
+</ul>
+<p>当modules功能启用时，依赖包的存放位置变更为$GOPATH/pkg，允许同一个package多个版本并存，且多个项目可以共享缓存的 module</p>
+<h3 id="go-mod命令">go mod命令</h3>
+<p>完整见原文或go官网</p>
+<p>常用的有：</p>
+<ul>
+<li>init，初始化项目</li>
+<li>tidy，自动清除不用的依赖添加使用的依赖</li>
+<li>edit，编辑go.mod文件</li>
+</ul>
+<h3 id="使用replace替换无法直接获取的package">使用replace替换无法直接获取的package</h3>
+<p>由于某些已知的原因，并不是所有的package都能成功下载，modules 可以通过在 go.mod 文件中使用 replace 指令替换成其他的库：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#0a0">replace</span> (
+</span></span><span style="display:flex;"><span>    golang.org/x/crypto v0<span style="color:#099">.0.0</span>-<span style="color:#099">20190313024323</span>-a1f597ede03a =&gt; github.com/golang/crypto v0<span style="color:#099">.0.0</span>-<span style="color:#099">20190313024323</span>-a1f597ede03a
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用命令：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go mod edit -replace [old git package]@[version]=[new git package]@[version]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>本地开发库的时候可以使用这个命令将导入包改为本地包，或者用上面说的<a href="#%e4%bd%bf%e7%94%a8github%e5%bc%80%e5%8f%91%e8%87%aa%e5%b7%b1%e7%9a%84%e6%a8%a1%e5%9d%97%e5%b9%b6%e5%8f%91%e5%b8%83" rel="">go work</a></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
