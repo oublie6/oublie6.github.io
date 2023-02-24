@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%92%8C%E5%8C%85\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python教程","wordcount":  1072 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python教程","wordcount":  1114 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%92%8C%E5%8C%85\/","datePublished": "2022-10-12T20:52:24+08:00","dateModified": "2022-10-12T20:52:24+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-虚拟环境和包</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1072 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1114 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -128,7 +128,16 @@
 <h2 id="创建虚拟环境">创建虚拟环境</h2>
 <p>该部分为venv的使用，详见<a href="https://docs.python.org/zh-cn/3.8/tutorial/venv.html#creating-virtual-environments" target="_blank" rel="noopener noreffer ">原文</a>，更推荐使用anaconda来管理多版本的python。</p>
 <h2 id="使用pip管理包">使用pip管理包</h2>
-<p>默认情况下 pip 将从 <a href="https://pypi.org" target="_blank" rel="noopener noreffer ">Python Package Index</a>安装软件包</p>
+<p>未安装pip解决办法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>python -m ensurepip --default-pip
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认情况下 pip 将从 <a href="https://pypi.org" target="_blank" rel="noopener noreffer ">Python Package Index</a>安装软件包</p>
 <p>pip 有许多子命令: &ldquo;install&rdquo;, &ldquo;uninstall&rdquo;, &ldquo;freeze&rdquo; 等等。 （请在 <a href="https://docs.python.org/zh-cn/3.8/installing/index.html#installing-index" target="_blank" rel="noopener noreffer ">安装 Python 模块</a> 指南页查看完整的 pip 文档。）</p>
 <p>pip下载的包位置位于：<code>${PYTHON_HOME}\Lib\site-packages</code>，当安装包出现问题时可以直接去这个文件夹删除包再重新安装，这个目录类似于golang 在 go mod 包管理下的<code>${GOROOT}/pkg/mod</code>目录</p>
 <p>通过指定包的名称来安装最新版本的包：</p>
@@ -147,6 +156,16 @@
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install <span style="color:#a00">requests</span>==2.6.0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://www.jb51.cc/python/3573698.html" target="_blank" rel="noopener noreffer ">编程之家</a></p>
+<p>离线安装本地的whl文件也使用pip install</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install xxx.whl
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>重复运行install命令，pip 会注意到已经安装了所请求的版本并且什么都不做。</p>

@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python-第三方库-Scapy - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="Python-第三方库-Scapy" />
+<meta property="og:description" content="PYPI官网 scapy官网 scapy官网文档 scapy官网api 通用文档 介绍 Scapy 是一个 Python 程序，它使用户能够发送、嗅探、剖析和伪造网络数据包。此" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/scapy/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-20T15:43:28+08:00" />
+<meta property="article:modified_time" content="2023-02-20T15:43:28+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python-第三方库-Scapy"/>
+<meta name="twitter:description" content="PYPI官网 scapy官网 scapy官网文档 scapy官网api 通用文档 介绍 Scapy 是一个 Python 程序，它使用户能够发送、嗅探、剖析和伪造网络数据包。此"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/scapy/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/unicode/" /><link rel="next" href="https://oublie6.github.io/posts/python/%E6%A0%87%E5%87%86%E5%BA%93/os/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python-第三方库-Scapy",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/scapy\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python第三方库","wordcount":  4369 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/scapy\/","datePublished": "2023-02-20T15:43:28+08:00","dateModified": "2023-02-20T15:43:28+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-Scapy</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-20">2023-02-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4369 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#通用文档">通用文档</a>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+        <li><a href="#下载安装">下载安装</a></li>
+        <li><a href="#用法">用法</a>
+          <ul>
+            <li><a href="#启动-scapy">启动 Scapy</a></li>
+            <li><a href="#互动教程">互动教程</a>
+              <ul>
+                <li><a href="#构建一个数据包并使用它">构建一个数据包并使用它</a></li>
+                <li><a href="#堆叠层">堆叠层</a></li>
+                <li><a href="#读取-pcap-文件">读取 PCAP 文件</a></li>
+                <li><a href="#图形转储pdfps">图形转储（PDF、PS）</a></li>
+                <li><a href="#生成数据包集">生成数据包集</a></li>
+                <li><a href="#发送数据包">发送数据包</a></li>
+                <li><a href="#模糊测试">模糊测试</a></li>
+                <li><a href="#注入字节">注入字节</a></li>
+                <li><a href="#发送和接收数据包-sr">发送和接收数据包 (sr)</a></li>
+                <li><a href="#syn-扫描">SYN 扫描</a></li>
+                <li><a href="#tcp-traceroute">TCP Traceroute</a></li>
+                <li><a href="#配置超级套接字">配置超级套接字</a></li>
+                <li><a href="#嗅探">嗅探</a></li>
+                <li><a href="#异步嗅探">异步嗅探</a></li>
+                <li><a href="#高级嗅探---嗅探会话">高级嗅探 - 嗅探会话</a></li>
+                <li><a href="#如何使用-tcpsession-对-tcp-数据包进行碎片整理httpsscapyreadthedocsioenlatestusagehtmlhow-to-use-tcpsession-to-defragment-tcp-packets"><a href="https://scapy.readthedocs.io/en/latest/usage.html#how-to-use-tcpsession-to-defragment-tcp-packets">如何使用 TCPSession 对 TCP 数据包进行碎片整理</a></a></li>
+                <li><a href="#过滤器">过滤器</a></li>
+                <li><a href="#循环发送和接收">循环发送和接收</a></li>
+                <li><a href="#导入和导出数据">导入和导出数据</a></li>
+                <li><a href="#制作表格">制作表格</a></li>
+                <li><a href="#路由">路由</a></li>
+                <li><a href="#matplotlib">Matplotlib</a></li>
+                <li><a href="#tcp-跟踪路由-2">TCP 跟踪路由 (2)</a></li>
+                <li><a href="#无线帧注入httpsscapyreadthedocsioenlatestusagehtmlwireless-frame-injection"><a href="https://scapy.readthedocs.io/en/latest/usage.html#wireless-frame-injection">无线帧注入</a></a></li>
+              </ul>
+            </li>
+            <li><a href="#简单的一行">简单的一行</a>
+              <ul>
+                <li><a href="#ack扫描">ACK扫描</a></li>
+                <li><a href="#xmas扫描">Xmas扫描</a></li>
+                <li><a href="#ip扫描">IP扫描</a></li>
+                <li><a href="#arp-ping">ARP ping</a></li>
+                <li><a href="#icmp-ping">ICMP Ping</a></li>
+                <li><a href="#tcp-ping">TCP Ping</a></li>
+                <li><a href="#udp-ping">UDP Ping</a></li>
+                <li><a href="#dns-请求">DNS 请求</a></li>
+                <li><a href="#经典攻击">经典攻击</a></li>
+                <li><a href="#arp缓存中毒">ARP缓存中毒</a></li>
+                <li><a href="#arp中间人攻击">ARP中间人攻击</a></li>
+                <li><a href="#tcp端口扫描">TCP端口扫描</a></li>
+                <li><a href="#ike-扫描httpsscapyreadthedocsioenlatestusagehtmlike-scanning"><a href="https://scapy.readthedocs.io/en/latest/usage.html#ike-scanning">IKE 扫描</a></a></li>
+                <li><a href="#dns-欺骗llmnr欺骗netbios欺骗httpsscapyreadthedocsioenlatestusagehtmldns-spoof"><a href="https://scapy.readthedocs.io/en/latest/usage.html#dns-spoof">DNS 欺骗，LLMNR欺骗，Netbios欺骗</a></a></li>
+                <li><a href="#节点状态请求从ip获取netbiosname">节点状态请求（从IP获取NetbiosName）</a></li>
+                <li><a href="#高级traceroute">高级traceroute</a></li>
+                <li><a href="#etherleakingicmp-leakingvlan-hoppinghttpsscapyreadthedocsioenlatestusagehtmletherleaking"><a href="https://scapy.readthedocs.io/en/latest/usage.html#etherleaking">Etherleaking，ICMP leaking，VLAN hopping</a></a></li>
+                <li><a href="#无线嗅探">无线嗅探</a></li>
+              </ul>
+            </li>
+            <li><a href="#食谱">食谱</a>
+              <ul>
+                <li><a href="#简单的-arp-监视器httpsscapyreadthedocsioenlatestusagehtmlsimplistic-arp-monitor"><a href="https://scapy.readthedocs.io/en/latest/usage.html#simplistic-arp-monitor">简单的 ARP 监视器</a></a></li>
+                <li><a href="#识别-lan-上的流氓-dhcp-服务器">识别 LAN 上的流氓 DHCP 服务器</a></li>
+                <li><a href="#firewalkingtcp-timestamp-filteringhttpsscapyreadthedocsioenlatestusagehtmlfirewalking"><a href="https://scapy.readthedocs.io/en/latest/usage.html#firewalking">Firewalking，TCP Timestamp Filtering</a></a></li>
+                <li><a href="#使用-wireshark-查看数据包">使用 Wireshark 查看数据包</a></li>
+                <li><a href="#scapy-的性能">Scapy 的性能</a></li>
+                <li><a href="#操作系统指纹识别">操作系统指纹识别</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#高级用法httpsscapyreadthedocsioenlatestadvanced_usagehtml"><a href="https://scapy.readthedocs.io/en/latest/advanced_usage.html">高级用法</a></a></li>
+        <li><a href="#scapy路由">Scapy路由</a>
+          <ul>
+            <li><a href="#列出接口">列出接口</a></li>
+            <li><a href="#ipv4路由">IPv4路由</a></li>
+            <li><a href="#ipv6-路由">IPv6 路由</a></li>
+            <li><a href="#获取路由器ip地址">获取路由器IP地址</a></li>
+            <li><a href="#获取接口的本地ip或ip">获取接口的本地IP或IP</a></li>
+            <li><a href="#获取接口的本地mac或mac">获取接口的本地MAC或MAC</a></li>
+            <li><a href="#通过ip获取mac">通过IP获取MAC</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://pypi.org/" target="_blank" rel="noopener noreffer ">PYPI官网</a></p>
+<p><a href="https://scapy.net/" target="_blank" rel="noopener noreffer ">scapy官网</a></p>
+<p><a href="https://scapy.readthedocs.io/en/latest/introduction.html" target="_blank" rel="noopener noreffer ">scapy官网文档</a></p>
+<p><a href="https://scapy.readthedocs.io/en/latest/api/scapy.html" target="_blank" rel="noopener noreffer ">scapy官网api</a></p>
+<h2 id="通用文档">通用文档</h2>
+<h3 id="介绍">介绍</h3>
+<p>Scapy 是一个 Python 程序，它使用户能够发送、嗅探、剖析和伪造网络数据包。此功能允许构建可以探测、扫描或攻击网络的工具。</p>
+<p>Scapy主要做两件事：发送数据包和接收应答。</p>
+<div id="id-1"><figure><a class="lightgallery" href="https://scapy.readthedocs.io/en/latest/_images/scapy-concept.png" title="https://scapy.readthedocs.io/en/latest/_images/scapy-concept.png" data-thumbnail="https://scapy.readthedocs.io/en/latest/_images/scapy-concept.png" data-sub-html="<h2>运行机制</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://scapy.readthedocs.io/en/latest/_images/scapy-concept.png"
+            data-srcset="https://scapy.readthedocs.io/en/latest/_images/scapy-concept.png, https://scapy.readthedocs.io/en/latest/_images/scapy-concept.png 1.5x, https://scapy.readthedocs.io/en/latest/_images/scapy-concept.png 2x"
+            data-sizes="auto"
+            alt="https://scapy.readthedocs.io/en/latest/_images/scapy-concept.png" />
+    </a><figcaption class="image-caption">运行机制</figcaption>
+    </figure></div>
+<h3 id="下载安装">下载安装</h3>
+<p>|类型|包含|命令|
+|:=:|:=:|:=:|
+|默认|只有 Scapy|<code>pip install scapy</code>|
+|基本的|Scapy 和 IPython。强烈推荐|<code>pip install --pre scapy[basic]</code>|
+|完全的|Scapy 及其所有主要依赖项|<code>pip install --pre scapy[complete]</code>|</p>
+<h3 id="用法">用法</h3>
+<h4 id="启动-scapy">启动 Scapy</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>scapy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="互动教程">互动教程</h4>
+<h5 id="构建一个数据包并使用它">构建一个数据包并使用它</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>a=IP(ttl=<span style="color:#099">10</span>)
+</span></span><span style="display:flex;"><span>a.dst=<span style="color:#a50">&#34;192.168.171.3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># scapy会根据dst来推断你的src</span>
+</span></span><span style="display:flex;"><span>a.src <span style="color:#aaa;font-style:italic"># 打印你的网卡地址192.168.171.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">del</span>(a.ttl) <span style="color:#aaa;font-style:italic"># 删除ttl配置，将使用默认值64</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="堆叠层">堆叠层</h5>
+<p><code>/</code>运算符连接两层</p>
+<div id="id-2"><figure><a class="lightgallery" href="https://scapy.readthedocs.io/en/latest/_images/fieldsmanagement.png" title="https://scapy.readthedocs.io/en/latest/_images/fieldsmanagement.png" data-thumbnail="https://scapy.readthedocs.io/en/latest/_images/fieldsmanagement.png" data-sub-html="<h2>xxx</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://scapy.readthedocs.io/en/latest/_images/fieldsmanagement.png"
+            data-srcset="https://scapy.readthedocs.io/en/latest/_images/fieldsmanagement.png, https://scapy.readthedocs.io/en/latest/_images/fieldsmanagement.png 1.5x, https://scapy.readthedocs.io/en/latest/_images/fieldsmanagement.png 2x"
+            data-sizes="auto"
+            alt="https://scapy.readthedocs.io/en/latest/_images/fieldsmanagement.png" />
+    </a><figcaption class="image-caption">xxx</figcaption>
+    </figure></div>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>IP()/TCP()/<span style="color:#a50">&#34;GET / HTTP/1.0</span><span style="color:#a50">\r\n\r\n</span><span style="color:#a50">&#34;</span>
+</span></span><span style="display:flex;"><span>Ether()/IP()/IP()/UDP()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个数据包都可以构建或分解，<code>_</code>在python解释器中表示上一个输出</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>raw(IP())
+</span></span><span style="display:flex;"><span>IP(_)
+</span></span><span style="display:flex;"><span>a=Ether()/IP(dst=<span style="color:#a50">&#34;www.slashdot.org&#34;</span>)/TCP()/<span style="color:#a50">&#34;GET /index.html HTTP/1.0 </span><span style="color:#a50">\n\n</span><span style="color:#a50">&#34;</span>
+</span></span><span style="display:flex;"><span>b=raw(a)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认会输出所有字段，hide_defaults() 将删除与默认值相同的字段，只看自定义的值</p>
+<h5 id="读取-pcap-文件">读取 PCAP 文件</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>a=rdpcap(<span style="color:#a50">&#34;/spare/captures/isakmp.cap&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="图形转储pdfps">图形转储（PDF、PS）</h5>
+<p>安装 PyX和<a href="https://www.tug.org/texlive/" target="_blank" rel="noopener noreffer ">TexLive</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 打开为临时文件</span>
+</span></span><span style="display:flex;"><span>a.pdfdump(layer_shift=<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 存储绝对路径</span>
+</span></span><span style="display:flex;"><span>a.pdfdump(<span style="color:#a50">r</span><span style="color:#a50">&#34;C:\Users\31316\Desktop\aaa.pdf&#34;</span>,layer_shift=<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 存储相对路径</span>
+</span></span><span style="display:flex;"><span>a.pdfdump(<span style="color:#a50">&#34;aaa.pdf&#34;</span>,layer_shift=<span style="color:#099">1</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>常用命令</p>
+<ul>
+<li>raw(pkt)：组装数据包</li>
+<li>hexdump(pkt)：十六进制转储</li>
+<li>ls(pkt)：字段值列表</li>
+<li>pkt.summary()：一行总结</li>
+<li>pkt.show()：数据包的开发视图</li>
+<li>pkt.show2()：在show的基础上加上校验和</li>
+<li>pkt.sprintf()：用数据包的字段值填充格式字符串</li>
+<li>pkt.decode_payload_as()：更改有效负载的解码方式</li>
+<li>pkt.psdump()：绘制带有解释的 PostScript 图</li>
+<li>pkt.pdfdump()：绘制带有解释的 PDF</li>
+<li>pkt.command()：返回可以生成数据包的 Scapy 命令</li>
+</ul>
+<h5 id="生成数据包集">生成数据包集</h5>
+<p>整个数据包（每一层）的每个字段都可以是一个集合</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 以dst地址前30位标记的网段的所有主机为dst的IP包</span>
+</span></span><span style="display:flex;"><span>a=IP(dst=<span style="color:#a50">&#34;www.slashdot.org/30&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 以ttl值1，2以及5到9的IP包</span>
+</span></span><span style="display:flex;"><span>b=IP(ttl=[<span style="color:#099">1</span>,<span style="color:#099">2</span>,(<span style="color:#099">5</span>,<span style="color:#099">9</span>)])
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 以目的端口为80到443的TCP包</span>
+</span></span><span style="display:flex;"><span>c=TCP(dport=[<span style="color:#099">80</span>,<span style="color:#099">443</span>])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>某些操作（例如从数据包构建字符串）不能对一组数据包进行操作，如果使用则只生成第一个元素的结果</p>
+<p>可以将数据包集转换到PacketList对象中，该对象提供一些列表操作</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>p = PacketList(a)
+</span></span><span style="display:flex;"><span>p = PacketList([p <span style="color:#00a">for</span> p <span style="color:#00a">in</span> a/c])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>常用方法：</p>
+<ul>
+<li>summary()：显示每个数据包的摘要列表</li>
+<li>nsummary()：带有数据包编号</li>
+<li>conversations()：显示对话图</li>
+<li>show()：显示首选表示</li>
+<li>filter()：返回使用 lambda 函数过滤的数据包列表</li>
+<li>hexdump()：返回所有数据包的 hexdump</li>
+<li>hexraw()：返回所有数据包原始层的 hexdump</li>
+<li>padding()：返回带有填充的数据包的 hexdump</li>
+<li>nzpadding()：返回具有非零填充的数据包的 hexdump</li>
+<li>plot()：绘制应用于数据包列表的 lambda 函数</li>
+<li>make_table()：根据 lambda 函数显示表格</li>
+</ul>
+<h5 id="发送数据包">发送数据包</h5>
+<p>send() 发送第 3 层数据包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>send(IP(dst=<span style="color:#a50">&#34;1.2.3.4&#34;</span>)/ICMP())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>sendp() 发送第 2 层数据包，可以配置接口和链路层协议</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sendp(Ether()/IP(dst=<span style="color:#a50">&#34;1.2.3.4&#34;</span>,ttl=(<span style="color:#099">1</span>,<span style="color:#099">4</span>)), iface=<span style="color:#a50">&#34;eth1&#34;</span>)
+</span></span><span style="display:flex;"><span>sendp(<span style="color:#a50">&#34;I&#39;m travelling on Ethernet&#34;</span>, iface=<span style="color:#a50">&#34;eth1&#34;</span>, loop=<span style="color:#099">1</span>, inter=<span style="color:#099">0.2</span>)
+</span></span><span style="display:flex;"><span>sendp(rdpcap(<span style="color:#a50">&#34;/tmp/pcapfile&#34;</span>)) <span style="color:#aaa;font-style:italic"># tcpreplay</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="模糊测试">模糊测试</h5>
+<p>fuzz()生成数据包对象，除了你给出的参数和需要计算的数据包字段如校验和，其他字段都是随机的。</p>
+<p>注意：IP 层 src 和 dst 参数不能使用fuzz()随机而是使用 RandIP()</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>send(IP(dst=RandIP())/fuzz(UDP()/NTP(version=<span style="color:#099">4</span>)),loop=<span style="color:#099">1</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="注入字节">注入字节</h5>
+<p>使用RawVal注入一些不适合该类型的值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pkt = IP(<span style="color:#0aa">len</span>=RawVal(<span style="color:#a50">b</span><span style="color:#a50">&#34;NotAnInteger&#34;</span>), src=<span style="color:#a50">&#34;127.0.0.1&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="发送和接收数据包-sr">发送和接收数据包 (sr)</h5>
+<p>sr() 函数用于发送数据包和接收响应，该函数返回响应数据包及其响应的列表和未响应数据包列表</p>
+<p>sr1() 函数是一种变体，它只返回一个数据包，该数据包响应了发送的数据包（或数据包集），</p>
+<p>以上两个函数的数据包必须是第 3 层数据包（IP、ARP 等）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>p = sr1(IP(dst=<span style="color:#a50">&#34;www.slashdot.org&#34;</span>)/ICMP()/<span style="color:#a50">&#34;XXXXXXXXXXX&#34;</span>)
+</span></span><span style="display:flex;"><span>p.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>srp() 函数对第 2 层数据包（以太网、802.3 等）执行相同的操作。如果没有响应，则在超时后返回 None 。</p>
+<p>DNS 查询</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sr1(IP(dst=<span style="color:#a50">&#34;192.168.5.1&#34;</span>)/UDP()/DNS(rd=<span style="color:#099">1</span>,qd=DNSQR(qname=<span style="color:#a50">&#34;www.slashdot.org&#34;</span>)))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>inter 参数指定两个数据包之间等待的时间间隔（以秒为单位）。retry 指定重新发送未应答的数据包最大次数。timeout参数指定发送完最后一个数据包后等待的时间。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sr(IP(dst=<span style="color:#a50">&#34;172.20.29.5/30&#34;</span>)/TCP(dport=[<span style="color:#099">21</span>,<span style="color:#099">22</span>,<span style="color:#099">23</span>]),inter=<span style="color:#099">0.5</span>,retry=-<span style="color:#099">2</span>,timeout=<span style="color:#099">1</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="syn-扫描">SYN 扫描</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>resp = sr1(IP(dst=<span style="color:#a50">&#34;72.14.207.99&#34;</span>)/TCP(dport=<span style="color:#099">80</span>,flags=<span style="color:#a50">&#34;S&#34;</span>))
+</span></span><span style="display:flex;"><span>ans, unans = sr(IP(dst=<span style="color:#a50">&#34;192.168.1.1&#34;</span>)/TCP(sport=<span style="color:#099">666</span>,dport=(<span style="color:#099">440</span>,<span style="color:#099">443</span>),flags=<span style="color:#a50">&#34;S&#34;</span>))
+</span></span><span style="display:flex;"><span>ans, unans = sr(IP(dst=<span style="color:#a50">&#34;192.168.1.1&#34;</span>)/TCP(sport=RandShort(),dport=[<span style="color:#099">440</span>,<span style="color:#099">441</span>,<span style="color:#099">442</span>,<span style="color:#099">443</span>],flags=<span style="color:#a50">&#34;S&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 快速查看响应</span>
+</span></span><span style="display:flex;"><span>ans.summary()
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 只查看响应的port和flag</span>
+</span></span><span style="display:flex;"><span>ans.summary( <span style="color:#00a">lambda</span> s,r: r.sprintf(<span style="color:#a50">&#34;%TCP.sport% </span><span style="color:#a50">\t</span><span style="color:#a50"> %TCP.flags%&#34;</span>) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用make_table()函数构建一个表来显示有关多个目标的信息</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans.make_table(
+</span></span><span style="display:flex;"><span>   <span style="color:#00a">lambda</span> s,r: (s.dst, s.dport,
+</span></span><span style="display:flex;"><span>   r.sprintf(<span style="color:#a50">&#34;{TCP:%TCP.flags%}{ICMP:%IP.src</span><span style="color:#a50">% - %</span><span style="color:#a50">ICMP.type%}&#34;</span>)))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="tcp-traceroute">TCP Traceroute</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr(IP(dst=target, ttl=(<span style="color:#099">4</span>,<span style="color:#099">25</span>),<span style="color:#0aa">id</span>=RandShort())/TCP(flags=<span style="color:#099">0x2</span>))
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> snd,rcv <span style="color:#00a">in</span> ans:
+</span></span><span style="display:flex;"><span>    <span style="color:#0aa">print</span> snd.ttl, rcv.src, <span style="color:#0aa">isinstance</span>(rcv.payload, TCP)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>TCP traceroute 和其他一些高级函数已经编码：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>&gt;&gt;&gt;lsc()
+</span></span><span style="display:flex;"><span>sr               : Send <span style="color:#00a">and</span> receive packets at layer <span style="color:#099">3</span>
+</span></span><span style="display:flex;"><span>sr1              : Send packets at layer <span style="color:#099">3</span> <span style="color:#00a">and</span> <span style="color:#00a">return</span> only the first answer
+</span></span><span style="display:flex;"><span>srp              : Send <span style="color:#00a">and</span> receive packets at layer <span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>srp1             : Send <span style="color:#00a">and</span> receive packets at layer <span style="color:#099">2</span> <span style="color:#00a">and</span> <span style="color:#00a">return</span> only the first answer
+</span></span><span style="display:flex;"><span>srloop           : Send a packet at layer <span style="color:#099">3</span> <span style="color:#00a">in</span> loop <span style="color:#00a">and</span> <span style="color:#0aa">print</span> the answer each time
+</span></span><span style="display:flex;"><span>srploop          : Send a packet at layer <span style="color:#099">2</span> <span style="color:#00a">in</span> loop <span style="color:#00a">and</span> <span style="color:#0aa">print</span> the answer each time
+</span></span><span style="display:flex;"><span>sniff            : Sniff packets
+</span></span><span style="display:flex;"><span>p0f              : Passive OS fingerprinting: which OS emitted this TCP SYN <span style="color:#f00;background-color:#faa">?</span>
+</span></span><span style="display:flex;"><span>arpcachepoison   : Poison target<span style="color:#a50">&#39;s cache with (your MAC,victim&#39;</span>s IP) couple
+</span></span><span style="display:flex;"><span>send             : Send packets at layer <span style="color:#099">3</span>
+</span></span><span style="display:flex;"><span>sendp            : Send packets at layer <span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>traceroute       : Instant TCP traceroute
+</span></span><span style="display:flex;"><span>arping           : Send ARP who-has requests to determine which hosts are up
+</span></span><span style="display:flex;"><span>ls               : List  available layers, <span style="color:#00a">or</span> infos on a given layer
+</span></span><span style="display:flex;"><span>lsc              : List user commands
+</span></span><span style="display:flex;"><span>queso            : Queso OS fingerprinting
+</span></span><span style="display:flex;"><span>nmap_fp          : nmap fingerprinting
+</span></span><span style="display:flex;"><span>report_ports     : portscan a target <span style="color:#00a">and</span> output a LaTeX table
+</span></span><span style="display:flex;"><span>dyndns_add       : Send a DNS add message to a nameserver <span style="color:#00a">for</span> <span style="color:#a50">&#34;name&#34;</span> to have a new <span style="color:#a50">&#34;rdata&#34;</span>
+</span></span><span style="display:flex;"><span>dyndns_del       : Send a DNS delete message to a nameserver <span style="color:#00a">for</span> <span style="color:#a50">&#34;name&#34;</span>
+</span></span><span style="display:flex;"><span>[...]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="配置超级套接字">配置超级套接字</h5>
+<p>Scapy 中提供原生套接字和libpcap套接字，默认使用原生套接字</p>
+<p>使用libpcap需要在linux上安装libpcap，windows安装Npcap/Winpcap，并手动设置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 将socket指向conf.L2socket和conf.L3socket</span>
+</span></span><span style="display:flex;"><span>conf.use_pcap = <span style="color:#00a">True</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也可以手动设置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>conf.L3socket=L3pcapSocket  <span style="color:#aaa;font-style:italic"># Receive/send L3 packets through libpcap</span>
+</span></span><span style="display:flex;"><span>conf.L2listen=L2ListenTcpdump  <span style="color:#aaa;font-style:italic"># Receive L2 packets through TCPDump</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="嗅探">嗅探</h5>
+<p>捕获一些数据包，甚至克隆 tcpdump 或 tshark</p>
+<p>提供一个接口或一个接口列表来嗅探，接口默认值为conf.iface</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pkts=sniff(<span style="color:#0aa">filter</span>=<span style="color:#a50">&#34;icmp and host 66.35.250.151&#34;</span>, count=<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>pkts=sniff(iface=<span style="color:#a50">&#34;wifi0&#34;</span>, prn=<span style="color:#00a">lambda</span> x: x.summary())
+</span></span><span style="display:flex;"><span>pkts=sniff(iface=<span style="color:#a50">&#34;eth1&#34;</span>, prn=<span style="color:#00a">lambda</span> x: x.show())
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 嗅探多个接口时，数据包的sniffed_on方法检查数据包所在的接口</span>
+</span></span><span style="display:flex;"><span>pkts=sniff(iface=[<span style="color:#a50">&#34;eth1&#34;</span>,<span style="color:#a50">&#34;eth2&#34;</span>], prn=<span style="color:#00a">lambda</span> x: x.sniffed_on+<span style="color:#a50">&#34;: &#34;</span>+x.summary())
+</span></span><span style="display:flex;"><span>pkts = sniff(prn=<span style="color:#00a">lambda</span> x:x.sprintf(<span style="color:#a50">&#34;{IP:%IP.src% -&gt; %IP.dst%</span><span style="color:#a50">\n</span><span style="color:#a50">}{Raw:%Raw.load%</span><span style="color:#a50">\n</span><span style="color:#a50">}&#34;</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>嗅探并进行被动操作系统指纹识别</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>load_module(<span style="color:#a50">&#34;p0f&#34;</span>)
+</span></span><span style="display:flex;"><span>p0f(p)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="异步嗅探">异步嗅探</h5>
+<p>异步嗅探允许以编程方式停止嗅探器而不是使用 ctrl^C，它使用start(),stop()和join()方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>t = AsyncSniffer(iface=<span style="color:#a50">&#34;enp0s3&#34;</span>, count=<span style="color:#099">200</span>)
+</span></span><span style="display:flex;"><span>t.start()
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 直接停止并返回数据包结果</span>
+</span></span><span style="display:flex;"><span>results = t.stop()
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 将异步线程join到主线程，这将会等待子线程运行完毕</span>
+</span></span><span style="display:flex;"><span>t.join()  <span style="color:#aaa;font-style:italic"># this will hold until 200 packets are collected</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 获取异步嗅探的数据包</span>
+</span></span><span style="display:flex;"><span>results = t.results
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 可以使用之前的prn，filter等参数</span>
+</span></span><span style="display:flex;"><span>t = AsyncSniffer(prn=<span style="color:#00a">lambda</span> x: x.summary(), store=<span style="color:#00a">False</span>, <span style="color:#0aa">filter</span>=<span style="color:#a50">&#34;tcp&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="高级嗅探---嗅探会话">高级嗅探 - 嗅探会话</h5>
+<p>sniff()提供会话，允许无缝地剖析数据包流（比如prn参数）。默认会话类型有</p>
+<ul>
+<li>IPSession-&gt;对流中的IP 数据包进行碎片整理，使流可用于prn</li>
+<li>TCPSession-&gt;对某些 TCP 协议进行碎片整理。目前支持：
+<ul>
+<li>HTTP 1.0</li>
+<li>TLS</li>
+<li>Kerberos / DCERPC</li>
+</ul>
+</li>
+<li>TLSSession-&gt;匹配流中的 TLS 会话。</li>
+<li>NetflowSession-&gt;从 NetflowFlowset 信息对象中解析 Netflow V9 数据包</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sniff(session=IPSession, iface=<span style="color:#a50">&#34;eth0&#34;</span>)
+</span></span><span style="display:flex;"><span>sniff(session=TCPSession, prn=<span style="color:#00a">lambda</span> x: x.summary(), store=<span style="color:#00a">False</span>)
+</span></span><span style="display:flex;"><span>sniff(offline=<span style="color:#a50">&#34;file.pcap&#34;</span>, session=NetflowSession)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要实现你自己的 Session 类支持另一个基于流的协议，从scapy/sessions.py复制一个示例并扩展DefaultSession类，并实现on_packet_received函数</p>
+<h5 id="如何使用-tcpsession-对-tcp-数据包进行碎片整理httpsscapyreadthedocsioenlatestusagehtmlhow-to-use-tcpsession-to-defragment-tcp-packets"><a href="https://scapy.readthedocs.io/en/latest/usage.html#how-to-use-tcpsession-to-defragment-tcp-packets" target="_blank" rel="noopener noreffer ">如何使用 TCPSession 对 TCP 数据包进行碎片整理</a></h5>
+<h5 id="过滤器">过滤器</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>a=sniff(<span style="color:#0aa">filter</span>=<span style="color:#a50">&#34;tcp and ( port 25 or port 110 )&#34;</span>,
+</span></span><span style="display:flex;"><span> prn=<span style="color:#00a">lambda</span> x: x.sprintf(<span style="color:#a50">&#34;%IP.src%:%TCP.sport% -&gt; %IP.dst%:%TCP.dport</span><span style="color:#a50">%  %</span><span style="color:#a50">2s,TCP.flags% : %TCP.payload%&#34;</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="循环发送和接收">循环发送和接收</h5>
+<p>发送相同的数据包集以查看是否有变化</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>srloop(IP(dst=<span style="color:#a50">&#34;www.target.com/30&#34;</span>)/TCP())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="导入和导出数据">导入和导出数据</h5>
+<p>PCAP</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 将捕获数据包保存到 pcap 文件</span>
+</span></span><span style="display:flex;"><span>wrpcap(<span style="color:#a50">&#34;temp.cap&#34;</span>,pkts)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 读取pcap文件</span>
+</span></span><span style="display:flex;"><span>pkts = rdpcap(<span style="color:#a50">&#34;temp.cap&#34;</span>)
+</span></span><span style="display:flex;"><span>pkts = sniff(offline=<span style="color:#a50">&#34;temp.cap&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>十六进制转储</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 转换为十六进制</span>
+</span></span><span style="display:flex;"><span>a=hexdump(pkt,<span style="color:#00a">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 从十六进制转换回数据包对象，import_hexcap用于将十六进制转换为二进制串</span>
+</span></span><span style="display:flex;"><span>pkt_hex = Ether(import_hexcap(a))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>二进制串</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 转换为二进制串</span>
+</span></span><span style="display:flex;"><span>pkt_raw = raw(pkt)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 从二进制串转换回数据包对象</span>
+</span></span><span style="display:flex;"><span>new_pkt = Ether(pkt_raw)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Base64</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 转换为base64编码结构</span>
+</span></span><span style="display:flex;"><span>export_object(pkt) <span style="color:#aaa;font-style:italic"># 打印 b&#39;eNprYEouTk4sqNTLSaxMLSrWy8xLLeHyDOAqZEiOT85PSU0u5krNAzG4ChkjRBkYGFwZGEQYGBkYHBhqDi+vZ2BgBOFCpgg2oFxOYklmnmEhc1shS1Aha2shW1Ahu4a7441/ElZhs0/5gUBJIUeSHgDDwCGB&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 从base64转换回数据包对象</span>
+</span></span><span style="display:flex;"><span>new_pkt = import_object(<span style="color:#a50">b</span><span style="color:#a50">&#39;eNprYEouTk4sqNTLSaxMLSrWy8xLLeHyDOAqZEiOT85PSU0u5krNAzG4ChkjRBkYGFwZGEQYGBkYHBhqDi+vZ2BgBOFCpgg2oFxOYklmnmEhc1shS1Aha2shW1Ahu4a7441/ElZhs0/5gUBJIUeSHgDDwCGB&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>会话</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 保存session</span>
+</span></span><span style="display:flex;"><span>save_session(<span style="color:#a50">&#34;session.scapy&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 加载session</span>
+</span></span><span style="display:flex;"><span>load_session(<span style="color:#a50">&#34;session.scapy&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="制作表格">制作表格</h5>
+<p>make_table()，make_lined_table()，make_tex_table()</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr(IP(dst=<span style="color:#a50">&#34;www.test.fr/30&#34;</span>, ttl=(<span style="color:#099">1</span>,<span style="color:#099">6</span>))/TCP())
+</span></span><span style="display:flex;"><span>ans.make_table( <span style="color:#00a">lambda</span> s,r: (s.dst, s.ttl, r.src) )
+</span></span><span style="display:flex;"><span>ans.make_table(<span style="color:#00a">lambda</span> s,r: (s.dst, s.dport, r.sprintf(<span style="color:#a50">&#34;%IP.id%&#34;</span>)))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="路由">路由</h5>
+<p>Scapy 有自己的路由表 conf.route 可以修改它以不同于系统路由表的方式路由数据包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 打印路由表</span>
+</span></span><span style="display:flex;"><span>conf.route
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 删除记录</span>
+</span></span><span style="display:flex;"><span>conf.route.delt(net=<span style="color:#a50">&#34;0.0.0.0/0&#34;</span>,gw=<span style="color:#a50">&#34;192.168.8.1&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 添加记录，已有网段的记录添加无效</span>
+</span></span><span style="display:flex;"><span>conf.route.add(net=<span style="color:#a50">&#34;0.0.0.0/0&#34;</span>,gw=<span style="color:#a50">&#34;192.168.8.254&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 重置路由表（恢复系统默认路由表）</span>
+</span></span><span style="display:flex;"><span>conf.route.resync()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="matplotlib">Matplotlib</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>a, b = sr(IP(dst=<span style="color:#a50">&#34;www.target.com&#34;</span>)/TCP(sport=[RandShort()]*<span style="color:#099">1000</span>))
+</span></span><span style="display:flex;"><span>a.plot(<span style="color:#00a">lambda</span> x:x[<span style="color:#099">1</span>].id)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="tcp-跟踪路由-2">TCP 跟踪路由 (2)</h5>
+<p>并行发送包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>result, unans=traceroute([<span style="color:#a50">&#34;www.yahoo.com&#34;</span>,<span style="color:#a50">&#34;www.altavista.com&#34;</span>,<span style="color:#a50">&#34;www.wisenut.com&#34;</span>,<span style="color:#a50">&#34;www.copernic.com&#34;</span>],maxttl=<span style="color:#099">20</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果对象可以相加</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>r2, unans = traceroute([<span style="color:#a50">&#34;www.voila.com&#34;</span>],maxttl=<span style="color:#099">20</span>)
+</span></span><span style="display:flex;"><span>r3=result+r2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>traceroute对象可以制作有向图，根据AS进行聚类，需要安装graphviz</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>res.graph()                          <span style="color:#aaa;font-style:italic"># piped to ImageMagick&#39;s display program. Image below.</span>
+</span></span><span style="display:flex;"><span>res.graph(<span style="color:#0aa">type</span>=<span style="color:#a50">&#34;ps&#34;</span>,target=<span style="color:#a50">&#34;| lp&#34;</span>)   <span style="color:#aaa;font-style:italic"># piped to postscript printer</span>
+</span></span><span style="display:flex;"><span>res.graph(target=<span style="color:#a50">&#34;&gt; /tmp/graph.svg&#34;</span>) <span style="color:#aaa;font-style:italic"># saved to file</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装了 VPython们可以对traceroute的结果对象进行3D表示</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>res.trace3D()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="无线帧注入httpsscapyreadthedocsioenlatestusagehtmlwireless-frame-injection"><a href="https://scapy.readthedocs.io/en/latest/usage.html#wireless-frame-injection" target="_blank" rel="noopener noreffer ">无线帧注入</a></h5>
+<h4 id="简单的一行">简单的一行</h4>
+<h5 id="ack扫描">ACK扫描</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr(IP(dst=<span style="color:#a50">&#34;www.slashdot.org&#34;</span>)/TCP(dport=[<span style="color:#099">80</span>,<span style="color:#099">666</span>],flags=<span style="color:#a50">&#34;A&#34;</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="xmas扫描">Xmas扫描</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr(IP(dst=<span style="color:#a50">&#34;192.168.1.1&#34;</span>)/TCP(dport=<span style="color:#099">666</span>,flags=<span style="color:#a50">&#34;FPU&#34;</span>) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="ip扫描">IP扫描</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr(IP(dst=<span style="color:#a50">&#34;192.168.1.1&#34;</span>,proto=(<span style="color:#099">0</span>,<span style="color:#099">255</span>))/<span style="color:#a50">&#34;SCAPY&#34;</span>,retry=<span style="color:#099">2</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="arp-ping">ARP ping</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = srp(Ether(dst=<span style="color:#a50">&#34;ff:ff:ff:ff:ff:ff&#34;</span>)/ARP(pdst=<span style="color:#a50">&#34;192.168.1.0/24&#34;</span>), timeout=<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>ans.summary(<span style="color:#00a">lambda</span> s,r: r.sprintf(<span style="color:#a50">&#34;</span><span style="color:#a50">%E</span><span style="color:#a50">ther.src</span><span style="color:#a50">% %</span><span style="color:#a50">ARP.psrc%&#34;</span>) )
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 内置命令arping等价于上面两个命令</span>
+</span></span><span style="display:flex;"><span>arping(<span style="color:#a50">&#34;192.168.1.0/24&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="icmp-ping">ICMP Ping</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr(IP(dst=<span style="color:#a50">&#34;192.168.1.0/24&#34;</span>)/ICMP(), timeout=<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>ans.summary(<span style="color:#00a">lambda</span> s,r: r.sprintf(<span style="color:#a50">&#34;%IP.src</span><span style="color:#a50">% i</span><span style="color:#a50">s alive&#34;</span>) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="tcp-ping">TCP Ping</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr( IP(dst=<span style="color:#a50">&#34;192.168.1.0/24&#34;</span>)/TCP(dport=<span style="color:#099">80</span>,flags=<span style="color:#a50">&#34;S&#34;</span>) )
+</span></span><span style="display:flex;"><span>ans.summary( <span style="color:#00a">lambda</span> s,r : r.sprintf(<span style="color:#a50">&#34;%IP.src</span><span style="color:#a50">% i</span><span style="color:#a50">s alive&#34;</span>) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="udp-ping">UDP Ping</h5>
+<p>UDP Ping 总是会产生来自实时主机的 ICMP 端口无法访问错误</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr( IP(dst=<span style="color:#a50">&#34;192.168.*.1-10&#34;</span>)/UDP(dport=<span style="color:#099">0</span>) )
+</span></span><span style="display:flex;"><span>ans.summary( <span style="color:#00a">lambda</span> s,r : r.sprintf(<span style="color:#a50">&#34;%IP.src</span><span style="color:#a50">% i</span><span style="color:#a50">s alive&#34;</span>) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="dns-请求">DNS 请求</h5>
+<p>IPv4 (A) 请求</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans = sr1(IP(dst=<span style="color:#a50">&#34;8.8.8.8&#34;</span>)/UDP(sport=RandShort(), dport=<span style="color:#099">53</span>)/DNS(rd=<span style="color:#099">1</span>,qd=DNSQR(qname=<span style="color:#a50">&#34;secdev.org&#34;</span>,qtype=<span style="color:#a50">&#34;A&#34;</span>)),timeout=<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>ans.an.rdata
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>SOA 请求</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans = sr1(IP(dst=<span style="color:#a50">&#34;8.8.8.8&#34;</span>)/UDP(sport=RandShort(), dport=<span style="color:#099">53</span>)/DNS(rd=<span style="color:#099">1</span>,qd=DNSQR(qname=<span style="color:#a50">&#34;secdev.org&#34;</span>,qtype=<span style="color:#a50">&#34;SOA&#34;</span>)),timeout=<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>ans.ns.mname
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>MX 请求</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans = sr1(IP(dst=<span style="color:#a50">&#34;8.8.8.8&#34;</span>)/UDP(sport=RandShort(), dport=<span style="color:#099">53</span>)/DNS(rd=<span style="color:#099">1</span>,qd=DNSQR(qname=<span style="color:#a50">&#34;google.com&#34;</span>,qtype=<span style="color:#a50">&#34;MX&#34;</span>)),timeout=<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>results = [x.exchange <span style="color:#00a">for</span> x <span style="color:#00a">in</span> ans.an.iterpayloads()]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="经典攻击">经典攻击</h5>
+<p>格式错误的数据包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>send(IP(dst=<span style="color:#a50">&#34;10.1.1.5&#34;</span>, ihl=<span style="color:#099">2</span>, version=<span style="color:#099">3</span>)/ICMP())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ping of death (Muuahahah)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>send( fragment(IP(dst=<span style="color:#a50">&#34;10.0.0.5&#34;</span>)/ICMP()/(<span style="color:#a50">&#34;X&#34;</span>*<span style="color:#099">60000</span>)) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Nestea attack</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>send(IP(dst=target, <span style="color:#0aa">id</span>=<span style="color:#099">42</span>, flags=<span style="color:#a50">&#34;MF&#34;</span>)/UDP()/(<span style="color:#a50">&#34;X&#34;</span>*<span style="color:#099">10</span>))
+</span></span><span style="display:flex;"><span>send(IP(dst=target, <span style="color:#0aa">id</span>=<span style="color:#099">42</span>, frag=<span style="color:#099">48</span>)/(<span style="color:#a50">&#34;X&#34;</span>*<span style="color:#099">116</span>))
+</span></span><span style="display:flex;"><span>send(IP(dst=target, <span style="color:#0aa">id</span>=<span style="color:#099">42</span>, flags=<span style="color:#a50">&#34;MF&#34;</span>)/UDP()/(<span style="color:#a50">&#34;X&#34;</span>*<span style="color:#099">224</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Land Attack（专为 Microsoft Windows 设计）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>send(IP(src=target,dst=target)/TCP(sport=<span style="color:#099">135</span>,dport=<span style="color:#099">135</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="arp缓存中毒">ARP缓存中毒</h5>
+<p>通过 VLAN 跳跃攻击使其 ARP 缓存中毒，从而阻止客户端加入网关</p>
+<p>经典 ARP 缓存中毒</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>send( Ether(dst=clientMAC)/ARP(op=<span style="color:#a50">&#34;who-has&#34;</span>, psrc=gateway, pdst=client),
+</span></span><span style="display:flex;"><span>      inter=RandNum(<span style="color:#099">10</span>,<span style="color:#099">40</span>), loop=<span style="color:#099">1</span> )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>双802.1q封装的ARP缓存中毒</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>send( Ether(dst=clientMAC)/Dot1Q(vlan=<span style="color:#099">1</span>)/Dot1Q(vlan=<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>      /ARP(op=<span style="color:#a50">&#34;who-has&#34;</span>, psrc=gateway, pdst=client),
+</span></span><span style="display:flex;"><span>      inter=RandNum(<span style="color:#099">10</span>,<span style="color:#099">40</span>), loop=<span style="color:#099">1</span> )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="arp中间人攻击">ARP中间人攻击</h5>
+<p>设置本机自动转发数据包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sysctl net.ipv4.conf.virbr0.send_redirects=<span style="color:#099">0</span>  <span style="color:#aaa;font-style:italic"># virbr0 = interface</span>
+</span></span><span style="display:flex;"><span>sysctl net.ipv4.ip_forward=<span style="color:#099">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>arp_mitm(<span style="color:#a50">&#34;192.168.122.156&#34;</span>, <span style="color:#a50">&#34;192.168.122.17&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="tcp端口扫描">TCP端口扫描</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>es, unans = sr( IP(dst=<span style="color:#a50">&#34;target&#34;</span>)/TCP(flags=<span style="color:#a50">&#34;S&#34;</span>, dport=(<span style="color:#099">1</span>,<span style="color:#099">1024</span>)) )
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 可视化结果</span>
+</span></span><span style="display:flex;"><span>res.nsummary( lfilter=<span style="color:#00a">lambda</span> s,r: (r.haslayer(TCP) <span style="color:#00a">and</span> (r.getlayer(TCP).flags &amp; <span style="color:#099">2</span>)) )
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="ike-扫描httpsscapyreadthedocsioenlatestusagehtmlike-scanning"><a href="https://scapy.readthedocs.io/en/latest/usage.html#ike-scanning" target="_blank" rel="noopener noreffer ">IKE 扫描</a></h5>
+<h5 id="dns-欺骗llmnr欺骗netbios欺骗httpsscapyreadthedocsioenlatestusagehtmldns-spoof"><a href="https://scapy.readthedocs.io/en/latest/usage.html#dns-spoof" target="_blank" rel="noopener noreffer ">DNS 欺骗，LLMNR欺骗，Netbios欺骗</a></h5>
+<h5 id="节点状态请求从ip获取netbiosname">节点状态请求（从IP获取NetbiosName）</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sr1(IP(dst=<span style="color:#a50">&#34;192.168.122.17&#34;</span>)/UDP()/NBNSHeader()/NBNSNodeStatusRequest())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://stackoverflow.com/questions/70056880/is-there-a-way-to-get-hostnames-with-scapy-in-python" target="_blank" rel="noopener noreffer ">stackoverflow </a></p>
+<p>scapy不提供通过ip查主机名的方法，因为socket标准库已经实现了这个方法，所以这里建议使用socket库的gethostbyaddr(ip)函数来查询ip对应的主机名</p>
+<h5 id="高级traceroute">高级traceroute</h5>
+<p>TCP SYN traceroute</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = sr(IP(dst=<span style="color:#a50">&#34;4.2.2.1&#34;</span>,ttl=(<span style="color:#099">1</span>,<span style="color:#099">10</span>))/TCP(dport=<span style="color:#099">53</span>,flags=<span style="color:#a50">&#34;S&#34;</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>UDP traceroute</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>res, unans = sr(IP(dst=<span style="color:#a50">&#34;target&#34;</span>, ttl=(<span style="color:#099">1</span>,<span style="color:#099">20</span>))/UDP()/DNS(qd=DNSQR(qname=<span style="color:#a50">&#34;test.com&#34;</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>DNS traceroute</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ans, unans = traceroute(<span style="color:#a50">&#34;4.2.2.1&#34;</span>,l4=UDP(sport=RandShort())/DNS(qd=DNSQR(qname=<span style="color:#a50">&#34;thesprawl.org&#34;</span>)))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="etherleakingicmp-leakingvlan-hoppinghttpsscapyreadthedocsioenlatestusagehtmletherleaking"><a href="https://scapy.readthedocs.io/en/latest/usage.html#etherleaking" target="_blank" rel="noopener noreffer ">Etherleaking，ICMP leaking，VLAN hopping</a></h5>
+<h5 id="无线嗅探">无线嗅探</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sniff(iface=<span style="color:#a50">&#34;ath0&#34;</span>, prn=<span style="color:#00a">lambda</span> x:x.sprintf(<span style="color:#a50">&#34;{Dot11Beacon:%Dot11.addr3%</span><span style="color:#a50">\t</span><span style="color:#a50">%Dot11Beacon.info%</span><span style="color:#a50">\t</span><span style="color:#a50">%PrismHeader.channel%</span><span style="color:#a50">\t</span><span style="color:#a50">%Dot11Beacon.cap%}&#34;</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="食谱">食谱</h4>
+<h5 id="简单的-arp-监视器httpsscapyreadthedocsioenlatestusagehtmlsimplistic-arp-monitor"><a href="https://scapy.readthedocs.io/en/latest/usage.html#simplistic-arp-monitor" target="_blank" rel="noopener noreffer ">简单的 ARP 监视器</a></h5>
+<h5 id="识别-lan-上的流氓-dhcp-服务器">识别 LAN 上的流氓 DHCP 服务器</h5>
+<p>发送DHCP发现请求并分析回复，如果有多个回复则说明有多个DHCP服务器</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>conf.checkIPaddr = <span style="color:#00a">False</span>
+</span></span><span style="display:flex;"><span>fam,hw = get_if_raw_hwaddr(conf.iface)
+</span></span><span style="display:flex;"><span>dhcp_discover = Ether(dst=<span style="color:#a50">&#34;ff:ff:ff:ff:ff:ff&#34;</span>)/IP(src=<span style="color:#a50">&#34;0.0.0.0&#34;</span>,dst=<span style="color:#a50">&#34;255.255.255.255&#34;</span>)/UDP(sport=<span style="color:#099">68</span>,dport=<span style="color:#099">67</span>)/BOOTP(chaddr=hw)/DHCP(options=[(<span style="color:#a50">&#34;message-type&#34;</span>,<span style="color:#a50">&#34;discover&#34;</span>),<span style="color:#a50">&#34;end&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># multi=True让 Scapy 在收到第一个响应后等待更多的应答包</span>
+</span></span><span style="display:flex;"><span>ans, unans = srp(dhcp_discover, multi=<span style="color:#00a">True</span>)      <span style="color:#aaa;font-style:italic"># Press CTRL-C after several seconds</span>
+</span></span><span style="display:flex;"><span>ans.summary()
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> p <span style="color:#00a">in</span> ans: <span style="color:#0aa">print</span> p[<span style="color:#099">1</span>][Ether].src, p[<span style="color:#099">1</span>][IP].src
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="firewalkingtcp-timestamp-filteringhttpsscapyreadthedocsioenlatestusagehtmlfirewalking"><a href="https://scapy.readthedocs.io/en/latest/usage.html#firewalking" target="_blank" rel="noopener noreffer ">Firewalking，TCP Timestamp Filtering</a></h5>
+<h5 id="使用-wireshark-查看数据包">使用 Wireshark 查看数据包</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>wireshark(packets)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="scapy-的性能">Scapy 的性能</h5>
+<ul>
+<li>使用 BPF 过滤器：即filter参数，使用操作系统过滤，提升解析性能</li>
+<li>禁用你不使用的层：不使用的层不解析会被解释为Raw，提升解析性能</li>
+</ul>
+<h5 id="操作系统指纹识别">操作系统指纹识别</h5>
+<p>Scapy 支持 Nmap 指纹识别</p>
+<p>先安装nmap，引入nmap模块，并设置nmap位置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>load_module(<span style="color:#a50">&#34;nmap&#34;</span>)
+</span></span><span style="display:flex;"><span>conf.nmap_base
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 识别操作系统</span>
+</span></span><span style="display:flex;"><span>nmap_fp(<span style="color:#a50">&#34;192.168.1.1&#34;</span>,oport=<span style="color:#099">443</span>,cport=<span style="color:#099">1</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>p0f</p>
+<p>可以使用p0f它猜测操作系统名称和版本(只使用 SYN 数据库)</p>
+<p>首先确保 p0f 数据库存在于指定的路径中</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>conf.p0f_base
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从单个捕获数据包猜测操作系统</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sniff(prn=prnp0f)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="高级用法httpsscapyreadthedocsioenlatestadvanced_usagehtml"><a href="https://scapy.readthedocs.io/en/latest/advanced_usage.html" target="_blank" rel="noopener noreffer ">高级用法</a></h3>
+<h3 id="scapy路由">Scapy路由</h3>
+<h4 id="列出接口">列出接口</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>get_if_list()
+</span></span><span style="display:flex;"><span>conf.ifaces
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 获取接口对象</span>
+</span></span><span style="display:flex;"><span>conf.ifaces.dev_from_index(n)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="ipv4路由">IPv4路由</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>conf.route
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 获取某ip的路由记录，返回(interface, outgoing_ip, gateway)</span>
+</span></span><span style="display:flex;"><span>conf.route.route(<span style="color:#a50">&#34;192.168.xxx.xxx&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="ipv6-路由">IPv6 路由</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>conf.route6
+</span></span><span style="display:flex;"><span>conf.route6.route(<span style="color:#a50">&#34;ipv6地址&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="获取路由器ip地址">获取路由器IP地址</h4>
+<p>即route的第三个返回值wg</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>gw = conf.route.route(<span style="color:#a50">&#34;0.0.0.0&#34;</span>)[<span style="color:#099">2</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="获取接口的本地ip或ip">获取接口的本地IP或IP</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ip = get_if_addr(conf.iface)  <span style="color:#aaa;font-style:italic"># 默认接口</span>
+</span></span><span style="display:flex;"><span>ip = get_if_addr(<span style="color:#a50">&#34;eth0&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="获取接口的本地mac或mac">获取接口的本地MAC或MAC</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>mac = get_if_hwaddr(conf.iface)  <span style="color:#aaa;font-style:italic"># 默认接口</span>
+</span></span><span style="display:flex;"><span>mac = get_if_hwaddr(<span style="color:#a50">&#34;eth0&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="通过ip获取mac">通过IP获取MAC</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>mac = getmacbyip(<span style="color:#a50">&#34;10.0.0.1&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-02-20
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/scapy/" data-title="Python-第三方库-Scapy" data-hashtags="Python第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/scapy/" data-hashtag="Python第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/scapy/" data-title="Python-第三方库-Scapy"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/scapy/" data-title="Python-第三方库-Scapy"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/scapy/" data-title="Python-第三方库-Scapy"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">Python第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/unicode/" class="prev" rel="prev" title="go标准库-Unicode"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>go标准库-Unicode</a>
+            <a href="/posts/python/%E6%A0%87%E5%87%86%E5%BA%93/os/" class="next" rel="next" title="Python-标准库-Os">Python-标准库-Os<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/86ccfb.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-02-20T15:43:28+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"Python-第三方库-Scapy"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

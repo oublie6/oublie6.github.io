@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  1012 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  1124 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93\/","datePublished": "2022-12-28T11:49:51+08:00","dateModified": "2022-12-28T11:49:51+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-个人总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-28">2022-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1012 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-28">2022-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1124 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -116,6 +116,7 @@
     <li><a href="#二维遍历复用逻辑代码">二维遍历复用逻辑代码</a></li>
     <li><a href="#减少逻辑复杂度">减少逻辑复杂度</a></li>
     <li><a href="#尽量使用range写法">尽量使用range写法</a></li>
+    <li><a href="#对不存在的key查询">对不存在的key查询</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>使用golang做题与使用其他语言做题有一些不同，golang原生的语法中的slice和map支持很多数据结构的简单构造如队列或栈，但是golang并没有提供C++ STL、Java Collection这样丰富的数据结构库，go标准库的container库仅提供了list，ring和heap（优先队列，必须掌握）。这三个库可以实现所有的数据结构但是过于复杂的数据结构实现过程会花很多时间。对于复杂的数据结构可以使用第三方库GODS来提高做题效率，比如红黑树。</p>
@@ -262,7 +263,23 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>for 三段式主要用于从中间开始遍历或者从后面往前遍历的过程，range语法只能进行顺序遍历。</p>
-</div><div class="post-footer" id="post-footer">
+<h2 id="对不存在的key查询">对不存在的key查询</h2>
+<p>当map的key不存在的时候，它的返回值为这个类型的默认返回值。</p>
+<p>由此可以引申出，对于查询kv对后在原来的基础上进行修改的map，可以不判断是否存在直接赋值</p>
+<p>比如统计一串数字中每种数字的个数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>m:=<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]<span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> _,v := <span style="color:#00a">range</span> nums{m[v]++}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
