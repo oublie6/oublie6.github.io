@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "linux","wordcount":  1424 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "linux","wordcount":  2332 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-02-18T13:15:22+08:00","dateModified": "2023-02-18T13:15:22+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-linux-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1424 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2332 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -117,6 +117,21 @@
     <li><a href="#wireshark">wireshark</a></li>
     <li><a href="#图形化界面">图形化界面</a></li>
     <li><a href="#开机启动脚本">开机启动脚本</a></li>
+    <li><a href="#ubuntu卸载firefox安装chrome">ubuntu卸载firefox，安装chrome</a></li>
+    <li><a href="#io模型">IO模型</a>
+      <ul>
+        <li><a href="#阻塞与非阻塞">阻塞与非阻塞</a></li>
+        <li><a href="#同步与异步">同步与异步</a></li>
+        <li><a href="#5种io模型">5种IO模型</a></li>
+      </ul>
+    </li>
+    <li><a href="#selectpoll和epoll">select,poll和epoll</a></li>
+    <li><a href="#配置代理">配置代理</a>
+      <ul>
+        <li><a href="#ubuntu配置代理">ubuntu配置代理</a></li>
+        <li><a href="#kali">kali</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://help.ubuntu.com/" target="_blank" rel="noopener noreffer ">ubuntu官方文档</a></p>
@@ -294,6 +309,193 @@
 </span></span><span style="display:flex;"><span>systemctl <span style="color:#0aa">enable</span> auto_run_script.service
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h2 id="ubuntu卸载firefox安装chrome">ubuntu卸载firefox，安装chrome</h2>
+<p><a href="https://blog.csdn.net/u012514113/article/details/127206845" target="_blank" rel="noopener noreffer ">CSDN broadview_java</a></p>
+<p>卸载firefox</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 检查firefox安装的相关软件</span>
+</span></span><span style="display:flex;"><span>dpkg --get-selections |grep firefox
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 卸载相关的软件，remove会保留配置文件，purge不保留配置文件</span>
+</span></span><span style="display:flex;"><span>sudo apt-get purge firefox firefox-locale-en firefox-locale-zh-hans
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装chrome</p>
+<p>去官网下载或者直接wget deb包，然后dpkg -i安装</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+</span></span><span style="display:flex;"><span>dpkg -i google-chrome-stable_current_amd64.deb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>chrome不支持自动更新，如果要升级则把安装chrome步骤再做一遍</p>
+<h2 id="io模型">IO模型</h2>
+<p><a href="https://blog.csdn.net/qq_44836676/article/details/124672227" target="_blank" rel="noopener noreffer ">CSDN #时代不杀菜鸡#</a></p>
+<h3 id="阻塞与非阻塞">阻塞与非阻塞</h3>
+<p>阻塞：调用方等待被调用方响应</p>
+<p>非阻塞：不等待</p>
+<h3 id="同步与异步">同步与异步</h3>
+<p>同步：被调用方处理完后才响应</p>
+<p>异步：被调用方收到请求后先返回已收到，处理完后通过回调方式通知调用方</p>
+<h3 id="5种io模型">5种IO模型</h3>
+<p>阻塞同步IO</p>
+<div id="id-2"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/694be39c2749f98700567080f2b56154.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/694be39c2749f98700567080f2b56154.png, https://img-blog.csdnimg.cn/img_convert/694be39c2749f98700567080f2b56154.png 1.5x, https://img-blog.csdnimg.cn/img_convert/694be39c2749f98700567080f2b56154.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/694be39c2749f98700567080f2b56154.png"
+        title="https://img-blog.csdnimg.cn/img_convert/694be39c2749f98700567080f2b56154.png" /></div>
+<p>非阻塞同步IO：轮询</p>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/7848d265b695b27b3175be6ffe1ff381.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/7848d265b695b27b3175be6ffe1ff381.png, https://img-blog.csdnimg.cn/img_convert/7848d265b695b27b3175be6ffe1ff381.png 1.5x, https://img-blog.csdnimg.cn/img_convert/7848d265b695b27b3175be6ffe1ff381.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/7848d265b695b27b3175be6ffe1ff381.png"
+        title="https://img-blog.csdnimg.cn/img_convert/7848d265b695b27b3175be6ffe1ff381.png" /></div>
+<p>（阻塞同步）IO复用</p>
+<div id="id-4"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/52b0f3b4ad496de74429c33850df28a2.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/52b0f3b4ad496de74429c33850df28a2.png, https://img-blog.csdnimg.cn/img_convert/52b0f3b4ad496de74429c33850df28a2.png 1.5x, https://img-blog.csdnimg.cn/img_convert/52b0f3b4ad496de74429c33850df28a2.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/52b0f3b4ad496de74429c33850df28a2.png"
+        title="https://img-blog.csdnimg.cn/img_convert/52b0f3b4ad496de74429c33850df28a2.png" /></div>
+<p>（非阻塞异步）信号驱动IO</p>
+<div id="id-5"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/20200605193656805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjAwNjg4Mg==,size_16,color_FFFFFF,t_70"
+        data-srcset="https://img-blog.csdnimg.cn/20200605193656805.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjAwNjg4Mg==%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200605193656805.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjAwNjg4Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200605193656805.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjAwNjg4Mg==%2csize_16%2ccolor_FFFFFF%2ct_70 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/20200605193656805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjAwNjg4Mg==,size_16,color_FFFFFF,t_70"
+        title="https://img-blog.csdnimg.cn/20200605193656805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjAwNjg4Mg==,size_16,color_FFFFFF,t_70" /></div>
+<p>（非阻塞异步）异步IO</p>
+<div id="id-6"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/787ff6e538868898f53a27e55bc30c62.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/787ff6e538868898f53a27e55bc30c62.png, https://img-blog.csdnimg.cn/img_convert/787ff6e538868898f53a27e55bc30c62.png 1.5x, https://img-blog.csdnimg.cn/img_convert/787ff6e538868898f53a27e55bc30c62.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/787ff6e538868898f53a27e55bc30c62.png"
+        title="https://img-blog.csdnimg.cn/img_convert/787ff6e538868898f53a27e55bc30c62.png" /></div>
+<h2 id="selectpoll和epoll">select,poll和epoll</h2>
+<p><a href="https://www.jianshu.com/p/722819425dbd/" target="_blank" rel="noopener noreffer ">简书 VictorHong</a></p>
+<p>IO多路复用的三种方式</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">select</th>
+<th style="text-align:center">poll</th>
+<th style="text-align:center">epoll</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">操作方式</td>
+<td style="text-align:center">遍历</td>
+<td style="text-align:center">遍历</td>
+<td style="text-align:center">回调</td>
+</tr>
+<tr>
+<td style="text-align:center">底层实现</td>
+<td style="text-align:center">数组</td>
+<td style="text-align:center">链表</td>
+<td style="text-align:center">哈希表</td>
+</tr>
+<tr>
+<td style="text-align:center">IO效率</td>
+<td style="text-align:center">每次调用都进行线性遍历，时间复杂度为O(n)</td>
+<td style="text-align:center">每次调用都进行线性遍历，时间复杂度为O(n)</td>
+<td style="text-align:center">事件通知方式，每当fd就绪，系统注册的回调函数就会被调用，将就绪fd放到rdllist里面。时间复杂度O(1)</td>
+</tr>
+<tr>
+<td style="text-align:center">最大连接数</td>
+<td style="text-align:center">1024（x86）或 2048（x64）</td>
+<td style="text-align:center">无上限</td>
+<td style="text-align:center">无上限</td>
+</tr>
+<tr>
+<td style="text-align:center">fd拷贝</td>
+<td style="text-align:center">每次调用select，都需要把fd集合从用户态拷贝到内核态</td>
+<td style="text-align:center">每次调用poll，都需要把fd集合从用户态拷贝到内核态</td>
+<td style="text-align:center">调用epoll_ctl时拷贝进内核并保存，之后每次epoll_wait不拷贝</td>
+</tr>
+</tbody>
+</table>
+<h2 id="配置代理">配置代理</h2>
+<p><a href="https://linux265.com/course/introductory%20linux%20tutorials.html" target="_blank" rel="noopener noreffer ">linux265</a></p>
+<p>分为用户代理和所有用户的代理配置</p>
+<p>用户代理通常是在用户主目录里面添加配置文件，所有用户代理通常是在etc目录里面修改配置文件</p>
+<h3 id="ubuntu配置代理">ubuntu配置代理</h3>
+<p>.bashrc</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">charles_socks_port</span>=<span style="color:#a50">&#34;8888&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">charles_http_port</span>=<span style="color:#a50">&#34;8889&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">charles_https_port</span>=<span style="color:#a50">&#34;8889&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">v2ray_socks_port</span>=<span style="color:#a50">&#34;10808&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">v2ray_http_port</span>=<span style="color:#a50">&#34;10809&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">v2ray_https_port</span>=<span style="color:#a50">&#34;10809&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">http_proxy</span>=<span style="color:#a50">&#34;http://</span><span style="color:#a50">${</span><span style="color:#a00">proxy_addr</span><span style="color:#a50">}</span><span style="color:#a50">:</span><span style="color:#a50">${</span><span style="color:#a00">charles_http_port</span><span style="color:#a50">}</span><span style="color:#a50">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">https_proxy</span>=<span style="color:#a50">&#34;http://</span><span style="color:#a50">${</span><span style="color:#a00">proxy_addr</span><span style="color:#a50">}</span><span style="color:#a50">:</span><span style="color:#a50">${</span><span style="color:#a00">charles_https_port</span><span style="color:#a50">}</span><span style="color:#a50">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">all_proxy</span>=<span style="color:#a50">&#34;http://</span><span style="color:#a50">${</span><span style="color:#a00">proxy_addr</span><span style="color:#a50">}</span><span style="color:#a50">:</span><span style="color:#a50">${</span><span style="color:#a00">charles_socks_port</span><span style="color:#a50">}</span><span style="color:#a50">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另外安装完证书后，系统设置里面也要使用你宿主机的地址和代理端口号</p>
+<p>注意主机防火墙的问题</p>
+<p>对于连接到charles的虚拟机还需要安装证书</p>
+<p><a href="https://blog.csdn.net/weixin_54156407/article/details/120294029" target="_blank" rel="noopener noreffer ">CSDN 滋滋ɷ</a></p>
+<p>当配置的代理服务器需要身份验证时配置为以下形式：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#0aa">export</span> <span style="color:#a00">HTTPS_PROXY</span>=<span style="color:#a50">&#34;http://user:password@host&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="kali">kali</h3>
+<p>kali使用proxychains4或者proxychains，仅需要配置proxychains4.conf即可。</p>
+<p>使用代理运行程序时将命令放到proxychains4后面即可。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>proxychains msfconsole
+</span></span></code></pre></td></tr></table>
+</div>
 </div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -375,5 +577,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d8d1a4.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-02-18T13:15:22+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"操作系统-linux-个人笔记"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/df182a.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-02-18T13:15:22+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"操作系统-linux-个人笔记"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
