@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E4%BA%91%E5%8E%9F%E7%94%9F\/docker\/%E6%A6%82%E8%BF%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "docker","wordcount":  1536 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "docker","wordcount":  1281 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E4%BA%91%E5%8E%9F%E7%94%9F\/docker\/%E6%A6%82%E8%BF%B0\/","datePublished": "2022-12-25T14:55:07+08:00","dateModified": "2022-12-25T14:55:07+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">云原生-docker-概述</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>云原生</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-25">2022-12-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1536 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-25">2022-12-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1281 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -129,13 +129,6 @@
       <ul>
         <li><a href="#常用命令-1">常用命令</a></li>
         <li><a href="#主要功能和用例">主要功能和用例</a></li>
-      </ul>
-    </li>
-    <li><a href="#docker配置代理">docker配置代理</a>
-      <ul>
-        <li><a href="#dockerd-代理">Dockerd 代理</a></li>
-        <li><a href="#container-代理">Container 代理</a></li>
-        <li><a href="#docker-build-代理">Docker Build 代理</a></li>
       </ul>
     </li>
   </ul>
@@ -290,6 +283,12 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 将当前容器作为一个新版本的img或者创建一个新的img</span>
@@ -321,9 +320,16 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 容器内top，查看容器进程</span>
 </span></span><span style="display:flex;"><span>docker container top CONTAINER [ps OPTIONS]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 杀死一个或多个正在运行的容器</span>
+</span></span><span style="display:flex;"><span>docker container <span style="color:#0aa">kill</span> [OPTIONS] CONTAINER [CONTAINER...]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 更新一个或多个容器的配置,--restart配置是否自动启动，启动策略见下面链接</span>
+</span></span><span style="display:flex;"><span>docker container update [OPTIONS] CONTAINER [CONTAINER...]
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h4 id="network">network</h4>
+</div><p><a href="https://docs.docker.com/engine/reference/run/#restart-policies---restart" target="_blank" rel="noopener noreffer ">启动策略</a></p>
+<h4 id="network">network</h4>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -405,97 +411,7 @@ temp?
 <li>docker compose xxx.yaml down关闭</li>
 </ol>
 <p><a href="https://github.com/Mikaelemmmm/go-zero-looklook/blob/main/docker-compose.yml" target="_blank" rel="noopener noreffer ">zero-looklook docker compose 示例</a></p>
-<h2 id="docker配置代理">docker配置代理</h2>
-<p><a href="https://blog.csdn.net/qq_39698985/article/details/123748820" target="_blank" rel="noopener noreffer ">CSDN Rory602 Docker 配置网络代理</a></p>
-<h3 id="dockerd-代理">Dockerd 代理</h3>
-<p>在执行docker pull时，是由守护进程dockerd来执行。因此，代理需要配在dockerd的环境中。而这个环境，则是受systemd所管控，因此实际是systemd的配置。创建配置文件。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo mkdir -p /etc/systemd/system/docker.service.d
-</span></span><span style="display:flex;"><span>sudo touch /etc/systemd/system/docker.service.d/proxy.conf
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>添加内容</p>
-<pre tabindex="0"><code class="language-conf" data-lang="conf">[Service]
-Environment=&#34;HTTP_PROXY=http://proxy.example.com:8080/&#34;
-Environment=&#34;HTTPS_PROXY=http://proxy.example.com:8080/&#34;
-Environment=&#34;NO_PROXY=localhost,127.0.0.1,.example.com&#34;
-</code></pre><p>重启docker服务</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 重启docker daemon</span>
-</span></span><span style="display:flex;"><span>sudo systemctl daemon-reload
-</span></span><span style="display:flex;"><span>sudo systemctl restart docker
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>查看配置是否成功</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl show --property=Environment docker
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="container-代理">Container 代理</h3>
-<p>所有容器代理，配置~/.docker/config.json添加内容</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span> <span style="color:#1e90ff;font-weight:bold">&#34;proxies&#34;</span>:
-</span></span><span style="display:flex;"><span> {
-</span></span><span style="display:flex;"><span>   <span style="color:#1e90ff;font-weight:bold">&#34;default&#34;</span>:
-</span></span><span style="display:flex;"><span>   {
-</span></span><span style="display:flex;"><span>     <span style="color:#1e90ff;font-weight:bold">&#34;httpProxy&#34;</span>: <span style="color:#a50">&#34;http://proxy.example.com:8080&#34;</span>,
-</span></span><span style="display:flex;"><span>     <span style="color:#1e90ff;font-weight:bold">&#34;httpsProxy&#34;</span>: <span style="color:#a50">&#34;http://proxy.example.com:8080&#34;</span>,
-</span></span><span style="display:flex;"><span>     <span style="color:#1e90ff;font-weight:bold">&#34;noProxy&#34;</span>: <span style="color:#a50">&#34;localhost,127.0.0.1,.example.com&#34;</span>
-</span></span><span style="display:flex;"><span>   }
-</span></span><span style="display:flex;"><span> }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>单个容器配置代理直接使用-e注入环境变量</p>
-<h3 id="docker-build-代理">Docker Build 代理</h3>
-<p>虽然 docker build 的本质，也是启动一个容器，但是环境会略有不同，用户级配置无效。在构建时，需要注入 http_proxy 等参数。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker build . <span style="color:#a50">\
-</span></span></span><span style="display:flex;"><span><span style="color:#a50"></span>    --build-arg <span style="color:#a50">&#34;HTTP_PROXY=http://proxy.example.com:8080/&#34;</span> <span style="color:#a50">\
-</span></span></span><span style="display:flex;"><span><span style="color:#a50"></span>    --build-arg <span style="color:#a50">&#34;HTTPS_PROXY=http://proxy.example.com:8080/&#34;</span> <span style="color:#a50">\
-</span></span></span><span style="display:flex;"><span><span style="color:#a50"></span>    --build-arg <span style="color:#a50">&#34;NO_PROXY=localhost,127.0.0.1,.example.com&#34;</span> <span style="color:#a50">\
-</span></span></span><span style="display:flex;"><span><span style="color:#a50"></span>    -t your/image:tag
-</span></span></code></pre></td></tr></table>
-</div>
-</div></div><div class="post-footer" id="post-footer">
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
