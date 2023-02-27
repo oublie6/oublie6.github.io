@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>云原生-docker-个人笔记 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="云原生-docker-个人笔记" />
-<meta property="og:description" content="镜像重命名 镜像不能重命名，只能复制一份镜像重新命名。 1 docker tag oldimagename:xxx newimagename:yyy 然后删除原来的镜像 1 2 3 4 5 6 docker image rm oldimagename //或者先找到image的id，然后再删" />
+<meta property="og:description" content="docker 官网 docker 官方文档 docker 参考文档 dockerfile 参考 镜像重命名 镜像不能重命名，只能复制一份镜像重新命名。 1 docker tag oldimagename:xxx newimagename:yyy 然后删除原来的镜像 1 2 3 4 5 6 docker image rm oldimagename //或者" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/%E4%BA%91%E5%8E%9F%E7%94%9F/docker/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-07T16:17:00+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="云原生-docker-个人笔记"/>
-<meta name="twitter:description" content="镜像重命名 镜像不能重命名，只能复制一份镜像重新命名。 1 docker tag oldimagename:xxx newimagename:yyy 然后删除原来的镜像 1 2 3 4 5 6 docker image rm oldimagename //或者先找到image的id，然后再删"/>
+<meta name="twitter:description" content="docker 官网 docker 官方文档 docker 参考文档 dockerfile 参考 镜像重命名 镜像不能重命名，只能复制一份镜像重新命名。 1 docker tag oldimagename:xxx newimagename:yyy 然后删除原来的镜像 1 2 3 4 5 6 docker image rm oldimagename //或者"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E4%BA%91%E5%8E%9F%E7%94%9F/docker/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/rpc/" /><link rel="next" href="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/looklook/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E4%BA%91%E5%8E%9F%E7%94%9F\/docker\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "docker","wordcount":  98 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "docker","wordcount":  845 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E4%BA%91%E5%8E%9F%E7%94%9F\/docker\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-01-07T16:17:00+08:00","dateModified": "2023-01-07T16:17:00+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">云原生-docker-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>云原生</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-07">2023-01-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;98 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-07">2023-01-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;845 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -112,9 +112,20 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#镜像重命名">镜像重命名</a></li>
+    <li><a href="#vscode镜像管理">vscode镜像管理</a></li>
+    <li><a href="#container-name属性">container name属性</a></li>
+    <li><a href="#docker-build上下文">Docker build上下文</a></li>
+    <li><a href="#portainer密码重置">Portainer密码重置</a></li>
+    <li><a href="#add和copy">ADD和COPY</a></li>
+    <li><a href="#alpine镜像">alpine镜像</a></li>
+    <li><a href="#容器间通信">容器间通信</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="镜像重命名">镜像重命名</h2>
+            </div><div class="content" id="content"><p><a href="https://www.docker.com/" target="_blank" rel="noopener noreffer ">docker 官网</a></p>
+<p><a href="https://docs.docker.com/" target="_blank" rel="noopener noreffer ">docker 官方文档</a></p>
+<p><a href="https://docs.docker.com/reference/" target="_blank" rel="noopener noreffer ">docker 参考文档</a></p>
+<p><a href="https://docs.docker.com/engine/reference/builder/" target="_blank" rel="noopener noreffer ">dockerfile 参考</a></p>
+<h2 id="镜像重命名">镜像重命名</h2>
 <p>镜像不能重命名，只能复制一份镜像重新命名。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -144,6 +155,105 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>对同一个版本的镜像打不同的tag是可以的</p>
+<h2 id="vscode镜像管理">vscode镜像管理</h2>
+<p>强烈推荐使用vscode的docker插件来管理镜像，以及使用remote插件来远程登录和修改镜像文件</p>
+<p><a href="https://wenku.baidu.com/view/c494ec4a021ca300a6c30c22590102020740f298.html?_wkts_=1677463988424&amp;bdQuery=docker%E9%95%9C%E5%83%8F%E5%AE%89%E8%A3%85fate%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84vscode" target="_blank" rel="noopener noreffer ">百度文库</a></p>
+<h2 id="container-name属性">container name属性</h2>
+<p>docker-compose中的container name</p>
+<p>container name其实相当于给容器取一个别名，因为你可以使用container name对应的名称访问容器，也可以使用原名访问容器。</p>
+<p>另外network中的alias属性也可以定义别名</p>
+<h2 id="docker-build上下文">Docker build上下文</h2>
+<p><a href="https://www.cnblogs.com/FengZeng666/p/16367833.html" target="_blank" rel="noopener noreffer ">博客园 拾月凄辰</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker build -f xxx -t yyy:zzz aaa
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>xxx为dockerfile文件路径，yyy为img名称，zzz为tag名称，aaa为上下文</p>
+<h2 id="portainer密码重置">Portainer密码重置</h2>
+<p><a href="https://www.cnblogs.com/A1999/p/15993682.html" target="_blank" rel="noopener noreffer ">博客园 Alive9</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker ps -a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>找到容器id，停止portainer容器</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker stop portainerid
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>找到Portainer容器挂载信息</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker inspect  portainerid
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>找到&quot;Mounts&quot;下&quot;volume&quot;绑定的&quot;Source&quot;地址</p>
+<p>执行命令重置密码</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker run --rm -v /dockerpath:/data portainer/helper-reset-password
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动容器，根据提示的密码登录portainer修改密码</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker start portainerid
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="add和copy">ADD和COPY</h2>
+<p>COPY 和 ADD 都是 Dockerfile 中的指令，有着类似的作用。主要区别是ADD有一个自动解压的功能。</p>
+<p><a href="https://www.jb51.net/article/252916.htm" target="_blank" rel="noopener noreffer ">脚本之家</a></p>
+<h2 id="alpine镜像">alpine镜像</h2>
+<p>alpine是基于arch最小的linux镜像，3.14版本只有5Mb</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 下载镜像</span>
+</span></span><span style="display:flex;"><span>docker pull alpine
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 新建并启动容器</span>
+</span></span><span style="display:flex;"><span>docker run -it docker.io/alpine sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>它使用apk安装软件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apk update
+</span></span><span style="display:flex;"><span>apk add curl
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="容器间通信">容器间通信</h2>
+<p>同一个网络下的容器之间的任何端口都可以直接通信</p>
+<p>dockerfile中的 EXPOSE 指令并不发布端口，更像是制作镜像的人给创建容器的人的文档。expose可以指定端口监听TCP还是UDP（80/tcp,80/udp），不指定协议默认为TCP。</p>
+<p>真正发布端口是在创建容器时使用-p进行的，使用-P发布docker镜像里面EXPOSE指定的端口</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
