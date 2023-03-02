@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  1547 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  1813 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/","datePublished": "2022-12-12T15:34:53+08:00","dateModified": "2022-12-12T15:34:53+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Goroutines和Channels</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1547 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1813 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -295,7 +295,16 @@
 <h2 id="并发的退出">并发的退出</h2>
 <p>读取被关闭channel可以立即被执行，并且会产生零值。不要向channel发送值，而是用关闭一个channel来进行广播。向关闭的channel发送消息会panic</p>
 <h2 id="channel底层">channel底层</h2>
-<p>环形队列，sendx，recvx两个int来指向读写位置</p>
+<p><a href="https://www.bookstack.cn/read/GoExpertProgramming/chapter01-1.1-chan.md" target="_blank" rel="noopener noreffer ">go专家编程</a></p>
+<p>环形队列，sendx，recvx两个uint来指向读写位置，qcount来记录剩余元素个数，buf和dataqsiz字段记录环形队列指针和环形队列长度，recvq和sendq记录等待读和等待写的goroutine队列，lock字段加锁同一时间只能由一个goroutine访问channel</p>
+<p>向nil管道读或写数据都会导致goroutine死锁</p>
+<p>关闭channel时会把recvq中的G全部唤醒，并给他们nil数据。把sendq中的G全部唤醒，并让这些G触发panic。</p>
+<p>其他panic场景：</p>
+<ul>
+<li>关闭值为nil的channel</li>
+<li>关闭已经被关闭的channel</li>
+<li>向已经关闭的channel写数据</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

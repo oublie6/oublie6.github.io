@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/looklook\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  4669 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  4688 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/looklook\/","datePublished": "2023-01-08T12:23:56+08:00","dateModified": "2023-01-08T12:23:56+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-教程-Looklook</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-08">2023-01-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4669 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-08">2023-01-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4688 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -230,12 +230,23 @@
 </div>
 </div><p>并在mysql中导入sql文件来构建表</p>
 <p>modd的img需要你配置modd.conf，配置很简单</p>
-<pre tabindex="0"><code class="language-conf" data-lang="conf">#usercenter
-app/usercenter/cmd/rpc/**/*.go {
-    prep: go build -o data/server/usercenter-rpc  -v app/usercenter/cmd/rpc/usercenter.go
-    daemon +sigkill: ./data/server/usercenter-rpc -f app/usercenter/cmd/rpc/etc/usercenter.yaml
-}
-</code></pre><p>app/usercenter/cmd/rpc/**/*.go表示这些文件变化就出发下面的代码块</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#4c8317">#usercenter
+</span></span></span><span style="display:flex;"><span><span style="color:#4c8317"></span>app/usercenter/cmd/rpc<span style="color:#aaa;font-style:italic">/**/</span>*.go {
+</span></span><span style="display:flex;"><span>    prep: go build -o data/server/usercenter-rpc  -v app/usercenter/cmd/rpc/usercenter.go
+</span></span><span style="display:flex;"><span>    daemon +sigkill: ./data/server/usercenter-rpc -f app/usercenter/cmd/rpc/etc/usercenter.yaml
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>app/usercenter/cmd/rpc/**/*.go表示这些文件变化就出发下面的代码块</p>
 <p>代码块里面按格式写就可以重新构建项目，实现热重载</p>
 <p>查看looklook容器日志</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -320,21 +331,41 @@ app/usercenter/cmd/rpc/**/*.go {
 <h3 id="nginx网关">nginx网关</h3>
 <p>容器内部nginx端口是8081，使用docker暴露出去8888映射端口8081，这样外部通过8888来访问网关</p>
 <p>使用location来匹配每个服务</p>
-<pre tabindex="0"><code class="language-conf" data-lang="conf">server{
-      listen 8081;
-      access_log /var/log/nginx/looklook.com_access.log;
-      error_log /var/log/nginx/looklook.com_error.log;
-
-
-      location ~ /order/ {
-           proxy_set_header Host $http_host;
-           proxy_set_header X-Real-IP $remote_addr;
-           proxy_set_header REMOTE-HOST $remote_addr;
-           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_pass http://looklook:1001;
-      }
-}
-</code></pre><p>通过go-zero自带的jwt鉴权之后，我们可以在ctx中拿到userId，</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>server{
+</span></span><span style="display:flex;"><span>      listen <span style="color:#099">8081</span>;
+</span></span><span style="display:flex;"><span>      access_log /var/log/nginx/looklook.com_access.log;
+</span></span><span style="display:flex;"><span>      error_log /var/log/nginx/looklook.com_error.log;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      location ~ /order/ {
+</span></span><span style="display:flex;"><span>           proxy_set_header Host <span style="color:#f00;background-color:#faa">$</span>http_host;
+</span></span><span style="display:flex;"><span>           proxy_set_header X-Real-IP <span style="color:#f00;background-color:#faa">$</span>remote_addr;
+</span></span><span style="display:flex;"><span>           proxy_set_header REMOTE-HOST <span style="color:#f00;background-color:#faa">$</span>remote_addr;
+</span></span><span style="display:flex;"><span>           proxy_set_header X-Forwarded-For <span style="color:#f00;background-color:#faa">$</span>proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>           proxy_pass http:<span style="color:#aaa;font-style:italic">//looklook:1001;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>      }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过go-zero自带的jwt鉴权之后，我们可以在ctx中拿到userId，</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1

@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0\/fate%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0\/%E6%95%99%E7%A8%8B\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "FATE联邦学习","wordcount":  977 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "FATE联邦学习","wordcount":  5225 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0\/fate%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0\/%E6%95%99%E7%A8%8B\/","datePublished": "2023-02-26T10:32:45+08:00","dateModified": "2023-02-26T10:32:45+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">机器学习-FATE联邦学习-教程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>机器学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-26">2023-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;977 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-26">2023-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5225 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -116,12 +116,6 @@
         <li><a href="#部署">部署</a>
           <ul>
             <li><a href="#单机部署">单机部署</a></li>
-          </ul>
-        </li>
-        <li><a href="#快速开始">快速开始</a>
-          <ul>
-            <li><a href="#pipline">Pipline</a></li>
-            <li><a href="#上传数据">上传数据</a></li>
           </ul>
         </li>
       </ul>
@@ -138,6 +132,48 @@
             </li>
             <li><a href="#组件">组件</a></li>
             <li><a href="#算法参数httpsgithubcomfederatedaifatetreemasterpythonfederatedmlparam"><a href="https://github.com/FederatedAI/FATE/tree/master/python/federatedml/param">算法参数</a></a></li>
+          </ul>
+        </li>
+        <li><a href="#开发资源">开发资源</a>
+          <ul>
+            <li><a href="#开发指南">开发指南</a>
+              <ul>
+                <li><a href="#为-fate-开发可运行的算法模块py文件httpsgithubcomfederatedaifateblobmasterdocdevelopdevelop_guidezhmd"><a href="https://github.com/FederatedAI/FATE/blob/master/doc/develop/develop_guide.zh.md">为 FATE 开发可运行的算法模块（py文件）</a></a>
+                  <ul>
+                    <li><a href="#1-定义此模块将使用的参数对象">1. 定义此模块将使用的参数对象</a></li>
+                    <li><a href="#2-定义新模块的meta文件">2. 定义新模块的meta文件</a></li>
+                    <li><a href="#3-定义此模块的传递变量py文件并生成传递变量对象可选">3. 定义此模块的传递变量py文件并生成传递变量对象（可选）</a></li>
+                    <li><a href="#4-定义算法模块继承-model_base">4. 定义算法模块（继承 model_base）</a></li>
+                    <li><a href="#5-定义模型保存所需的protobuf">5. 定义模型保存所需的protobuf</a></li>
+                    <li><a href="#6-开发pipeline组件">6. 开发Pipeline组件</a></li>
+                    <li><a href="#7-重启fate-flow服务">7. 重启fate flow服务</a></li>
+                  </ul>
+                </li>
+                <li><a href="#开始建模任务">开始建模任务</a></li>
+              </ul>
+            </li>
+            <li><a href="#fate-pipeline">FATE Pipeline</a>
+              <ul>
+                <li><a href="#fate-作业是有向无环图dag">FATE 作业是有向无环图（dag）</a></li>
+                <li><a href="#安装pipeline">安装Pipeline</a></li>
+                <li><a href="#pipline接口">pipline接口</a>
+                  <ul>
+                    <li><a href="#component组件">Component组件</a></li>
+                  </ul>
+                </li>
+                <li><a href="#建立管道">建立管道</a></li>
+                <li><a href="#设置作业提供者">设置作业提供者</a></li>
+                <li><a href="#运行管道">运行管道</a></li>
+                <li><a href="#查询任务">查询任务</a></li>
+                <li><a href="#部署组件">部署组件</a></li>
+                <li><a href="#用管道预测">用管道预测</a></li>
+                <li><a href="#管道的保存和恢复">管道的保存和恢复</a></li>
+                <li><a href="#流水线概要信息">流水线概要信息</a></li>
+                <li><a href="#将在线预测服务fate-servinghttpsfate-servingreadthedocsioendevelop与管道一起使用">将<a href="https://fate-serving.readthedocs.io/en/develop/">在线预测服务（FATE-Serving）</a>与管道一起使用</a></li>
+                <li><a href="#上传数据">上传数据</a></li>
+                <li><a href="#管道与-cli">管道与 CLI</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>
@@ -207,58 +243,6 @@
 </span></span><span style="display:flex;"><span>fate_test unittest federatedml --yes <span style="color:#aaa;font-style:italic"># there are 0 failed test</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="快速开始">快速开始</h3>
-<h4 id="pipline">Pipline</h4>
-<p><a href="https://github.com/FederatedAI/FATE/blob/master/doc/api/fate_client/pipeline.md" target="_blank" rel="noopener noreffer ">github 文档</a></p>
-<p><code>Pipeline</code>是基于<code>fate_client</code>pip包的分布式过程，安装fate_client：<code>pip install fate_client</code>。安装后可以执行<code>pipline</code>命令</p>
-<p>使用pipline之前外面需要指定连接的<code>FATE Flow Service</code>，类似聚合服务器，在单机部署的Fate里面默认是<code>127.0.0.1:9380</code>。执行如下命令来指定连接</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pipeline init --ip 127.0.0.1 --port <span style="color:#099">9380</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="上传数据">上传数据</h4>
-<p>在开始建模任务之前，应上传要使用的数据。 <code>party</code> 通常是包含多个节点的集群，上传数据时，将分配给这些节点。</p>
-<p>生成pipline实例，并给该实例设置initiator(指定role和partyid)和使用的roles</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">pipeline.backend.pipeline</span> <span style="color:#00a">import</span> PipeLine
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>pipeline_upload = PipeLine().set_initiator(role=<span style="color:#a50">&#39;guest&#39;</span>, party_id=<span style="color:#099">9999</span>).set_roles(guest=<span style="color:#099">9999</span>)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用add_upload_data方法上传数据</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline_upload.add_upload_data(file=<span style="color:#a50">&#34;examples/data/breast_hetero_guest.csv&#34;</span>, <span style="color:#aaa;font-style:italic"># 文件位置</span>
-</span></span><span style="display:flex;"><span>                                table_name=<span style="color:#a50">&#34;breast_hetero_guest&#34;</span>,             <span style="color:#aaa;font-style:italic"># table name</span>
-</span></span><span style="display:flex;"><span>                                namespace=<span style="color:#a50">&#34;experiment&#34;</span>,         <span style="color:#aaa;font-style:italic"># namespace</span>
-</span></span><span style="display:flex;"><span>                                head=<span style="color:#099">1</span>, partition=<span style="color:#099">4</span>)         <span style="color:#aaa;font-style:italic"># partition是数据存储分区数</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>最后使用upload方法启动上传</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline_upload.upload(drop=<span style="color:#099">1</span>)
-</span></span></code></pre></td></tr></table>
-</div>
 </div><h2 id="文档">文档</h2>
 <h3 id="fate设计">FATE设计</h3>
 <h4 id="架构">架构</h4>
@@ -295,7 +279,554 @@
 <li>模型评估：提供对二分类，多分类，回归评估，聚类评估，联邦和单边对比评估</li>
 <li>安全协议：提供了多种安全协议，以进行更安全的多方交互计算</li>
 </ol>
+<p>pipline也可以作为组件被添加到新pipline。</p>
 <h4 id="算法参数httpsgithubcomfederatedaifatetreemasterpythonfederatedmlparam"><a href="https://github.com/FederatedAI/FATE/tree/master/python/federatedml/param" target="_blank" rel="noopener noreffer ">算法参数</a></h4>
+<h3 id="开发资源">开发资源</h3>
+<h4 id="开发指南">开发指南</h4>
+<h5 id="为-fate-开发可运行的算法模块py文件httpsgithubcomfederatedaifateblobmasterdocdevelopdevelop_guidezhmd"><a href="https://github.com/FederatedAI/FATE/blob/master/doc/develop/develop_guide.zh.md" target="_blank" rel="noopener noreffer ">为 FATE 开发可运行的算法模块（py文件）</a></h5>
+<p>对于xxx算法模块</p>
+<h6 id="1-定义此模块将使用的参数对象">1. 定义此模块将使用的参数对象</h6>
+<p>参数对象是将用户定义的运行时参数传递给开发模块的唯一途径，每个模块都有其自己的参数对象</p>
+<ul>
+<li>在<code>FATE/python/faderatedml/param</code>目录下新建xxx_param.py，定义继承BaseParam的参数类</li>
+<li>在init方法调用基类的init方法(<code>super(LogisticParam, self).__init__()</code>)并添加模块使用的所有参数</li>
+<li>重载BaseParam的check方法，检查参数是否可用，对于不可用的参数实例抛出<code>ValueError(&quot;xxx&quot;)</code>异常。未实现check方法的参数类会在使用时抛出异常</li>
+</ul>
+<h6 id="2-定义新模块的meta文件">2. 定义新模块的meta文件</h6>
+<p>向FATE-Flow模块描述如何启动算法模块程序</p>
+<ul>
+<li>在<code>FATE/python/federatedml/components/</code>目录下新建xxx.py作为meta文件</li>
+<li>配置文件：
+<ul>
+<li>传入xxx定义ComponentMeta实例：<code>xxx_cpn_meta = ComponentMeta(&quot;XXX&quot;)</code>，xxx为小写<code>_</code>分隔单词，XXX为dls中调用的模块名使用大驼峰，比如：<code>hetero_lr_cpn_meta = ComponentMeta(&quot;HeteroLR&quot;)</code></li>
+<li>使用装饰器<code>xxx_cpn_meta.bind_runner.on_$role</code>绑定模块对象到每个角色，可以将多个角色绑定到一个模块对象：<code>xxx_cpn_meta.bind_runner.on_$role1.on_$role2.on_$role3</code></li>
+<li>使用装饰器<code>xxx_cpn_meta.bind_param</code>将参数对象绑定到定义的组件，函数返回参数对象即可</li>
+</ul>
+</li>
+</ul>
+<h6 id="3-定义此模块的传递变量py文件并生成传递变量对象可选">3. 定义此模块的传递变量py文件并生成传递变量对象（可选）</h6>
+<p>不同参与方之间存在信息交互时</p>
+<p>在<code>FATE/python/federatedml/transfer_variable/transfer_class</code>中新建py文件，新建一个继承<code>BaseTransferVariables</code>类的<code>XXXTransferVariable</code>类，定义相应的变量，并为其赋予需要的传输权限</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">federatedml.transfer_variable.base_transfer_variable</span> <span style="color:#00a">import</span> BaseTransferVariables
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">HeteroLRTransferVariable</span>(BaseTransferVariables):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> __init__(self, flowid=<span style="color:#099">0</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#0aa">super</span>().__init__(flowid)
+</span></span><span style="display:flex;"><span>        self.batch_data_index = self._create_variable(name=<span style="color:#a50">&#39;batch_data_index&#39;</span>, src=[<span style="color:#a50">&#39;guest&#39;</span>], dst=[<span style="color:#a50">&#39;host&#39;</span>])
+</span></span><span style="display:flex;"><span>        ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>name:变量名</li>
+<li>src:交互信息从何处发出，应为 &ldquo;guest&rdquo;，&ldquo;host&rdquo;，&ldquo;arbiter&rdquo; 的列表</li>
+<li>dst:交互信息发送到何处，应为 &ldquo;guest&rdquo;，&ldquo;host&rdquo;，&ldquo;arbiter&rdquo; 的列表</li>
+</ul>
+<h6 id="4-定义算法模块继承-model_base">4. 定义算法模块（继承 model_base）</h6>
+<p>fate_flow_client 模块的运行规则</p>
+<ol>
+<li>从数据库中检索fate的组件注册信息，获取component的每个role对应的运行对象</li>
+<li>初始化各方的运行对象</li>
+<li>调用运行对象的 run 方法</li>
+<li>如果需要，调用 save_data 方法或 export_model 方法</li>
+</ol>
+<p>继承<code>python/federatedml/model_base.py</code>中的ModelBase对象，init方法中指定一些模块信息并指定参数对象</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>  <span style="color:#0aa">super</span>().__init__()
+</span></span><span style="display:flex;"><span>  self.model_name = <span style="color:#a50">&#39;HeteroLogisticRegression&#39;</span>
+</span></span><span style="display:flex;"><span>  self.model_param_name = <span style="color:#a50">&#39;HeteroLogisticRegressionParam&#39;</span>
+</span></span><span style="display:flex;"><span>  self.model_meta_name = <span style="color:#a50">&#39;HeteroLogisticRegressionMeta&#39;</span>
+</span></span><span style="display:flex;"><span>  self.mode = consts.HETERO
+</span></span><span style="display:flex;"><span>  self.aggregator = <span style="color:#00a">None</span>
+</span></span><span style="display:flex;"><span>  self.cipher = <span style="color:#00a">None</span>
+</span></span><span style="display:flex;"><span>  self.batch_generator = <span style="color:#00a">None</span>
+</span></span><span style="display:flex;"><span>  self.gradient_loss_operator = <span style="color:#00a">None</span>
+</span></span><span style="display:flex;"><span>  self.converge_procedure = <span style="color:#00a">None</span>
+</span></span><span style="display:flex;"><span>  self.model_param = HeteroLogisticParam()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要时重载fit方法：<code>def fit(self, train_data, validate_data=None):</code>。fit方法是启动建模组件的训练，或者特征工程组件的fit功能的入口。接受train_data训练数据和validate验证集数据，验证集数据可不提供。该函数在用户启动训练任务时，被model_base自动调起</p>
+<p>需要时重载 predict 方法：<code>def predict(self, data_inst):</code>。data_inst 是一个 Table， 用于建模组件的预测功能。在用户启动预测任务时，将被model_base自动调起，训练任务中，建模组件也会调用predict函数对训练数据和验证集数据（如果有）进行预测，并输出预测结果。后续希望接入evaluation，需要输出符合下列格式的Table：</p>
+<ul>
+<li>二分类，多分类，回归任务返回一张表 表的格式为: <code>[&quot;label&quot;, &quot;predict_result&quot;, &quot;predict_score&quot;, &quot;predict_detail&quot;, &quot;type&quot;]</code></li>
+<li>聚类任务返回两张表，第一张的格式为: <code>[&quot;cluster_sample_count&quot;, &quot;cluster_inner_dist&quot;, &quot;inter_cluster_dist&quot;]</code>，第二张表的格式为: <code>[&quot;predicted_cluster_index&quot;, &quot;distance&quot;]</code></li>
+</ul>
+<p>需要时重载 transform 方法：<code>def transform(self, data_inst):</code>，data_inst 是一个 Table, 用于特征工程组件对数据进行转化功能。用户启动预测任务时，将被model_base自动调起</p>
+<p>定义 save_data 方法：fate-flow 通过它获取输出数据。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">save_data</span>(self):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> self.data_output
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h6 id="5-定义模型保存所需的protobuf">5. 定义模型保存所需的protobuf</h6>
+<p>为了方便模型跨平台保存和读取模型，FATE使用protobuf文件定义每个模型所需的参数和模型内容。在<code>FATE/python/federatedml/protobuf/proto/</code>目录新建proto文件，<a href="https://protobuf.dev/getting-started/pythontutorial/" target="_blank" rel="noopener noreffer ">python protobuf 教程</a></p>
+<p>一个模型需要两个proto文件，后缀为meta的文件中保存某一次任务的配置，后缀为param的文件中保存某次任务的模型结果</p>
+<p>定义完文件后执行该目录下的<code>proto_generate.sh</code>文件生成对应的py文件，之后可以在项目中引用proto类型</p>
+<p>定义 export_model 方法：fate-flow 通过它获取输出的模型，模型同时包含 “Meta” 和 “Param” 产生的proto buffer类的 dict 格式，如</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">export_model</span>(self):
+</span></span><span style="display:flex;"><span>    meta_obj = self._get_meta()
+</span></span><span style="display:flex;"><span>    param_obj = self._get_param()
+</span></span><span style="display:flex;"><span>    result = {
+</span></span><span style="display:flex;"><span>        self.model_meta_name: meta_obj,
+</span></span><span style="display:flex;"><span>        self.model_param_name: param_obj
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> result
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h6 id="6-开发pipeline组件">6. 开发Pipeline组件</h6>
+<p>在<code>python/fate_client/pipeline/component</code>中添加自己的组件，见pipline</p>
+<h6 id="7-重启fate-flow服务">7. 重启fate flow服务</h6>
+<p>重启fate flow从而让其发现新加的组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python fate_flow_server.py --debug <span style="color:#aaa;font-style:italic"># debug进行代码热重载</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="开始建模任务">开始建模任务</h5>
+<ul>
+<li>第一步: 上传数据</li>
+<li>第二步: 开始建模任务</li>
+<li>第三步: 检查日志文件</li>
+</ul>
+<h4 id="fate-pipeline">FATE Pipeline</h4>
+<p><a href="https://github.com/FederatedAI/FATE/blob/master/doc/api/fate_client/pipeline.md" target="_blank" rel="noopener noreffer ">pipline官方文档</a></p>
+<p>Pipeline 是一种高级 Python API，允许用户以顺序方式设计、启动和查询 FATE job作业。FATE Pipeline 设计为用户友好且与 FATE 命令行工具的行为一致。用户可以通过向管道添加组件来自定义工作流程，然后通过一次调用启动一个作业。</p>
+<h5 id="fate-作业是有向无环图dag">FATE 作业是有向无环图（dag）</h5>
+<p>FATE 作业是一个由算法组件节点组成的 dag。FATE 管道提供易于使用的工具来配置任务的顺序和设置。</p>
+<p>FATE 以模块化风格编写。模块是具有输入和输出数据的模型。当一个模块的输出设置为另一个模块的输入时，两个模块被连接。 FATE 作业实际上是由一系列子模块组成的。</p>
+<h5 id="安装pipeline">安装Pipeline</h5>
+<p>安装fate_client会自动安装pipline命令</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install fate_client
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用pipline之前外面需要指定连接的FATE Flow Service，类似聚合服务器，在单机部署的Fate里面默认是127.0.0.1:9380。执行如下命令来指定连接</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pipeline init --ip 127.0.0.1 --port <span style="color:#099">9380</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="pipline接口">pipline接口</h5>
+<h6 id="component组件">Component组件</h6>
+<p><a href="https://github.com/FederatedAI/FATE/blob/master/doc/api/fate_client/pipeline_component.md" target="_blank" rel="noopener noreffer ">组件官方文档</a></p>
+<p><a href="https://github.com/FederatedAI/FATE/blob/master/doc/federatedml_component/README.zh.md" target="_blank" rel="noopener noreffer ">FATE支持的模块清单</a></p>
+<p>FATE 模块被包装在 component 组件中。每个组件都可以接收和输出Data 和 Model。组件的参数可以在初始化的时候设置，未指定的参数将采用默认值，所有组件都有一个 name 标识符，它在管道中必须是唯一的，建议每个组件名称都包含一个编号作为后缀，以便于跟踪。</p>
+<ul>
+<li>Input输入：Input将所有上游输入封装到作业工作流中的组件。分为三类input：data、cache和 model。只有Intersection可能有cache输入</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">pipeline.component</span> <span style="color:#00a">import</span> DataTransform
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data_transform_0 = DataTransform(name=<span style="color:#a50">&#34;data_transform_0&#34;</span>)
+</span></span><span style="display:flex;"><span>input_all = data_transform_0.input
+</span></span><span style="display:flex;"><span>input_data = data_transform_0.input.data
+</span></span><span style="display:flex;"><span>input_model = data_transform_0.input.model
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Output输出：Output将组件的输出data、cache和 modelof 封装在一个 FATE 作业中。只有Intersection可能有cache输出</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">pipeline.component</span> <span style="color:#00a">import</span> DataTransform
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data_transform_0 = DataTransform(name=<span style="color:#a50">&#34;data_transform_0&#34;</span>)
+</span></span><span style="display:flex;"><span>output_all = data_transform_0.output
+</span></span><span style="display:flex;"><span>output_data = data_transform_0.output.data
+</span></span><span style="display:flex;"><span>output_model = data_transform_0.output.model
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Data数据：数据集在模块之间传递时被包装到data</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.add_component(intersection_0, data=Data(data=data_transform_0.output.data))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>|Data|Name|Input|Output|Use Case|
+|:-:|:-:|:-:|:-:|
+|data|Yes|Yes|单一数据输入或输出|
+|train_data|Yes|Yes|模型训练；DataSplit组件输出|
+|validate_data|Yes|Yes|带验证集的模型训练；DataSplit组件输出|
+|test_data|No|Yes|DataSplit组件输出|
+|predict_input|Yes|No|模型预测|</p>
+<p>组件的所有输入和输出数据在组件之间传递时都需要包装成Data对象</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">pipeline.backend.pipeline</span> <span style="color:#00a">import</span> Pipeline
+</span></span><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">pipeline.component</span> <span style="color:#00a">import</span> DataTransform, Intersection, HeteroDataSplit, HeteroLR
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># initialize a pipeline</span>
+</span></span><span style="display:flex;"><span>pipeline = PipeLine().set_initiator(role=<span style="color:#a50">&#39;guest&#39;</span>, party_id=guest).set_roles(guest=guest)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># define all components</span>
+</span></span><span style="display:flex;"><span>data_transform_0 = DataTransform(name=<span style="color:#a50">&#34;data_transform_0&#34;</span>)
+</span></span><span style="display:flex;"><span>data_split = HeteroDataSplit(name=<span style="color:#a50">&#34;data_split_0&#34;</span>)
+</span></span><span style="display:flex;"><span>hetero_lr_0 = HeteroLR(name=<span style="color:#a50">&#34;hetero_lr_0&#34;</span>, max_iter=<span style="color:#099">20</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># chain together all components</span>
+</span></span><span style="display:flex;"><span>pipeline.add_component(reader_0)
+</span></span><span style="display:flex;"><span>pipeline.add_component(data_transform_0, data=Data(data=reader_0.output.data))
+</span></span><span style="display:flex;"><span>pipeline.add_component(intersection_0, data=Data(data=data_transform_0.output.data))
+</span></span><span style="display:flex;"><span>pipeline.add_component(hetero_data_split_0, data=Data(data=intersection_0.output.data))
+</span></span><span style="display:flex;"><span>pipeline.add_component(hetero_lr_0, data=Data(train_data=hetero_data_split_0.output.data.train_data,
+</span></span><span style="display:flex;"><span>                                              validate_data=hetero_data_split_0.output.data.test_data))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>Model模型：分为model和isometric_model。当前组件与前一个组件属于同一类则是model，将复制前一个组件的所有模型参数。当前组件和前一个组件不是同一类时为isometric_model。</p>
+</li>
+<li>
+<p>Cache缓存：Cache仅适用于Intersection组件。</p>
+</li>
+</ul>
+<p>将intersection_0的缓存输出设置为intersection_1的缓存输入</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.add_component(intersection_1, data=Data(data=data_transform_0.output.data), cache=Cache(intersect_0.output.cache))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用CacheLoader组件从另一个作业加载缓存</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.add_component(cache_loader_0)
+</span></span><span style="display:flex;"><span>pipeline.add_component(intersect_0, data=Data(data=data_transform_0.output.data), cache=Cache(cache_loader_0.output.cache))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Parameter参数：定义组件时可以设置所有方的参数，也可以为某一方设置单独参数</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">pipeline.component</span> <span style="color:#00a">import</span> DataTransform
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 定义组件所有方的默认参数</span>
+</span></span><span style="display:flex;"><span>data_transform_0 = DataTransform(name=<span style="color:#a50">&#34;data_transform_0&#34;</span>, input_format=<span style="color:#a50">&#34;dense&#34;</span>, output_format=<span style="color:#a50">&#34;dense&#34;</span>,
+</span></span><span style="display:flex;"><span>                  outlier_replace=<span style="color:#00a">False</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 为某方设置单独的参数</span>
+</span></span><span style="display:flex;"><span>guest_data_transform_0 = data_transform_0.get_party_instance(role=<span style="color:#a50">&#39;guest&#39;</span>, party_id=<span style="color:#099">9999</span>)
+</span></span><span style="display:flex;"><span>guest_data_transform_0.component_param(with_label=<span style="color:#00a">True</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Task Info任务信息：</li>
+</ul>
+<p>Components可以使用 Pipeline 任务信息 API 检索输出数据和模型信息。目前 Pipeline 支持这四种类型的组件查询：</p>
+<ol>
+<li>get_output_data：返回下载的输出数据；使用limits参数限制来限制输出行</li>
+<li>get_output_data_table：返回输出数据表信息（包括表名和命名空间）</li>
+<li>get_model_param：返回拟合模型参数</li>
+<li>get_summary：返回模型摘要</li>
+</ol>
+<h5 id="建立管道">建立管道</h5>
+<p><a href="https://github.com/FederatedAI/FATE/blob/master/examples/pipeline/demo/pipeline-mini-demo.py" target="_blank" rel="noopener noreffer ">管道演示</a></p>
+<p>初始化管道后，应指定作业发起者和参与者</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline = PipeLine()
+</span></span><span style="display:flex;"><span>pipeline.set_initiator(role=<span style="color:#a50">&#39;guest&#39;</span>, party_id=<span style="color:#099">9999</span>)
+</span></span><span style="display:flex;"><span>pipeline.set_roles(guest=<span style="color:#099">9999</span>, host=<span style="color:#099">10000</span>, arbiter=<span style="color:#099">10000</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Reader读取数据源</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>reader_0 = Reader(name=<span style="color:#a50">&#34;reader_0&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>DataTransform将数据转换为DataInstance格式，然后可以将其用于数据工程和模型训，组件的get_party_instance方法为不同的角色设置单独配置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>data_transform_0 = DataTransform(name=<span style="color:#a50">&#34;data_transform_0&#34;</span>)
+</span></span><span style="display:flex;"><span>guest_component_instance = data_transform_0.get_party_instance(role=<span style="color:#a50">&#39;guest&#39;</span>, party_id=<span style="color:#099">9999</span>)
+</span></span><span style="display:flex;"><span>guest_component_instance.component_param(with_label=<span style="color:#00a">True</span>, output_format=<span style="color:#a50">&#34;dense&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>管道实例的add_component方法添加组件实例</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.add_component(data_transform_0, data=Data(data=reader_0.output.data))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="设置作业提供者">设置作业提供者</h5>
+<p>指定FATE的版本来提交任务，未指定，将使用默认版本</p>
+<p>管道实例的set_global_job_provider方法设置全局版本</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.set_global_job_provider(<span style="color:#a50">&#34;fate@1.7.0&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>组件实例的provider属性指定组件版本</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>homo_nn.provider = <span style="color:#a50">&#34;fate@1.7.0&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="运行管道">运行管道</h5>
+<p>添加所有组件后，先编译管道，然后运行作业</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.compile()
+</span></span><span style="display:flex;"><span>pipeline.fit()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="查询任务">查询任务</h5>
+<p>FATE Pipeline 提供 API 来查询组件信息，包括数据、模型和摘要。所有查询 API 都具有与 <a href="https://github.com/FederatedAI/FATE/blob/master/doc/api/fate_client/flow_sdk.zh.md" target="_blank" rel="noopener noreffer ">FlowPy</a> 匹配的名称，Pipeline 检索并将查询结果直接返回给用户</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>summary = pipeline.get_component(<span style="color:#a50">&#34;hetero_lr_0&#34;</span>).get_summary()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="部署组件">部署组件</h5>
+<p>管道fit拟合（训练）完成，就可以在新数据集上运行预测。在进行预测之前，需要先部署必要的组件，可以部署选择的组件和全部组件（Reader组件只能被指定部署）</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 部署选择的部分组件</span>
+</span></span><span style="display:flex;"><span>pipeline.deploy_component([data_transform_0, hetero_lr_0])
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 部署全部组件</span>
+</span></span><span style="display:flex;"><span>pipeline.deploy_component()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="用管道预测">用管道预测</h5>
+<p>启动一个新的管道，将训练后的管道作为组件添加到其中，然后指定用于预测的数据源。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>predict_pipeline = PipeLine()
+</span></span><span style="display:flex;"><span>predict_pipeline.add_component(reader_0)
+</span></span><span style="display:flex;"><span>predict_pipeline.add_component(pipeline,
+</span></span><span style="display:flex;"><span>                               data=Data(predict_input={pipeline.data_transform_0.input.data: reader_0.output.data}))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后可以在新管道上启动预测</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>predict_pipeline.predict()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以在运行预测之前向原始管道添加新组件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>predict_pipeline.add_component(evaluation_0, data=Data(data=pipeline.hetero_lr_0.output.data))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以指定使用训练过程中保存的检查点模块进行预测</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>predict_pipeline.predict(components_checkpoint={<span style="color:#a50">&#34;hetero_lr_0&#34;</span>: {<span style="color:#a50">&#34;step_index&#34;</span>: <span style="color:#099">8</span>}})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="管道的保存和恢复">管道的保存和恢复</h5>
+<p>保存管道</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.dump(<span style="color:#a50">&#34;pipeline_saved.pkl&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>恢复管道</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">from</span> <span style="color:#0aa;text-decoration:underline">pipeline.backend.pipeline</span> <span style="color:#00a">import</span> PineLine
+</span></span><span style="display:flex;"><span>PipeLine.load_model_from_file(<span style="color:#a50">&#34;pipeline_saved.pkl&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="流水线概要信息">流水线概要信息</h5>
+<p>获取管道的详细信息</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.describe()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="将在线预测服务fate-servinghttpsfate-servingreadthedocsioendevelop与管道一起使用">将<a href="https://fate-serving.readthedocs.io/en/develop/" target="_blank" rel="noopener noreffer ">在线预测服务（FATE-Serving）</a>与管道一起使用</h5>
+<p>先<a href="#%e9%83%a8%e7%bd%b2%e7%bb%84%e4%bb%b6" rel="">部署组件</a></p>
+<p>加载模型</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.online.load()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将模型绑定到所选服务，可以指定选择的 FATE-Serving 地址</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pipeline.online.bind(<span style="color:#a50">&#34;service_1&#34;</span>)
+</span></span><span style="display:flex;"><span>pipeline.online.bind(<span style="color:#a50">&#34;service_1&#34;</span>, <span style="color:#a50">&#34;127.0.0.1&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="上传数据">上传数据</h5>
+<p>PipeLine 提供了上传本地数据表的<a href="https://github.com/FederatedAI/FATE/blob/master/examples/pipeline/demo/pipeline-upload.py" target="_blank" rel="noopener noreffer ">功能</a></p>
+<h5 id="管道与-cli">管道与 CLI</h5>
+<p>过去的版本中，用户通过命令行界面与 FATE 交互，使用手动配置的 conf 和 dsl json 文件</p>
+<p>Pipeline 在编译时自动形成任务配置文件</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
