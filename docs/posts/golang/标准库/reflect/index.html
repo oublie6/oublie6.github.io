@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>go标准库-Reflect - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="go标准库-Reflect" />
-<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc 博客园 itbsl" />
+<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc 博客园 itbsl 常用函" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/reflect/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-04T13:53:57+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="go标准库-Reflect"/>
-<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc 博客园 itbsl"/>
+<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc 博客园 itbsl 常用函"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/reflect/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/sort/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/reflect\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  67 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  265 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/reflect\/","datePublished": "2022-12-04T13:53:57+08:00","dateModified": "2022-12-04T13:53:57+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,18 +102,26 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Reflect</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-04">2022-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;67 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-04">2022-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;265 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#常用函数">常用函数</a></li>
+  </ul>
+</nav></div>
             </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
 <p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
 <p>go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc</p>
 <p><a href="https://www.cnblogs.com/itbsl/p/10551880.html" target="_blank" rel="noopener noreffer ">博客园  itbsl</a></p>
+<h2 id="常用函数">常用函数</h2>
+<ul>
+<li>func DeepEqual(a1, a2 interface{}) bool：用来判断两个值是否深度一致：除了类型相同；在可以时（主要是基本类型）会使用==；但还会比较array、slice的成员，map的键值对，结构体字段进行深入比对。map的键值对，对键只使用==，但值会继续往深层比对。DeepEqual函数可以正确处理循环的类型。函数类型只有都会nil时才相等；空切片不等于nil切片；还会考虑array、slice的长度、map键值对数。</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

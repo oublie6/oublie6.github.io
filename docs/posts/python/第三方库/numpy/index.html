@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python-第三方库-Numpy - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="Python-第三方库-Numpy" />
+<meta property="og:description" content="PYPI官网 numpy官网 numpy官方教程 numpy官网API文档 本文中的np表示numpy包的别名 NumPy 是 Python 中科学计算的基础包。提供多维数组" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-04T22:48:48+08:00" />
+<meta property="article:modified_time" content="2023-03-04T22:48:48+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python-第三方库-Numpy"/>
+<meta name="twitter:description" content="PYPI官网 numpy官网 numpy官方教程 numpy官网API文档 本文中的np表示numpy包的别名 NumPy 是 Python 中科学计算的基础包。提供多维数组"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%9D%82%E9%A1%B9/steam/" /><link rel="next" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python-第三方库-Numpy",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/numpy\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python第三方库","wordcount":  2246 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/numpy\/","datePublished": "2023-03-04T22:48:48+08:00","dateModified": "2023-03-04T22:48:48+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-Numpy</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-04">2023-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2246 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#基础用法">基础用法</a>
+      <ul>
+        <li><a href="#绝对基础">绝对基础</a>
+          <ul>
+            <li><a href="#类型">类型</a></li>
+            <li><a href="#常用函数">常用函数</a></li>
+            <li><a href="#常用方法">常用方法</a></li>
+            <li><a href="#运算符">运算符</a></li>
+            <li><a href="#其他常用类型">其他常用类型</a></li>
+          </ul>
+        </li>
+        <li><a href="#数组创建">数组创建</a></li>
+        <li><a href="#索引">索引</a>
+          <ul>
+            <li><a href="#基本索引">基本索引</a>
+              <ul>
+                <li><a href="#切片和步长">切片和步长</a></li>
+                <li><a href="#维度索引工具">维度索引工具</a></li>
+              </ul>
+            </li>
+            <li><a href="#高级索引">高级索引</a>
+              <ul>
+                <li><a href="#整数数组索引">整数数组索引</a></li>
+                <li><a href="#布尔数组索引">布尔数组索引</a></li>
+              </ul>
+            </li>
+            <li><a href="#平面迭代器索引">平面迭代器索引</a></li>
+            <li><a href="#为索引数组赋值">为索引数组赋值</a></li>
+            <li><a href="#处理程序中可变数量的索引">处理程序中可变数量的索引</a></li>
+          </ul>
+        </li>
+        <li><a href="#numpy-的-iohttpsnumpyorgdocstableuserbasicsiogenfromtxthtmlskipping-lines-and-choosing-columns"><a href="https://numpy.org/doc/stable/user/basics.io.genfromtxt.html#skipping-lines-and-choosing-columns">NumPy 的 I/O</a></a></li>
+        <li><a href="#数据类型httpsnumpyorgdocstableuserbasicstypeshtml"><a href="https://numpy.org/doc/stable/user/basics.types.html">数据类型</a></a></li>
+        <li><a href="#广播">广播</a></li>
+        <li><a href="#副本和视图">副本和视图</a></li>
+        <li><a href="#结构化数组httpsnumpyorgdocstableuserbasicsrechtml"><a href="https://numpy.org/doc/stable/user/basics.rec.html">结构化数组</a></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://pypi.org/" target="_blank" rel="noopener noreffer ">PYPI官网</a></p>
+<p><a href="https://numpy.org/" target="_blank" rel="noopener noreffer ">numpy官网</a></p>
+<p><a href="https://numpy.org/doc/stable/user/index.html" target="_blank" rel="noopener noreffer ">numpy官方教程</a></p>
+<p><a href="https://numpy.org/doc/stable/reference/index.html" target="_blank" rel="noopener noreffer ">numpy官网API文档</a></p>
+<p>本文中的np表示numpy包的别名</p>
+<p>NumPy 是 Python 中科学计算的基础包。提供多维数组对象、各种派生对象（例如掩码数组和矩阵）以及用于对数组进行快速操作的各种例程，包括数学、逻辑、形状操作、排序、选择、I/O 、离散傅里叶变换、基本线性代数、基本统计运算、随机模拟等等。</p>
+<p>NumPy 包的核心是ndarray对象。这封装了同构数据类型的n维数组，许多操作在编译代码中执行以提高性能。</p>
+<p>NumPy 数组和标准 Python 序列之间有几个重要的区别：</p>
+<ul>
+<li>更改ndarray的大小将创建一个新数组并删除原始数组</li>
+<li>NumPy 数组中的元素都需要具有相同的数据类型</li>
+<li>NumPy 数组有助于对大量数据进行高级数学运算和其他类型的运算</li>
+</ul>
+<h2 id="安装">安装</h2>
+<p>conda</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>conda install numpy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pip</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install numpy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="基础用法">基础用法</h2>
+<h3 id="绝对基础">绝对基础</h3>
+<h4 id="类型">类型</h4>
+<p>ndarray</p>
+<ul>
+<li>ndim:轴数或维数</li>
+<li>size:元素的总数</li>
+<li>shape:每个维度存储的元素数元组</li>
+<li>T:转置</li>
+<li>flat:返回一个元素迭代器</li>
+<li>base:值为None表示副本，否则为视图，且该值为原数组</li>
+</ul>
+<h4 id="常用函数">常用函数</h4>
+<ul>
+<li>np.expand_dims():指定索引位置来插入维度</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>b = np.expand_dims(a, axis=<span style="color:#099">0</span>) <span style="color:#aaa;font-style:italic"># (1,6)</span>
+</span></span><span style="display:flex;"><span>c = np.expand_dims(a, axis=<span style="color:#099">1</span>) <span style="color:#aaa;font-style:italic"># (6,1)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>np.array():创建数组</li>
+<li>np.unique():找到数组中的唯一元素</li>
+<li>flip():选择维度反转元素</li>
+<li>flatten():创建一个新的一维数组，里面是原数组的元素</li>
+<li>ravel():将原数组转换为一维数组</li>
+<li>save():数组保存为npy文件</li>
+<li>load():导入npy文件的数组</li>
+<li>savetxt():数组保存为csv文件</li>
+<li>loadtxt():导入csv文件的数组</li>
+</ul>
+<h4 id="常用方法">常用方法</h4>
+<p>ndarray</p>
+<ul>
+<li>reshape():重塑数组的形状，重塑的形状元素个数需要保证不变</li>
+<li>sum():返回指定维度(axis命名参数)或全部数组元素的总和</li>
+<li>min():最小值</li>
+<li>max():最大值</li>
+<li>mean():平均值</li>
+<li>prod():乘积</li>
+<li>transpose():根据指定的值来反转或更改数组的轴</li>
+<li>copy():新建一个副本</li>
+</ul>
+<h4 id="运算符">运算符</h4>
+<p>数组支持加减乘除</p>
+<h4 id="其他常用类型">其他常用类型</h4>
+<p>np.newaxis函数用于当前位置添加一个维度</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>a = np.array([<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>, <span style="color:#099">4</span>, <span style="color:#099">5</span>, <span style="color:#099">6</span>])
+</span></span><span style="display:flex;"><span>row_vector = a[np.newaxis, :] <span style="color:#aaa;font-style:italic"># (1,6)</span>
+</span></span><span style="display:flex;"><span>col_vector = a[:, np.newaxis] <span style="color:#aaa;font-style:italic"># (6,1)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="数组创建">数组创建</h3>
+<p>创建数组有 6 种方法（这里列举的函数和方法都只是一部分，全部函数和方法见<a href="https://numpy.org/doc/stable/reference/index.html" target="_blank" rel="noopener noreffer ">官网API文档</a>）：</p>
+<ul>
+<li>从其他 Python 结构（即列表和元组）转换：<code>numpy.array</code>函数，<code>dtype</code>定义数组元素类型比如<code>numpy.int8</code>类型</li>
+<li>内在的 NumPy 数组创建函数：
+<ul>
+<li>一维数组：
+<ul>
+<li>numpy.arange()：指定步长</li>
+<li>numpy.linspace()：指定元素个数</li>
+</ul>
+</li>
+<li>二维数组：
+<ul>
+<li>numpy.eye()：二维单位矩阵</li>
+<li>numpy.diag()：指定对角线和对角线元素的方形数组</li>
+</ul>
+</li>
+<li>数组：
+<ul>
+<li>numpy.ones()：全1数组</li>
+<li>numpy.zeros()：全0数组</li>
+<li>random.Generator.random()：[0.0, 1.0) 随机浮点数填充数组</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>复制、加入或改变现有数组：
+<ul>
+<li>numpy.copy()：拷贝一份数组，直接复制给另一个变量使用的仍然是同一个数组</li>
+<li>numpy.vstack()：纵向堆叠数组，N为数组元素个数则生成一个[1,N]的数组</li>
+<li>numpy.hstack()：组合多个数组，按块的方式堆叠</li>
+</ul>
+</li>
+<li>从磁盘读取数组，无论是标准格式还是自定义格式
+<ul>
+<li>numpy.loadtxt()：导入逗号分隔值 (csv) 和制表符分隔值 (tsv) 的文本文件</li>
+<li>numpy.genfromtxt()：从文本文件加载数据，可以指定默认值</li>
+</ul>
+</li>
+<li>通过使用字符串或缓冲区从原始字节创建数组</li>
+<li>使用其他库的函数（例如，SciPy、Pandas 和 OpenCV）</li>
+</ul>
+<h3 id="索引">索引</h3>
+<h4 id="基本索引">基本索引</h4>
+<p>与其他标准 Python 序列完全相同：<code>x[0][2]</code></p>
+<p>语法糖：<code>x[0, 2] == x[0][2]</code></p>
+<h5 id="切片和步长">切片和步长</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># start:stop:step</span>
+</span></span><span style="display:flex;"><span>x[<span style="color:#099">1</span>:<span style="color:#099">7</span>:<span style="color:#099">2</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>NumPy 切片创建一个视图而不是副本，所以尽量同时调用copy()以生成副本，视图范围为[start,stop)</p>
+<p>负数索引从后往前找，比如数组该维度元素个数为N，那么-k表示索引为N-k</p>
+<p>索引超过长度则表示到数组最后一个元素</p>
+<p>默认start为0，stop为N-1，step为1</p>
+<p>使用与切片相同大小的其他数组对切片赋值可以设置原数组中的值</p>
+<h5 id="维度索引工具">维度索引工具</h5>
+<p>np.newaxis对象来添加维度</p>
+<p>Ellipsis对象等价于<code>...</code></p>
+<h4 id="高级索引">高级索引</h4>
+<p>高级索引总是返回数据的副本，不像切片返回视图</p>
+<p>高级索引总是进行广播和迭代</p>
+<h5 id="整数数组索引">整数数组索引</h5>
+<p>将整数数组作为索引会取整数数组中的元素作为下标来索引原数组中的元素，将索引到的元素作为一个新的数组，相当于增加一个维度</p>
+<p>索引超出范围会抛出错误</p>
+<p>多个整数数组作为索引并且个数小于等于原数组的维数时，每个整数数组标记一个维数，整数数组的元素个数一样表示生成的数组的元素个数</p>
+<h5 id="布尔数组索引">布尔数组索引</h5>
+<p>将布尔数组作为索引时，下标为true的布尔数组元素在布尔数组中的下标对应值 索引的原数组元素添加到返回数组中</p>
+<p>作为数组与整形类似，多个布尔数组作为索引时，仍然是每一个布尔数组标记一个维度</p>
+<h4 id="平面迭代器索引">平面迭代器索引</h4>
+<p>x.flat返回元素迭代器</p>
+<h4 id="为索引数组赋值">为索引数组赋值</h4>
+<p>切片视图可以直接修改</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>x[<span style="color:#099">2</span>:<span style="color:#099">7</span>] = np.arange(<span style="color:#099">5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 广播</span>
+</span></span><span style="display:flex;"><span>x[<span style="color:#099">2</span>:<span style="color:#099">7</span>] = <span style="color:#099">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果想根据高级索引修改元素，不要使用返回值（副本），在高级索引的后面直接进行修改如：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>x = np.array([<span style="color:#099">1.</span>, -<span style="color:#099">1.</span>, -<span style="color:#099">2.</span>, <span style="color:#099">3</span>])
+</span></span><span style="display:flex;"><span>x[x &lt; <span style="color:#099">0</span>] += <span style="color:#099">20</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="处理程序中可变数量的索引">处理程序中可变数量的索引</h4>
+<p>Ellipsis对象或<code>...</code></p>
+<h3 id="numpy-的-iohttpsnumpyorgdocstableuserbasicsiogenfromtxthtmlskipping-lines-and-choosing-columns"><a href="https://numpy.org/doc/stable/user/basics.io.genfromtxt.html#skipping-lines-and-choosing-columns" target="_blank" rel="noopener noreffer ">NumPy 的 I/O</a></h3>
+<p>genfromtxt函数从表格数据创建数组</p>
+<h3 id="数据类型httpsnumpyorgdocstableuserbasicstypeshtml"><a href="https://numpy.org/doc/stable/user/basics.types.html" target="_blank" rel="noopener noreffer ">数据类型</a></h3>
+<h3 id="广播">广播</h3>
+<div id="id-1"><p><figure><a class="lightgallery" href="https://numpy.org/doc/stable/_images/broadcasting_1.png" title="https://numpy.org/doc/stable/_images/broadcasting_1.png" data-thumbnail="https://numpy.org/doc/stable/_images/broadcasting_1.png" data-sub-html="<h2>1</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://numpy.org/doc/stable/_images/broadcasting_1.png"
+            data-srcset="https://numpy.org/doc/stable/_images/broadcasting_1.png, https://numpy.org/doc/stable/_images/broadcasting_1.png 1.5x, https://numpy.org/doc/stable/_images/broadcasting_1.png 2x"
+            data-sizes="auto"
+            alt="https://numpy.org/doc/stable/_images/broadcasting_1.png" />
+    </a><figcaption class="image-caption">1</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="https://numpy.org/doc/stable/_images/broadcasting_2.png" title="https://numpy.org/doc/stable/_images/broadcasting_2.png" data-thumbnail="https://numpy.org/doc/stable/_images/broadcasting_2.png" data-sub-html="<h2>2</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://numpy.org/doc/stable/_images/broadcasting_2.png"
+            data-srcset="https://numpy.org/doc/stable/_images/broadcasting_2.png, https://numpy.org/doc/stable/_images/broadcasting_2.png 1.5x, https://numpy.org/doc/stable/_images/broadcasting_2.png 2x"
+            data-sizes="auto"
+            alt="https://numpy.org/doc/stable/_images/broadcasting_2.png" />
+    </a><figcaption class="image-caption">2</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="https://numpy.org/doc/stable/_images/broadcasting_3.png" title="https://numpy.org/doc/stable/_images/broadcasting_3.png" data-thumbnail="https://numpy.org/doc/stable/_images/broadcasting_3.png" data-sub-html="<h2>3</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://numpy.org/doc/stable/_images/broadcasting_3.png"
+            data-srcset="https://numpy.org/doc/stable/_images/broadcasting_3.png, https://numpy.org/doc/stable/_images/broadcasting_3.png 1.5x, https://numpy.org/doc/stable/_images/broadcasting_3.png 2x"
+            data-sizes="auto"
+            alt="https://numpy.org/doc/stable/_images/broadcasting_3.png" />
+    </a><figcaption class="image-caption">3</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="https://numpy.org/doc/stable/_images/broadcasting_4.png" title="https://numpy.org/doc/stable/_images/broadcasting_4.png" data-thumbnail="https://numpy.org/doc/stable/_images/broadcasting_4.png" data-sub-html="<h2>4</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://numpy.org/doc/stable/_images/broadcasting_4.png"
+            data-srcset="https://numpy.org/doc/stable/_images/broadcasting_4.png, https://numpy.org/doc/stable/_images/broadcasting_4.png 1.5x, https://numpy.org/doc/stable/_images/broadcasting_4.png 2x"
+            data-sizes="auto"
+            alt="https://numpy.org/doc/stable/_images/broadcasting_4.png" />
+    </a><figcaption class="image-caption">4</figcaption>
+    </figure></p>
+</div>
+<h3 id="副本和视图">副本和视图</h3>
+<p>更改某些元数据（如stride和dtype）而不更改数据缓冲区从而以不同方式访问数组的实现为视图</p>
+<p>ndarray.view()方法新建一个视图</p>
+<p>ndarray.copy()方法新建副本</p>
+<p>切片是视图，高级索引总是创建副本</p>
+<p>base属性判断是视图还是副本，副本返回None，视图返回原始数组</p>
+<h3 id="结构化数组httpsnumpyorgdocstableuserbasicsrechtml"><a href="https://numpy.org/doc/stable/user/basics.rec.html" target="_blank" rel="noopener noreffer ">结构化数组</a></h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-03-04
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" data-title="Python-第三方库-Numpy" data-hashtags="Python第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" data-hashtag="Python第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" data-title="Python-第三方库-Numpy"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" data-title="Python-第三方库-Numpy"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" data-title="Python-第三方库-Numpy"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">Python第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%9D%82%E9%A1%B9/steam/" class="prev" rel="prev" title="杂项-Steam"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>杂项-Steam</a>
+            <a href="/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" class="next" rel="next" title="Python-第三方库-Pandas">Python-第三方库-Pandas<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d8d1a4.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-03-04T22:48:48+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"Python-第三方库-Numpy"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

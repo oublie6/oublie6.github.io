@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python-第三方库-Pandas - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="Python-第三方库-Pandas" />
+<meta property="og:description" content="PYPI官网 pandas官网 pandas API文档 pandas 提供快速、灵活和富有表现力的数据结构，旨在使处理“关系”或“标记”数据简单又直观 安装 anaconda 1 conda install pandas pip 1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-05T17:48:46+08:00" />
+<meta property="article:modified_time" content="2023-03-05T17:48:46+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Python-第三方库-Pandas"/>
+<meta name="twitter:description" content="PYPI官网 pandas官网 pandas API文档 pandas 提供快速、灵活和富有表现力的数据结构，旨在使处理“关系”或“标记”数据简单又直观 安装 anaconda 1 conda install pandas pip 1"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" /><link rel="prev" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python-第三方库-Pandas",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/pandas\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python第三方库","wordcount":  3715 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/pandas\/","datePublished": "2023-03-05T17:48:46+08:00","dateModified": "2023-03-05T17:48:46+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-Pandas</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-05">2023-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3715 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#常用函数">常用函数</a></li>
+    <li><a href="#数据类型">数据类型</a>
+      <ul>
+        <li><a href="#dataframe和series方法">dataframe和series方法：</a></li>
+        <li><a href="#datetime对象">datetime对象</a></li>
+        <li><a href="#datetimeindex对象">DatetimeIndex对象</a></li>
+        <li><a href="#datetimeindexresampler对象">DatetimeIndexResampler对象</a></li>
+      </ul>
+    </li>
+    <li><a href="#入门教程">入门教程</a>
+      <ul>
+        <li><a href="#处理的数据类型">处理的数据类型</a></li>
+        <li><a href="#如何读取和写入表格数据">如何读取和写入表格数据</a></li>
+        <li><a href="#如何选择-df-的子集">如何选择 df 的子集</a></li>
+        <li><a href="#如何创建plot绘图">如何创建plot绘图</a></li>
+        <li><a href="#从现有列派生的新列">从现有列派生的新列</a></li>
+        <li><a href="#计算汇总统计量">计算汇总统计量</a></li>
+        <li><a href="#重塑dataframe的布局">重塑dataframe的布局</a></li>
+        <li><a href="#如何合并多个表的数据">如何合并多个表的数据</a></li>
+        <li><a href="#如何轻松处理时间序列数据">如何轻松处理时间序列数据</a></li>
+        <li><a href="#如何操作文本数据">如何操作文本数据</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://pypi.org/" target="_blank" rel="noopener noreffer ">PYPI官网</a></p>
+<p><a href="https://pandas.pydata.org/docs/getting_started/index.html" target="_blank" rel="noopener noreffer ">pandas官网</a></p>
+<p><a href="https://pandas.pydata.org/docs/reference/index.html" target="_blank" rel="noopener noreffer ">pandas API文档</a></p>
+<p>pandas 提供快速、灵活和富有表现力的数据结构，旨在使处理“关系”或“标记”数据简单又直观</p>
+<h2 id="安装">安装</h2>
+<p>anaconda</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>conda install pandas
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pip</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip install pandas
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="常用函数">常用函数</h2>
+<ul>
+<li>pd.DataFrame():创建df</li>
+<li>pd.concat():合并两个结构相似的表</li>
+<li>pd.merge():连接两个表，on参数指定参照的key，how参数选择连接方式</li>
+<li>pd.to_datetime():将字符串Series转换为datetime对象Series，该类型为DatetimeIndex</li>
+<li>pd.read_xxx():读取xxx类型文件并返回df，parse_dates参数进行datetime对象列的转换</li>
+</ul>
+<h2 id="数据类型">数据类型</h2>
+<h3 id="dataframe和series方法">dataframe和series方法：</h3>
+<ul>
+<li>describe():对数值列进行统计并返回dataframe，百分号为百分位数</li>
+<li>max():获取最大值</li>
+<li>count():行数</li>
+<li>mean():平均值</li>
+<li>std():方差</li>
+<li>min():最小值</li>
+<li>pivot():重塑df，以选择一列的值作为新df的列名，colume参数选择选择的列，values参数设置默认值，index选择索引（没有index则使用原表的index）</li>
+<li>reset_index():添加新的索引列，id_vars参数指定新df的索引列</li>
+<li>pivot_table():和pivot类似，但是该方法统计聚合值</li>
+<li>head():返回前N行的df</li>
+<li>tail():返回最后N行的df</li>
+<li>to_xxx():将df转换为xxx类型文件</li>
+<li>isin():转换Series为布尔Series，值包含在其中的行为True，否则为False</li>
+<li>notna():转换Series为布尔Series，值不为None则为True，否则为False</li>
+<li>plot():生成plot绘图对象，之后可以使用matplotlib.pyplot.show()显式结果</li>
+<li>plot.xxx():生成xxx类型的plot绘图对象，也是用matplotlib.pyplot.show()显式结果</li>
+<li>rename():修改列名</li>
+<li>agg():给出列名和对于列要统计的聚合量，返回df</li>
+<li>groupby():按给定列的不同值进行分组，返回DataframeGroupby对象，该对象拥有和pd类似的方法和运算符</li>
+<li>value_counts():给定列统计不同值的行数，返回df</li>
+<li>info():查看技术信息</li>
+<li>set_index():设置索引列</li>
+<li>resample():按给定频率将时间索引进行分组，后面可以使用聚合函数来获取聚合值</li>
+</ul>
+<p>属性</p>
+<ul>
+<li>dtypes：返回每列的类型的df</li>
+</ul>
+<p>运算符：</p>
+<ul>
+<li>加减乘除和逻辑运算</li>
+<li><code>[]</code>:读取特定列返回df，作为左值时修改原df</li>
+<li><code>loc[]</code>:根据传入布尔Series过滤行并选择列返回df，作为左值时修改原df</li>
+<li><code>iloc[]</code>:直接传入行数和列数返回df，作为左值时修改原df</li>
+</ul>
+<h3 id="datetime对象">datetime对象</h3>
+<p>属性</p>
+<ul>
+<li>dt:通过该属性访问year，month等具体信息，这些信息可以用于给原df分组groupby</li>
+</ul>
+<h3 id="datetimeindex对象">DatetimeIndex对象</h3>
+<p>方法：具有和df类似的方法</p>
+<h3 id="datetimeindexresampler对象">DatetimeIndexResampler对象</h3>
+<p>方法：具有和df类似的方法</p>
+<p>属性：</p>
+<ul>
+<li>freq：分组频率</li>
+</ul>
+<h2 id="入门教程">入门教程</h2>
+<h3 id="处理的数据类型">处理的数据类型</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">pandas</span> <span style="color:#00a">as</span> <span style="color:#0aa;text-decoration:underline">pd</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" target="_blank" rel="noopener noreffer ">DataFrame</a></p>
+<div id="id-1"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/01_table_dataframe.svg" title="https://pandas.pydata.org/docs/_images/01_table_dataframe.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/01_table_dataframe.svg" data-sub-html="<h2>DataFrame</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/01_table_dataframe.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/01_table_dataframe.svg, https://pandas.pydata.org/docs/_images/01_table_dataframe.svg 1.5x, https://pandas.pydata.org/docs/_images/01_table_dataframe.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/01_table_dataframe.svg" />
+    </a><figcaption class="image-caption">DataFrame</figcaption>
+    </figure></div>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>df = pd.DataFrame(
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;Name&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#a50">&#34;Braund, Mr. Owen Harris&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#a50">&#34;Allen, Mr. William Henry&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#a50">&#34;Bonnell, Miss. Elizabeth&#34;</span>,
+</span></span><span style="display:flex;"><span>        ],
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;Age&#34;</span>: [<span style="color:#099">22</span>, <span style="color:#099">35</span>, <span style="color:#099">58</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;Sex&#34;</span>: [<span style="color:#a50">&#34;male&#34;</span>, <span style="color:#a50">&#34;male&#34;</span>, <span style="color:#a50">&#34;female&#34;</span>],
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>DataFrame是一种二维数据结构，可以在列中存储不同类型的数据（包括字符、整数、浮点值、分类数据等），类似于excel</p>
+<p>使用下标访问<a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.html#pandas.Series" target="_blank" rel="noopener noreffer ">Series列</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>df[<span style="color:#a50">&#34;Age&#34;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-2"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/01_table_series.svg" title="https://pandas.pydata.org/docs/_images/01_table_series.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/01_table_series.svg" data-sub-html="<h2>Series</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/01_table_series.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/01_table_series.svg, https://pandas.pydata.org/docs/_images/01_table_series.svg 1.5x, https://pandas.pydata.org/docs/_images/01_table_series.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/01_table_series.svg" />
+    </a><figcaption class="image-caption">Series</figcaption>
+    </figure></div>
+<p>Series也可以创建</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ages = pd.Series([<span style="color:#099">22</span>, <span style="color:#099">35</span>, <span style="color:#099">58</span>], name=<span style="color:#a50">&#34;Age&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>许多 pandas 操作返回 DataFrame 或 Series</p>
+<p>常用方法，更多详见<a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html?highlight=dataframe" target="_blank" rel="noopener noreffer ">文档</a></p>
+<h3 id="如何读取和写入表格数据">如何读取和写入表格数据</h3>
+<div id="id-3"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/02_io_readwrite.svg" title="https://pandas.pydata.org/docs/_images/02_io_readwrite.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/02_io_readwrite.svg" data-sub-html="<h2>Series</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/02_io_readwrite.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/02_io_readwrite.svg, https://pandas.pydata.org/docs/_images/02_io_readwrite.svg 1.5x, https://pandas.pydata.org/docs/_images/02_io_readwrite.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/02_io_readwrite.svg" />
+    </a><figcaption class="image-caption">Series</figcaption>
+    </figure></div>
+<p>read_xxx()函数读取xxx类型文件并返回DataFrame，如read_csv()函数读取csv文件并返回DataFrame，其他的还有csv、excel、sql、json、parquet 等</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic = pd.read_csv(<span style="color:#a50">&#34;data/titanic.csv&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>to_xxx()函数存储DataFrame为xxx类型文件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.to_excel(<span style="color:#a50">&#34;titanic.xlsx&#34;</span>, sheet_name=<span style="color:#a50">&#34;passengers&#34;</span>, index=<span style="color:#00a">False</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>df.head(N)方法查看df的前N行，df.tail(N)方法查看df的最后N行</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.head(<span style="color:#099">8</span>)
+</span></span><span style="display:flex;"><span>titanic.tail(<span style="color:#099">10</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>df.types属性查看每列的数据类型</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.dtypes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>df.info()方法查看df的技术信息</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.info()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="如何选择-df-的子集">如何选择 df 的子集</h3>
+<div id="id-4"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/03_subset_columns.svg" title="https://pandas.pydata.org/docs/_images/03_subset_columns.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/03_subset_columns.svg" data-sub-html="<h2>选择列</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/03_subset_columns.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/03_subset_columns.svg, https://pandas.pydata.org/docs/_images/03_subset_columns.svg 1.5x, https://pandas.pydata.org/docs/_images/03_subset_columns.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/03_subset_columns.svg" />
+    </a><figcaption class="image-caption">选择列</figcaption>
+    </figure></div>
+<p>使用<code>[]</code>选择单个列，返回Series对象，或选择多个列的列表，返回df对象</p>
+<p>df.shape属性返回一个元组，包含行数和列数，series.shape属性返回只包含行数的元组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>age_sex = titanic[[<span style="color:#a50">&#34;Age&#34;</span>, <span style="color:#a50">&#34;Sex&#34;</span>]]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>传入<code>[]</code>布尔值Series过滤特定行</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>above_35 = titanic[titanic[<span style="color:#a50">&#34;Age&#34;</span>] &gt; <span style="color:#099">35</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-5"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/03_subset_rows.svg" title="https://pandas.pydata.org/docs/_images/03_subset_rows.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/03_subset_rows.svg" data-sub-html="<h2>过滤行</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/03_subset_rows.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/03_subset_rows.svg, https://pandas.pydata.org/docs/_images/03_subset_rows.svg 1.5x, https://pandas.pydata.org/docs/_images/03_subset_rows.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/03_subset_rows.svg" />
+    </a><figcaption class="image-caption">过滤行</figcaption>
+    </figure></div>
+<p>除了比较运算符还可以用来生成布尔Series的函数</p>
+<ul>
+<li>isin([&hellip;]):值含于列表中</li>
+<li>notna():值不为None</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>class_23 = titanic[titanic[<span style="color:#a50">&#34;Pclass&#34;</span>].isin([<span style="color:#099">2</span>, <span style="color:#099">3</span>])]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>布尔值Series之间可以进行逻辑运算</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>class_23 = titanic[(titanic[<span style="color:#a50">&#34;Pclass&#34;</span>] == <span style="color:#099">2</span>) | (titanic[<span style="color:#a50">&#34;Pclass&#34;</span>] == <span style="color:#099">3</span>)]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-6"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/03_subset_columns_rows.svg" title="https://pandas.pydata.org/docs/_images/03_subset_columns_rows.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/03_subset_columns_rows.svg" data-sub-html="<h2>选择特定行和列</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/03_subset_columns_rows.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/03_subset_columns_rows.svg, https://pandas.pydata.org/docs/_images/03_subset_columns_rows.svg 1.5x, https://pandas.pydata.org/docs/_images/03_subset_columns_rows.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/03_subset_columns_rows.svg" />
+    </a><figcaption class="image-caption">选择特定行和列</figcaption>
+    </figure></div>
+<p>在<code>[]</code>前面添加<code>loc</code>运算符，第一个参数是行过滤条件，第二个参数是选择的列</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>adult_names = titanic.loc[titanic[<span style="color:#a50">&#34;Age&#34;</span>] &gt; <span style="color:#099">35</span>, <span style="color:#a50">&#34;Name&#34;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>还可以使用<code>iloc</code>函数直接指定行数和列数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.iloc[<span style="color:#099">9</span>:<span style="color:#099">25</span>, <span style="color:#099">2</span>:<span style="color:#099">5</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用loc和iloc选择单列时可以直接赋值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.iloc[<span style="color:#099">0</span>:<span style="color:#099">3</span>, <span style="color:#099">3</span>] = <span style="color:#a50">&#34;anonymous&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="如何创建plot绘图">如何创建plot绘图</h3>
+<div id="id-7"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/04_plot_overview.svg" title="https://pandas.pydata.org/docs/_images/04_plot_overview.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/04_plot_overview.svg" data-sub-html="<h2>plot绘图</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/04_plot_overview.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/04_plot_overview.svg, https://pandas.pydata.org/docs/_images/04_plot_overview.svg 1.5x, https://pandas.pydata.org/docs/_images/04_plot_overview.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/04_plot_overview.svg" />
+    </a><figcaption class="image-caption">plot绘图</figcaption>
+    </figure></div>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">pandas</span> <span style="color:#00a">as</span> <span style="color:#0aa;text-decoration:underline">pd</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#0aa;text-decoration:underline">matplotlib.pyplot</span> <span style="color:#00a">as</span> <span style="color:#0aa;text-decoration:underline">plt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>读取csv文件并设置索引列参数index_col，这里索引列是date类型，所以需要参数parse_dates为true转换一下</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality = pd.read_csv(<span style="color:#a50">&#34;air_quality_no2.csv&#34;</span>, index_col=<span style="color:#099">0</span>, parse_dates=<span style="color:#00a">True</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建plot对象，然后展示plot对象</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality.plot()
+</span></span><span style="display:flex;"><span>plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>df.plot.scatter方法比较两个列的散点图，参数x和参数y选择列名，</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality.plot.scatter(x=<span style="color:#a50">&#34;station_london&#34;</span>, y=<span style="color:#a50">&#34;station_paris&#34;</span>, alpha=<span style="color:#099">0.5</span>)
+</span></span><span style="display:flex;"><span>plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>df.plot.box方法画箱线图</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality.plot.box()
+</span></span><span style="display:flex;"><span>plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>除了scatter和box还有很多其他的图，比如箱线图，详见<a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html?highlight=plot" target="_blank" rel="noopener noreffer ">文档</a></p>
+<p>df.plot.area画堆积面积图，figsize为一个二元组表示图表的长和宽，参数subplots将每一列单独放到一个图中，其他图也可以使用这两个参数，类似参数详见<a href="https://pandas.pydata.org/docs/user_guide/visualization.html#visualization-formatting" target="_blank" rel="noopener noreffer ">文档</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality.plot.area(figsize=(<span style="color:#099">12</span>, <span style="color:#099">4</span>), subplots=<span style="color:#00a">True</span>)
+</span></span><span style="display:flex;"><span>plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pandas 创建的每个绘图对象都是一个 Matplotlib 对象</p>
+<h3 id="从现有列派生的新列">从现有列派生的新列</h3>
+<div id="id-8"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/05_newcolumn_1.svg" title="https://pandas.pydata.org/docs/_images/05_newcolumn_1.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/05_newcolumn_1.svg" data-sub-html="<h2>派生新列</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/05_newcolumn_1.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/05_newcolumn_1.svg, https://pandas.pydata.org/docs/_images/05_newcolumn_1.svg 1.5x, https://pandas.pydata.org/docs/_images/05_newcolumn_1.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/05_newcolumn_1.svg" />
+    </a><figcaption class="image-caption">派生新列</figcaption>
+    </figure></div>
+<p>给<code>[]</code>传入新列名称并赋值，可以直接用一个Series进行运算的结果赋值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality[<span style="color:#a50">&#34;london_mg_per_cubic&#34;</span>] = air_quality[<span style="color:#a50">&#34;station_london&#34;</span>] * <span style="color:#099">1.882</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以直接将Series加减乘除一个值或逻辑运算，会给每一个元素进行这样的运算，Series之间也可以进行加减乘除运算或逻辑运算，会逐个对应元素进行运算。如果需要更高级的逻辑可以使用<a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html#pandas.DataFrame.apply" target="_blank" rel="noopener noreffer ">apply方法</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality[<span style="color:#a50">&#34;ratio_paris_antwerp&#34;</span>] = air_quality[<span style="color:#a50">&#34;station_paris&#34;</span>] / air_quality[<span style="color:#a50">&#34;station_antwerp&#34;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>rename方法重命名列标签，未重命名的列保持原名</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality_renamed = air_quality.rename(
+</span></span><span style="display:flex;"><span>    columns={
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;station_antwerp&#34;</span>: <span style="color:#a50">&#34;BETR801&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;station_paris&#34;</span>: <span style="color:#a50">&#34;FR04014&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;station_london&#34;</span>: <span style="color:#a50">&#34;London Westminster&#34;</span>,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>air_quality_renamed.plot()
+</span></span><span style="display:flex;"><span>plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>还可以使用函数来重命名映射，如str.lower将名称转换为小写</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality_renamed = air_quality_renamed.rename(columns=<span style="color:#0aa">str</span>.lower)
+</span></span><span style="display:flex;"><span>air_quality_renamed.head()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="计算汇总统计量">计算汇总统计量</h3>
+<p>聚合统计</p>
+<p>DataFrame.agg方法定义给定列的聚合统计信息的特定组合，更多聚合统计信息见<a href="https://pandas.pydata.org/docs/user_guide/basics.html#descriptive-statistics" target="_blank" rel="noopener noreffer ">文档</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.agg(
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;Age&#34;</span>: [<span style="color:#a50">&#34;min&#34;</span>, <span style="color:#a50">&#34;max&#34;</span>, <span style="color:#a50">&#34;median&#34;</span>, <span style="color:#a50">&#34;skew&#34;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#a50">&#34;Fare&#34;</span>: [<span style="color:#a50">&#34;min&#34;</span>, <span style="color:#a50">&#34;max&#34;</span>, <span style="color:#a50">&#34;median&#34;</span>, <span style="color:#a50">&#34;mean&#34;</span>],
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>返回以键为列名，所有值列表的并集为index索引的dataframe</p>
+<div id="id-9"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/06_groupby_select_detail.svg" title="https://pandas.pydata.org/docs/_images/06_groupby_select_detail.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/06_groupby_select_detail.svg" data-sub-html="<h2>groupby</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/06_groupby_select_detail.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/06_groupby_select_detail.svg, https://pandas.pydata.org/docs/_images/06_groupby_select_detail.svg 1.5x, https://pandas.pydata.org/docs/_images/06_groupby_select_detail.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/06_groupby_select_detail.svg" />
+    </a><figcaption class="image-caption">groupby</figcaption>
+    </figure></div>
+<p>groupby方法将dataframe按指定列的值分组，然后可以给每一组求聚合统计信息，分组也拥有df的几乎所有方法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic[[<span style="color:#a50">&#34;Sex&#34;</span>, <span style="color:#a50">&#34;Age&#34;</span>]].groupby(<span style="color:#a50">&#34;Sex&#34;</span>).mean()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>返回以选择的列名为返回值的列明，groupby列不同值为索引的dataframe</p>
+<p>整个过程为：</p>
+<ul>
+<li>将数据分组</li>
+<li>将函数独立应用于每个组</li>
+<li>将结果组合成数据结构</li>
+</ul>
+<p>也可以先分组再选择列</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.groupby([<span style="color:#a50">&#34;Sex&#34;</span>, <span style="color:#a50">&#34;Pclass&#34;</span>])[<span style="color:#a50">&#34;Fare&#34;</span>].mean()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以选择多个列进行分组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.groupby([<span style="color:#a50">&#34;Sex&#34;</span>, <span style="color:#a50">&#34;Pclass&#34;</span>])[<span style="color:#a50">&#34;Fare&#34;</span>].mean()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://pandas.pydata.org/docs/user_guide/groupby.html#groupby" target="_blank" rel="noopener noreffer ">groupby文档详解</a></p>
+<p>value_counts方法统计每种值的行数，其实是分组操作的组合，常用于离散化</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic[<span style="color:#a50">&#34;Pclass&#34;</span>].value_counts()
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 等价于</span>
+</span></span><span style="display:flex;"><span>titanic.groupby(<span style="color:#a50">&#34;Pclass&#34;</span>)[<span style="color:#a50">&#34;Pclass&#34;</span>].count()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="重塑dataframe的布局">重塑dataframe的布局</h3>
+<p>df.sort_values方法排序行，by参数选择排序依据的列，ascending参数确定是否升序排列，默认升序。<a href="https://pandas.pydata.org/docs/user_guide/basics.html#basics-sorting" target="_blank" rel="noopener noreffer ">排序详细内容文档</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>titanic.sort_values(by=[<span style="color:#a50">&#39;Pclass&#39;</span>, <span style="color:#a50">&#39;Age&#39;</span>], ascending=<span style="color:#00a">False</span>).head()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前面<a href="#%e5%a6%82%e4%bd%95%e9%80%89%e6%8b%a9-df-%e7%9a%84%e5%ad%90%e9%9b%86" rel="">如何选择df子集</a>，可以传入布尔值df来取子集</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>no2 = air_quality[air_quality[<span style="color:#a50">&#34;parameter&#34;</span>] == <span style="color:#a50">&#34;no2&#34;</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-10"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/07_pivot.svg" title="https://pandas.pydata.org/docs/_images/07_pivot.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/07_pivot.svg" data-sub-html="<h2>pivot</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/07_pivot.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/07_pivot.svg, https://pandas.pydata.org/docs/_images/07_pivot.svg 1.5x, https://pandas.pydata.org/docs/_images/07_pivot.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/07_pivot.svg" />
+    </a><figcaption class="image-caption">pivot</figcaption>
+    </figure></div>
+<p>pivot()方法重塑df，以选择的列的不同值为新df的列，colume参数为选择的列，values参数设置默认值，index选择索引（没有index则使用原表的index，修改index后会表格会取平均值），更多详见<a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pivot.html#pandas.DataFrame.pivot" target="_blank" rel="noopener noreffer ">官网文档</a></p>
+<p>reset_index()方法将添加新的索引列</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>no2_pivoted = no2.pivot(columns=<span style="color:#a50">&#34;location&#34;</span>, values=<span style="color:#a50">&#34;value&#34;</span>).reset_index()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-11"><figure><a class="lightgallery" href="https://pandas.pydata.org/docs/_images/07_melt.svg" title="https://pandas.pydata.org/docs/_images/07_melt.svg" data-thumbnail="https://pandas.pydata.org/docs/_images/07_melt.svg" data-sub-html="<h2>melt</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://pandas.pydata.org/docs/_images/07_melt.svg"
+            data-srcset="https://pandas.pydata.org/docs/_images/07_melt.svg, https://pandas.pydata.org/docs/_images/07_melt.svg 1.5x, https://pandas.pydata.org/docs/_images/07_melt.svg 2x"
+            data-sizes="auto"
+            alt="https://pandas.pydata.org/docs/_images/07_melt.svg" />
+    </a><figcaption class="image-caption">melt</figcaption>
+    </figure></div>
+<p>melt()方法与pivot()方法相反的转换，id_vars参数指定新df的索引列</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>no_2 = no2_pivoted.melt(id_vars=<span style="color:#a50">&#34;date.utc&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pivot方法只是<a href="https://pandas.pydata.org/docs/user_guide/reshaping.html#reshaping" target="_blank" rel="noopener noreffer ">将数据重新排列</a>多个值将出现多个索引值，列聚合值可以使用pivot_table()方法，它多了一个aggfunc参数标记聚合值，将margins参数设为True时会统计边际总和值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality.pivot_table(
+</span></span><span style="display:flex;"><span>    values=<span style="color:#a50">&#34;value&#34;</span>, index=<span style="color:#a50">&#34;location&#34;</span>, columns=<span style="color:#a50">&#34;parameter&#34;</span>, aggfunc=<span style="color:#a50">&#34;mean&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="如何合并多个表的数据">如何合并多个表的数据</h3>
+<p>concat函数合并两个结构相似的df</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pd.concat([air_quality_pm25, air_quality_no2], axis=<span style="color:#099">0</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>merge函数根据on参数连接两个df，how参数选择连接方式，可以选择内连接，外连接和左右连接</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality = pd.merge(air_quality, stations_coord, how=<span style="color:#a50">&#34;left&#34;</span>, on=<span style="color:#a50">&#34;location&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="如何轻松处理时间序列数据">如何轻松处理时间序列数据</h3>
+<p>to_datetime函数将字符串Series转换为datetime对象列，该对象为DatetimeIndex</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality[<span style="color:#a50">&#34;datetime&#34;</span>] = pd.to_datetime(air_quality[<span style="color:#a50">&#34;datetime&#34;</span>])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另外在read_csv函数中添加parse_dates参数可以在读取文件时顺便转换</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>pd.read_csv(<span style="color:#a50">&#34;../data/air_quality_no2_long.csv&#34;</span>, parse_dates=[<span style="color:#a50">&#34;datetime&#34;</span>])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>datetime对象的dt属性访问详细日期信息，且该信息可以像df中的普通列一样进行分组groupby</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>air_quality[<span style="color:#a50">&#34;month&#34;</span>] = air_quality[<span style="color:#a50">&#34;datetime&#34;</span>].dt.month
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 用于分组</span>
+</span></span><span style="display:flex;"><span>air_quality.groupby([air_quality[<span style="color:#a50">&#34;datetime&#34;</span>].dt.weekday, <span style="color:#a50">&#34;location&#34;</span>])[<span style="color:#a50">&#34;value&#34;</span>].mean()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>索引为datetime对象时可以不通过dt属性，而使用index属性来访问内部时间信息</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>no_2.index.year, no_2.index.weekday
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>resample方法按给定频率将时间索引进行分组，结果时DatetimeIndexResampler对象，它后面可以使用聚合函数来获取聚合值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>monthly_max = no_2.resample(<span style="color:#a50">&#34;M&#34;</span>).max()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="如何操作文本数据">如何操作文本数据</h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-03-05
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" data-title="Python-第三方库-Pandas" data-hashtags="Python第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" data-hashtag="Python第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" data-title="Python-第三方库-Pandas"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" data-title="Python-第三方库-Pandas"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/pandas/" data-title="Python-第三方库-Pandas"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">Python第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/numpy/" class="prev" rel="prev" title="Python-第三方库-Numpy"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Python-第三方库-Numpy</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/c32271.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-03-05T17:48:46+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"Python-第三方库-Pandas"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
