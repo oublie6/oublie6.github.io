@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E6%8E%A5%E5%8F%A3interfaces%E4%B8%8E%E5%8F%8D%E5%B0%84reflection\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  1157 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  983 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E6%8E%A5%E5%8F%A3interfaces%E4%B8%8E%E5%8F%8D%E5%B0%84reflection\/","datePublished": "2022-12-11T17:33:21+08:00","dateModified": "2022-12-11T17:33:21+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-接口（Interfaces）与反射（reflection）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1157 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;983 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -223,18 +223,6 @@
 </div>
 </div><p>使用接口使代码更具有普适性。</p>
 <h2 id="使用方法集与接口">使用方法集与接口</h2>
-<ul>
-<li>指针方法可以通过指针调用</li>
-<li>值方法可以通过值调用</li>
-<li>接收者是值的方法可以通过指针调用，因为指针会首先被解引用</li>
-<li>接收者是指针的方法不可以通过值调用，因为存储在接口中的值没有地址</li>
-</ul>
-<p>总结一下Go 语言规范定义了接口方法集的调用规则：</p>
-<ul>
-<li>类型 *T 的可调用方法集包含接受者为 T 或 *T 的所有方法集</li>
-<li>类型 T 的可调用方法集包含接受者为 T 的所有方法</li>
-<li>类型 T 的可调用方法集不包含接受者为 *T 的方法</li>
-</ul>
 <p>记住3点即可</p>
 <ol>
 <li>go语言里面只有值传递，包括方法接收者</li>
