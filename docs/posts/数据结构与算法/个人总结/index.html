@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  3224 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  3635 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93\/","datePublished": "2022-12-28T11:49:51+08:00","dateModified": "2022-12-28T11:49:51+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-个人总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-28">2022-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3224 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-28">2022-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3635 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -149,7 +149,8 @@
     <li><a href="#前缀和哈希表解决子数组问题">前缀和哈希表解决子数组问题</a></li>
     <li><a href="#数位dp">数位DP</a></li>
     <li><a href="#序列中只有一个数字出现k次">序列中只有一个数字出现k次</a></li>
-    <li><a href="#heading"></a></li>
+    <li><a href="#树的直径">树的直径</a></li>
+    <li><a href="#二进制枚举子集">二进制枚举子集</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>使用golang做题与使用其他语言做题有一些不同，golang原生的语法中的slice和map支持很多数据结构的简单构造如队列或栈，但是golang并没有提供C++ STL、Java Collection这样丰富的数据结构库，go标准库的container库仅提供了list，ring和heap（优先队列，必须掌握）。这三个库可以实现所有的数据结构但是过于复杂的数据结构实现过程会花很多时间。对于复杂的数据结构可以使用第三方库GODS来提高做题效率，比如红黑树。</p>
@@ -925,8 +926,117 @@
 <h2 id="序列中只有一个数字出现k次">序列中只有一个数字出现k次</h2>
 <p>除了一个数字出现k次外，其他数字出现m次，m不可整除k</p>
 <p>位运算，记录每个位出现1的次数，当次数除以m不能除尽时，对于目标数字在该位上为1</p>
-<h2 id="heading"></h2>
-</div><div class="post-footer" id="post-footer">
+<h2 id="树的直径">树的直径</h2>
+<p><a href="https://blog.csdn.net/m0_51572183/article/details/128044945" target="_blank" rel="noopener noreffer ">树的直径（两次DFS + 树形DP）</a></p>
+<p>两种方法，两遍dfs和树形DP，这里的graph均为邻接表([][]int)，深度的定义为从当前根节点到叶子节点的路径的最大值</p>
+<p>dfs，O(2N)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>visited:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,n)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> dfs <span style="color:#00a">func</span>(<span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>dfs=<span style="color:#00a">func</span>(i <span style="color:#0aa">int</span>)(<span style="color:#0aa">int</span>,<span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>  visited[i]=<span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//maxLen记录i作为根节点的最大深度,node记录最深的叶子节点
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  maxLen,node:=<span style="color:#099">0</span>,i
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> _,j:=<span style="color:#00a">range</span> graph[i]{
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> !visited[j]{
+</span></span><span style="display:flex;"><span>      tmp,tmpnode:=<span style="color:#0a0">dfs</span>(j)+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#00a">if</span> maxLen&lt;tmp{
+</span></span><span style="display:flex;"><span>        maxLen=tmp
+</span></span><span style="display:flex;"><span>        node=tmpnode
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> maxLen,node
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>_,n1:=<span style="color:#0a0">dfs</span>(<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>diameter,n2:=<span style="color:#0a0">dfs</span>(n1)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>树形DP（在遍历子树的过程中记录子树的结果并返回给父节点），O(N)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>visited:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,n)
+</span></span><span style="display:flex;"><span>diameter:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> dfs <span style="color:#00a">func</span>(<span style="color:#0aa">int</span>) <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>dfs = <span style="color:#00a">func</span>(i <span style="color:#0aa">int</span>) (<span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>  visited[i]=<span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>  maxLen=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> _, j := <span style="color:#00a">range</span> graph[i] {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> !visited[j] {
+</span></span><span style="display:flex;"><span>      tmp := <span style="color:#0a0">dfs</span>(j)+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#aaa;font-style:italic">//max即上面的工具函数，maxLen记录最深子树分支的深度，当前分支的深度，看加起来是否大于当前记录diameter
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>      diameter = <span style="color:#0a0">max</span>(diameter, maxLen+tmp)
+</span></span><span style="display:flex;"><span>      <span style="color:#aaa;font-style:italic">//更新maxLen记录
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>      maxLen = <span style="color:#0a0">max</span>(maxLen, tmp)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二进制枚举子集">二进制枚举子集</h2>
+<p>使用一个整数的二进制来表示问题的状态，每一位是否为1表示元素是否在当前状态。</p>
+<p>这样可以直接通过将整数加1来枚举所有问题状态</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">for</span> mask=<span style="color:#099">1</span>;mask&lt;<span style="color:#099">1</span>&lt;&lt;n;mask++{
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
