@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/leetcode\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  212 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  601 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/leetcode\/","datePublished": "2023-03-14T19:22:41+08:00","dateModified": "2023-03-14T19:22:41+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-刷题-Leetcode</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-14">2023-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;212 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-14">2023-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;601 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -113,6 +113,9 @@
   <ul>
     <li><a href="#8-字符串转换整数-atoihttpsleetcodecnproblemsstring-to-integer-atoi"><a href="https://leetcode.cn/problems/string-to-integer-atoi/">8. 字符串转换整数 (atoi)</a></a></li>
     <li><a href="#51-n-皇后httpsleetcodecnproblemsn-queens"><a href="https://leetcode.cn/problems/n-queens/">51. N 皇后</a></a></li>
+    <li><a href="#52-n-皇后-iihttpsleetcodecnproblemsn-queens-ii"><a href="https://leetcode.cn/problems/n-queens-ii/">52. N 皇后 II</a></a></li>
+    <li><a href="#58-最后一个单词的长度httpsleetcodecnproblemslength-of-last-word"><a href="https://leetcode.cn/problems/length-of-last-word/">58. 最后一个单词的长度</a></a></li>
+    <li><a href="#60-排列序列httpsleetcodecnproblemspermutation-sequence"><a href="https://leetcode.cn/problems/permutation-sequence/">60. 排列序列</a></a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="8-字符串转换整数-atoihttpsleetcodecnproblemsstring-to-integer-atoi"><a href="https://leetcode.cn/problems/string-to-integer-atoi/" target="_blank" rel="noopener noreffer ">8. 字符串转换整数 (atoi)</a></h2>
@@ -256,6 +259,174 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#0a0">backtrack</span>(<span style="color:#099">0</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="52-n-皇后-iihttpsleetcodecnproblemsn-queens-ii"><a href="https://leetcode.cn/problems/n-queens-ii/" target="_blank" rel="noopener noreffer ">52. N 皇后 II</a></h2>
+<p>逻辑与N皇后一样，但是统计basecase的逻辑改为计数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">totalNQueens</span>(n <span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    colbool:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,n)
+</span></span><span style="display:flex;"><span>    leftup:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,<span style="color:#099">2</span>*n-<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>    rightup:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,<span style="color:#099">2</span>*n-<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> backtrack <span style="color:#00a">func</span>(row <span style="color:#0aa">int</span>)
+</span></span><span style="display:flex;"><span>    backtrack=<span style="color:#00a">func</span>(row <span style="color:#0aa">int</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#aaa;font-style:italic">//fmt.Println(colbool,leftup,rightup)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>        <span style="color:#00a">if</span> row==n{
+</span></span><span style="display:flex;"><span>            ans++
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> col:=<span style="color:#099">0</span>;col&lt;n;col++{
+</span></span><span style="display:flex;"><span>            lu,ru:=row-col+n-<span style="color:#099">1</span>,row+col
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> !(colbool[col]||leftup[lu]||rightup[ru]){
+</span></span><span style="display:flex;"><span>                colbool[col],leftup[lu],rightup[ru]=<span style="color:#00a">true</span>,<span style="color:#00a">true</span>,<span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a0">backtrack</span>(row+<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>                colbool[col],leftup[lu],rightup[ru]=<span style="color:#00a">false</span>,<span style="color:#00a">false</span>,<span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">backtrack</span>(<span style="color:#099">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="58-最后一个单词的长度httpsleetcodecnproblemslength-of-last-word"><a href="https://leetcode.cn/problems/length-of-last-word/" target="_blank" rel="noopener noreffer ">58. 最后一个单词的长度</a></h2>
+<p>简单模拟，从后往前数字母</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">lengthOfLastWord</span>(s <span style="color:#0aa">string</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    s=strings.<span style="color:#0a0">TrimSpace</span>(s)
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#0aa">len</span>(s)-<span style="color:#099">1</span>;i&gt;=<span style="color:#099">0</span>;i--{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> unicode.<span style="color:#0a0">IsLetter</span>(<span style="color:#0aa">rune</span>(s[i])){
+</span></span><span style="display:flex;"><span>            ans++
+</span></span><span style="display:flex;"><span>        }<span style="color:#00a">else</span>{<span style="color:#00a">break</span>}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="60-排列序列httpsleetcodecnproblemspermutation-sequence"><a href="https://leetcode.cn/problems/permutation-sequence/" target="_blank" rel="noopener noreffer ">60. 排列序列</a></h2>
+<p>数学，从最高位开始往后计算值，对于从右往左第t位每一个值包含的子状态数步长为<code>t!</code>，首先计算每一位的步长sep，然后根据sep从左往右计算t位上的第<code>ans[t]</code>个未使用数字，最后使用onpath数组迭代从左往右求每位的具体值，最后输出值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">getPermutation</span>(n <span style="color:#0aa">int</span>, k <span style="color:#0aa">int</span>) <span style="color:#0aa">string</span> {
+</span></span><span style="display:flex;"><span>    onpath:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,n+<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,n)
+</span></span><span style="display:flex;"><span>    sep:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,n)
+</span></span><span style="display:flex;"><span>    tmp:=<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i,j:=n-<span style="color:#099">1</span>,<span style="color:#099">1</span>;i&gt;=<span style="color:#099">0</span>;{
+</span></span><span style="display:flex;"><span>        tmp*=j
+</span></span><span style="display:flex;"><span>        sep[i]=tmp
+</span></span><span style="display:flex;"><span>        i--
+</span></span><span style="display:flex;"><span>        j++
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//统一结果，-1过后k/v正好就是从左往右第i位取的第ans[i]个未使用数字
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    k--
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i,v:=<span style="color:#00a">range</span> sep[<span style="color:#099">1</span>:]{
+</span></span><span style="display:flex;"><span>        ans[i]=k/v
+</span></span><span style="display:flex;"><span>        k-=ans[i]*v
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//fmt.Println(&#34;sep&#34;,sep)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    sb:=strings.Builder{}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> _,v:=<span style="color:#00a">range</span> ans{
+</span></span><span style="display:flex;"><span>        tmp:=<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> onpath[tmp]{tmp++}
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> v&gt;<span style="color:#099">0</span>{
+</span></span><span style="display:flex;"><span>            tmp++
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">for</span> onpath[tmp]{tmp++}
+</span></span><span style="display:flex;"><span>            v--
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        onpath[tmp]=<span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>        sb.<span style="color:#0a0">WriteString</span>(strconv.<span style="color:#0a0">Itoa</span>(tmp))
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//fmt.Println(&#34;ans&#34;,ans)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> sb.<span style="color:#0a0">String</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
