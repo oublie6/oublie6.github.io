@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  786 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  1349 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98\/","datePublished": "2023-03-11T13:36:15+08:00","dateModified": "2023-03-11T13:36:15+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-刷题-每日一题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;786 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1349 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -116,6 +116,7 @@
     <li><a href="#2383-赢得比赛需要的最少训练时长">2383. 赢得比赛需要的最少训练时长</a></li>
     <li><a href="#1605-给定行和列的和求可行矩阵">1605. 给定行和列的和求可行矩阵</a></li>
     <li><a href="#1615-最大网络秩">1615. 最大网络秩</a></li>
+    <li><a href="#2488-统计中位数为-k-的子数组">2488. 统计中位数为 K 的子数组</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://leetcode.cn/problemset/all/" target="_blank" rel="noopener noreffer ">leetcode 官网</a></p>
@@ -468,6 +469,154 @@
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> maxdegree+maxdegree2
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2488-统计中位数为-k-的子数组">2488. 统计中位数为 K 的子数组</h2>
+<p><a href="https://leetcode.cn/problems/count-subarrays-with-median-k/" target="_blank" rel="noopener noreffer ">2488. 统计中位数为 K 的子数组</a></p>
+<p>官方题解是前缀和+哈希表优化查询。自己做第一时间分析问题后选择记忆化搜索（类似区间动规），但是核心思想和官方题解一致。</p>
+<p>数组中一定是有索引为t值为k的数，并且子数组的左端点索引left和右端点索引right一定满足：<code>0&lt;=left&lt;=k&lt;=right&lt;l</code>，并且子数组中大于k的数的数目减去小于k的数的数目为0或1</p>
+<p>我的解题思路是首先通过memo[i]记录[i,k]区间大于k的数的数目减去小于k的数的数目的值，并以memo[i]为键i为值存入哈希表m，优化后续查询，然后固定右端点为[k,l)区间的j，使用tmp来记录后面 [k,j]区间大于k的数的数目减去小于k的数的数目的值。然后通过查询m中键为1-tmp或0-tmp的值i，那么[i,j]即为一个满足条件的子数组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">countSubarrays</span>(nums []<span style="color:#0aa">int</span>, k <span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    l:=<span style="color:#0aa">len</span>(nums)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> t <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i,v:=<span style="color:#00a">range</span> nums{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> v==k{
+</span></span><span style="display:flex;"><span>            t=i
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">break</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    memo:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,t+<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>    memo[t]=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    m:=<span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>][]<span style="color:#0aa">int</span>,l)
+</span></span><span style="display:flex;"><span>    m[<span style="color:#099">0</span>]=[]<span style="color:#0aa">int</span>{t}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=t-<span style="color:#099">1</span>;i&gt;=<span style="color:#099">0</span>;i--{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> nums[i]&gt;k{
+</span></span><span style="display:flex;"><span>            memo[i]=memo[i+<span style="color:#099">1</span>]+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>        }<span style="color:#00a">else</span>{memo[i]=memo[i+<span style="color:#099">1</span>]-<span style="color:#099">1</span>}
+</span></span><span style="display:flex;"><span>        m[memo[i]]=<span style="color:#0aa">append</span>(m[memo[i]],i)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> memo[i]==<span style="color:#099">0</span>||memo[i]==<span style="color:#099">1</span>{
+</span></span><span style="display:flex;"><span>            ans++
+</span></span><span style="display:flex;"><span>            <span style="color:#aaa;font-style:italic">//fmt.Println(i,t)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//fmt.Println(memo)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//fmt.Println(m)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    tmp:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> j:=t+<span style="color:#099">1</span>;j&lt;l;j++{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> nums[j]&gt;k{
+</span></span><span style="display:flex;"><span>            tmp++
+</span></span><span style="display:flex;"><span>        }<span style="color:#00a">else</span>{tmp--}
+</span></span><span style="display:flex;"><span>        ans+=<span style="color:#0aa">len</span>(m[<span style="color:#099">0</span>-tmp])+<span style="color:#0aa">len</span>(m[<span style="color:#099">1</span>-tmp])
+</span></span><span style="display:flex;"><span>        <span style="color:#aaa;font-style:italic">//fmt.Println(tmp)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>后续按官方题解优化代码，除了使用preSum，还有哈希表的值不使用数组，直接计数即可</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">countSubarrays</span>(nums []<span style="color:#0aa">int</span>, k <span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    l:=<span style="color:#0aa">len</span>(nums)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    preSum:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,l)
+</span></span><span style="display:flex;"><span>    m:=<span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]<span style="color:#0aa">int</span>,l)
+</span></span><span style="display:flex;"><span>    flag:=<span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    tmp:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i,v:=<span style="color:#00a">range</span> nums{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> v&gt;k{tmp++}<span style="color:#00a">else</span> <span style="color:#00a">if</span> v&lt;k{tmp--}
+</span></span><span style="display:flex;"><span>        preSum[i]=tmp
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> v==k{flag=<span style="color:#00a">true</span>}
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> flag{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> tmp==<span style="color:#099">0</span>||tmp==<span style="color:#099">1</span>{ans++}
+</span></span><span style="display:flex;"><span>            <span style="color:#aaa;font-style:italic">//tmp-target=1||tmp-target=0
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>            ans+=m[tmp-<span style="color:#099">1</span>]+m[tmp]
+</span></span><span style="display:flex;"><span>        }<span style="color:#00a">else</span>{m[tmp]++}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//fmt.Println(preSum)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//fmt.Println(m)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
