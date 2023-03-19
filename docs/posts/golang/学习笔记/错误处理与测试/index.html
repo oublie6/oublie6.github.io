@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  4010 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  4073 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95\/","datePublished": "2022-12-11T19:40:21+08:00","dateModified": "2022-12-11T19:40:21+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-错误处理与测试</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4010 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4073 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -158,6 +158,7 @@
 <p>在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者跟着<a href="https://go.wuhaolin.cn/" target="_blank" rel="noopener noreffer ">电子书</a>重新复习go语言相关内容的笔记</p>
 <p><a href="https://mp.weixin.qq.com/s?__biz=Mzg2ODU1MTI0OA==&amp;mid=2247485827&amp;idx=1&amp;sn=5b022401e3581b609e3fa1a5eba22bf8&amp;chksm=ceabd6bcf9dc5faac8b5ebb9a9f57b3bcafe24f761cf0699e8330a48f010903ef9e55584e575&amp;cur_album_id=1655138838454796294&amp;scene=190#rd" target="_blank" rel="noopener noreffer ">go-zero微服务实战系列（十一、大结局）</a></p>
 <p><a href="https://github.com/golang/mock" target="_blank" rel="noopener noreffer ">github gomock</a></p>
+<p><a href="https://github.com/xujinzheng/monkey/blob/master/README_zh-CN.md" target="_blank" rel="noopener noreffer ">gomock中文示例</a></p>
 <p><a href="https://blog.csdn.net/weixin_30337227/article/details/121316871" target="_blank" rel="noopener noreffer ">csdn 超级强zcq</a></p>
 <p><a href="https://www.liwenzhou.com/posts/Go/unit-test-3/" target="_blank" rel="noopener noreffer ">李文周博客</a></p>
 <p>Go 检查和报告错误条件的惯有方式</p>
@@ -784,6 +785,7 @@
 <li>Do(func)：执行操作，忽略返回值</li>
 <li>DoAndReturn(func)：执行并返回指定值</li>
 </ul>
+<p>Any()函数表示对参数没有要求，其他的还有Equ()函数，其实直接将限制字面量放到参数也可以进行相等限制</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -812,7 +814,7 @@
 <li>MinTimes() 最小次数</li>
 <li>AnyTimes() 任意次数（包括 0 次）</li>
 </ul>
-<ol start="4">
+<ol>
 <li>行为调用的保序</li>
 </ol>
 <p>默认情况下，行为调用顺序可以和mock对象行为注入顺序不一致，即不保序</p>
