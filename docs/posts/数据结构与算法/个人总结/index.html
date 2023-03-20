@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  3308 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  3420 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93\/","datePublished": "2022-12-28T11:49:51+08:00","dateModified": "2022-12-28T11:49:51+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-个人总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-28">2022-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3308 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-28">2022-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3420 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -929,9 +929,11 @@
 <p><a href="https://blog.csdn.net/hzf0701/article/details/116717851" target="_blank" rel="noopener noreffer ">CSDN unique_pursuit</a></p>
 <p>给定一个闭区间[l,r]，让你求这个区间中满足某种条件的数的总数</p>
 <ol>
-<li>求[0,r]满足条件的数的总数，从最高位逐位枚举，对于第n位（十进制或二进制等），r的数字位an，那么分两种情况[0,an-1]和an。[0,an-1]可以直接得到结果，an则继续细分，当第n位取an时，得到子问题第n-1位取值</li>
+<li>求[0,r]满足条件的数的总数，从最高位逐位枚举，对于第n位（十进制或二进制等），r的数字位an，那么分两种情况[0,an-1]和an（有时候0也需要作为额外的特殊情况，这样就是3个特殊情况了）。[0,an-1]可以直接得到结果，an则继续细分，当第n位取an时，得到子问题第n-1位取值</li>
 <li>求出[0,r]的结果之后，使用同样的方式求[0,l-1]的结果，然后相减就是最后的结果</li>
 </ol>
+<p>通常设置memo的大小为[位数][可取值（一般为10）]</p>
+<p>然后有一个dp(i)函数求第i位所在位置的答案(可以是递归也可以是递推)</p>
 <h2 id="序列中只有一个数字出现k次">序列中只有一个数字出现k次</h2>
 <p>除了一个数字出现k次外，其他数字出现m次，m不可整除k</p>
 <p>位运算，记录每个位出现1的次数，当次数除以m不能除尽时，对于目标数字在该位上为1</p>
@@ -950,7 +952,9 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><p><a href="https://space.bilibili.com/206214" target="_blank" rel="noopener noreffer ">bilibili 灵茶山艾府</a></p>
+<p>集合和二进制是一一对应的</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

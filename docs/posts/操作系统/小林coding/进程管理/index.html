@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  2375 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  2630 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86\/","datePublished": "2023-01-15T14:42:22+08:00","dateModified": "2023-01-15T14:42:22+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-小林coding-进程管理</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-15">2023-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2375 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-15">2023-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2630 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -153,6 +153,8 @@
     </li>
     <li><a href="#什么是悲观锁乐观锁">什么是悲观锁、乐观锁</a>
       <ul>
+        <li><a href="#互斥锁与自旋锁">互斥锁与自旋锁</a></li>
+        <li><a href="#读写锁">读写锁</a></li>
         <li><a href="#乐观锁与悲观锁">乐观锁与悲观锁</a></li>
       </ul>
     </li>
@@ -361,10 +363,24 @@
 <li>环路等待条件：多个线程获取资源的顺序构成了环形链</li>
 </ul>
 <h2 id="什么是悲观锁乐观锁">什么是悲观锁、乐观锁</h2>
+<h3 id="互斥锁与自旋锁">互斥锁与自旋锁</h3>
+<ul>
+<li>互斥锁加锁失败后，线程会释放 CPU ，给其他线程</li>
+<li>自旋锁加锁失败后，线程会忙等待，直到它拿到锁</li>
+</ul>
+<p>被锁住的代码执行时间很短，就不应该用互斥锁，而应该选用自旋锁，否则使用互斥锁</p>
+<p>在单核 CPU 上，需要抢占式的调度器（即不断通过时钟中断一个线程，运行其他线程）。否则，自旋锁在单 CPU 上无法使用，因为一个自旋的线程永远不会放弃 CPU</p>
+<h3 id="读写锁">读写锁</h3>
+<p>读写锁适用于能明确区分读操作和写操作的场景</p>
+<p>读写锁在读多写少的场景，能发挥出优势</p>
 <h3 id="乐观锁与悲观锁">乐观锁与悲观锁</h3>
-<p>悲观锁：访问共享资源前，先要上锁
-乐观锁：结束操作时检查是否有其他线程修改资源</p>
+<p>前面提到的互斥锁、自旋锁、读写锁，都是属于悲观锁</p>
+<ul>
+<li>悲观锁：访问共享资源前，先要上锁</li>
+<li>乐观锁：结束操作时检查是否有其他线程修改资源</li>
+</ul>
 <p>乐观锁全程并没有加锁，所以它也叫无锁编程</p>
+<p>只有在冲突概率非常低，且加锁成本非常高的场景时，才考虑使用乐观锁</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
