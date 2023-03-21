@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E7%B4%A2%E5%BC%95%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  3110 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  3131 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E7%B4%A2%E5%BC%95%E7%AF%87\/","datePublished": "2022-12-07T13:57:20+08:00","dateModified": "2022-12-07T13:57:20+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-mysql-小林coding-索引篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-07">2022-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3110 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-07">2022-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3131 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -309,38 +309,46 @@
 </ul>
 <h2 id="从数据页的角度看-b-树">从数据页的角度看 B+ 树</h2>
 <h3 id="innodb-是如何存储数据的">InnoDB 是如何存储数据的</h3>
-<div id="id-1"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/243b1466779a9e107ae3ef0155604a17.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/243b1466779a9e107ae3ef0155604a17.png, https://img-blog.csdnimg.cn/img_convert/243b1466779a9e107ae3ef0155604a17.png 1.5x, https://img-blog.csdnimg.cn/img_convert/243b1466779a9e107ae3ef0155604a17.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/243b1466779a9e107ae3ef0155604a17.png"
-        title="https://img-blog.csdnimg.cn/img_convert/243b1466779a9e107ae3ef0155604a17.png" /></div>
-<div id="id-2"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/fabd6dadd61a0aa342d7107213955a72.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/fabd6dadd61a0aa342d7107213955a72.png, https://img-blog.csdnimg.cn/img_convert/fabd6dadd61a0aa342d7107213955a72.png 1.5x, https://img-blog.csdnimg.cn/img_convert/fabd6dadd61a0aa342d7107213955a72.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/fabd6dadd61a0aa342d7107213955a72.png"
-        title="https://img-blog.csdnimg.cn/img_convert/fabd6dadd61a0aa342d7107213955a72.png" /></div>
-<div id="id-3"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/557d17e05ce90f18591c2305871af665.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/557d17e05ce90f18591c2305871af665.png, https://img-blog.csdnimg.cn/img_convert/557d17e05ce90f18591c2305871af665.png 1.5x, https://img-blog.csdnimg.cn/img_convert/557d17e05ce90f18591c2305871af665.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/557d17e05ce90f18591c2305871af665.png"
-        title="https://img-blog.csdnimg.cn/img_convert/557d17e05ce90f18591c2305871af665.png" /></div>
-<div id="id-4"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/261011d237bec993821aa198b97ae8ce.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/261011d237bec993821aa198b97ae8ce.png, https://img-blog.csdnimg.cn/img_convert/261011d237bec993821aa198b97ae8ce.png 1.5x, https://img-blog.csdnimg.cn/img_convert/261011d237bec993821aa198b97ae8ce.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/261011d237bec993821aa198b97ae8ce.png"
-        title="https://img-blog.csdnimg.cn/img_convert/261011d237bec993821aa198b97ae8ce.png" /></div>
+<div id="id-1"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/243b1466779a9e107ae3ef0155604a17.png" title="https://cdn.xiaolincoding.com//mysql/other/243b1466779a9e107ae3ef0155604a17.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/243b1466779a9e107ae3ef0155604a17.png" data-sub-html="<h2>数据页物理结构</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/243b1466779a9e107ae3ef0155604a17.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/243b1466779a9e107ae3ef0155604a17.png, https://cdn.xiaolincoding.com//mysql/other/243b1466779a9e107ae3ef0155604a17.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/243b1466779a9e107ae3ef0155604a17.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/243b1466779a9e107ae3ef0155604a17.png" />
+    </a><figcaption class="image-caption">数据页物理结构</figcaption>
+    </figure></div>
+<div id="id-2"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/261011d237bec993821aa198b97ae8ce.png" title="https://cdn.xiaolincoding.com//mysql/other/261011d237bec993821aa198b97ae8ce.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/261011d237bec993821aa198b97ae8ce.png" data-sub-html="<h2>数据页逻辑结构</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/261011d237bec993821aa198b97ae8ce.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/261011d237bec993821aa198b97ae8ce.png, https://cdn.xiaolincoding.com//mysql/other/261011d237bec993821aa198b97ae8ce.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/261011d237bec993821aa198b97ae8ce.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/261011d237bec993821aa198b97ae8ce.png" />
+    </a><figcaption class="image-caption">数据页逻辑结构</figcaption>
+    </figure></div>
+<div id="id-3"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/557d17e05ce90f18591c2305871af665.png" title="https://cdn.xiaolincoding.com//mysql/other/557d17e05ce90f18591c2305871af665.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/557d17e05ce90f18591c2305871af665.png" data-sub-html="<h2>链表结构</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/557d17e05ce90f18591c2305871af665.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/557d17e05ce90f18591c2305871af665.png, https://cdn.xiaolincoding.com//mysql/other/557d17e05ce90f18591c2305871af665.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/557d17e05ce90f18591c2305871af665.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/557d17e05ce90f18591c2305871af665.png" />
+    </a><figcaption class="image-caption">链表结构</figcaption>
+    </figure></div>
+<div id="id-4"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/7c635d682bd3cdc421bb9eea33a5a413.png" title="https://cdn.xiaolincoding.com//mysql/other/7c635d682bd3cdc421bb9eea33a5a413.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/7c635d682bd3cdc421bb9eea33a5a413.png" data-sub-html="<h2>B&#43;树</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/7c635d682bd3cdc421bb9eea33a5a413.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/7c635d682bd3cdc421bb9eea33a5a413.png, https://cdn.xiaolincoding.com//mysql/other/7c635d682bd3cdc421bb9eea33a5a413.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/7c635d682bd3cdc421bb9eea33a5a413.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/7c635d682bd3cdc421bb9eea33a5a413.png" />
+    </a><figcaption class="image-caption">B+树</figcaption>
+    </figure></div>
 <ul>
 <li>第一个分组中的记录只能有 1 条记录；</li>
 <li>最后一个分组中的记录条数范围只能在 1-8 条之间；</li>
@@ -384,11 +392,11 @@
 <div id="id-5"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/af711033aa3423330d3a4bc6baeb9532.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/af711033aa3423330d3a4bc6baeb9532.png, https://img-blog.csdnimg.cn/img_convert/af711033aa3423330d3a4bc6baeb9532.png 1.5x, https://img-blog.csdnimg.cn/img_convert/af711033aa3423330d3a4bc6baeb9532.png 2x"
+        data-src="https://cdn.xiaolincoding.com//mysql/other/af711033aa3423330d3a4bc6baeb9532.png"
+        data-srcset="https://cdn.xiaolincoding.com//mysql/other/af711033aa3423330d3a4bc6baeb9532.png, https://cdn.xiaolincoding.com//mysql/other/af711033aa3423330d3a4bc6baeb9532.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/af711033aa3423330d3a4bc6baeb9532.png 2x"
         data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/af711033aa3423330d3a4bc6baeb9532.png"
-        title="https://img-blog.csdnimg.cn/img_convert/af711033aa3423330d3a4bc6baeb9532.png" /></div>
+        alt="https://cdn.xiaolincoding.com//mysql/other/af711033aa3423330d3a4bc6baeb9532.png"
+        title="https://cdn.xiaolincoding.com//mysql/other/af711033aa3423330d3a4bc6baeb9532.png" /></div>
 <h3 id="如何优化-count">如何优化 count(*)</h3>
 <p>第一种，近似值</p>
 <p>执行 explain 命令效率是很高的，因为它并不会真正的去查询，下图中的 rows 字段值就是 explain 命令对表 t_order 记录的估算值。</p>
