@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  2344 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  2546 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98\/","datePublished": "2023-03-11T13:36:15+08:00","dateModified": "2023-03-11T13:36:15+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-刷题-每日一题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2344 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2546 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -122,6 +122,7 @@
     <li><a href="#1625-执行操作后字典序最小的字符串">1625. 执行操作后字典序最小的字符串</a></li>
     <li><a href="#1012-至少有-1-位重复的数字">1012. 至少有 1 位重复的数字</a></li>
     <li><a href="#2469-温度转换">2469. 温度转换</a></li>
+    <li><a href="#1626-无矛盾的最佳球队">1626. 无矛盾的最佳球队</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://leetcode.cn/problemset/all/" target="_blank" rel="noopener noreffer ">leetcode 官网</a></p>
@@ -1030,6 +1031,78 @@
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">convertTemperature</span>(celsius <span style="color:#0aa">float64</span>) []<span style="color:#0aa">float64</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> []<span style="color:#0aa">float64</span>{celsius+<span style="color:#099">273.15</span>,celsius*<span style="color:#099">1.8</span>+<span style="color:#099">32</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="1626-无矛盾的最佳球队">1626. 无矛盾的最佳球队</h2>
+<p><a href="https://leetcode.cn/problems/best-team-with-no-conflicts/" target="_blank" rel="noopener noreffer ">1626. 无矛盾的最佳球队</a></p>
+<p>排序+DP</p>
+<p>状态转移方程为 <code>dp[i]=max(dp[j])+scores[i],j&lt;i&amp;&amp;scores[i]&lt;=scores[j]</code>，方程比较简单就直接自底向上求解即可</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">bestTeamScore</span>(scores []<span style="color:#0aa">int</span>, ages []<span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">type</span> pair <span style="color:#00a">struct</span>{age,score <span style="color:#0aa">int</span>}
+</span></span><span style="display:flex;"><span>    l:=<span style="color:#0aa">len</span>(scores)
+</span></span><span style="display:flex;"><span>    s:=<span style="color:#0aa">make</span>([]pair,<span style="color:#099">0</span>,l)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i,v:=<span style="color:#00a">range</span> scores{
+</span></span><span style="display:flex;"><span>        s=<span style="color:#0aa">append</span>(s,pair{ages[i],v})
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    sort.<span style="color:#0a0">Slice</span>(s,<span style="color:#00a">func</span> (i,j <span style="color:#0aa">int</span>)<span style="color:#0aa">bool</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> s[i].age&lt;s[j].age{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">return</span> <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>        }<span style="color:#00a">else</span> <span style="color:#00a">if</span> s[i].age==s[j].age{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> s[i].score&lt;s[j].score{
+</span></span><span style="display:flex;"><span>                <span style="color:#00a">return</span> <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> <span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//fmt.Println(s)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    memo:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,l)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i,vi:=<span style="color:#00a">range</span> s{
+</span></span><span style="display:flex;"><span>        tmp:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> j,vj:=<span style="color:#00a">range</span> s[:i]{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> vi.score&gt;=vj.score&amp;&amp;tmp&lt;=memo[j]{tmp=memo[j]}
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        memo[i]=tmp+vi.score
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> ans&lt;memo[i]{ans=memo[i]}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
