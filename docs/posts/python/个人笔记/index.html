@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  1022 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  1243 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-02-26T11:51:41+08:00","dateModified": "2023-02-26T11:51:41+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-26">2023-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1022 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-26">2023-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1243 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -120,6 +120,7 @@
         <li><a href="#上传模块">上传模块</a></li>
       </ul>
     </li>
+    <li><a href="#对于要求传入迭代对象的参数">对于要求传入迭代对象的参数</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="pip安装包时冲突">pip安装包时冲突</h2>
@@ -216,9 +217,9 @@
 </span></span><span style="display:flex;"><span>├── pyproject.toml
 </span></span><span style="display:flex;"><span>├── README.md
 </span></span><span style="display:flex;"><span>├── src/
-</span></span><span style="display:flex;"><span>│   └── example_package_YOUR_USERNAME_HERE/
+</span></span><span style="display:flex;"><span>│   └── example_package_YOUR_USERNAME_HERE/ <span style="color:#aaa;font-style:italic"># 导入包名，和toml配置里的name对应</span>
 </span></span><span style="display:flex;"><span>│       ├── __init__.py
-</span></span><span style="display:flex;"><span>│       └── example.py
+</span></span><span style="display:flex;"><span>│       └── example.py <span style="color:#aaa;font-style:italic"># 导入的模块，可以有多个，后续直接通过`from 包名 import 模块名`导入</span>
 </span></span><span style="display:flex;"><span>└── tests/
 </span></span></code></pre></td></tr></table>
 </div>
@@ -266,10 +267,14 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[project]
-</span></span><span style="display:flex;"><span>name = <span style="color:#a50">&#34;example_package_YOUR_USERNAME_HERE&#34;</span>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>[project]
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 后续导入名称，和src里面的文件夹对应</span>
+</span></span><span style="display:flex;"><span>name = <span style="color:#a50">&#34;example_package_YOUR_USERNAME_HERE&#34;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 版本号</span>
 </span></span><span style="display:flex;"><span>version = <span style="color:#a50">&#34;0.0.1&#34;</span>
 </span></span><span style="display:flex;"><span>authors = [
 </span></span><span style="display:flex;"><span>  { name=<span style="color:#a50">&#34;Example Author&#34;</span>, email=<span style="color:#a50">&#34;author@example.com&#34;</span> },
@@ -282,10 +287,10 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;License :: OSI Approved :: MIT License&#34;</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;Operating System :: OS Independent&#34;</span>,
 </span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 依赖项，安装包之前自动安装下面的包</span>
 </span></span><span style="display:flex;"><span>dependencies = [
 </span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;networkx&#34;</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;matplotlib&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;mpl_toolkits&#34;</span>,
 </span></span><span style="display:flex;"><span>]
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[project.urls]
@@ -315,33 +320,58 @@
 </div><ol start="5">
 <li>创建许可证</li>
 </ol>
-<pre tabindex="0"><code class="language-LICENSE" data-lang="LICENSE">Copyright (c) 2018 The Python Packaging Authority
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &#34;Software&#34;), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-</code></pre><h3 id="上传模块">上传模块</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Copyright (c) <span style="color:#099">2018</span> The Python Packaging Authority
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Permission is hereby granted, free of charge, to any person obtaining a copy
+</span></span><span style="display:flex;"><span>of this software and associated documentation files (the <span style="color:#a50">&#34;Software&#34;</span>), to deal
+</span></span><span style="display:flex;"><span>in the Software without restriction, including without limitation the rights
+</span></span><span style="display:flex;"><span>to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+</span></span><span style="display:flex;"><span>copies of the Software, and to permit persons to whom the Software is
+</span></span><span style="display:flex;"><span>furnished to <span style="color:#00a">do</span> so, subject to the following conditions:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The above copyright notice and this permission notice shall be included in all
+</span></span><span style="display:flex;"><span>copies or substantial portions of the Software.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>THE SOFTWARE IS PROVIDED <span style="color:#a50">&#34;AS IS&#34;</span>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+</span></span><span style="display:flex;"><span>IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+</span></span><span style="display:flex;"><span>FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+</span></span><span style="display:flex;"><span>AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+</span></span><span style="display:flex;"><span>LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+</span></span><span style="display:flex;"><span>OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+</span></span><span style="display:flex;"><span>SOFTWARE.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="上传模块">上传模块</h3>
 <ol>
 <li>更新build模块:<code>python -m pip install --upgrade build</code></li>
 <li>在项目根目录运行build模块:<code>python -m build</code></li>
 <li>更新twine模块:<code>python -m pip install --upgrade twine</code></li>
-<li>在项目根目录使用twine上传模块到pypi:<code>python3 -m twine upload dist/*</code></li>
+<li>在项目根目录使用twine上传模块到pypi:<code>python -m twine upload dist/*</code></li>
 </ol>
-<p>之后就可以在本地安装自己的模块了:<code>python3 -m pip install example_package_YOUR_USERNAME_HERE</code></p>
+<p>之后就可以在本地安装自己的模块了:<code>python -m pip install example_package_YOUR_USERNAME_HERE</code></p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -357,8 +387,18 @@ SOFTWARE.
 </div><p>后续每次更新模块后需要修改版本号并将dist删掉重新执行<a href="#%e4%b8%8a%e4%bc%a0%e6%a8%a1%e5%9d%97" rel="">上传模块</a>的步骤</p>
 <p><a href="https://pypi.org/help/#file-name-reuse" target="_blank" rel="noopener noreffer ">为什么会出现“文件名或内容已存在”或“文件名以前已被使用”错误？</a></p>
 <p>PyPI 上的分发文件名由项目名称、版本号和分发类型的组合组成</p>
-<p>PyPI 不允许重复使用文件名</p>
-</div><div class="post-footer" id="post-footer">
+<p>出于法律考虑，PyPI 不允许重复使用文件名，即使你的模块已经删除或者你的版本已经删除，仍然无法上传相同名字和版本的模块</p>
+<h2 id="对于要求传入迭代对象的参数">对于要求传入迭代对象的参数</h2>
+<p>可以在调用函数的时候在实参中使用推导式以及lambda表达式来现场生成对象，比如</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>nx.draw_networkx(...,labels={n:prefix+n <span style="color:#00a">for</span> n <span style="color:#00a">in</span> G})
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
