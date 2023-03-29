@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>数据库-SqlZoo - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="数据库-SqlZoo" />
+<meta property="og:description" content="本文为作者跟随SqlZoo学习sql的笔记，仅看mysql支持的内容 select selcet用于提取数据，空格加标识符命名列名 1 select xxx x,yyy y; 数值字段允许计" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/sqlzoo/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-29T15:51:48+08:00" />
+<meta property="article:modified_time" content="2023-03-29T15:51:48+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="数据库-SqlZoo"/>
+<meta name="twitter:description" content="本文为作者跟随SqlZoo学习sql的笔记，仅看mysql支持的内容 select selcet用于提取数据，空格加标识符命名列名 1 select xxx x,yyy y; 数值字段允许计"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/sqlzoo/" /><link rel="prev" href="https://oublie6.github.io/posts/python/%E6%A0%87%E5%87%86%E5%BA%93/multiprocessing/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数据库-SqlZoo",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/sqlzoo\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  1531 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/sqlzoo\/","datePublished": "2023-03-29T15:51:48+08:00","dateModified": "2023-03-29T15:51:48+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-SqlZoo</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-29">2023-03-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1531 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#select">select</a></li>
+    <li><a href="#函数">函数</a></li>
+    <li><a href="#select--where">SELECT .. WHERE</a></li>
+    <li><a href="#select--group-by">SELECT .. GROUP BY</a></li>
+    <li><a href="#a-join-b-on-condition">A JOIN B on condition</a></li>
+    <li><a href="#select--select">SELECT .. SELECT</a></li>
+    <li><a href="#insert--values">INSERT .. VALUES</a></li>
+    <li><a href="#insert--select">INSERT .. SELECT</a></li>
+    <li><a href="#update">UPDATE</a></li>
+    <li><a href="#delete">DELETE</a></li>
+    <li><a href="#create-table">CREATE TABLE</a></li>
+    <li><a href="#create-view">CREATE VIEW</a></li>
+    <li><a href="#create-index">CREATE INDEX</a></li>
+    <li><a href="#drop">DROP</a></li>
+    <li><a href="#alter">ALTER</a></li>
+    <li><a href="#union">UNION</a></li>
+    <li><a href="#left-join">LEFT JOIN</a></li>
+    <li><a href="#null">NULL</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文为作者跟随<a href="https://sqlzoo.net/wiki/SQL_Tutorial/zh" target="_blank" rel="noopener noreffer ">SqlZoo</a>学习sql的笔记，仅看mysql支持的内容</p>
+<h2 id="select">select</h2>
+<p>selcet用于提取数据，空格加标识符命名列名</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">select</span><span style="color:#bbb"> </span>xxx<span style="color:#bbb"> </span>x,yyy<span style="color:#bbb"> </span>y;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>数值字段允许计算：<code>+-*/%</code></p>
+<h2 id="函数">函数</h2>
+<p>较为常见的函数列表见<a href="https://sqlzoo.net/wiki/FUNCTIONS" target="_blank" rel="noopener noreffer ">官网</a></p>
+<p>列举常用的函数，聚合函数配合group by使用，否则为整个表聚合:</p>
+<hr>
+<p>语法</p>
+<ul>
+<li>case:类似其他语言的switch</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">CASE</span><span style="color:#bbb"> </span><span style="color:#00a">WHEN</span><span style="color:#bbb"> </span>condition1<span style="color:#bbb"> </span><span style="color:#00a">THEN</span><span style="color:#bbb"> </span>value1<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#00a">WHEN</span><span style="color:#bbb"> </span>condition2<span style="color:#bbb"> </span><span style="color:#00a">THEN</span><span style="color:#bbb"> </span>value2<span style="color:#bbb">  
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#00a">ELSE</span><span style="color:#bbb"> </span>def_value<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">END</span><span style="color:#bbb"> 
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>数值</p>
+<ul>
+<li>ceil(n):n向上取整</li>
+<li>floor(n):n向下取整</li>
+<li>round(n,k):四舍五入保留k位小数</li>
+<li>abs(n):n取绝对值</li>
+<li>cos(n):求n余弦</li>
+<li>sin(n):求n正弦</li>
+<li>tan(n):求n正切</li>
+<li>a div b:a地板除以b</li>
+<li>coalesce(n&hellip;):取n切片中第一个非null值</li>
+</ul>
+<hr>
+<p>字符串，索引以1开头</p>
+<ul>
+<li>concat(s&hellip;):连接字符串</li>
+<li>left(s,n):取s字符串的左边n个字符</li>
+<li>right(s,n):取s字符串的右边n个字符</li>
+<li>instr(s1,s2):s2在s1中出现第一次的索引</li>
+<li>length(s):s的长度</li>
+<li>replace(s,p,r):将s中的p替换成r</li>
+<li>substr(s,n,k):将s从索引n向后取k个字符</li>
+<li>trim(s):将s两端的空白符去掉</li>
+</ul>
+<hr>
+<p>时间</p>
+<ul>
+<li>current_date:当前时间，datetime类型，精确到日</li>
+<li>current_timestamp:当前时间，datetime类型，精确到秒</li>
+<li>extract(xxx from d):根据xxx粒度提取datetime类型d的信息，xxx可以是year,quarter,month,day,hour,minute和second，同时这些值也可以作为函数来提取值，比如datepart(year,d)和year(d)是一样的</li>
+<li>+interval n xxx:增加n个xxx，xxx可以是year,quarter,month,day,hour,minute和second</li>
+</ul>
+<hr>
+<p>聚合函数</p>
+<ul>
+<li>avg(field):求field的平均值</li>
+<li>count(field):求field为非空的记录数，count(*)查询表的记录数</li>
+<li>max(field):求field的最大值</li>
+<li>min(field):求field的最小值</li>
+<li>sum(field):求field的和</li>
+</ul>
+<h2 id="select--where">SELECT .. WHERE</h2>
+<p>添加对记录的条件判断</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>yr,<span style="color:#bbb"> </span>city<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>yr<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#099">2004</span><span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="select--group-by">SELECT .. GROUP BY</h2>
+<p>分组进行统计</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>continent,<span style="color:#bbb"> </span><span style="color:#00a">COUNT</span>(yr)<span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"> </span><span style="color:#00a">GROUP</span><span style="color:#bbb"> </span><span style="color:#00a">BY</span><span style="color:#bbb"> </span>continent<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="a-join-b-on-condition">A JOIN B on condition</h2>
+<p>内连接两个表</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>games.yr,<span style="color:#bbb"> </span>city.country<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games<span style="color:#bbb"> </span><span style="color:#00a">JOIN</span><span style="color:#bbb"> </span>city<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">       </span><span style="color:#00a">ON</span><span style="color:#bbb"> </span>(games.city<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>city.name)<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="select--select">SELECT .. SELECT</h2>
+<p>嵌套查询，子查询得添加别名，格式为空格加别名</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>name,<span style="color:#bbb"> </span>ROUND(gdp_per_capita)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#00a">FROM</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>(<span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>name,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>gdp/population<span style="color:#bbb"> </span><span style="color:#00a">AS</span><span style="color:#bbb"> </span>gdp_per_capita<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">     </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>bbc)<span style="color:#bbb"> </span>X<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"> </span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>gdp_per_capita&gt;<span style="color:#099">20000</span><span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="insert--values">INSERT .. VALUES</h2>
+<p>添加记录</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">INSERT</span><span style="color:#bbb"> </span><span style="color:#00a">INTO</span><span style="color:#bbb"> </span>games(yr,<span style="color:#bbb"> </span>city)<span style="color:#bbb"> </span><span style="color:#00a">VALUES</span><span style="color:#bbb"> </span>(<span style="color:#099">2012</span>,<span style="color:#a50">&#39;London&#39;</span>)<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="insert--select">INSERT .. SELECT</h2>
+<p>批量添加记录</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">INSERT</span><span style="color:#bbb"> </span><span style="color:#00a">INTO</span><span style="color:#bbb"> </span>games(yr,city)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>yr+<span style="color:#099">12</span>,<span style="color:#bbb"> </span>city<span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="update">UPDATE</h2>
+<p>更新记录</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">UPDATE</span><span style="color:#bbb"> </span>games<span style="color:#bbb"> </span><span style="color:#00a">SET</span><span style="color:#bbb"> </span>city=<span style="color:#a50">&#39;Paris&#39;</span><span style="color:#bbb"> </span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>yr<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#099">2012</span>;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="delete">DELETE</h2>
+<p>删除记录</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">DELETE</span><span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games<span style="color:#bbb"> </span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>yr=<span style="color:#099">2000</span>;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="create-table">CREATE TABLE</h2>
+<p>创建表</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">CREATE</span><span style="color:#bbb"> </span><span style="color:#00a">TABLE</span><span style="color:#bbb"> </span>games<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>(<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#aaa;font-style:italic">/* 这里举例了添加主键和非空 */</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>yr<span style="color:#bbb">   </span><span style="color:#0aa">INT</span><span style="color:#bbb"> </span><span style="color:#00a">NOT</span><span style="color:#bbb"> </span><span style="color:#00a">NULL</span><span style="color:#bbb"> </span><span style="color:#00a">PRIMARY</span><span style="color:#bbb"> </span><span style="color:#00a">KEY</span>,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>city<span style="color:#bbb"> </span><span style="color:#0aa">VARCHAR</span>(<span style="color:#099">20</span>)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>);<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="create-view">CREATE VIEW</h2>
+<p>创建视图，其实就是一个存一个select语句，创建的视图的使用方法和table的使用方法一致</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">CREATE</span><span style="color:#bbb"> </span><span style="color:#00a">VIEW</span><span style="color:#bbb"> </span>og<span style="color:#bbb"> </span><span style="color:#00a">AS</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>yr,city<span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">   </span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>yr&lt;<span style="color:#099">2006</span>;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="create-index">CREATE INDEX</h2>
+<p>创建索引</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">CREATE</span><span style="color:#bbb"> </span>[<span style="color:#00a">unique</span>]<span style="color:#bbb"> </span><span style="color:#00a">INDEX</span><span style="color:#bbb"> </span>gamesIdx<span style="color:#bbb"> </span><span style="color:#00a">ON</span><span style="color:#bbb"> </span>games(city,yr<span style="color:#bbb"> </span>[<span style="color:#00a">desc</span>]);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>yr,<span style="color:#bbb"> </span>city<span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://blog.csdn.net/qq_41044636/article/details/123483334" target="_blank" rel="noopener noreffer ">CSDN qq_41044636 MySQL InnoDB数据表不设置主键时的情况</a></p>
+<p>第一种情况：用户定义了主键，那么InnoDB会使用主键作为聚簇索引；
+第二种情况：用户没有定义主键，那么InnoDB会使用第一个非空的唯一索引作为聚簇索引；
+第三种情况：用户既没有定义主键，也没有定义唯一索引，那么InnoDB会自动生成一个不可见的ROW_ID的列名为GEN_CLUST_INDEX的聚簇索引，该列是一个6字节的自增数值，随着插入而自增。</p>
+<p><a href="https://blog.csdn.net/u012643122/article/details/52890772#t12" target="_blank" rel="noopener noreffer ">CSDN 思想永无止境 MySQL添加/删除主键、外键、唯一键、索引、自增</a></p>
+<p>绝大部分情况下，mysql中的索引index和键key是同义词</p>
+<h2 id="drop">DROP</h2>
+<p>删除表，视图，索引</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">DROP</span><span style="color:#bbb"> </span><span style="color:#00a">VIEW</span><span style="color:#bbb"> </span>old_games;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">DROP</span><span style="color:#bbb"> </span><span style="color:#00a">INDEX</span><span style="color:#bbb"> </span>gamesIdx<span style="color:#bbb"> </span><span style="color:#00a">ON</span><span style="color:#bbb"> </span>games;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="alter">ALTER</h2>
+<p>修改表，索引</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">ALTER</span><span style="color:#bbb"> </span><span style="color:#00a">TABLE</span><span style="color:#bbb"> </span>games<span style="color:#bbb"> </span><span style="color:#00a">ADD</span><span style="color:#bbb"> </span>season<span style="color:#bbb"> </span><span style="color:#0aa">VARCHAR</span>(<span style="color:#099">6</span>);<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="union">UNION</h2>
+<p>合并两个结构相同的表</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>name<span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>bbc<span style="color:#bbb"> </span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>name<span style="color:#bbb"> </span><span style="color:#00a">LIKE</span><span style="color:#bbb"> </span><span style="color:#a50">&#39;Z%&#39;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">UNION</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>name<span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>actor<span style="color:#bbb"> </span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>name<span style="color:#bbb"> </span><span style="color:#00a">LIKE</span><span style="color:#bbb"> </span><span style="color:#a50">&#39;Z%&#39;</span><span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="left-join">LEFT JOIN</h2>
+<p>左外连接</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>games.yr,<span style="color:#bbb"> </span>city.country<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games<span style="color:#bbb"> </span><span style="color:#00a">LEFT</span><span style="color:#bbb"> </span><span style="color:#00a">JOIN</span><span style="color:#bbb"> </span>city<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">       </span><span style="color:#00a">ON</span><span style="color:#bbb"> </span>(games.city<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>city.name)<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="null">NULL</h2>
+<p>空值判断使用<code>is null</code></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>name,gdp<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>world<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>gdp<span style="color:#bbb"> </span><span style="color:#00a">IS</span><span style="color:#bbb"> </span><span style="color:#00a">NULL</span><span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-03-29
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/sqlzoo/" data-title="数据库-SqlZoo"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/sqlzoo/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/sqlzoo/" data-title="数据库-SqlZoo"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/sqlzoo/" data-title="数据库-SqlZoo"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/sqlzoo/" data-title="数据库-SqlZoo"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/python/%E6%A0%87%E5%87%86%E5%BA%93/multiprocessing/" class="prev" rel="prev" title="Python-标准库-Multiprocessing"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Python-标准库-Multiprocessing</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-03-29T15:51:48+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-SqlZoo"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
