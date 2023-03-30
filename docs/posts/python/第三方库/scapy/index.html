@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/scapy\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python第三方库","wordcount":  4168 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python第三方库","wordcount":  4338 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/scapy\/","datePublished": "2023-02-20T15:43:28+08:00","dateModified": "2023-02-20T15:43:28+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-Scapy</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-20">2023-02-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4168 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-20">2023-02-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4338 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -137,7 +137,8 @@
     <li><a href="#asyncsniffer">AsyncSniffer</a></li>
     <li><a href="#route">route</a></li>
     <li><a href="#tracerouteresult">TracerouteResult</a></li>
-    <li><a href="#接口相关">接口相关</a>
+    <li><a href="#queryanswer">QueryAnswer</a></li>
+    <li><a href="#网卡接口相关">网卡接口相关</a>
       <ul>
         <li><a href="#ifaces">IFACES</a></li>
         <li><a href="#networkinterface">NetworkInterface</a></li>
@@ -229,7 +230,7 @@
 <ul>
 <li>send():发送第 3 层数据包，loop参数选择发送次数</li>
 <li>sendp():发送第 2 层数据包，可以配置网卡接口和链路层协议，iface参数选择网卡接口，inter参数设置数据包发送间隔</li>
-<li>sr():函数用于发送 3 层数据包和接收响应，该函数返回(ans SndRcvList,unans PacketList)，ans是被响应的(数据包,响应)，unans是未响应数据包集，retry 指定重新发送未应答的数据包最大次数，timeout参数指定发送完最后一个数据包后等待的时间。threaded开启新线程来发送（开了时间优化）</li>
+<li>sr():函数用于发送 3 层数据包和接收响应，该函数返回(ans SndRcvList,unans PacketList)，ans是被响应的(数据包,响应)，unans是未响应数据包集，retry 指定重新发送未应答的数据包最大次数，timeout参数指定发送完最后一个数据包后等待的时间。threaded开启新线程来发送（开了时间优化），filter参数使用BPF过滤器（注意BPF过滤器的语法<code>ip</code>指的是含有ip头，那么icmp包，udp包或者http包等应用层数据包也能被嗅探到）所有的具有接收功能的函数都具有这个参数。</li>
 <li>sr1():返回一个数据包，该数据包响应了发送的 3 层数据包（或数据包集），</li>
 <li>srp():对第 2 层数据包（以太网、802.3 等）执行sr函数相同的操作，返回值类型也相同</li>
 <li>srloop():循环发送和接收包</li>
@@ -327,19 +328,31 @@
 </ul>
 <p>常用方法：</p>
 <ul>
-<li>PacketList.summary()：显示每个数据包的摘要列表，可以使用lambda表达式，比如<code>ans.summary( lambda s,r: r.sprintf(&quot;%TCP.sport% \t %TCP.flags%&quot;) )</code></li>
-<li>PacketList.nsummary()：带有数据包编号</li>
-<li>PacketList.conversations()：显示对话图</li>
-<li>PacketList.show()：显示首选表示</li>
-<li>PacketList.filter()：返回使用 lambda 函数过滤的数据包列表</li>
-<li>PacketList.hexdump()：返回所有数据包的 hexdump</li>
-<li>PacketList.hexraw()：返回所有数据包Raw二进制字符串的 hexdump</li>
-<li>PacketList.padding()：返回带有填充的数据包的 hexdump</li>
-<li>PacketList.nzpadding()：返回具有非零填充的数据包的 hexdump</li>
-<li>PacketList.plot()：绘制应用于数据包列表的 lambda 函数</li>
-<li>PacketList.make_table()：根据 lambda 函数显示表格，lambda表达式接收p为层，返回第一个参数是列名，第二个参数是行名，第三个参数是单元格中的名称</li>
+<li>summary()：显示每个数据包的摘要列表，可以使用lambda表达式，比如<code>ans.summary( lambda s,r: r.sprintf(&quot;%TCP.sport% \t %TCP.flags%&quot;) )</code></li>
+<li>nsummary()：带有数据包编号</li>
+<li>conversations()：显示对话图</li>
+<li>show()：显示首选表示</li>
+<li>filter()：返回使用 lambda 函数过滤的数据包列表</li>
+<li>hexdump()：返回所有数据包的 hexdump</li>
+<li>hexraw()：返回所有数据包Raw二进制字符串的 hexdump</li>
+<li>padding()：返回带有填充的数据包的 hexdump</li>
+<li>nzpadding()：返回具有非零填充的数据包的 hexdump</li>
+<li>plot()：绘制应用于数据包列表的 lambda 函数</li>
+<li>make_table()：根据 lambda 函数显示表格，lambda表达式接收p为层，返回第一个参数是列名，第二个参数是行名，第三个参数是单元格中的名称</li>
 </ul>
-<h2 id="sndrcvlist">SndRcvList</h2>
+<p>语法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">for</span> p <span style="color:#00a">in</span> packetlist:
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="sndrcvlist">SndRcvList</h2>
+<p>其实就是QueryAnswer的列表</p>
 <p>可以进行拆解遍历</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -382,6 +395,17 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>a.plot(<span style="color:#00a">lambda</span> x:x[<span style="color:#099">1</span>].id)
 </span></span></code></pre></td></tr></table>
 </div>
+</div><p>语法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">for</span> s,r <span style="color:#00a">in</span> sndrcvList:
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></td></tr></table>
+</div>
 </div><h2 id="asyncsniffer">AsyncSniffer</h2>
 <p>异步嗅探允许以编程方式停止嗅探器而不是使用 ctrl^C，它使用start(),stop()和join()方法</p>
 <p>常用函数:</p>
@@ -410,7 +434,11 @@
 <li>conf.route.route(&ldquo;192.168.xxx.xxx&rdquo;):查询路由结果，返回(interface, outgoing_ip, gateway)，可以通过&quot;0.0.0.0&quot;这个特殊地址查看默认网关</li>
 </ul>
 <h2 id="tracerouteresult">TracerouteResult</h2>
-<p>并行发送包，返回和sr类似的结果，因为TracerouteResult继承自SndRcvList</p>
+<p>并行发送包，返回和sr类似的结果，因为TracerouteResult继承自SndRcvList，可以将SndRcvList的res属性转换为TracerouteResult：<code>a = TracerouteResult(a.res)</code>，这个可以在traceroute函数里面看见</p>
+<p>变量</p>
+<ul>
+<li>res:QueryAnswer类型的列表</li>
+</ul>
 <p>常用函数</p>
 <ul>
 <li>traceroute():对目标ip进行普通tcp transroute，maxttl参数设置最大ttl</li>
@@ -423,8 +451,26 @@
 <ul>
 <li>graph():制作有向图，根据AS进行聚类，需要安装graphviz</li>
 <li>trace3D():安装了 VPython们可以对traceroute的结果对象进行3D表示</li>
+<li>SndRcvList的方法</li>
 </ul>
-<h2 id="接口相关">接口相关</h2>
+<p>语法</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">for</span> s,r <span style="color:#00a">in</span> tracerouteresult:
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="queryanswer">QueryAnswer</h2>
+<p>运算符</p>
+<ul>
+<li><code>[0]</code>:query数据包</li>
+<li><code>[1]</code>:answer数据包</li>
+</ul>
+<h2 id="网卡接口相关">网卡接口相关</h2>
 <p>变量</p>
 <ul>
 <li>conf.ifaces:网卡接口列表，等价于IFACES</li>
