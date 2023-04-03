@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/sqlzoo\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  1551 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  2189 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/sqlzoo\/","datePublished": "2023-03-29T15:51:48+08:00","dateModified": "2023-03-29T15:51:48+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-SqlZoo</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-29">2023-03-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1551 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-29">2023-03-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2189 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -129,6 +129,15 @@
     <li><a href="#union">UNION</a></li>
     <li><a href="#left-join">LEFT JOIN</a></li>
     <li><a href="#null">NULL</a></li>
+    <li><a href="#个人笔记">个人笔记</a>
+      <ul>
+        <li><a href="#select后的字段是否可以运算">select后的字段是否可以运算</a></li>
+        <li><a href="#utf8和utf8mb4">utf8和utf8mb4</a></li>
+        <li><a href="#变量">变量</a></li>
+        <li><a href="#需要关键字字段名或值">需要关键字字段名或值</a></li>
+        <li><a href="#避免sql注入">避免sql注入</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本文为作者跟随<a href="https://sqlzoo.net/wiki/SQL_Tutorial/zh" target="_blank" rel="noopener noreffer ">SqlZoo</a>学习sql的笔记，仅看mysql支持的内容</p>
@@ -143,7 +152,20 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>数值字段允许计算：<code>+-*/%</code></p>
-<h2 id="函数">函数</h2>
+<p>嵌套查询一定要给表取别名，否则会报错</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">select</span><span style="color:#bbb"> </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">from</span><span style="color:#bbb"> </span>(<span style="color:#00a">select</span><span style="color:#bbb"> </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#00a">from</span><span style="color:#bbb"> </span>...)<span style="color:#bbb"> </span>a<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="函数">函数</h2>
 <p>较为常见的函数列表见<a href="https://sqlzoo.net/wiki/FUNCTIONS" target="_blank" rel="noopener noreffer ">官网</a></p>
 <p>列举常用的函数，聚合函数配合group by使用，否则为整个表聚合:</p>
 <hr>
@@ -163,6 +185,22 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#00a">WHEN</span><span style="color:#bbb"> </span>condition2<span style="color:#bbb"> </span><span style="color:#00a">THEN</span><span style="color:#bbb"> </span>value2<span style="color:#bbb">  
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#00a">ELSE</span><span style="color:#bbb"> </span>def_value<span style="color:#bbb"> 
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">END</span><span style="color:#bbb"> 
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>if:<code>IF(condition, value_if_true, value_if_false)</code>，case的二元形式的简写</li>
+</ul>
+<p><a href="https://blog.csdn.net/wang704987562/article/details/80753954" target="_blank" rel="noopener noreffer ">CSDN 半笙彷徨</a></p>
+<ul>
+<li>cast:显式类型转换，CAST(value AS datatype)</li>
+</ul>
+<p><a href="https://blog.csdn.net/Hudas/article/details/124399908" target="_blank" rel="noopener noreffer ">CSDN 山茶花开时</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span><span style="color:#00a">CAST</span>(<span style="color:#099">150</span><span style="color:#bbb"> </span><span style="color:#00a">AS</span><span style="color:#bbb"> </span><span style="color:#0aa">CHAR</span>);<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
@@ -206,8 +244,20 @@
 <li>max(field):求field的最大值</li>
 <li>min(field):求field的最小值</li>
 <li>sum(field):求field的和</li>
+<li>rank,dense_rank,row_number:8.0之后能用，可以通过变量加case语法实现，RANK并列跳跃排名，DENSE_RANK并列连续排序，ROW_NUMBER连续排名</li>
 </ul>
-<h2 id="select--where">SELECT .. WHERE</h2>
+<p><a href="https://blog.csdn.net/u011726005/article/details/94592866" target="_blank" rel="noopener noreffer ">CSDN 哲这这</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>#<span style="color:#bbb"> </span><span style="color:#00a">order</span><span style="color:#bbb"> </span>by提到over后面的括号<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>rank()<span style="color:#bbb"> </span>over<span style="color:#bbb"> </span>(<span style="color:#00a">order</span><span style="color:#bbb"> </span><span style="color:#00a">by</span><span style="color:#bbb"> </span>score<span style="color:#bbb"> </span><span style="color:#00a">desc</span>)<span style="color:#bbb"> </span>ranking<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="select--where">SELECT .. WHERE</h2>
 <p>添加对记录的条件判断</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -425,7 +475,39 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">WHERE</span><span style="color:#bbb"> </span>gdp<span style="color:#bbb"> </span><span style="color:#00a">IS</span><span style="color:#bbb"> </span><span style="color:#00a">NULL</span><span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="个人笔记">个人笔记</h2>
+<h3 id="select后的字段是否可以运算">select后的字段是否可以运算</h3>
+<p>可以直接引用from表里面的字段并进行运算，当使用group by时引用字段遵循group by规则（group by字段和聚合函数）。</p>
+<p>注意可以直接进行运算</p>
+<h3 id="utf8和utf8mb4">utf8和utf8mb4</h3>
+<p><a href="https://blog.csdn.net/qq_52385631/article/details/123019036" target="_blank" rel="noopener noreffer ">CSDN 骑台风走 utf8和utf8mb4的区别</a></p>
+<p>uft8最大字符长度为 3 字节</p>
+<p>utf8mb4（mb4 = most bytes 4）</p>
+<p>utf8mb4是utf8的超集。用来兼容四字节的unicode</p>
+<h3 id="变量">变量</h3>
+<p><a href="https://blog.csdn.net/u011649691/article/details/79059990" target="_blank" rel="noopener noreffer ">CSDN xiaoniuxqq</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>#<span style="color:#bbb"> </span><span style="color:#f00;background-color:#faa">定义变量或修改</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">select</span><span style="color:#bbb"> </span>@a<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>xxx;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为这种变量的可以直接在需要查询的表table的后面添加<code>select ... from table,(select @var1=xxx,@var2=yyy)</code>，这其实是一个联表查询，但是不影响要查询的表，因为变量所在的表只有一行记录</p>
+<h3 id="需要关键字字段名或值">需要关键字字段名或值</h3>
+<p>可以使用反引号括起来就能用了，比如rank不让使用可以用<code>`rank`</code>来使用。</p>
+<h3 id="避免sql注入">避免sql注入</h3>
+<ol>
+<li>使用预编译语句(参数化查询)</li>
+</ol>
+<p>？占位符来预编译语句，然后使用setval类似的api来执行语句</p>
+<ol start="2">
+<li>客户端或服务端检查用户输入是否合法</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
