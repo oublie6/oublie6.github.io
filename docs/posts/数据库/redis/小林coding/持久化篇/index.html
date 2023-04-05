@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>数据库-redis-小林coding-持久化篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="数据库-redis-小林coding-持久化篇" />
-<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 AOF 持久化 AOF(Append Only File)：执行一条写操作命令以追加的方式写入到一个文件" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 AOF 持久化 AOF(Append Only File)：写命令执行完后将命令存储到硬盘中的日志文件 AOF" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E6%8C%81%E4%B9%85%E5%8C%96%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-23T12:16:57+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="数据库-redis-小林coding-持久化篇"/>
-<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 AOF 持久化 AOF(Append Only File)：执行一条写操作命令以追加的方式写入到一个文件"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 AOF 持久化 AOF(Append Only File)：写命令执行完后将命令存储到硬盘中的日志文件 AOF"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E6%8C%81%E4%B9%85%E5%8C%96%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E5%8A%9F%E8%83%BD%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E6%8C%81%E4%B9%85%E5%8C%96%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  981 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  831 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E6%8C%81%E4%B9%85%E5%8C%96%E7%AF%87\/","datePublished": "2022-12-23T12:16:57+08:00","dateModified": "2022-12-23T12:16:57+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-redis-小林coding-持久化篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;981 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;831 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -130,8 +130,18 @@
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/redis/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
 <h2 id="aof-持久化">AOF 持久化</h2>
-<p>AOF(Append Only File)：执行一条写操作命令以追加的方式写入到一个文件里，重启 Redis 的时候，先读取这个文件里的命令，并且执行它</p>
-<p>默认是不开启，redis.conf 配置文件</p>
+<p>AOF(Append Only File)：写命令执行完后将命令存储到硬盘中的日志文件</p>
+<div id="id-1"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/6f0ab40396b7fc2c15e6f4487d3a0ad7.png" title="https://cdn.xiaolincoding.com//mysql/other/6f0ab40396b7fc2c15e6f4487d3a0ad7.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/6f0ab40396b7fc2c15e6f4487d3a0ad7.png" data-sub-html="<h2>AOF</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/6f0ab40396b7fc2c15e6f4487d3a0ad7.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/6f0ab40396b7fc2c15e6f4487d3a0ad7.png, https://cdn.xiaolincoding.com//mysql/other/6f0ab40396b7fc2c15e6f4487d3a0ad7.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/6f0ab40396b7fc2c15e6f4487d3a0ad7.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/6f0ab40396b7fc2c15e6f4487d3a0ad7.png" />
+    </a><figcaption class="image-caption">AOF</figcaption>
+    </figure></div>
+<p>默认是不开启，开启需要修改 redis.conf 配置文件</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -142,31 +152,18 @@
 </span></span><span style="display:flex;"><span>appendfilename  <span style="color:#a50">&#34;appendonly.aof&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div id="id-1"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/6f0ab40396b7fc2c15e6f4487d3a0ad7.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/6f0ab40396b7fc2c15e6f4487d3a0ad7.png, https://img-blog.csdnimg.cn/img_convert/6f0ab40396b7fc2c15e6f4487d3a0ad7.png 1.5x, https://img-blog.csdnimg.cn/img_convert/6f0ab40396b7fc2c15e6f4487d3a0ad7.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/6f0ab40396b7fc2c15e6f4487d3a0ad7.png"
-        title="https://img-blog.csdnimg.cn/img_convert/6f0ab40396b7fc2c15e6f4487d3a0ad7.png" /></div>
-<p>先执行操作再写日志：</p>
-<ol>
-<li>利用写操作时检测语法，避免写日志时的额外的检查开销</li>
-<li>不会阻塞当前写操作命令的执行，但是可能阻塞下一个命令</li>
-</ol>
-<h3 id="三种写回策略">三种写回策略</h3>
+</div><h3 id="三种写回策略">三种写回策略</h3>
 <p>redis.conf 配置文件中的 appendfsync 参数</p>
 <div id="id-2"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/98987d9417b2bab43087f45fc959d32a.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/98987d9417b2bab43087f45fc959d32a.png, https://img-blog.csdnimg.cn/img_convert/98987d9417b2bab43087f45fc959d32a.png 1.5x, https://img-blog.csdnimg.cn/img_convert/98987d9417b2bab43087f45fc959d32a.png 2x"
+        data-src="https://cdn.xiaolincoding.com//mysql/other/98987d9417b2bab43087f45fc959d32a.png"
+        data-srcset="https://cdn.xiaolincoding.com//mysql/other/98987d9417b2bab43087f45fc959d32a.png, https://cdn.xiaolincoding.com//mysql/other/98987d9417b2bab43087f45fc959d32a.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/98987d9417b2bab43087f45fc959d32a.png 2x"
         data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/98987d9417b2bab43087f45fc959d32a.png"
-        title="https://img-blog.csdnimg.cn/img_convert/98987d9417b2bab43087f45fc959d32a.png" /></div>
+        alt="https://cdn.xiaolincoding.com//mysql/other/98987d9417b2bab43087f45fc959d32a.png"
+        title="https://cdn.xiaolincoding.com//mysql/other/98987d9417b2bab43087f45fc959d32a.png" /></div>
 <h3 id="aof-重写机制">AOF 重写机制</h3>
-<p>AOF 重写机制：当 AOF 文件的大小超过所设定的阈值后，读取当前数据库中的所有键值对，将每一个键值对用一条命令记录到「新的 AOF 文件」，全部记录完后，替换掉现有的 AOF 文件</p>
+<p>AOF 重写机制： AOF 文件的大小超过所设定的阈值后，将每一个当前存储的键值对用一条命令记录到「新的 AOF 文件」，并替换掉现有的 AOF 文件</p>
 <h3 id="aof-后台重写">AOF 后台重写</h3>
 <p>重写 AOF 过程是由后台子进程 bgrewriteaof 来完成的，好处：</p>
 <ul>
@@ -176,11 +173,11 @@
 <div id="id-3"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/d4cfac545377b54dd035c775603b4936.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/d4cfac545377b54dd035c775603b4936.png, https://img-blog.csdnimg.cn/img_convert/d4cfac545377b54dd035c775603b4936.png 1.5x, https://img-blog.csdnimg.cn/img_convert/d4cfac545377b54dd035c775603b4936.png 2x"
+        data-src="https://cdn.xiaolincoding.com//mysql/other/5a1f2a90b5f3821c19bea3b7a5f27fa1.png"
+        data-srcset="https://cdn.xiaolincoding.com//mysql/other/5a1f2a90b5f3821c19bea3b7a5f27fa1.png, https://cdn.xiaolincoding.com//mysql/other/5a1f2a90b5f3821c19bea3b7a5f27fa1.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/5a1f2a90b5f3821c19bea3b7a5f27fa1.png 2x"
         data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/d4cfac545377b54dd035c775603b4936.png"
-        title="https://img-blog.csdnimg.cn/img_convert/d4cfac545377b54dd035c775603b4936.png" /></div>
+        alt="https://cdn.xiaolincoding.com//mysql/other/5a1f2a90b5f3821c19bea3b7a5f27fa1.png"
+        title="https://cdn.xiaolincoding.com//mysql/other/5a1f2a90b5f3821c19bea3b7a5f27fa1.png" /></div>
 <p>2个阻塞父进程的时机：</p>
 <ul>
 <li>fork复制页表时</li>
@@ -193,15 +190,7 @@
 <li>将执行后的写命令追加到 「AOF 缓冲区」</li>
 <li>将执行后的写命令追加到 「AOF 重写缓冲区」</li>
 </ul>
-<div id="id-4"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/202105270918298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0ODI3Njc0,size_16,color_FFFFFF,t_70#pic_center"
-        data-srcset="https://img-blog.csdnimg.cn/202105270918298.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0ODI3Njc0%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center, https://img-blog.csdnimg.cn/202105270918298.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0ODI3Njc0%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 1.5x, https://img-blog.csdnimg.cn/202105270918298.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0ODI3Njc0%2csize_16%2ccolor_FFFFFF%2ct_70#pic_center 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/202105270918298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0ODI3Njc0,size_16,color_FFFFFF,t_70#pic_center"
-        title="https://img-blog.csdnimg.cn/202105270918298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0ODI3Njc0,size_16,color_FFFFFF,t_70#pic_center" /></div>
-<p>子进程完成 AOF 重写工作（扫描数据库中所有数据，逐一把内存数据的键值对转换成一条命令，再将命令记录到重写日志）后，向主进程发送一条异步信号。主进程收到信号后执行：</p>
+<p>子进程完成 AOF 重写工作后，向主进程发送一条异步信号。主进程收到信号后执行：</p>
 <ul>
 <li>将 AOF 重写缓冲区中的所有内容追加到新的 AOF 的文件中</li>
 <li>新的 AOF 的文件进行改名，覆盖现有的 AOF 文件</li>
@@ -223,7 +212,7 @@
 <h3 id="rdb-和-aof-合体">RDB 和 AOF 合体</h3>
 <p>混合使用 AOF 日志和内存快照，也叫混合持久化</p>
 <pre tabindex="0"><code class="language-conf" data-lang="conf">aof-use-rdb-preamble yes
-</code></pre><div id="id-5"><img
+</code></pre><div id="id-4"><img
         class="lazyload"
         src="/svg/loading.min.svg"
         data-src="https://img-blog.csdnimg.cn/img_convert/f67379b60d151262753fec3b817b8617.png"
@@ -321,5 +310,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/8c525f.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-23T12:16:57+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-redis-小林coding-持久化篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/adb004.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-23T12:16:57+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-redis-小林coding-持久化篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

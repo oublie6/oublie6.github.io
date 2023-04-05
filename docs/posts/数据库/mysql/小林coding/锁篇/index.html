@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E9%94%81%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  1893 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  1826 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E9%94%81%E7%AF%87\/","datePublished": "2022-12-07T15:27:54+08:00","dateModified": "2022-12-07T15:27:54+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-mysql-小林coding-锁篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-07">2022-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1893 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-07">2022-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1826 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -139,11 +139,11 @@
 <div id="id-1"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png"
-        data-srcset="https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png, https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png 1.5x, https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png 2x"
+        data-src="https://cdn.xiaolincoding.com//mysql/other/1e37f6994ef44714aba03b8046b1ace2.png"
+        data-srcset="https://cdn.xiaolincoding.com//mysql/other/1e37f6994ef44714aba03b8046b1ace2.png, https://cdn.xiaolincoding.com//mysql/other/1e37f6994ef44714aba03b8046b1ace2.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/1e37f6994ef44714aba03b8046b1ace2.png 2x"
         data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png"
-        title="https://img-blog.csdnimg.cn/1e37f6994ef44714aba03b8046b1ace2.png" /></div>
+        alt="https://cdn.xiaolincoding.com//mysql/other/1e37f6994ef44714aba03b8046b1ace2.png"
+        title="https://cdn.xiaolincoding.com//mysql/other/1e37f6994ef44714aba03b8046b1ace2.png" /></div>
 <h3 id="全局锁">全局锁</h3>
 <p>开启全局锁</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -193,14 +193,13 @@
 <p>长事务的MDL可能会对性能造成影响，还可能会导致数据库线程耗尽，例子见<a href="https://xiaolincoding.com/mysql/lock/mysql_lock.html#%E5%85%83%E6%95%B0%E6%8D%AE%E9%94%81" target="_blank" rel="noopener noreffer ">原文</a></p>
 <h4 id="意向锁">意向锁</h4>
 <ul>
-<li>在使用 InnoDB 引擎的表里对某些记录加上「共享锁」之前，需要先在表级别加上一个「意向共享锁」；</li>
-<li>在使用 InnoDB 引擎的表里对某些纪录加上「独占锁」之前，需要先在表级别加上一个「意向独占锁」；</li>
+<li>对记录加上「共享锁」之前，需要先在表级别加上一个「意向共享锁」；</li>
+<li>对记录加上「独占锁」之前，需要先在表级别加上一个「意向独占锁」；</li>
 </ul>
-<p>意向共享锁和意向独占锁是表级锁，不会和行级的共享锁和独占锁发生冲突，而且意向锁之间也不会发生冲突，只会和共享表锁（lock tables &hellip; read）和独占表锁（lock tables &hellip; write）发生冲突。</p>
-<p>表锁和行锁是满足读读共享、读写互斥、写写互斥的。</p>
+<p>意向共享锁和意向独占锁是表级锁，不会和行级的共享锁和独占锁发生冲突，意向锁之间也不会发生冲突，只会和共享表锁（lock tables &hellip; read）和独占表锁（lock tables &hellip; write）发生冲突。</p>
 <p>意向锁的目的是为了快速判断表里是否有记录被加锁</p>
 <h4 id="auto-inc-锁">AUTO-INC 锁</h4>
-<p>AUTO-INC锁不是再一个事务提交后才释放，而是再执行完插入语句后就会立即释放。</p>
+<p>执行完插入语句后就会立即释放AUTO-INC锁。</p>
 <p>在 MySQL 5.1.22 版本开始，InnoDB 存储引擎提供了一种轻量级的锁来实现自增。在插入数据的时候，会为被 AUTO_INCREMENT 修饰的字段加上轻量级锁，然后给该字段赋值一个自增的值，就把这个轻量级锁释放了，而不需要等待整个插入语句执行完后才释放锁。</p>
 <p>InnoDB 存储引擎提供了个 innodb_autoinc_lock_mode 的系统变量，是用来控制选择用 AUTO-INC 锁，还是轻量级的锁。</p>
 <ul>
@@ -222,7 +221,7 @@ select ... lock in share mode;
 
 //对读取的记录加独占锁
 select ... for update;
-</code></pre><p>这两条语句必须在一个事务中，因为当事务提交了，锁就会被释放</p>
+</code></pre><p>这两条语句必须在一个事务中，当事务提交了，锁就会被释放</p>
 <p>行级锁的类型主要有三类：</p>
 <ul>
 <li>Record Lock，记录锁，也就是仅仅把一条记录锁上；</li>

@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/sqlzoo\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  2189 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  2245 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/sqlzoo\/","datePublished": "2023-03-29T15:51:48+08:00","dateModified": "2023-03-29T15:51:48+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-SqlZoo</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-29">2023-03-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2189 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-29">2023-03-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2245 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -253,8 +253,8 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>#<span style="color:#bbb"> </span><span style="color:#00a">order</span><span style="color:#bbb"> </span>by提到over后面的括号<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>rank()<span style="color:#bbb"> </span>over<span style="color:#bbb"> </span>(<span style="color:#00a">order</span><span style="color:#bbb"> </span><span style="color:#00a">by</span><span style="color:#bbb"> </span>score<span style="color:#bbb"> </span><span style="color:#00a">desc</span>)<span style="color:#bbb"> </span>ranking<span style="color:#bbb">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>#<span style="color:#bbb"> </span><span style="color:#00a">order</span><span style="color:#bbb"> </span>by提到over后面的括号<span style="color:#f00;background-color:#faa">，</span>xxx为order<span style="color:#bbb"> </span>by后每组内再细分一次<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>rank()<span style="color:#bbb"> </span>over<span style="color:#bbb"> </span>(partition<span style="color:#bbb"> </span><span style="color:#00a">by</span><span style="color:#bbb"> </span>xxx,yyy<span style="color:#bbb"> </span><span style="color:#00a">order</span><span style="color:#bbb"> </span><span style="color:#00a">by</span><span style="color:#bbb"> </span>score<span style="color:#bbb"> </span><span style="color:#00a">desc</span>)<span style="color:#bbb"> </span>ranking<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="select--where">SELECT .. WHERE</h2>
@@ -363,12 +363,16 @@
 <p>创建表</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">CREATE</span><span style="color:#bbb"> </span><span style="color:#00a">TABLE</span><span style="color:#bbb"> </span>games<span style="color:#bbb">
@@ -376,6 +380,10 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#aaa;font-style:italic">/* 这里举例了添加主键和非空 */</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>yr<span style="color:#bbb">   </span><span style="color:#0aa">INT</span><span style="color:#bbb"> </span><span style="color:#00a">NOT</span><span style="color:#bbb"> </span><span style="color:#00a">NULL</span><span style="color:#bbb"> </span><span style="color:#00a">PRIMARY</span><span style="color:#bbb"> </span><span style="color:#00a">KEY</span>,<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>city<span style="color:#bbb"> </span><span style="color:#0aa">VARCHAR</span>(<span style="color:#099">20</span>)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#00a">UNIQUE</span><span style="color:#bbb"> </span><span style="color:#00a">KEY</span><span style="color:#bbb"> </span>indexname(index_column_1,index_column_2,...)<span style="color:#bbb">  </span><span style="color:#00a">USING</span><span style="color:#bbb"> </span>BTREE<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#00a">INDEX</span><span style="color:#bbb"> </span>indexname(index_column_1,index_column_2,...)<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#aaa;font-style:italic">/*前缀索引*/</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#00a">INDEX</span><span style="color:#bbb"> </span>indexname(<span style="color:#00a">column_name</span>(<span style="color:#00a">length</span>))<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>);<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
@@ -398,14 +406,13 @@
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">CREATE</span><span style="color:#bbb"> </span>[<span style="color:#00a">unique</span>]<span style="color:#bbb"> </span><span style="color:#00a">INDEX</span><span style="color:#bbb"> </span>gamesIdx<span style="color:#bbb"> </span><span style="color:#00a">ON</span><span style="color:#bbb"> </span>games(city,yr<span style="color:#bbb"> </span>[<span style="color:#00a">desc</span>]);<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>yr,<span style="color:#bbb"> </span>city<span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span>games<span style="color:#bbb">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">CREATE</span><span style="color:#bbb"> </span>[<span style="color:#00a">unique</span>]<span style="color:#bbb"> </span><span style="color:#00a">INDEX</span><span style="color:#bbb"> </span>gamesIdx<span style="color:#bbb"> </span><span style="color:#00a">ON</span><span style="color:#bbb"> </span>games(city,yr<span style="color:#bbb"> </span>[<span style="color:#00a">desc</span>])<span style="color:#bbb"> </span><span style="color:#00a">USING</span><span style="color:#bbb"> </span>BTREE;<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p><a href="https://blog.csdn.net/qq_41044636/article/details/123483334" target="_blank" rel="noopener noreffer ">CSDN qq_41044636 MySQL InnoDB数据表不设置主键时的情况</a></p>
+</div><p>在表中创建索引见<a href="#create-table" rel="">CREATE TABLE</a></p>
+<p><a href="https://blog.csdn.net/qq_41044636/article/details/123483334" target="_blank" rel="noopener noreffer ">CSDN qq_41044636 MySQL InnoDB数据表不设置主键时的情况</a></p>
 <p>第一种情况：用户定义了主键，那么InnoDB会使用主键作为聚簇索引；
 第二种情况：用户没有定义主键，那么InnoDB会使用第一个非空的唯一索引作为聚簇索引；
 第三种情况：用户既没有定义主键，也没有定义唯一索引，那么InnoDB会自动生成一个不可见的ROW_ID的列名为GEN_CLUST_INDEX的聚簇索引，该列是一个6字节的自增数值，随着插入而自增。</p>

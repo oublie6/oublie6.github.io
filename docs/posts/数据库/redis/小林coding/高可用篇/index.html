@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E9%AB%98%E5%8F%AF%E7%94%A8%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  628 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  619 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E9%AB%98%E5%8F%AF%E7%94%A8%E7%AF%87\/","datePublished": "2022-12-23T18:48:34+08:00","dateModified": "2022-12-23T18:48:34+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-redis-小林coding-高可用篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;628 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;619 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -146,22 +146,31 @@
         title="https://img-blog.csdnimg.cn/img_convert/2b7231b6aabb9a9a2e2390ab3a280b2d.png" /></div>
 <h3 id="第一次同步">第一次同步</h3>
 <p>replicaof命令：</p>
-<pre tabindex="0"><code class="language-redis" data-lang="redis"># 服务器 B 执行这条命令
-replicaof &lt;服务器 A 的 IP 地址&gt; &lt;服务器 A 的 Redis 端口号&gt;
-</code></pre><div id="id-2"><img
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># 服务器 B 执行这条命令</span>
+</span></span><span style="display:flex;"><span>replicaof &lt;服务器 A 的 IP 地址&gt; &lt;服务器 A 的 Redis 端口号&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div id="id-2"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/ea4f7e86baf2435af3999e5cd38b6a26.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/ea4f7e86baf2435af3999e5cd38b6a26.png, https://img-blog.csdnimg.cn/img_convert/ea4f7e86baf2435af3999e5cd38b6a26.png 1.5x, https://img-blog.csdnimg.cn/img_convert/ea4f7e86baf2435af3999e5cd38b6a26.png 2x"
+        data-src="https://cdn.xiaolincoding.com//mysql/other/ea4f7e86baf2435af3999e5cd38b6a26.png"
+        data-srcset="https://cdn.xiaolincoding.com//mysql/other/ea4f7e86baf2435af3999e5cd38b6a26.png, https://cdn.xiaolincoding.com//mysql/other/ea4f7e86baf2435af3999e5cd38b6a26.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/ea4f7e86baf2435af3999e5cd38b6a26.png 2x"
         data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/ea4f7e86baf2435af3999e5cd38b6a26.png"
-        title="https://img-blog.csdnimg.cn/img_convert/ea4f7e86baf2435af3999e5cd38b6a26.png" /></div>
-<p>第二阶段将记录在这三个时间段的写操作命令，写入到 replication buffer 缓冲区里</p>
+        alt="https://cdn.xiaolincoding.com//mysql/other/ea4f7e86baf2435af3999e5cd38b6a26.png"
+        title="https://cdn.xiaolincoding.com//mysql/other/ea4f7e86baf2435af3999e5cd38b6a26.png" /></div>
+<p>第二阶段分为:</p>
 <ul>
-<li>主服务器生成 RDB 文件期间；</li>
-<li>主服务器发送 RDB 文件给从服务器期间；</li>
-<li>「从服务器」加载 RDB 文件期间；</li>
+<li>主服务器生成 RDB 文件；</li>
+<li>主服务器发送 RDB 文件给从服务器；</li>
+<li>「从服务器」加载 RDB 文件；</li>
 </ul>
+<p>在此期间将写操作命令写入到 replication buffer 缓冲区</p>
 <p>第三阶段发送这些写操作</p>
 <p>完成第一次同步后，维护一个基于keepalive的TCP长连接，通过这个连接将写操作命令传播给从服务器。称为基于长连接的命令传播</p>
 <h3 id="分摊主服务器的压力">分摊主服务器的压力</h3>

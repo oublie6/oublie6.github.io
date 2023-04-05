@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/%E5%B0%8F%E6%9E%97coding\/%E5%9F%BA%E7%A1%80%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  2689 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  2659 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/%E5%B0%8F%E6%9E%97coding\/%E5%9F%BA%E7%A1%80%E7%AF%87\/","datePublished": "2022-12-13T15:15:04+08:00","dateModified": "2022-12-13T15:15:04+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">计算机网络-小林coding-基础篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机网络</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-13">2022-12-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2689 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-13">2022-12-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2659 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -114,15 +114,15 @@
     <li><a href="#tcpip-网络模型有哪几层">TCP/IP 网络模型有哪几层？</a></li>
     <li><a href="#键入网址到网页显示期间发生了什么">键入网址到网页显示，期间发生了什么</a>
       <ul>
-        <li><a href="#孤单小弟--http">孤单小弟 —— HTTP</a></li>
-        <li><a href="#真实地址查询--dns">真实地址查询 —— DNS</a></li>
-        <li><a href="#指南好帮手--协议栈">指南好帮手 —— 协议栈</a></li>
-        <li><a href="#可靠传输--tcp">可靠传输 —— TCP</a></li>
-        <li><a href="#远程定位--ip">远程定位 —— IP</a></li>
-        <li><a href="#两点传输--mac">两点传输 —— MAC</a></li>
-        <li><a href="#出口--网卡">出口 —— 网卡</a></li>
-        <li><a href="#送别者--交换机">送别者 —— 交换机</a></li>
-        <li><a href="#出境大门--路由器">出境大门 —— 路由器</a></li>
+        <li><a href="#http">HTTP</a></li>
+        <li><a href="#dns查询">DNS查询</a></li>
+        <li><a href="#操作系统协议栈">操作系统协议栈</a></li>
+        <li><a href="#tcp">TCP</a></li>
+        <li><a href="#ip">IP</a></li>
+        <li><a href="#mac">MAC</a></li>
+        <li><a href="#网卡">网卡</a></li>
+        <li><a href="#交换机">交换机</a></li>
+        <li><a href="#路由器">路由器</a></li>
         <li><a href="#互相扒皮--服务器-与-客户端">互相扒皮 —— 服务器 与 客户端</a></li>
       </ul>
     </li>
@@ -139,26 +139,26 @@
 <h2 id="tcpip-网络模型有哪几层">TCP/IP 网络模型有哪几层？</h2>
 <p>TCP/IP 网络分 4 层：应用层，传输层，网络层和网络接口层</p>
 <p>ISO为7层，传统网络架构为5层，将数据链路层的物理层分离了出来单独作为一层。</p>
+<p>传统网络分层为5层：应用层，传输层，网络层，数据链路层和物理层</p>
 <p>附上网络协议层级图</p>
-<div id="id-1"><figure><a class="lightgallery" href="https://img-blog.csdn.net/20180129151922200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hpbmFfamVmZmVyeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" title="https://img-blog.csdn.net/20180129151922200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hpbmFfamVmZmVyeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" data-thumbnail="https://img-blog.csdn.net/20180129151922200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hpbmFfamVmZmVyeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" data-sub-html="<h2>网络层级图</h2>">
+<div id="id-1"><figure><a class="lightgallery" href="/images/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c/%e5%b0%8f%e6%9e%97coding/%e7%bd%91%e7%bb%9c%e5%8d%8f%e8%ae%ae%e5%b1%82%e7%ba%a7%e5%9b%be.png" title="/images/计算机网络/小林coding/网络协议层级图.png" data-thumbnail="/images/计算机网络/小林coding/网络协议层级图.png" data-sub-html="<h2>网络层级图</h2>">
         <img
             class="lazyload"
             src="/svg/loading.min.svg"
-            data-src="https://img-blog.csdn.net/20180129151922200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hpbmFfamVmZmVyeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"
-            data-srcset="https://img-blog.csdn.net/20180129151922200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hpbmFfamVmZmVyeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast, https://img-blog.csdn.net/20180129151922200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hpbmFfamVmZmVyeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast 1.5x, https://img-blog.csdn.net/20180129151922200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hpbmFfamVmZmVyeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast 2x"
+            data-src="/images/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c/%e5%b0%8f%e6%9e%97coding/%e7%bd%91%e7%bb%9c%e5%8d%8f%e8%ae%ae%e5%b1%82%e7%ba%a7%e5%9b%be.png"
+            data-srcset="/images/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c/%e5%b0%8f%e6%9e%97coding/%e7%bd%91%e7%bb%9c%e5%8d%8f%e8%ae%ae%e5%b1%82%e7%ba%a7%e5%9b%be.png, /images/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c/%e5%b0%8f%e6%9e%97coding/%e7%bd%91%e7%bb%9c%e5%8d%8f%e8%ae%ae%e5%b1%82%e7%ba%a7%e5%9b%be.png 1.5x, /images/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c/%e5%b0%8f%e6%9e%97coding/%e7%bd%91%e7%bb%9c%e5%8d%8f%e8%ae%ae%e5%b1%82%e7%ba%a7%e5%9b%be.png 2x"
             data-sizes="auto"
-            alt="https://img-blog.csdn.net/20180129151922200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hpbmFfamVmZmVyeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" />
+            alt="/images/计算机网络/小林coding/网络协议层级图.png" />
     </a><figcaption class="image-caption">网络层级图</figcaption>
     </figure></div>
 <h2 id="键入网址到网页显示期间发生了什么">键入网址到网页显示，期间发生了什么</h2>
-<h3 id="孤单小弟--http">孤单小弟 —— HTTP</h3>
+<h3 id="http">HTTP</h3>
 <p>浏览器解析 URL字符串: 协议类型://域名或者IP:端口号/文件路径</p>
-<p>端口号省略时默认是协议默认端口比如http是80</p>
-<p>没有路径名是访问默认文件index.html或default.html</p>
+<p>端口号省略时默认是协议对应的默认端口，比如http是80</p>
+<p>没有路径名则访问index.html或default.html</p>
 <p>根据这些信息生成 HTTP 请求消息</p>
-<h3 id="真实地址查询--dns">真实地址查询 —— DNS</h3>
-<p>委托操作系统将消息发送给 Web 服务器。</p>
-<p>发送之前需要查询服务器域名对应的 IP 地址。</p>
+<h3 id="dns查询">DNS查询</h3>
+<p>应用层，传输层，网络层和网络接口层发送之前需要查询服务器域名对应的 IP 地址。</p>
 <p>域名由<code>.</code>分割，越靠右的位置表示其层级越高。域名的层级关系类似一个树状结构：</p>
 <ul>
 <li>根 DNS 服务器（.）</li>
@@ -167,7 +167,7 @@
 </ul>
 <p>域名解析的工作流程</p>
 <ol>
-<li>客户端发出 DNS 请求给本地 DNS 服务器（本地设置的 DNS 服务器地址）</li>
+<li>客户端发出 DNS 请求给本地设置的 DNS 服务器地址</li>
 <li>本地域名服务器查询缓存，找到 <a href="https://www.server.com" target="_blank" rel="noopener noreffer ">www.server.com</a>，则直接返回 IP 地址。否则本地 DNS 会去问它的根域名服务器</li>
 <li>根 DNS 返回给本地域名服务器 .com 顶级域名服务器地址</li>
 <li>本地域名服务器和返回的服务器地址重复2，3步，直到找到权威域名服务器。</li>
@@ -175,10 +175,10 @@
 <li>本地域名服务器将IP返回给客户端</li>
 </ol>
 <p>通常客户端到域名服务器是不可靠无连接的UDP通信，域名服务器之间使用可靠有连接的TCP通信进行迭代查询</p>
-<h3 id="指南好帮手--协议栈">指南好帮手 —— 协议栈</h3>
-<p>通过 DNS 获取到 IP 后，HTTP 的传输工作交给操作系统中的协议栈（传统网络架构中的传输层到数据链路层。物理层由网卡驱动接管）。</p>
+<h3 id="操作系统协议栈">操作系统协议栈</h3>
+<p>获取 IP 后，操作系统中的协议栈处理和发送数据包（传统网络架构中的传输层到数据链路层。物理层由网卡驱动接管）。</p>
 <p>应用程序（浏览器）通过调用 Socket 库，来委托协议栈工作。</p>
-<h3 id="可靠传输--tcp">可靠传输 —— TCP</h3>
+<h3 id="tcp">TCP</h3>
 <p>源端口号和目标端口号寻址</p>
 <p>包的序号解决包乱序的问题</p>
 <p>状态位：改变协议状态。</p>
@@ -204,7 +204,7 @@
         data-sizes="auto"
         alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%94%AE%E5%85%A5%E7%BD%91%E5%9D%80%E8%BF%87%E7%A8%8B/13.jpg"
         title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E9%94%AE%E5%85%A5%E7%BD%91%E5%9D%80%E8%BF%87%E7%A8%8B/13.jpg" /></div>
-<h3 id="远程定位--ip">远程定位 —— IP</h3>
+<h3 id="ip">IP</h3>
 <div id="id-4"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -218,7 +218,7 @@
 <p>路由数据包时根据路由表规则，来判断哪一个网卡作为源地址 IP</p>
 <p>route -n 命令查看当前系统的路由表（推荐ip系列的命令 ip routes）</p>
 <p>路由数据包流程：路由表从上往下将包目的ip和掩码与运算，结果和目的网段相同就匹配上，使用匹配的网卡（端口）进行转发。通常最后一个条目的目的网段和子网掩码都是0.0.0.0，称为默认网关，当上面的都不匹配的时候就发送到这个网卡接口，该条目的Gateway就是默认网关ip地址。发送出数据包时，当Gateway为0.0.0.0时表示该网段跟主机是直连的，链路层将目的ip对应的MAC作为链路层包头的MAC，否则使用Gateway 的MAC。</p>
-<h3 id="两点传输--mac">两点传输 —— MAC</h3>
+<h3 id="mac">MAC</h3>
 <div id="id-5"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -238,14 +238,14 @@
 <li>ARP 缓存中不存在对方 MAC 地址时，发送 ARP 广播查询。</li>
 </ul>
 <p>arp -a查看 ARP 缓存的内容</p>
-<h3 id="出口--网卡">出口 —— 网卡</h3>
+<h3 id="网卡">网卡</h3>
 <p>我们需要将数字信息转换为电信号，才能在网线上传输，由网卡负责。网卡驱动程序控制网卡。</p>
 <p>网卡驱动获取网络包之后，会将其复制到网卡内的缓存区中，接着会在其开头加上报头和起始帧分界符，在末尾加上用于检测错误的帧校验序列。</p>
 <ul>
 <li>起始帧分界符是一个用来表示包起始位置的标记</li>
 <li>末尾的 FCS（帧校验序列）用来检查包传输过程是否有损坏</li>
 </ul>
-<h3 id="送别者--交换机">送别者 —— 交换机</h3>
+<h3 id="交换机">交换机</h3>
 <p>将网络包原样转发到目的地。也称为二层网络设备（即传统网络架构中的数据链路层，不涉及网络层及以上数据包的修改）</p>
 <p>交换机的包接收操作：交换机接收电信号，将电信号转换为数字信号，通过包末尾的 FCS 校验错误，如果没问题则放到缓冲区，根据 MAC 地址表查找 MAC 地址，然后将信号发送到相应的端口。当 MAC 地址表找不到指定的 MAC 地址，将包转发到除了源端口之外的所有端口。</p>
 <p>交换机的 MAC 地址表主要包含两个信息：一个是设备的 MAC 地址，另一个是该设备连接在交换机的哪个端口上。</p>
@@ -255,9 +255,9 @@
 <li>MAC 地址中的 FF:FF:FF:FF:FF:FF</li>
 <li>IP 地址中的 255.255.255.255</li>
 </ul>
-<h3 id="出境大门--路由器">出境大门 —— 路由器</h3>
+<h3 id="路由器">路由器</h3>
 <p>路由器是基于 IP 设计的，俗称三层网络设备（即传统网络架构中的网络层），路由器的各个端口都具有 MAC 地址和 IP 地址</p>
-<p>路由流程见上面<a href="#%e8%bf%9c%e7%a8%8b%e5%ae%9a%e4%bd%8d--ip" rel="">IP层</a></p>
+<p>路由流程见上面<a href="#ip" rel="">IP层</a></p>
 <p>路由器的端口都具有 MAC 地址，只接收与自身地址匹配的包，遇到不匹配的包则直接丢弃</p>
 <h3 id="互相扒皮--服务器-与-客户端">互相扒皮 —— 服务器 与 客户端</h3>
 <p>逐层协议分析包头。链路层接收和自己的 MAC 地址符合的包。网络层接收和自己的IP地址符合的IP包。根据IP头读取传输层协议。TCP会检查首部校验和序列号并返回ACK，UDP只检查首部校验和。读取传输层端口号，并将传输层载荷发送给进程。</p>

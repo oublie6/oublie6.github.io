@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E6%97%A5%E5%BF%97%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  1303 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  1413 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E6%97%A5%E5%BF%97%E7%AF%87\/","datePublished": "2022-12-22T10:20:33+08:00","dateModified": "2022-12-22T10:20:33+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-mysql-小林coding-日志篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1303 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1413 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -180,7 +180,7 @@
         alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
         title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
 <h2 id="redo-log">redo log</h2>
-<p>更新内存（同时标记为脏页）时将对这个页的修改以 redo log 的形式记录下来，比如对 XXX 表空间中的 YYY 数据页 ZZZ 偏移量的地方做了AAA 更新</p>
+<p>对 XXX 表空间中的 YYY 数据页 ZZZ 偏移量的地方做了AAA 更新的事务提交时就会产生redolog物理日志（直接写到磁盘），redolog在内存中（Pool Buffer中的undo页），事务执行过程中redolog也是存储在Pool Buffer中的</p>
 <p>WAL 技术： MySQL 的写操作不立刻写到磁盘上，先写日志，然后在合适的时间再写到磁盘上</p>
 <div id="id-5"><img
         class="lazyload"
@@ -219,6 +219,7 @@
 <li>每次事务提交时（innodb_flush_log_at_trx_commit参数控制）</li>
 </ul>
 <h2 id="binlog">binlog</h2>
+<p>binlog由服务层生成（可以供其他存储引擎使用），redolog和undolog由innodb存储层生成</p>
 <p>一条更新操作后生成一条 binlog，事务提交时将该事务执行过程中产生的所有 binlog 写入 binlog 文件。</p>
 <p>binlog 文件只记录所有数据库表结构变更和表数据的修改</p>
 <p>主从复制依赖于 binlog。复制的过程是将 binlog 中的数据从主库传输到从库上。该过程默认不需要阻塞主库执行事务（异步）</p>
