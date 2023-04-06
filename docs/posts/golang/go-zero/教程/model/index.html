@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/model\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  3868 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  4507 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/model\/","datePublished": "2023-01-06T12:38:49+08:00","dateModified": "2023-01-06T12:38:49+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-教程-Model</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3868 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4507 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -149,6 +149,22 @@
       <ul>
         <li><a href="#db">db</a></li>
         <li><a href="#cache">cache</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a>
+      <ul>
+        <li><a href="#cachedsql">cachedsql</a>
+          <ul>
+            <li><a href="#cachedconn">CachedConn</a></li>
+          </ul>
+        </li>
+        <li><a href="#sqlconn">sqlconn</a>
+          <ul>
+            <li><a href="#session-interface">Session interface</a></li>
+            <li><a href="#sqlconn-interface">SqlConn interface</a></li>
+            <li><a href="#stmtsession-interface">StmtSession interface</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -930,7 +946,65 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="总结">总结</h2>
+<p>总结一下，对于带缓存model和不带缓存model的方法都在<code>core/stores/sqlc/cachedsql.go</code>和<code>core/stores/sqlx/sqlconn.go</code>文件中</p>
+<h3 id="cachedsql">cachedsql</h3>
+<p>类型</p>
+<ul>
+<li>ExecFn func(conn sqlx.SqlConn) (sql.Result, error)：数据库执行函数</li>
+<li>IndexQueryFn func(conn sqlx.SqlConn, v interface{}) (interface{}, error)：使用唯一索引的查询语句</li>
+<li>PrimaryQueryFn func(conn sqlx.SqlConn, v, primary interface{}) error：使用主键查询的语句</li>
+<li>QueryFn func(conn sqlx.SqlConn, v interface{}) error：普通查询语句</li>
+</ul>
+<h4 id="cachedconn">CachedConn</h4>
+<p>变量</p>
+<ul>
+<li>db    sqlx.SqlConn</li>
+<li>cache cache.Cache</li>
+</ul>
+<p>方法</p>
+<ul>
+<li>func (cc CachedConn) DelCache(keys &hellip;string) error：删除cache中的键值对</li>
+<li>func (cc CachedConn) GetCache(key string, v interface{}) error：获取cache中键对应的值</li>
+<li>func (cc CachedConn) Exec(exec ExecFn, keys &hellip;string) (sql.Result, error)：对给定的keys执行exec</li>
+<li>func (cc CachedConn) ExecNoCache(q string, args &hellip;interface{}) (sql.Result, error)：直接对数据库执行q语句，不修改缓存</li>
+<li>func (cc CachedConn) QueryRow(v interface{}, key string, query QueryFn) error：如果key在缓存中直接返回，否则执行查询语句</li>
+<li><a href="https://go-zero.dev/cn/docs/blog/cache/redis-cache#2-%E5%9F%BA%E4%BA%8E%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%9A%84%E7%BC%93%E5%AD%98%E9%80%BB%E8%BE%91" target="_blank" rel="noopener noreffer ">func (cc CachedConn) QueryRowIndex(v interface{}, key string, keyer func(primary interface{}) string,indexQuery IndexQueryFn, primaryQuery PrimaryQueryFn) error</a></li>
+<li>func (cc CachedConn) QueryRowNoCache(v interface{}, q string, args &hellip;interface{}) error ；直接查询数据库，不影响缓存</li>
+<li>func (cc CachedConn) QueryRowsNoCache(v interface{}, q string, args &hellip;interface{}) error：直接查数据库，不影响缓存</li>
+<li>func (cc CachedConn) SetCache(key string, v interface{}) error：设置缓存</li>
+<li>func (cc CachedConn) Transact(fn func(sqlx.Session) error) error：开启事务</li>
+</ul>
+<h3 id="sqlconn">sqlconn</h3>
+<h4 id="session-interface">Session interface</h4>
+<p>方法</p>
+<ul>
+<li>Exec(query string, args &hellip;interface{}) (sql.Result, error)：执行语句</li>
+<li>Prepare(query string) (StmtSession, error)：预编译语句</li>
+<li>QueryRow(v interface{}, query string, args &hellip;interface{}) error：查询一条记录</li>
+<li>QueryRowPartial(v interface{}, query string, args &hellip;interface{}) error：查询一条记录的部分字段</li>
+<li>QueryRows(v interface{}, query string, args &hellip;interface{}) error：查询多条记录</li>
+<li>QueryRowsPartial(v interface{}, query string, args &hellip;interface{}) error：查询多条记录的部分字段</li>
+</ul>
+<h4 id="sqlconn-interface">SqlConn interface</h4>
+<p>方法</p>
+<ul>
+<li>Session</li>
+<li>Exec(query string, args &hellip;interface{}) (sql.Result, error)：执行语句</li>
+<li>RawDB() (*sql.DB, error)：返回原始DB，可以用于启动其他orm</li>
+<li>Transact(func(session Session) error) error：开启事务</li>
+</ul>
+<h4 id="stmtsession-interface">StmtSession interface</h4>
+<p>方法</p>
+<ul>
+<li>Close() error</li>
+<li>Exec(args &hellip;interface{}) (sql.Result, error)</li>
+<li>QueryRow(v interface{}, args &hellip;interface{}) error</li>
+<li>QueryRowPartial(v interface{}, args &hellip;interface{}) error</li>
+<li>QueryRows(v interface{}, args &hellip;interface{}) error</li>
+<li>QueryRowsPartial(v interface{}, args &hellip;interface{}) error</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

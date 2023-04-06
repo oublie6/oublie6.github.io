@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E4%BA%91%E5%8E%9F%E7%94%9F\/k8s\/%E6%95%99%E7%A8%8B\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "k8s","wordcount":  10815 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "k8s","wordcount":  10849 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E4%BA%91%E5%8E%9F%E7%94%9F\/k8s\/%E6%95%99%E7%A8%8B\/","datePublished": "2022-12-31T11:28:48+08:00","dateModified": "2022-12-31T11:28:48+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">云原生-k8s-教程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>云原生</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-31">2022-12-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10815 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-31">2022-12-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10849 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;22 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -116,7 +116,7 @@
       <ul>
         <li><a href="#概述">概述</a>
           <ul>
-            <li><a href="#kubernetes-组件httpskubernetesiozh-cndocsconceptsoverviewcomponents"><a href="https://kubernetes.io/zh-cn/docs/concepts/overview/components/">Kubernetes 组件</a></a></li>
+            <li><a href="#kubernetes-组件">Kubernetes 组件</a></li>
           </ul>
         </li>
       </ul>
@@ -161,10 +161,10 @@
           <ul>
             <li><a href="#statefulset-基础">StatefulSet 基础</a>
               <ul>
-                <li><a href="#service-与-pod-的-dnshttpskubernetesiozh-cndocsconceptsservices-networkingdns-pod-service"><a href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/dns-pod-service/">Service 与 Pod 的 DNS</a></a></li>
-                <li><a href="#无头服务headless-serviceshttpskubernetesiozh-cndocsconceptsservices-networkingserviceheadless-services"><a href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/#headless-services">无头服务（Headless Services）</a></a></li>
-                <li><a href="#持久卷httpskubernetesiozh-cndocsconceptsstoragepersistent-volumes"><a href="https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/">持久卷</a></a></li>
-                <li><a href="#statefulsethttpskubernetesiozh-cndocsconceptsworkloadscontrollersstatefulset"><a href="https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/statefulset/">StatefulSet</a></a></li>
+                <li><a href="#service-与-pod-的-dns">Service 与 Pod 的 DNS</a></li>
+                <li><a href="#无头服务headless-services">无头服务（Headless Services）</a></li>
+                <li><a href="#持久卷">持久卷</a></li>
+                <li><a href="#statefulset">StatefulSet</a></li>
                 <li><a href="#创建-statefulset">创建 StatefulSet。</a></li>
                 <li><a href="#statefulset-中的-pod">StatefulSet 中的 Pod</a></li>
                 <li><a href="#扩容缩容-statefulset">扩容/缩容 StatefulSet</a></li>
@@ -222,23 +222,28 @@
 <p>curl和谷歌浏览器并不会识别.bashrc里面的环境变量，所以你需要在curl后面添加<code>--noproxy &quot;*&quot;</code>来访问k8s的服务service</p>
 <h2 id="概念">概念</h2>
 <h3 id="概述">概述</h3>
-<div id="id-1"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg, https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg" /></div>
-<h4 id="kubernetes-组件httpskubernetesiozh-cndocsconceptsoverviewcomponents"><a href="https://kubernetes.io/zh-cn/docs/concepts/overview/components/" target="_blank" rel="noopener noreffer ">Kubernetes 组件</a></h4>
-<div id="id-2"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg, https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg" /></div>
+<div id="id-1"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg" title="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg, https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
+<h4 id="kubernetes-组件">Kubernetes 组件</h4>
+<p><a href="https://kubernetes.io/zh-cn/docs/concepts/overview/components/" title=" " target="_blank" rel="noopener noreffer ">Kubernetes 组件</a></p>
+<div id="id-2"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg" title="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg, https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/2475489eaf20163ec0f54ddc1d92aa8d4c87c96b/e7c81/images/docs/components-of-kubernetes.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <h2 id="教程">教程</h2>
 <h3 id="你好minikube">你好，Minikube</h3>
 <p>安装好minikube后使用该命令启动minikube服务</p>
@@ -397,27 +402,31 @@
 <p>Kubernetes 协调一个高可用计算机集群，每个计算机作为独立单元互相连接工作</p>
 <p>Kubernetes 以更高效的方式跨集群自动分发和调度应用容器</p>
 <p>集群图</p>
-<div id="id-3"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg, https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg" /></div>
+<div id="id-3"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg" title="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg, https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/283cc20bb49089cb2ca54d51b4ac27720c1a7902/34424/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>Master 负责管理整个集群</p>
 <p>Node 是一个虚拟机或者物理机，它在 Kubernetes 集群中充当工作机器的角色。Node 使用 Master 暴露的 Kubernetes API 与 Master 通信。</p>
 <h4 id="使用-kubectl-创建-deployment">使用 kubectl 创建 Deployment</h4>
 <p>Deployment 指挥 Kubernetes 如何创建和更新应用程序的实例。创建 Deployment 后，Kubernetes master 将应用程序实例调度到集群中的各个节点上。</p>
 <p>Kubernetes Deployment 控制器会持续监视这些实例。 如果托管实例的节点关闭或被删除，则 Deployment 控制器会将该实例替换为集群中另一个节点上的实例。 这提供了一种自我修复机制来解决机器故障维护问题。</p>
-<div id="id-4"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg, https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg" /></div>
+<div id="id-4"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg" title="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg, https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/8700a7f5f0008913aa6c25a1b26c08461e4947c7/cfc2c/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <h4 id="查看-pod-和工作节点">查看 pod 和工作节点</h4>
 <p>Pod 是 Kubernetes 抽象出来的，表示一组一个或多个应用程序容器（如 Docker），以及这些容器的一些共享资源。这些资源包括:</p>
 <ul>
@@ -426,28 +435,32 @@
 <li>有关每个容器如何运行的信息，例如容器镜像版本或要使用的特定端口</li>
 </ul>
 <p>Pod是 Kubernetes 平台上的原子单元。当我们在 Kubernetes 上创建 Deployment 时，该 Deployment 会在其中创建包含容器的 Pod （而不是直接创建容器）。每个 Pod 都与调度它的工作节点绑定，并保持在那里直到终止（根据重启策略）或删除。 如果工作节点发生故障，则会在集群中的其他可用工作节点上调度相同的 Pod。</p>
-<div id="id-5"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg, https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg" /></div>
+<div id="id-5"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg" title="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg, https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>一个 pod 总是运行在 工作节点。工作节点是 Kubernetes 中的参与计算的机器，可以是虚拟机或物理计算机，具体取决于集群。每个工作节点由主节点管理。工作节点可以有多个 pod ，Kubernetes 主节点会自动处理在集群中的工作节点上调度 pod 。 主节点的自动调度考量了每个工作节点上的可用资源。</p>
 <p>每个 Kubernetes 工作节点至少运行:</p>
 <ul>
 <li>Kubelet，负责 Kubernetes 主节点和工作节点之间通信的过程; 它管理 Pod 和机器上运行的容器。</li>
 <li>容器运行时（如 Docker）负责从仓库中提取容器镜像，解压缩容器以及运行应用程序。</li>
 </ul>
-<div id="id-6"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg, https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg" /></div>
+<div id="id-6"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg" title="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg, https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>使用 kubectl 进行故障排除</p>
 <ul>
 <li>kubectl get - 列出资源</li>
@@ -466,14 +479,16 @@
 <li>LoadBalancer - 在当前云中创建一个外部负载均衡器(如果支持的话)，并为 Service 分配一个固定的外部IP。是 NodePort 的超集。（常用）</li>
 <li>ExternalName - 通过返回带有该名称的 CNAME 记录，使用任意名称(由 spec 中的externalName指定)公开 Service。不使用代理。这种类型需要kube-dns的v1.7或更高版本。</li>
 </ul>
-<div id="id-7"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg, https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg" /></div>
+<div id="id-7"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg" title="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg, https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>Service 通过一组 Pod 路由通信。Service 是一种抽象，它允许 Pod 死亡并在 Kubernetes 中复制，而不会影响应用程序。在依赖的 Pod (如应用程序中的前端和后端组件)之间进行发现和路由是由Kubernetes Service 处理的。</p>
 <p>Service 匹配一组 Pod 是使用 标签(Label)和选择器(Selector), 它们是允许对 Kubernetes 中的对象进行逻辑操作的一种分组原语。标签(Label)是附加在对象上的键/值对，可以以多种方式使用:</p>
 <ul>
@@ -481,69 +496,83 @@
 <li>嵌入版本标签</li>
 <li>使用 Label 将对象进行分类</li>
 </ul>
-<div id="id-8"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg, https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg" /></div>
+<div id="id-8"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg" title="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg, https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/7a13fe12acc9ea0728460c482c67e0eb31ff5303/2c8a7/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>标签(Label)可以在创建时或之后附加到对象上。他们可以随时被修改。</p>
 <h4 id="缩放你的应用">缩放你的应用</h4>
-<div id="id-9"><p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg, https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg" /></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg, https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg" /></p>
+<div id="id-9"><p><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg" title="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg, https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg" title="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg, https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></p>
 </div>
 <p>扩展 Deployment 将创建新的 Pods，并将资源调度请求分配到有可用资源的节点上，收缩 会将 Pods 数量减少至所需的状态。</p>
 <h4 id="执行滚动更新">执行滚动更新</h4>
 <p>滚动更新 允许通过使用新的实例逐步更新 Pod 实例，零停机进行 Deployment 更新。</p>
 <p>默认情况下，更新期间不可用的 pod 的最大值和可以创建的新 pod 数都是 1。这两个选项都可以配置为（pod）数字或百分比。</p>
-<div id="id-10"><p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg, https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg" /></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg, https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg" /></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg, https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg" /></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg, https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg" /></p>
+<div id="id-10"><p><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg" title="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg, https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/fa906/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates1.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg" title="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg, https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg" title="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg, https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg" title="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg, https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></p>
 </div>
 <h3 id="配置">配置</h3>
 <h4 id="使用-configmap-来配置-redis">使用 ConfigMap 来配置 Redis</h4>
@@ -861,14 +890,18 @@
 </div>
 </div><h3 id="有状态的应用">有状态的应用</h3>
 <h4 id="statefulset-基础">StatefulSet 基础</h4>
-<h5 id="service-与-pod-的-dnshttpskubernetesiozh-cndocsconceptsservices-networkingdns-pod-service"><a href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/dns-pod-service/" target="_blank" rel="noopener noreffer ">Service 与 Pod 的 DNS</a></h5>
+<h5 id="service-与-pod-的-dns">Service 与 Pod 的 DNS</h5>
+<p><a href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/dns-pod-service/" target="_blank" rel="noopener noreffer ">Service 与 Pod 的 DNS</a></p>
 <p>Kubernetes 为 Service 和 Pod 创建 DNS 记录。 可以使用一致的 DNS 名称而非 IP 地址访问 Service。</p>
-<h5 id="无头服务headless-serviceshttpskubernetesiozh-cndocsconceptsservices-networkingserviceheadless-services"><a href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/#headless-services" target="_blank" rel="noopener noreffer ">无头服务（Headless Services）</a></h5>
+<h5 id="无头服务headless-services">无头服务（Headless Services）</h5>
+<p><a href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/#headless-services" target="_blank" rel="noopener noreffer ">无头服务（Headless Services）</a></p>
 <p>不需要或不想要负载均衡，以及单独的 Service IP。指定 Cluster IP（spec.clusterIP）的值为 &ldquo;None&rdquo; 来创建 Headless Service。</p>
-<h5 id="持久卷httpskubernetesiozh-cndocsconceptsstoragepersistent-volumes"><a href="https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/" target="_blank" rel="noopener noreffer ">持久卷</a></h5>
+<h5 id="持久卷">持久卷</h5>
+<p><a href="https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/" target="_blank" rel="noopener noreffer ">持久卷</a></p>
 <p>持久卷（PersistentVolume，PV） 是集群中的一块存储，可以由管理员事先制备， 或者使用存储类（Storage Class）来动态制备。 持久卷是集群资源，就像节点也是集群资源一样。</p>
 <p>持久卷申领（PersistentVolumeClaim，PVC） 表达的是用户对存储的请求。概念上与 Pod 类似。 Pod 会耗用节点资源，而 PVC 申领会耗用 PV 资源。PVC 申领可以请求特定的大小和访问模式 （例如，可以要求 PV 卷能够以 ReadWriteOnce、ReadOnlyMany 或 ReadWriteMany 模式之一来挂载）</p>
-<h5 id="statefulsethttpskubernetesiozh-cndocsconceptsworkloadscontrollersstatefulset"><a href="https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/statefulset/" target="_blank" rel="noopener noreffer ">StatefulSet</a></h5>
+<h5 id="statefulset">StatefulSet</h5>
+<p><a href="https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/statefulset/" target="_blank" rel="noopener noreffer ">StatefulSet</a></p>
 <p>StatefulSet 是用来管理有状态应用的工作负载 API 对象。</p>
 <p>StatefulSet 用来管理某 Pod 集合的部署和扩缩， 并为这些 Pod 提供持久存储和持久标识符。</p>
 <p>和 Deployment 类似， StatefulSet 管理基于相同容器规约的一组 Pod。和 Deployment 不同的是， StatefulSet 为它们的每个 Pod 维护了一个有粘性的 ID，这些 Pod 是基于相同的规约来创建的， 但是不能相互替换：无论怎么调度，每个 Pod 都有一个永久不变的 ID。</p>
@@ -1768,14 +1801,16 @@ wget -qO - 10.0.170.92
 <li>Pod 的回复被路由回 node2</li>
 <li>Pod 的回复被发送回给客户端</li>
 </ul>
-<div id="id-11"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg, https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg" /></div>
+<div id="id-11"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg" title="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg, https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/90debb6eaa6622c9fc5235e084e008805f2bf8cd/7552e/zh-cn/docs/images/tutor-service-nodeport-fig01.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>为避免这种情况，Kubernetes 有一个特性可以保留客户端源 IP。 如果将 service.spec.externalTrafficPolicy 设置为 Local， kube-proxy 只会将代理请求代理到本地端点，而不会将流量转发到其他节点。 这种方法保留了原始源 IP 地址。如果没有本地端点，则发送到该节点的数据包将被丢弃， 因此你可以在任何数据包处理规则中依赖正确的源 IP，你可能会应用一个数据包使其通过该端点。</p>
 <p>设置 service.spec.externalTrafficPolicy 字段如下</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1802,14 +1837,16 @@ wget -qO - 10.0.170.92
 <li>客户端发送数据包到必有端点的 node1:nodePort</li>
 <li>node1 使用正确的源 IP 地址将数据包路由到端点</li>
 </ul>
-<div id="id-12"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg, https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg" /></div>
+<div id="id-12"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg" title="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg, https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/5e1cca9c47b5f2b1ad1ec4921fff79df5d5031ea/b7858/zh-cn/docs/images/tutor-service-nodeport-fig02.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <h5 id="typeloadbalancer-类型-service-的源-ip">Type=LoadBalancer 类型 Service 的源 IP</h5>
 <p>默认情况下，发送到 Type=LoadBalancer 的 Service 的数据包经过源 NAT处理，因为所有处于 Ready 状态的可调度 Kubernetes 节点对于负载均衡的流量都是符合条件的。 因此，如果数据包到达一个没有端点的节点，系统会将其代理到一个带有端点的节点，用该节点的 IP 替换数据包上的源 IP</p>
 <p>你可以通过负载均衡器上暴露 source-ip-app 进行测试</p>
@@ -1842,14 +1879,16 @@ wget -qO - 10.0.170.92
 </div><p>minikube 会使得 LoadBalancer 则会出现 External-IP 一直处于 pending 官方给出的解决办法是添加tunnel，<a href="https://zhidao.baidu.com/question/1741582419884433347.html" target="_blank" rel="noopener noreffer ">百度 青柠姑娘17</a>，详见<a href="https://minikube.sigs.k8s.io/docs/handbook/accessing/#using-minikube-tunnel" target="_blank" rel="noopener noreffer ">官网</a></p>
 <p>这里也需要注意curl不使用代理&ndash;noproxy &ldquo;*&rdquo;</p>
 <p>将相同的 service.spec.externalTrafficPolicy 字段设置为 Local， 故意导致健康检查失败，从而强制没有端点的节点把自己从负载均衡流量的可选节点列表中删除。</p>
-<div id="id-13"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg"
-        data-srcset="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg, https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg 2x"
-        data-sizes="auto"
-        alt="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg"
-        title="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg" /></div>
+<div id="id-13"><figure><a class="lightgallery" href="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg" title="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg" data-thumbnail="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg"
+            data-srcset="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg, https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg 1.5x, https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg 2x"
+            data-sizes="auto"
+            alt="https://d33wubrfki0l68.cloudfront.net/a67218b40eb6e2d0eee68f1077cbb0509b56e041/dba10/images/docs/sourceip-externaltrafficpolicy.svg" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <h5 id="清理现场-1">清理现场</h5>
 <p>删除 Service：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
