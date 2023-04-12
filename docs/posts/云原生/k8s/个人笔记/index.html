@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E4%BA%91%E5%8E%9F%E7%94%9F\/k8s\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "k8s","wordcount":  103 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "k8s","wordcount":  312 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E4%BA%91%E5%8E%9F%E7%94%9F\/k8s\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-01-17T16:42:25+08:00","dateModified": "2023-01-17T16:42:25+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">云原生-k8s-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>云原生</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-17">2023-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;103 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-17">2023-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;312 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -113,6 +113,7 @@
   <ul>
     <li><a href="#查看k8s集群所有内容">查看k8s集群所有内容</a></li>
     <li><a href="#以yaml文件删除deploymentservice和pod">以yaml文件删除deployment，service和pod</a></li>
+    <li><a href="#容器网络接口cni容器运行时接口cri和容器存储接口csi">容器网络接口(cni)，容器运行时接口(cri)和容器存储接口(csi)</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://kubernetes.io/" target="_blank" rel="noopener noreffer ">k8s官网</a></p>
@@ -138,7 +139,16 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubctl delete -f xxx.yaml
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="容器网络接口cni容器运行时接口cri和容器存储接口csi">容器网络接口(cni)，容器运行时接口(cri)和容器存储接口(csi)</h2>
+<p><a href="https://www.cni.dev/docs/" target="_blank" rel="noopener noreffer ">cni官方文档</a></p>
+<p><a href="https://kubernetes.io/docs/concepts/architecture/cri/" target="_blank" rel="noopener noreffer ">cri官方文档1</a></p>
+<p><a href="https://github.com/kubernetes/kubernetes/blob/242a97307b34076d5d8f5bbeb154fa4d97c9ef1d/docs/devel/container-runtime-interface.md" target="_blank" rel="noopener noreffer ">cri官方文档2</a></p>
+<p><a href="https://kubernetes-csi.github.io/docs/" target="_blank" rel="noopener noreffer ">csi官方文档</a></p>
+<p><a href="https://blog.csdn.net/u012516914/article/details/116574037" target="_blank" rel="noopener noreffer ">CSDN Spring_java_gg</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/450140876" target="_blank" rel="noopener noreffer ">知乎 A7kaou</a></p>
+<p>这三个是谷歌为了扩展k8s功能制定的标准，符合这些标准的容器都可以接入k8s，而不是只有docker能接入，另外这三个标准也废弃掉了docker shim组件（用于屏蔽docker具有的k8s不需要的功能，如创建网络创建卷等）。</p>
+<p>cri目前还没使用，目前仍然使用的是docker cri</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
