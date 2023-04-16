@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>数据库-redis-小林coding-高可用篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="数据库-redis-小林coding-高可用篇" />
-<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 主从复制是怎么实现 主从复制共有三种模式：全量复制、基于长连接的命令传" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 主从复制是怎么实现 全量复制、基于长连接的命令传播、增量复制 第一次同步" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%AB%98%E5%8F%AF%E7%94%A8%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-23T18:48:34+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="数据库-redis-小林coding-高可用篇"/>
-<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 主从复制是怎么实现 主从复制共有三种模式：全量复制、基于长连接的命令传"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 主从复制是怎么实现 全量复制、基于长连接的命令传播、增量复制 第一次同步"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%AB%98%E5%8F%AF%E7%94%A8%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E5%8A%9F%E8%83%BD%E7%AF%87/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E7%BC%93%E5%AD%98%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E9%AB%98%E5%8F%AF%E7%94%A8%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  619 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "redis, 小林coding系列","wordcount":  837 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/redis\/%E5%B0%8F%E6%9E%97coding\/%E9%AB%98%E5%8F%AF%E7%94%A8%E7%AF%87\/","datePublished": "2022-12-23T18:48:34+08:00","dateModified": "2022-12-23T18:48:34+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-redis-小林coding-高可用篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;619 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;837 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -114,6 +114,7 @@
     <li><a href="#主从复制是怎么实现">主从复制是怎么实现</a>
       <ul>
         <li><a href="#第一次同步">第一次同步</a></li>
+        <li><a href="#命令传播">命令传播</a></li>
         <li><a href="#分摊主服务器的压力">分摊主服务器的压力</a></li>
         <li><a href="#增量复制">增量复制</a></li>
       </ul>
@@ -135,15 +136,17 @@
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/redis/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
 <h2 id="主从复制是怎么实现">主从复制是怎么实现</h2>
-<p>主从复制共有三种模式：全量复制、基于长连接的命令传播、增量复制。</p>
-<div id="id-1"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/2b7231b6aabb9a9a2e2390ab3a280b2d.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/2b7231b6aabb9a9a2e2390ab3a280b2d.png, https://img-blog.csdnimg.cn/img_convert/2b7231b6aabb9a9a2e2390ab3a280b2d.png 1.5x, https://img-blog.csdnimg.cn/img_convert/2b7231b6aabb9a9a2e2390ab3a280b2d.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/2b7231b6aabb9a9a2e2390ab3a280b2d.png"
-        title="https://img-blog.csdnimg.cn/img_convert/2b7231b6aabb9a9a2e2390ab3a280b2d.png" /></div>
+<p>全量复制、基于长连接的命令传播、增量复制</p>
+<div id="id-1"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/2b7231b6aabb9a9a2e2390ab3a280b2d-20230309232920063.png" title="https://cdn.xiaolincoding.com//mysql/other/2b7231b6aabb9a9a2e2390ab3a280b2d-20230309232920063.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/2b7231b6aabb9a9a2e2390ab3a280b2d-20230309232920063.png" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/2b7231b6aabb9a9a2e2390ab3a280b2d-20230309232920063.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/2b7231b6aabb9a9a2e2390ab3a280b2d-20230309232920063.png, https://cdn.xiaolincoding.com//mysql/other/2b7231b6aabb9a9a2e2390ab3a280b2d-20230309232920063.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/2b7231b6aabb9a9a2e2390ab3a280b2d-20230309232920063.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/2b7231b6aabb9a9a2e2390ab3a280b2d-20230309232920063.png" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <h3 id="第一次同步">第一次同步</h3>
 <p>replicaof命令：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -164,6 +167,8 @@
         data-sizes="auto"
         alt="https://cdn.xiaolincoding.com//mysql/other/ea4f7e86baf2435af3999e5cd38b6a26.png"
         title="https://cdn.xiaolincoding.com//mysql/other/ea4f7e86baf2435af3999e5cd38b6a26.png" /></div>
+<p>第一阶段：建立链接、协商同步:</p>
+<p>通过psync命令获取主服务器的 runID 和复制进度 offset</p>
 <p>第二阶段分为:</p>
 <ul>
 <li>主服务器生成 RDB 文件；</li>
@@ -171,53 +176,71 @@
 <li>「从服务器」加载 RDB 文件；</li>
 </ul>
 <p>在此期间将写操作命令写入到 replication buffer 缓冲区</p>
-<p>第三阶段发送这些写操作</p>
-<p>完成第一次同步后，维护一个基于keepalive的TCP长连接，通过这个连接将写操作命令传播给从服务器。称为基于长连接的命令传播</p>
+<p>第三阶段：发送replication buffer 缓冲区的写操作</p>
+<h3 id="命令传播">命令传播</h3>
+<p>完成第一次同步后，维护一个TCP长连接，通过这个连接将写操作命令传播给从服务器。称为基于长连接的命令传播</p>
 <h3 id="分摊主服务器的压力">分摊主服务器的压力</h3>
 <p>从服务器可以有自己的从服务器</p>
-<div id="id-3"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/4d850bfe8d712d3d67ff13e59b919452.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/4d850bfe8d712d3d67ff13e59b919452.png, https://img-blog.csdnimg.cn/img_convert/4d850bfe8d712d3d67ff13e59b919452.png 1.5x, https://img-blog.csdnimg.cn/img_convert/4d850bfe8d712d3d67ff13e59b919452.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/4d850bfe8d712d3d67ff13e59b919452.png"
-        title="https://img-blog.csdnimg.cn/img_convert/4d850bfe8d712d3d67ff13e59b919452.png" /></div>
+<div id="id-3"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/4d850bfe8d712d3d67ff13e59b919452.png" title="https://cdn.xiaolincoding.com//mysql/other/4d850bfe8d712d3d67ff13e59b919452.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/4d850bfe8d712d3d67ff13e59b919452.png" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/4d850bfe8d712d3d67ff13e59b919452.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/4d850bfe8d712d3d67ff13e59b919452.png, https://cdn.xiaolincoding.com//mysql/other/4d850bfe8d712d3d67ff13e59b919452.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/4d850bfe8d712d3d67ff13e59b919452.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/4d850bfe8d712d3d67ff13e59b919452.png" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <h3 id="增量复制">增量复制</h3>
-<div id="id-4"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/img_convert/e081b470870daeb763062bb873a4477e.png"
-        data-srcset="https://img-blog.csdnimg.cn/img_convert/e081b470870daeb763062bb873a4477e.png, https://img-blog.csdnimg.cn/img_convert/e081b470870daeb763062bb873a4477e.png 1.5x, https://img-blog.csdnimg.cn/img_convert/e081b470870daeb763062bb873a4477e.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/img_convert/e081b470870daeb763062bb873a4477e.png"
-        title="https://img-blog.csdnimg.cn/img_convert/e081b470870daeb763062bb873a4477e.png" /></div>
-<p>主服务器环形缓冲区repl_backlog_buffer记录写命令，主服务器传播命令时会添加replication offset参数表示该命令在缓存区的偏移。当网络中断又好了之后就将该值发给主服务器，如果主服务器根据缓存区包含该参数对应的命令，则直接将缓冲区写命令发给从服务器进行增量复制，否则进行全量复制（RDB复制和第一次同步一样）</p>
+<div id="id-4"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/e081b470870daeb763062bb873a4477e.png" title="https://cdn.xiaolincoding.com//mysql/other/e081b470870daeb763062bb873a4477e.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/e081b470870daeb763062bb873a4477e.png" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/e081b470870daeb763062bb873a4477e.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/e081b470870daeb763062bb873a4477e.png, https://cdn.xiaolincoding.com//mysql/other/e081b470870daeb763062bb873a4477e.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/e081b470870daeb763062bb873a4477e.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/e081b470870daeb763062bb873a4477e.png" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
+<p>网络出问题后又恢复时</p>
+<p>psync传输主服务器ID和offset继续同步写命令</p>
 <h2 id="哨兵">哨兵</h2>
-<p>监测主节点是否存活，如果发现主节点挂了，它就会选举一个从节点切换为主节点，实现主从节点故障转移。</p>
+<p>实现主从节点故障转移</p>
 <h3 id="判断主节点故障">判断主节点故障</h3>
-<div id="id-5"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/26f88373d8454682b9e0c1d4fd1611b4.png"
-        data-srcset="https://img-blog.csdnimg.cn/26f88373d8454682b9e0c1d4fd1611b4.png, https://img-blog.csdnimg.cn/26f88373d8454682b9e0c1d4fd1611b4.png 1.5x, https://img-blog.csdnimg.cn/26f88373d8454682b9e0c1d4fd1611b4.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/26f88373d8454682b9e0c1d4fd1611b4.png"
-        title="https://img-blog.csdnimg.cn/26f88373d8454682b9e0c1d4fd1611b4.png" /></div>
+<p>每隔1秒给所有主从节点发送ping命令，没有在down-after-milliseconds参数规定的时间内响应则标记为主观下线</p>
+<div id="id-5"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/26f88373d8454682b9e0c1d4fd1611b4-20230309233114856.png" title="https://cdn.xiaolincoding.com//mysql/other/26f88373d8454682b9e0c1d4fd1611b4-20230309233114856.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/26f88373d8454682b9e0c1d4fd1611b4-20230309233114856.png" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/26f88373d8454682b9e0c1d4fd1611b4-20230309233114856.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/26f88373d8454682b9e0c1d4fd1611b4-20230309233114856.png, https://cdn.xiaolincoding.com//mysql/other/26f88373d8454682b9e0c1d4fd1611b4-20230309233114856.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/26f88373d8454682b9e0c1d4fd1611b4-20230309233114856.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/26f88373d8454682b9e0c1d4fd1611b4-20230309233114856.png" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>哨兵集群（最少需要三台机器来部署哨兵集群）减少误判的情况</p>
-<div id="id-6"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://img-blog.csdnimg.cn/13e4361407ba46979e802eaa654dcf67.png"
-        data-srcset="https://img-blog.csdnimg.cn/13e4361407ba46979e802eaa654dcf67.png, https://img-blog.csdnimg.cn/13e4361407ba46979e802eaa654dcf67.png 1.5x, https://img-blog.csdnimg.cn/13e4361407ba46979e802eaa654dcf67.png 2x"
-        data-sizes="auto"
-        alt="https://img-blog.csdnimg.cn/13e4361407ba46979e802eaa654dcf67.png"
-        title="https://img-blog.csdnimg.cn/13e4361407ba46979e802eaa654dcf67.png" /></div>
+<p>当某个哨兵主观下线主节点时，会向其他哨兵询问主节点是否下线，当收到quorum个主观下线结果时，将主节点标记为客观下线。quorum参数通常是哨兵个数除以2加1</p>
+<div id="id-6"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/13e4361407ba46979e802eaa654dcf67.png" title="https://cdn.xiaolincoding.com//mysql/other/13e4361407ba46979e802eaa654dcf67.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/13e4361407ba46979e802eaa654dcf67.png" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/13e4361407ba46979e802eaa654dcf67.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/13e4361407ba46979e802eaa654dcf67.png, https://cdn.xiaolincoding.com//mysql/other/13e4361407ba46979e802eaa654dcf67.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/13e4361407ba46979e802eaa654dcf67.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/13e4361407ba46979e802eaa654dcf67.png" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <h3 id="主从故障转移的过程">主从故障转移的过程</h3>
+<p>当主节点客观下线时就需要在从节点中选出一个新的主节点，这个过程由一个leader来执行。</p>
+<p>标记主节点客观下线的哨兵作为leader候选者，询问其他哨兵是否赞成我作为leader，每个哨兵只能投一次票，拿到Max(半数+1，quorum)的赞成票则得知自己为leader</p>
 <h4 id="步骤一选出新主节点">步骤一：选出新主节点</h4>
+<p>从节点中选一个节点转换为新主节点</p>
 <h4 id="步骤二将从节点指向新主节点">步骤二：将从节点指向新主节点</h4>
+<p>让其他从节点修改复制目标为新主节点</p>
 <h4 id="步骤三通知客户的主节点已更换">步骤三：通知客户的主节点已更换</h4>
+<p>通过发布者订阅者机制通知客户端新主节点的ip地址和信息</p>
 <h4 id="步骤四将旧主节点变为从节点">步骤四：将旧主节点变为从节点</h4>
+<p>监视旧主节点，上线后转换为从节点</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

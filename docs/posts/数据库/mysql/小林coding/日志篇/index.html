@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>数据库-mysql-小林coding-日志篇 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="数据库-mysql-小林coding-日志篇" />
-<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 undo log（回滚日志）：Innodb 存储引擎层生成的日志，原子性，主要" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 undo log（回滚日志）：Innodb 存储引擎层生成的日志，原子性，用于" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E6%97%A5%E5%BF%97%E7%AF%87/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-22T10:20:33+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="数据库-mysql-小林coding-日志篇"/>
-<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 undo log（回滚日志）：Innodb 存储引擎层生成的日志，原子性，主要"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 undo log（回滚日志）：Innodb 存储引擎层生成的日志，原子性，用于"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E5%B0%8F%E6%9E%97coding/%E6%97%A5%E5%BF%97%E7%AF%87/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/base64captcha/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/%E5%B0%8F%E6%9E%97coding/%E9%9D%A2%E8%AF%95%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E6%97%A5%E5%BF%97%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  1413 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql, 小林coding系列","wordcount":  1452 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E5%B0%8F%E6%9E%97coding\/%E6%97%A5%E5%BF%97%E7%AF%87\/","datePublished": "2022-12-22T10:20:33+08:00","dateModified": "2022-12-22T10:20:33+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-mysql-小林coding-日志篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1413 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1452 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -120,20 +120,22 @@
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/mysql/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
 <ul>
-<li>undo log（回滚日志）：Innodb 存储引擎层生成的日志，原子性，主要用于事务回滚和 MVCC。</li>
-<li>redo log（重做日志）：是 Innodb 存储引擎层生成的日志，持久性，用于掉电等故障恢复；</li>
+<li>undo log（回滚日志）：Innodb 存储引擎层生成的日志，原子性，用于事务回滚和 MVCC。</li>
+<li>redo log（重做日志）：是 Innodb 存储引擎层生成的日志，持久性，用于故障恢复；</li>
 <li>binlog （归档日志）：Server 层生成的日志，用于数据备份和主从复制；</li>
 </ul>
 <h2 id="undo-log">undo log</h2>
 <p>MySQL 会为没有begin和commit的单个语句隐式开启事务</p>
-<div id="id-1"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
+<div id="id-1"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <ul>
 <li>插入一条记录，存记录的主键值，回滚时删掉这个主键值</li>
 <li>删除一条记录，存这条记录的所有内容，回滚时插入到表中</li>
@@ -144,120 +146,203 @@
 <li>trx_id 存修改操作的事务</li>
 <li>roll_pointer 指针指向被修改的记录。该指针形成的链表就叫版本链</li>
 </ul>
-<div id="id-2"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
+<div id="id-2"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E7%89%88%E6%9C%AC%E9%93%BE.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>undo log 两大作用：</p>
 <ul>
 <li>实现事务回滚，保障事务的原子性</li>
 <li>实现 MVCC（多版本并发控制）关键因素之一</li>
 </ul>
 <h2 id="buffer-pool">Buffer Pool</h2>
-<div id="id-3"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
+<div id="id-3"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <ul>
-<li>读取数据时，如果数据存在于 Buffer Pool 中，直接读取 Buffer Pool 中的数据，否则再去磁盘中读取</li>
-<li>修改数据时，如果数据存在于 Buffer Pool 中，那直接修改 Buffer Pool 中数据所在的页，然后将其页设置为脏页（该页的内存数据和磁盘上的数据已经不一致），为了减少磁盘I/O，不会立即将脏页写入磁盘，后续由后台线程选择一个合适的时机将脏页写入到磁盘</li>
+<li>读取数据需要先从磁盘读取到buffer pool，再从buffer pool读取</li>
+<li>修改数据时，仅修改buffer pool，并将响应的页设置为脏页，最后在合适的时候将脏页刷新到磁盘，这也叫做WAL （Write-Ahead Logging）技术</li>
 </ul>
-<p>buffer pool以页为单位分配连续内存，每次磁盘读取时将读取的页放到其中</p>
-<div id="id-4"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
+<div id="id-4"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/bufferpool%E5%86%85%E5%AE%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <h2 id="redo-log">redo log</h2>
-<p>对 XXX 表空间中的 YYY 数据页 ZZZ 偏移量的地方做了AAA 更新的事务提交时就会产生redolog物理日志（直接写到磁盘），redolog在内存中（Pool Buffer中的undo页），事务执行过程中redolog也是存储在Pool Buffer中的</p>
-<p>WAL 技术： MySQL 的写操作不立刻写到磁盘上，先写日志，然后在合适的时间再写到磁盘上</p>
-<div id="id-5"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
-<p>在内存修改该 Undo 页面后，需要记录对应的 redo log</p>
+<p>对 XXX 表空间中的 YYY 数据页 ZZZ 偏移量的地方做了AAA 更新时就会产生redolog日志，先写脏页再写redolog</p>
+<div id="id-5"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/wal.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>redo log 和 undo log 区别：</p>
 <ul>
 <li>redo log 记录事务「完成后」的数据状态，更新之后的值</li>
 <li>undo log 记录事务「开始前」的数据状态，更新之前的值</li>
 </ul>
-<p>crash-safe（崩溃恢复）</p>
-<div id="id-6"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
-<p>redo log 追加写操作， 写入数据随机写。开销更小</p>
+<div id="id-6"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>redo log作用：</p>
 <ul>
 <li>实现事务的持久性，让 MySQL 有 crash-safe 的能力</li>
-<li>将写操作从「随机写」变成了「顺序写」</li>
+<li>将写操作从「随机写」变成了「顺序写」，提升 MySQL 写入磁盘的性能</li>
 </ul>
-<p>redo log 也有自己的缓存—— redo log buffer。刷盘时机：</p>
+<p>redo log 不是直接写入磁盘而是写入 redo log buffer，在后续持久化到磁盘</p>
+<div id="id-7"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/redologbuf.webp" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/redologbuf.webp" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/redologbuf.webp" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/redologbuf.webp"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/redologbuf.webp, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/redologbuf.webp 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/redologbuf.webp 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/redologbuf.webp" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
+<p>刷盘时机：</p>
 <ul>
 <li>MySQL 正常关闭</li>
-<li>写入量大于 redo log buffer 内存空间的一半</li>
+<li>redo log buffer空闲空间少于一半</li>
 <li>InnoDB 的后台线程每隔 1 秒</li>
-<li>每次事务提交时（innodb_flush_log_at_trx_commit参数控制）</li>
+<li>innodb_flush_log_at_trx_commit参数控制每次事务提交时的操作，0不主动触发，1持久化到磁盘，2持久化到page cache（操作系统的页缓存）</li>
 </ul>
+<div id="id-8"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/innodb_flush_log_at_trx_commit.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/innodb_flush_log_at_trx_commit.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/innodb_flush_log_at_trx_commit.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/innodb_flush_log_at_trx_commit.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/innodb_flush_log_at_trx_commit.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/innodb_flush_log_at_trx_commit.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/innodb_flush_log_at_trx_commit.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/innodb_flush_log_at_trx_commit.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
+<p>redo log 文件写满了怎么办</p>
+<p>重做日志文件组（redo log Group）由有 2 个 redo log 文件组成，ib_logfile0 和 ib_logfile1 。两个文件循环写。满了就阻塞mysql将脏页写入磁盘，同时清理可以擦除的redolog</p>
+<div id="id-9"><p><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%84%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B.drawio.png" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%84%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B.drawio.png" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%84%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B.drawio.png" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%84%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B.drawio.png"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%84%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B.drawio.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%84%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B.drawio.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%84%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B.drawio.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%84%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B.drawio.png" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/checkpoint.png" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/checkpoint.png" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/checkpoint.png" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/checkpoint.png"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/checkpoint.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/checkpoint.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/checkpoint.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/checkpoint.png" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></p>
+</div>
 <h2 id="binlog">binlog</h2>
 <p>binlog由服务层生成（可以供其他存储引擎使用），redolog和undolog由innodb存储层生成</p>
 <p>一条更新操作后生成一条 binlog，事务提交时将该事务执行过程中产生的所有 binlog 写入 binlog 文件。</p>
 <p>binlog 文件只记录所有数据库表结构变更和表数据的修改</p>
 <p>主从复制依赖于 binlog。复制的过程是将 binlog 中的数据从主库传输到从库上。该过程默认不需要阻塞主库执行事务（异步）</p>
-<div id="id-7"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
-<p>主从复制过程：主库写入 Binlog=》两库同步 Binlog=》从库回放 Binlog</p>
-<div id="id-8"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
+<div id="id-10"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
+<p>主从复制过程：主库写 Binlog=》从库同步 Binlog=》从库回放 Binlog</p>
+<div id="id-11"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 <p>一个主库一般跟 2～3 个从库（1 套数据库，1 主 2 从 1 备主）</p>
 <p>主从复制模型：</p>
 <ul>
-<li>同步复制：主从复制阻塞提交事务，mysql不直接支持，性能太差</li>
-<li>异步复制（默认模型）：主从复制不阻塞提交事务</li>
-<li>半同步复制：只要数据成功复制到任意一个从库上，主库的事务线程就可以返回给客户端。至少有一个从库有最新的数据</li>
+<li>同步复制：阻塞直到所有从库成功响应，性能太差</li>
+<li>异步复制（默认模型）：不阻塞</li>
+<li>半同步复制：阻塞直到某一个从库成功响应</li>
 </ul>
-<p>事务执行过程中，先把日志写到 binlog cache（Server 层的 cache），事务提交的时候，再把 binlog cache 写到 binlog 文件中。一个事务的 binlog 是不能被拆开的</p>
+<p>binlog日志写到 binlog cache（Server 层的 cache），事务提交的时候再写到 binlog 文件中。一个事务的 binlog 是不能被拆开的</p>
+<div id="id-12"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/binlogcache.drawio.png" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/binlogcache.drawio.png" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/binlogcache.drawio.png" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/binlogcache.drawio.png"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/binlogcache.drawio.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/binlogcache.drawio.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/binlogcache.drawio.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/binlogcache.drawio.png" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
+<p>sync_binlog 控制binlog 每次提交事务时的操作</p>
+<ul>
+<li>0：只write，不fsync</li>
+<li>1：write后立刻fsync</li>
+<li>N：write，然后提交N个事务后fsync</li>
+</ul>
 <h2 id="两阶段提交">两阶段提交</h2>
 <p>MySQL 为了避免出现redo log 和 binlog 之间的逻辑不一致的问题，使用了「两阶段提交」来解决</p>
-<div id="id-9"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
-        data-sizes="auto"
-        alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
-        title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
+<div id="id-13"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
+<p>两阶段提交都会存储XID</p>
+<p>异常重启通过检查binlog中有没有XID来判断异常时机。如果有则是时刻A，需要进行事务回滚；如果没有则是时刻B，直接将redolog状态修改为commit即可。</p>
+<div id="id-14"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%B4%A9%E6%BA%83%E7%82%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%B4%A9%E6%BA%83%E7%82%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%B4%A9%E6%BA%83%E7%82%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" data-sub-html="<h2> </h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%B4%A9%E6%BA%83%E7%82%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%B4%A9%E6%BA%83%E7%82%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%B4%A9%E6%BA%83%E7%82%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%B4%A9%E6%BA%83%E7%82%B9.drawio.png?image_process=watermark%2ctext_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n%2ctype_ZnpsdHpoaw%2cx_10%2cy_10%2cg_se%2csize_20%2ccolor_0000CD%2ct_70%2cfill_0 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%E5%B4%A9%E6%BA%83%E7%82%B9.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" />
+    </a><figcaption class="image-caption"> </figcaption>
+    </figure></div>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -339,5 +424,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/766d80.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-22T10:20:33+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-mysql-小林coding-日志篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d4b1a0.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-22T10:20:33+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-mysql-小林coding-日志篇"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
