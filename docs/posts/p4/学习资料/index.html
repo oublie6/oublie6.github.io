@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/p4\/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "P4","wordcount":  7900 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "P4","wordcount":  7917 ,
         "url": "https:\/\/oublie6.github.io\/posts\/p4\/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99\/","datePublished": "2022-12-01T11:41:09+08:00","dateModified": "2022-12-01T11:41:09+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">P4-学习资料</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/p4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>P4</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-01">2022-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;7900 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-01">2022-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;7917 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;16 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -398,28 +398,59 @@
 <li>第一个参数是类型，CloneType.I2E将orignal数据包的副本发送到出口管道，CloneType.E2E将出口数据包的副本发送到缓冲区机制。</li>
 <li>第二个参数是镜像 id或session id。指定克隆端口。需要使用控制平面或客户端API配置此映射</li>
 </ol>
-<pre tabindex="0"><code>mirroring_add &lt;session&gt; &lt;output_port&gt;
-</code></pre><ol start="3">
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mirroring_add &lt;session&gt; &lt;output_port&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
 <li>使用clone3时，可以复制一些元数据值，以便克隆的数据包能够访问它们。</li>
 </ol>
 <p>使用该standard_metadata.instance_type字段区分普通数据包和克隆数据包。</p>
 <h4 id="数据包摘要">数据包摘要</h4>
 <p>digest外部函数将一些小信息（摘要）发送到控制器的方法。摘要数据包是和原始数据包一起发送的，因此不需要克隆任何东西。Simple Switch摘要是使用套接字库Nanomsg实现的。digest必须从入口管道调用。</p>
 <p>假设我们在 p4 代码中定义了这个元数据结构：</p>
-<pre tabindex="0"><code>struct digest_data_t {
-
-    bit&lt;8&gt; a;
-    bit&lt;8&gt; b;
-
-}
-
-struct metadata {
-    /* empty */
-    digest_data_t digest_data;
-}
-</code></pre><p>然后我们可以在入口管道中调用摘要：</p>
-<pre tabindex="0"><code>digest(1, meta.digest_data); //assume that metadata is called meta in the ingress parameters
-</code></pre><p>digest 的第一个参数总是1.</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#00a">struct</span> digest_data_t {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    bit&lt;<span style="color:#099">8</span>&gt; a;
+</span></span><span style="display:flex;"><span>    bit&lt;<span style="color:#099">8</span>&gt; b;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">struct</span> metadata {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">/* empty */</span>
+</span></span><span style="display:flex;"><span>    digest_data_t digest_data;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后我们可以在入口管道中调用摘要：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>digest(<span style="color:#099">1</span>, meta.digest_data); <span style="color:#aaa;font-style:italic">//assume that metadata is called meta in the ingress parameters
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>digest 的第一个参数总是1.</p>
 <p>交换机添加了一些需要解析的控制标头，对于每个摘要数据包，交换机都需要一个确认消息（用于过滤重复项）。</p>
 <h3 id="使用严格的优先级队列">使用严格的优先级队列</h3>
 <p>Simple Switch允许每个输出端口使用多个队列。但是，为了使用它们，需要做一些小的修改。</p>
@@ -427,14 +458,30 @@ struct metadata {
 <li>在bmv2/targets/simple_switch/simple_switch.h文件中取消注释#define SSWITCH_PRIORITY_QUEUEING_ON。</li>
 <li>将这两个元数据字段添加到v1model.p4文件中：</li>
 </ol>
-<pre tabindex="0"><code>//Priority queueing
-@alias(&#34;queueing_metadata.qid&#34;)           bit&lt;5&gt;  qid;
-@alias(&#34;intrinsic_metadata.priority&#34;)     bit&lt;3&gt; priority;
-</code></pre><ol start="3">
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//Priority queueing
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#f00;background-color:#faa">@</span>alias(<span style="color:#a50">&#34;queueing_metadata.qid&#34;</span>)           bit&lt;<span style="color:#099">5</span>&gt;  qid;
+</span></span><span style="display:flex;"><span><span style="color:#f00;background-color:#faa">@</span>alias(<span style="color:#a50">&#34;intrinsic_metadata.priority&#34;</span>)     bit&lt;<span style="color:#099">3</span>&gt; priority;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
 <li>将修改后的v1model.p4文件复制到/usr/local/share/p4c/p4include/：</li>
 </ol>
-<pre tabindex="0"><code>cp v1model.p4 /usr/local/share/p4c/p4include/
-</code></pre><ol start="4">
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cp v1model.p4 /usr/local/share/p4c/p4include/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
 <li>重新编译 BMv2，以便添加多个队列。</li>
 </ol>
 <p>默认情况下，有 8 个严格优先级队列，0 为最高优先级，7 为最低优先级。较高优先级队列中的数据包将始终比较低优先级队列中的数据包先传输。将standard_metadata.priority字段设置为0-7来选择队列。</p>
@@ -505,7 +552,7 @@ struct metadata {
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>action <span style="color:#0a0">drop</span>(){
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>action <span style="color:#0a0">drop</span>(){
 </span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// drops packet
 </span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    mark_to_drop(standard_metadata);
 </span></span><span style="display:flex;"><span>}

@@ -5,19 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>数据库-个人笔记 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="数据库-个人笔记" />
-<meta property="og:description" content="避免sql注入 使用预编译语句(参数化查询) ？占位符来预编译语句，然后使用setval类似的api来执行语句 客户端或服务端检查用户输入是否合法" />
+<meta property="og:description" content="分库分表 知乎 零声Github整理库 垂直分表：将一个表按字段分成多表，每个表存储其中一部分字段 避免IO争抢并减少锁表的几率，充分发挥热门数据的" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-02-27T19:25:08+08:00" />
-<meta property="article:modified_time" content="2023-02-27T19:25:08+08:00" /><meta property="og:site_name" content="我的网站" />
+<meta property="article:published_time" content="2023-04-16T19:29:23+08:00" />
+<meta property="article:modified_time" content="2023-04-16T19:29:23+08:00" /><meta property="og:site_name" content="我的网站" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="数据库-个人笔记"/>
-<meta name="twitter:description" content="避免sql注入 使用预编译语句(参数化查询) ？占位符来预编译语句，然后使用setval类似的api来执行语句 客户端或服务端检查用户输入是否合法"/>
+<meta name="twitter:description" content="分库分表 知乎 零声Github整理库 垂直分表：将一个表按字段分成多表，每个表存储其中一部分字段 避免IO争抢并减少锁表的几率，充分发挥热门数据的"/>
 <meta name="application-name" content="LoveIt">
-<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://oublie6.github.io/posts/ide/vscode/" /><link rel="next" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/jupyter/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://oublie6.github.io/posts/python/%E6%A0%87%E5%87%86%E5%BA%93/collections/" /><link rel="next" href="https://oublie6.github.io/posts/p4/p4-learning/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -28,8 +28,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  70 ,
-        "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-02-27T19:25:08+08:00","dateModified": "2023-02-27T19:25:08+08:00","publisher": {
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  363 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-04-16T19:29:23+08:00","dateModified": "2023-04-16T19:29:23+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
                 "@type": "Person",
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-27">2023-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;70 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-16">2023-04-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;363 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -111,22 +111,42 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#避免sql注入">避免sql注入</a></li>
+    <li><a href="#分库分表">分库分表</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="避免sql注入">避免sql注入</h2>
-<ol>
-<li>使用预编译语句(参数化查询)</li>
-</ol>
-<p>？占位符来预编译语句，然后使用setval类似的api来执行语句</p>
-<ol start="2">
-<li>客户端或服务端检查用户输入是否合法</li>
-</ol>
+            </div><div class="content" id="content"><h2 id="分库分表">分库分表</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/375951738" target="_blank" rel="noopener noreffer ">知乎 零声Github整理库</a></p>
+<ul>
+<li>垂直分表：将一个表按字段分成多表，每个表存储其中一部分字段</li>
+</ul>
+<p>避免IO争抢并减少锁表的几率，充分发挥热门数据的操作效率</p>
+<ul>
+<li>水平分表：在同一个数据库内，把同一个表的数据按一定规则拆到多个表中（对数据的拆分，不影响表结构）</li>
+</ul>
+<p>避免IO争抢并减少锁表的几率，优化单一表数据量过大而产生的性能问题</p>
+<ul>
+<li>垂直分库：按照业务将表进行分类，分布到不同的数据库上面，每个库可以放在不同的服务器上</li>
+</ul>
+<p>解决业务层面的耦合，业务清晰</p>
+<p>对不同业务的数据进行分级管理、维护、监控和扩展</p>
+<p>提升IO、数据库连接和降低单机硬件资源的瓶颈</p>
+<ul>
+<li>水平分库：把同一个表的数据按一定规则拆到不同的数据库中，每个库可以放在不同的服务器上</li>
+</ul>
+<p>解决了单库大数据，高并发的性能瓶颈</p>
+<p>提高了系统的稳定性和可用性</p>
+<p><a href="https://blog.csdn.net/demored/article/details/123371982" target="_blank" rel="noopener noreffer ">CSDN 勤天</a></p>
+<p>数据分片规则</p>
+<ul>
+<li>Hash取模分表</li>
+<li>数值Range分表</li>
+<li>一致性Hash算法</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2023-02-27
+                <span>Updated on 2023-04-16
     
 
     
@@ -157,8 +177,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/ide/vscode/" class="prev" rel="prev" title="IDE-Vscode"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>IDE-Vscode</a>
-            <a href="/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/jupyter/" class="next" rel="next" title="Python-第三方库-Jupyter">Python-第三方库-Jupyter<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+    <div class="post-nav"><a href="/posts/python/%E6%A0%87%E5%87%86%E5%BA%93/collections/" class="prev" rel="prev" title="Python-标准库-Collections"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Python-标准库-Collections</a>
+            <a href="/posts/p4/p4-learning/" class="next" rel="next" title="P4-P4 Learning">P4-P4 Learning<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="comments"><div id="gitalk" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
@@ -203,5 +223,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-02-27T19:25:08+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-个人笔记"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-04-16T19:29:23+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"数据库-个人笔记"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

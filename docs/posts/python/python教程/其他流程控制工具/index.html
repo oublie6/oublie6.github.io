@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python教程","wordcount":  2246 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python教程","wordcount":  2401 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7\/","datePublished": "2022-10-11T19:10:45+08:00","dateModified": "2022-10-11T19:10:45+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-其他流程控制工具</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-11">2022-10-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2246 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-11">2022-10-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2401 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -126,6 +126,12 @@
         <li><a href="#解包参数列表">解包参数列表</a></li>
         <li><a href="#lambda-表达式">Lambda 表达式</a></li>
         <li><a href="#函数标注">函数标注</a></li>
+      </ul>
+    </li>
+    <li><a href="#对于要求传入迭代对象的参数">对于要求传入迭代对象的参数</a></li>
+    <li><a href="#functools">Functools</a>
+      <ul>
+        <li><a href="#functoolspartialfunc--args-keywords">functools.partial(func, /, *args, **keywords)</a></li>
       </ul>
     </li>
   </ul>
@@ -523,6 +529,35 @@
 </span></span><span style="display:flex;"><span>Annotations: {<span style="color:#a50">&#39;ham&#39;</span>: &lt;<span style="color:#00a">class</span> <span style="color:#f00;background-color:#faa">&#39;</span><span style="color:#0a0;text-decoration:underline">str</span><span style="color:#a50">&#39;&gt;, &#39;</span><span style="color:#00a">return</span><span style="color:#a50">&#39;: &lt;class &#39;</span><span style="color:#0aa">str</span><span style="color:#a50">&#39;&gt;, &#39;</span>eggs<span style="color:#a50">&#39;: &lt;class &#39;</span><span style="color:#0aa">str</span><span style="color:#a50">&#39;&gt;}</span>
 </span></span><span style="display:flex;"><span>Arguments: spam eggs
 </span></span><span style="display:flex;"><span><span style="color:#a50">&#39;spam and eggs&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="对于要求传入迭代对象的参数">对于要求传入迭代对象的参数</h2>
+<p>可以在调用函数的时候在实参中使用推导式以及lambda表达式来现场生成对象，比如</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>nx.draw_networkx(...,labels={n:prefix+n <span style="color:#00a">for</span> n <span style="color:#00a">in</span> G})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="functools">Functools</h2>
+<p>functools 模块应用于高阶函数，即参数或（和）返回值为其他函数的函数。详见<a href="https://docs.python.org/zh-cn/3.8/library/functools.html?highlight=functools" target="_blank" rel="noopener noreffer ">官方文档</a></p>
+<h3 id="functoolspartialfunc--args-keywords">functools.partial(func, /, *args, **keywords)</h3>
+<p>返回一个新的 部分对象，当被调用时其行为类似于 func 附带位置参数 args 和关键字参数 keywords 被调用。</p>
+<p><a href="https://docs.python.org/zh-cn/3.8/library/functools.html?highlight=functools#functools.partial" target="_blank" rel="noopener noreffer ">官方文档</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">def</span> <span style="color:#0a0">f</span>(m,n):
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> m*n
+</span></span><span style="display:flex;"><span>re=partial(f,<span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#0aa">print</span>(re(<span style="color:#099">4</span>))<span style="color:#aaa;font-style:italic">#12</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
