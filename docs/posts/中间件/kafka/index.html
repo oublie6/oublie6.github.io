@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E4%B8%AD%E9%97%B4%E4%BB%B6\/kafka\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "kafka","wordcount":  1102 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "kafka","wordcount":  1188 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E4%B8%AD%E9%97%B4%E4%BB%B6\/kafka\/","datePublished": "2022-12-23T09:10:47+08:00","dateModified": "2022-12-23T09:10:47+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">中间件-Kafka</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>中间件</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1102 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1188 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -114,6 +114,7 @@
     <li><a href="#简介">简介</a></li>
     <li><a href="#主要概念和术语">主要概念和术语</a></li>
     <li><a href="#docker安装">docker安装</a></li>
+    <li><a href="#传递的消息是什么">传递的消息是什么</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://kafka.apache.org/documentation/" target="_blank" rel="noopener noreffer ">官方文档</a></p>
@@ -156,7 +157,39 @@
 <p>每个Consumer属于一个特定的Consumer Group（可为每个Consumer指定group name，若不指定group name则属于默认的group）。</p>
 <h2 id="docker安装">docker安装</h2>
 <p>见<a href="https://blog.csdn.net/y393016244/article/details/126405864" target="_blank" rel="noopener noreffer ">乾坤鸟博客</a></p>
-</div><div class="post-footer" id="post-footer">
+<h2 id="传递的消息是什么">传递的消息是什么</h2>
+<p>就是一个字符串，一般是序列化的json对象，比如go-zero的kq就是通过方法Push传送对象的</p>
+<p>serviceContext.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> ServiceContext <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	...
+</span></span><span style="display:flex;"><span>	KqueuePaymentUpdatePayStatusClient *kq.Pusher
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>updateTradeStateLogic.go</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (l *UpdateTradeStateLogic) <span style="color:#0a0">pubKqPaySuccess</span>(orderSn <span style="color:#0aa">string</span>,payStatus <span style="color:#0aa">int64</span>) <span style="color:#0aa">error</span>{
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span>  l.svcCtx.KqueuePaymentUpdatePayStatusClient.<span style="color:#0a0">Push</span>(<span style="color:#0aa">string</span>(body))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
