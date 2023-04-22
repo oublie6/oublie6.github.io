@@ -111,19 +111,6 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#随机算法">随机算法</a>
-      <ul>
-        <li><a href="#洗牌算法">洗牌算法</a></li>
-        <li><a href="#蓄水池抽样算法">蓄水池抽样算法</a></li>
-      </ul>
-    </li>
-    <li><a href="#高效寻找素数">高效寻找素数</a></li>
-    <li><a href="#高效进行模幂运算">高效进行模幂运算</a>
-      <ul>
-        <li><a href="#如何处理-mod-运算">如何处理 mod 运算</a></li>
-        <li><a href="#如何高效求幂">如何高效求幂</a></li>
-      </ul>
-    </li>
     <li><a href="#其他算法">其他算法</a>
       <ul>
         <li><a href="#雪花算法和uuid">雪花算法和uuid</a>
@@ -162,148 +149,24 @@
     <li><a href="#枚举子字符串">枚举子字符串</a></li>
     <li><a href="#查询热门的字符串">查询热门的字符串</a></li>
     <li><a href="#复制一倍断环成链">复制一倍，断环成链</a></li>
+    <li><a href="#随机算法">随机算法</a>
+      <ul>
+        <li><a href="#洗牌算法">洗牌算法</a></li>
+        <li><a href="#蓄水池抽样算法">蓄水池抽样算法</a></li>
+      </ul>
+    </li>
+    <li><a href="#高效寻找素数">高效寻找素数</a></li>
+    <li><a href="#高效进行模幂运算">高效进行模幂运算</a>
+      <ul>
+        <li><a href="#如何处理-mod-运算">如何处理 mod 运算</a></li>
+        <li><a href="#如何高效求幂">如何高效求幂</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://labuladong.github.io/algo/" target="_blank" rel="noopener noreffer ">labuladong的算法小抄</a>学习的时候结合golang做的笔记。感谢东哥。另外根据东哥对算法的分类法，将自己平时记的笔记也写到这里面。</p>
 <p>第三章：必知必会算法技巧</p>
-<h2 id="随机算法">随机算法</h2>
-<h3 id="洗牌算法">洗牌算法</h3>
-<p>随机打乱一个数组</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>l:=<span style="color:#0aa">len</span>(s)
-</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i:=<span style="color:#099">0</span>;i&lt;l;i++{
-</span></span><span style="display:flex;"><span>  s.<span style="color:#0a0">Swap</span>(i,i+rand.<span style="color:#0a0">Intn</span>(l-i))
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="蓄水池抽样算法">蓄水池抽样算法</h3>
-<p>抽样</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>l:=<span style="color:#0aa">len</span>(s)
-</span></span><span style="display:flex;"><span>ans:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,k)
-</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i:=<span style="color:#099">0</span>;i&lt;k&amp;&amp;i&lt;l;i++{
-</span></span><span style="display:flex;"><span>  ans[i]=s[i]
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i:=k;i&lt;l;i++{
-</span></span><span style="display:flex;"><span>  r:=rand.<span style="color:#0a0">Intn</span>(i)
-</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> r&lt;k{s.<span style="color:#0a0">Swap</span>(i,r)}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><a href="https://www.jianshu.com/p/7a9ea6ece2af?utm_campaign=haruki&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weixin" target="_blank" rel="noopener noreffer ">简书 邱simple</a></p>
-<p><a href="https://leetcode.cn/problems/linked-list-random-node/solution/xu-shui-chi-chou-yang-suan-fa-sha-zi-du-neng-kan-d/" target="_blank" rel="noopener noreffer ">leetcode 你的发香散得匆忙</a></p>
-<p>给定一个数据流，数据流长度N很大，且N直到处理完所有数据之前都不可知，请问如何在只遍历一遍数据（O(N)）的情况下，能够随机选取出m个不重复的数据。</p>
-<ol>
-<li>将第1到第m个数据加入ans数组中。</li>
-<li>从第m+1个数据开始，对每一个数据x随机获取一个1到m+1的数k，当k属于[1,m]时，使用x换出ans[k]</li>
-<li>ans数组为最后结果</li>
-</ol>
-<p>任何一个数据被选择的概率时m/N</p>
-<h2 id="高效寻找素数">高效寻找素数</h2>
-<p>素数筛</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> primes []<span style="color:#0aa">bool</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">countPrimes</span>(n){
-</span></span><span style="display:flex;"><span>  primes=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,n+<span style="color:#099">1</span>)
-</span></span><span style="display:flex;"><span>  count:=<span style="color:#099">0</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> i:=<span style="color:#099">2</span>;i&lt;=n;i++{primes[i]=<span style="color:#00a">true</span>}
-</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> i:=<span style="color:#099">2</span>;i&lt;=n;i++{
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> primes[i]!=<span style="color:#00a">true</span>{<span style="color:#00a">continue</span>}
-</span></span><span style="display:flex;"><span>    count++
-</span></span><span style="display:flex;"><span>    tmp:=i
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> tmp&lt;=n{
-</span></span><span style="display:flex;"><span>      primes[tmp]=<span style="color:#00a">false</span>
-</span></span><span style="display:flex;"><span>      tmp+=i
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> count
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="高效进行模幂运算">高效进行模幂运算</h2>
-<h3 id="如何处理-mod-运算">如何处理 mod 运算</h3>
-<p>(a * b) % k = (a % k)(b % k) % k</p>
-<h3 id="如何高效求幂">如何高效求幂</h3>
-<p>快速幂</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> base <span style="color:#0aa">int</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">mypow</span>(a,k <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> k==<span style="color:#099">0</span> {<span style="color:#00a">return</span> <span style="color:#099">1</span>}
-</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> k==<span style="color:#099">1</span> {<span style="color:#00a">return</span> a}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  a %= base
-</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> k&amp;<span style="color:#099">1</span>==<span style="color:#099">1</span>{
-</span></span><span style="display:flex;"><span>    tmp:=<span style="color:#0a0">mypow</span>(a,k-<span style="color:#099">1</span>)%base
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> tmp*a
-</span></span><span style="display:flex;"><span>  }<span style="color:#00a">else</span>{
-</span></span><span style="display:flex;"><span>    tmp:=<span style="color:#0a0">mypow</span>(a,k/<span style="color:#099">2</span>)%base
-</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> tmp*tmp
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>使用golang做题与使用其他语言做题有一些不同，golang原生的语法中的slice和map支持很多数据结构的简单构造如队列或栈，但是golang并没有提供C++ STL、Java Collection这样丰富的数据结构库，go标准库的container库仅提供了list，ring和heap（优先队列，必须掌握）。这三个库可以实现所有的数据结构但是过于复杂的数据结构实现过程会花很多时间。对于复杂的数据结构可以使用第三方库GODS来提高做题效率，比如红黑树。</p>
+<p>使用golang做题与使用其他语言做题有一些不同，golang原生的语法中的slice和map支持很多数据结构的简单构造如队列或栈，但是golang并没有提供C++ STL、Java Collection这样丰富的数据结构库，go标准库的container库仅提供了list，ring和heap（优先队列，必须掌握）。这三个库可以实现所有的数据结构但是过于复杂的数据结构实现过程会花很多时间。对于复杂的数据结构可以使用第三方库GODS来提高做题效率，比如红黑树。</p>
 <p>解题函数通常分为两部分：数据初始化函数部分和solution函数部分，这两部分也可以内联到解题函数中</p>
 <p>递归方法有两种减少空间复杂度的办法，使用全局变量或者在solution函数中定义递归函数。</p>
 <p><a href="https://oi-wiki.org/" target="_blank" rel="noopener noreffer ">OI Wiki官网</a></p>
@@ -745,6 +608,143 @@
 </span></span><span style="display:flex;"><span>nums:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,l+l)
 </span></span><span style="display:flex;"><span><span style="color:#0aa">copy</span>(nums,ring)
 </span></span><span style="display:flex;"><span><span style="color:#0aa">copy</span>(nums[l:],ring)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="随机算法">随机算法</h2>
+<h3 id="洗牌算法">洗牌算法</h3>
+<p>随机打乱一个数组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>l:=<span style="color:#0aa">len</span>(s)
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i:=<span style="color:#099">0</span>;i&lt;l;i++{
+</span></span><span style="display:flex;"><span>  s.<span style="color:#0a0">Swap</span>(i,i+rand.<span style="color:#0a0">Intn</span>(l-i))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="蓄水池抽样算法">蓄水池抽样算法</h3>
+<p>抽样</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>l:=<span style="color:#0aa">len</span>(s)
+</span></span><span style="display:flex;"><span>ans:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,k)
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i:=<span style="color:#099">0</span>;i&lt;k&amp;&amp;i&lt;l;i++{
+</span></span><span style="display:flex;"><span>  ans[i]=s[i]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i:=k;i&lt;l;i++{
+</span></span><span style="display:flex;"><span>  r:=rand.<span style="color:#0a0">Intn</span>(i)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> r&lt;k{s.<span style="color:#0a0">Swap</span>(i,r)}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://www.jianshu.com/p/7a9ea6ece2af?utm_campaign=haruki&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weixin" target="_blank" rel="noopener noreffer ">简书 邱simple</a></p>
+<p><a href="https://leetcode.cn/problems/linked-list-random-node/solution/xu-shui-chi-chou-yang-suan-fa-sha-zi-du-neng-kan-d/" target="_blank" rel="noopener noreffer ">leetcode 你的发香散得匆忙</a></p>
+<p>给定一个数据流，数据流长度N很大，且N直到处理完所有数据之前都不可知，请问如何在只遍历一遍数据（O(N)）的情况下，能够随机选取出m个不重复的数据。</p>
+<ol>
+<li>将第1到第m个数据加入ans数组中。</li>
+<li>从第m+1个数据开始，对每一个数据x随机获取一个1到m+1的数k，当k属于[1,m]时，使用x换出ans[k]</li>
+<li>ans数组为最后结果</li>
+</ol>
+<p>任何一个数据被选择的概率时m/N</p>
+<h2 id="高效寻找素数">高效寻找素数</h2>
+<p>素数筛</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> primes []<span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">countPrimes</span>(n){
+</span></span><span style="display:flex;"><span>  primes=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,n+<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>  count:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> i:=<span style="color:#099">2</span>;i&lt;=n;i++{primes[i]=<span style="color:#00a">true</span>}
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> i:=<span style="color:#099">2</span>;i&lt;=n;i++{
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> primes[i]!=<span style="color:#00a">true</span>{<span style="color:#00a">continue</span>}
+</span></span><span style="display:flex;"><span>    count++
+</span></span><span style="display:flex;"><span>    tmp:=i
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> tmp&lt;=n{
+</span></span><span style="display:flex;"><span>      primes[tmp]=<span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>      tmp+=i
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> count
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="高效进行模幂运算">高效进行模幂运算</h2>
+<h3 id="如何处理-mod-运算">如何处理 mod 运算</h3>
+<p>(a * b) % k = (a % k)(b % k) % k</p>
+<h3 id="如何高效求幂">如何高效求幂</h3>
+<p>快速幂</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> base <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">mypow</span>(a,k <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> k==<span style="color:#099">0</span> {<span style="color:#00a">return</span> <span style="color:#099">1</span>}
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> k==<span style="color:#099">1</span> {<span style="color:#00a">return</span> a}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  a %= base
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> k&amp;<span style="color:#099">1</span>==<span style="color:#099">1</span>{
+</span></span><span style="display:flex;"><span>    tmp:=<span style="color:#0a0">mypow</span>(a,k-<span style="color:#099">1</span>)%base
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> tmp*a
+</span></span><span style="display:flex;"><span>  }<span style="color:#00a">else</span>{
+</span></span><span style="display:flex;"><span>    tmp:=<span style="color:#0a0">mypow</span>(a,k/<span style="color:#099">2</span>)%base
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> tmp*tmp
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
