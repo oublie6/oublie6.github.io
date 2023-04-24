@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/model\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  3530 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  3621 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/model\/","datePublished": "2023-01-06T12:38:49+08:00","dateModified": "2023-01-06T12:38:49+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-教程-Model</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3530 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3621 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -823,10 +823,12 @@
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>conn.<span style="color:#0a0">QueryRow</span>(&amp;model, querysql, args...)
-</span></span><span style="display:flex;"><span>conn.<span style="color:#0a0">QueryRowPartial</span>(&amp;model, querysql, args...)
+</span></span><span style="display:flex;"><span>conn.<span style="color:#0a0">QueryRows</span>(&amp;users, querysql, sex) <span style="color:#aaa;font-style:italic">//users为slice
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>conn.<span style="color:#0a0">QueryRowPartial</span>(&amp;model, querysql, args...)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="cache">Cache</h3>
@@ -836,10 +838,12 @@
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> QueryFn <span style="color:#00a">func</span>(conn sqlx.SqlConn, v <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
 </span></span><span style="display:flex;"><span><span style="color:#00a">type</span> QueryCtxFn <span style="color:#00a">func</span>(ctx context.Context, conn sqlx.SqlConn, v <span style="color:#00a">interface</span>{}) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> ExecFn <span style="color:#00a">func</span>(conn sqlx.SqlConn) (sql.Result, <span style="color:#0aa">error</span>)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>方法</p>
@@ -852,6 +856,14 @@
 <li>primaryQuery - 用主键从DB获取完整数据的方法</li>
 </ul>
 </li>
+<li>func (cc CachedConn) DelCache(keys &hellip;string) error</li>
+<li>func (cc CachedConn) GetCache(key string, v interface{}) error</li>
+<li>func (cc CachedConn) Exec(exec ExecFn, keys &hellip;string) (sql.Result, error)</li>
+<li>func (cc CachedConn) ExecNoCache(q string, args &hellip;interface{}) (sql.Result, error)</li>
+<li>func (cc CachedConn) QueryRowNoCache(v interface{}, q string, args &hellip;interface{}) error</li>
+<li>func (cc CachedConn) QueryRowsNoCache(v interface{}, q string, args &hellip;interface{}) error</li>
+<li>func (cc CachedConn) SetCache(key string, val interface{}) error</li>
+<li>func (cc CachedConn) Transact(fn func(sqlx.Session) error) error</li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

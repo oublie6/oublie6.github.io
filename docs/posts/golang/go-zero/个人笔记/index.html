@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  3112 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  3786 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2022-11-14T12:34:23+08:00","dateModified": "2022-11-14T12:34:23+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-14">2022-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3112 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-14">2022-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3786 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -150,7 +150,30 @@
         </li>
       </ul>
     </li>
-    <li><a href="#stringx包">stringx包</a></li>
+    <li><a href="#go-zero博客">go-zero博客</a>
+      <ul>
+        <li><a href="#stringx包">stringx包</a></li>
+        <li><a href="#缓存设计">缓存设计</a>
+          <ul>
+            <li><a href="#持久层缓存">持久层缓存</a></li>
+            <li><a href="#业务层缓存">业务层缓存</a></li>
+            <li><a href="#进程内缓存工具collectioncache">进程内缓存工具collection.Cache</a></li>
+          </ul>
+        </li>
+        <li><a href="#并发编程">并发编程</a>
+          <ul>
+            <li><a href="#简单使用finish函数">简单使用Finish函数</a></li>
+            <li><a href="#复杂使用mapreduce">复杂使用：MapReduce</a></li>
+          </ul>
+        </li>
+        <li><a href="#流处理">流处理</a>
+          <ul>
+            <li><a href="#fx">fx</a></li>
+          </ul>
+        </li>
+        <li><a href="#mysql">mysql</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列为作者跟着<a href="https://space.bilibili.com/389552232" target="_blank" rel="noopener noreffer ">Mikaelemmmm</a>的b站教学视频学习时做的笔记</p>
@@ -522,7 +545,10 @@
         data-sizes="auto"
         alt="https://github.com/Mikaelemmmm/gozerodtm/raw/main/docimage/barrier_tx_model.png"
         title="https://github.com/Mikaelemmmm/gozerodtm/raw/main/docimage/barrier_tx_model.png" /></div>
-<h2 id="stringx包">stringx包</h2>
+<h2 id="go-zero博客">go-zero博客</h2>
+<p><a href="https://legacy.go-zero.dev/cn/extended-reading.html" target="_blank" rel="noopener noreffer ">老文档</a></p>
+<p><a href="https://go-zero.dev/cn/docs/blog/blog" target="_blank" rel="noopener noreffer ">新文档</a></p>
+<h3 id="stringx包">stringx包</h3>
 <p><a href="https://legacy.go-zero.dev/cn/keywords.html" target="_blank" rel="noopener noreffer ">go zero 博客 高效的关键词替换和敏感词过滤工具</a></p>
 <p>利用高效的Trie树建立关键词树</p>
 <p>函数</p>
@@ -539,6 +565,256 @@
 <li>func (n *trieNode) Filter(text string) (sentence string, keywords []string, found bool)：返回值第一个是替换屏蔽词后的结果，第二个是找到的屏蔽词，第三个是是否有屏蔽词</li>
 <li>func (n *trieNode) FindKeywords(text string) []string：返回找到的屏蔽词</li>
 </ul>
+<h3 id="缓存设计">缓存设计</h3>
+<h4 id="持久层缓存">持久层缓存</h4>
+<p><a href="https://go-zero.dev/cn/docs/blog/cache/redis-cache" target="_blank" rel="noopener noreffer ">持久层缓存</a></p>
+<div id="id-8"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://go-zero.dev/cn/assets/images/redis-cache-11-c2989ee89c9f5f204d294bbed81f1bad.webp"
+        data-srcset="https://go-zero.dev/cn/assets/images/redis-cache-11-c2989ee89c9f5f204d294bbed81f1bad.webp, https://go-zero.dev/cn/assets/images/redis-cache-11-c2989ee89c9f5f204d294bbed81f1bad.webp 1.5x, https://go-zero.dev/cn/assets/images/redis-cache-11-c2989ee89c9f5f204d294bbed81f1bad.webp 2x"
+        data-sizes="auto"
+        alt="https://go-zero.dev/cn/assets/images/redis-cache-11-c2989ee89c9f5f204d294bbed81f1bad.webp"
+        title="https://go-zero.dev/cn/assets/images/redis-cache-11-c2989ee89c9f5f204d294bbed81f1bad.webp" /></div>
+<p>缓存只删除不更新</p>
+<p>行记录始终只存储一份，即主键对应行记录</p>
+<p>唯一索引仅缓存主键值，不直接缓存行记录（参考mysql索引思想）</p>
+<p>防缓存穿透设计，缓存中没有的添加*记录，并使用Once查询数据库，默认一分钟</p>
+<p>不缓存多行记录</p>
+<h4 id="业务层缓存">业务层缓存</h4>
+<p><a href="https://go-zero.dev/cn/docs/blog/cache/business-cache" target="_blank" rel="noopener noreffer ">业务层缓存</a></p>
+<div id="id-9"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://go-zero.dev/cn/assets/images/biz-redis-02-c74e333a1fd8a3af9c5f12314a9fb1cd.svg"
+        data-srcset="https://go-zero.dev/cn/assets/images/biz-redis-02-c74e333a1fd8a3af9c5f12314a9fb1cd.svg, https://go-zero.dev/cn/assets/images/biz-redis-02-c74e333a1fd8a3af9c5f12314a9fb1cd.svg 1.5x, https://go-zero.dev/cn/assets/images/biz-redis-02-c74e333a1fd8a3af9c5f12314a9fb1cd.svg 2x"
+        data-sizes="auto"
+        alt="https://go-zero.dev/cn/assets/images/biz-redis-02-c74e333a1fd8a3af9c5f12314a9fb1cd.svg"
+        title="https://go-zero.dev/cn/assets/images/biz-redis-02-c74e333a1fd8a3af9c5f12314a9fb1cd.svg" /></div>
+<h4 id="进程内缓存工具collectioncache">进程内缓存工具collection.Cache</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 初始化 cache，其中 WithLimit 可以指定最大缓存的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>c, err := collection.<span style="color:#0a0">NewCache</span>(time.Minute, collection.<span style="color:#0a0">WithLimit</span>(<span style="color:#099">10000</span>))
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#0aa">panic</span>(err)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 设置缓存
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>c.<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;key&#34;</span>, user)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 获取缓存，ok：是否存在
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>v, ok := c.<span style="color:#0a0">Get</span>(<span style="color:#a50">&#34;key&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 删除缓存
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>c.<span style="color:#0a0">Del</span>(<span style="color:#a50">&#34;key&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 获取缓存，如果 key 不存在的，则会调用 func 去生成缓存
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>v, err := c.<span style="color:#0a0">Take</span>(<span style="color:#a50">&#34;key&#34;</span>, <span style="color:#00a">func</span>() (<span style="color:#00a">interface</span>{}, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> user, <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="并发编程">并发编程</h3>
+<p><a href="https://go-zero.dev/cn/docs/blog/concurrency/mapreduce" target="_blank" rel="noopener noreffer ">mapreduce官方文档</a></p>
+<div id="id-10"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/mr.png"
+        data-srcset="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/mr.png, https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/mr.png 1.5x, https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/mr.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/mr.png"
+        title="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/mr.png" /></div>
+<h4 id="简单使用finish函数">简单使用Finish函数</h4>
+<p>并发执行多个函数。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">productDetail</span>(uid, pid <span style="color:#0aa">int64</span>) (*ProductDetail, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> pd ProductDetail
+</span></span><span style="display:flex;"><span>    err := mr.<span style="color:#0a0">Finish</span>(<span style="color:#00a">func</span>() (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>        pd.User, err = userRpc.<span style="color:#0a0">User</span>(uid)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>    }, <span style="color:#00a">func</span>() (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>        pd.Store, err = storeRpc.<span style="color:#0a0">Store</span>(pid)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>    }, <span style="color:#00a">func</span>() (err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>        pd.Order, err = orderRpc.<span style="color:#0a0">Order</span>(pid)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span>
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>        log.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;product detail error: %v&#34;</span>, err)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> <span style="color:#00a">nil</span>, err
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> &amp;pd, <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="复杂使用mapreduce">复杂使用：MapReduce</h4>
+<p>并发对多个对象执行mapreduce</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">checkLegal</span>(uids []<span style="color:#0aa">int64</span>) ([]<span style="color:#0aa">int64</span>, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>    r, err := mr.<span style="color:#0a0">MapReduce</span>(<span style="color:#00a">func</span>(source <span style="color:#00a">chan</span>&lt;- <span style="color:#00a">interface</span>{}) {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> _, uid := <span style="color:#00a">range</span> uids {
+</span></span><span style="display:flex;"><span>            source &lt;- uid
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }, <span style="color:#00a">func</span>(item <span style="color:#00a">interface</span>{}, writer mr.Writer, cancel <span style="color:#00a">func</span>(<span style="color:#0aa">error</span>)) {
+</span></span><span style="display:flex;"><span>        uid := item.(<span style="color:#0aa">int64</span>)
+</span></span><span style="display:flex;"><span>        ok, err := <span style="color:#0a0">check</span>(uid)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#0a0">cancel</span>(err)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> ok {
+</span></span><span style="display:flex;"><span>            writer.<span style="color:#0a0">Write</span>(uid)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }, <span style="color:#00a">func</span>(pipe &lt;-<span style="color:#00a">chan</span> <span style="color:#00a">interface</span>{}, writer mr.Writer, cancel <span style="color:#00a">func</span>(<span style="color:#0aa">error</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">var</span> uids []<span style="color:#0aa">int64</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> p := <span style="color:#00a">range</span> pipe {
+</span></span><span style="display:flex;"><span>            uids = <span style="color:#0aa">append</span>(uids, p.(<span style="color:#0aa">int64</span>))
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        writer.<span style="color:#0a0">Write</span>(uids)
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>        log.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;check error: %v&#34;</span>, err)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> <span style="color:#00a">nil</span>, err
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> r.([]<span style="color:#0aa">int64</span>), <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">check</span>(uid <span style="color:#0aa">int64</span>) (<span style="color:#0aa">bool</span>, <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// do something check user legal
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">return</span> <span style="color:#00a">true</span>, <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>调用cancel立即返回nil, error</p>
+<h3 id="流处理">流处理</h3>
+<h4 id="fx">fx</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">outputStream</span>(ch <span style="color:#00a">chan</span> <span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>    fx.<span style="color:#0a0">From</span>(<span style="color:#00a">func</span>(source <span style="color:#00a">chan</span>&lt;- <span style="color:#00a">interface</span>{}) {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> c := <span style="color:#00a">range</span> ch {
+</span></span><span style="display:flex;"><span>            source &lt;- c
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }).<span style="color:#0a0">Walk</span>(<span style="color:#00a">func</span>(item <span style="color:#00a">interface</span>{}, pipe <span style="color:#00a">chan</span>&lt;- <span style="color:#00a">interface</span>{}) {
+</span></span><span style="display:flex;"><span>        count := item.(<span style="color:#0aa">int</span>)
+</span></span><span style="display:flex;"><span>        pipe &lt;- count
+</span></span><span style="display:flex;"><span>    }).<span style="color:#0a0">Filter</span>(<span style="color:#00a">func</span>(item <span style="color:#00a">interface</span>{}) <span style="color:#0aa">bool</span> {
+</span></span><span style="display:flex;"><span>        itemInt := item.(<span style="color:#0aa">int</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> itemInt%<span style="color:#099">2</span> == <span style="color:#099">0</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">return</span> <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> <span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>    }).<span style="color:#0a0">ForEach</span>(<span style="color:#00a">func</span>(item <span style="color:#00a">interface</span>{}) {
+</span></span><span style="display:flex;"><span>        fmt.<span style="color:#0a0">Println</span>(item)
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="mysql">mysql</h3>
+<p><a href="https://go-zero.dev/cn/docs/blog/showcase/mysql" target="_blank" rel="noopener noreffer ">mysql</a></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -620,5 +896,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/26aa8d.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-11-14T12:34:23+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-go-zero-个人笔记"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/df6c04.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-11-14T12:34:23+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-go-zero-个人笔记"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
