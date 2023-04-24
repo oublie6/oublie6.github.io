@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>golang-go-zero-教程-Api - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="golang-go-zero-教程-Api" />
-<meta property="og:description" content="go-zero官网 go-zero详细文档 本系列为作者跟着Mikaelemmmm的b站教学视频学习时做的笔记 api文件 编写api文件，语法和g" />
+<meta property="og:description" content="go-zero官网 go-zero详细文档 本系列为作者跟着Mikaelemmmm的b站教学视频学习时做的笔记 api文件 语法和go类似，api文" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/api/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-06T11:40:15+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="golang-go-zero-教程-Api"/>
-<meta name="twitter:description" content="go-zero官网 go-zero详细文档 本系列为作者跟着Mikaelemmmm的b站教学视频学习时做的笔记 api文件 编写api文件，语法和g"/>
+<meta name="twitter:description" content="go-zero官网 go-zero详细文档 本系列为作者跟着Mikaelemmmm的b站教学视频学习时做的笔记 api文件 语法和go类似，api文"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/api/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/sql2pb/" /><link rel="next" href="https://oublie6.github.io/posts/golang/go-zero/%E6%95%99%E7%A8%8B/model/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/api\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  4555 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  4000 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/api\/","datePublished": "2023-01-06T11:40:15+08:00","dateModified": "2023-01-06T11:40:15+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-教程-Api</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4555 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4000 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -121,22 +121,22 @@
         <li><a href="#启动服务">启动服务</a></li>
       </ul>
     </li>
-    <li><a href="#internalhandler目录">internal/handler目录</a>
+    <li><a href="#internal目录">internal目录</a>
       <ul>
-        <li><a href="#handler函数">Handler函数</a></li>
+        <li><a href="#internalhandler目录">internal/handler目录</a>
+          <ul>
+            <li><a href="#handler函数">Handler函数</a></li>
+          </ul>
+        </li>
+        <li><a href="#internallogic目录">internal/logic目录</a></li>
+        <li><a href="#internalmiddleware目录">internal/middleware目录</a></li>
       </ul>
     </li>
-    <li><a href="#internallogic目录">internal/logic目录</a></li>
-    <li><a href="#middleware">middleware</a>
+    <li><a href="#全局中间件">全局中间件</a></li>
+    <li><a href="#整体源码分析">整体源码分析</a>
       <ul>
-        <li><a href="#server粒度middleware">server粒度middleware</a></li>
-        <li><a href="#全局中间件">全局中间件</a></li>
-      </ul>
-    </li>
-    <li><a href="#整体源码分析httpswwwbilibilicomvideobv1u94y1f7rtspm_id_frompagedrivervd_source2b1aa8668a9c97c4d09f9c3e9bd74bd0"><a href="https://www.bilibili.com/video/BV1u94y1f7rT/?spm_id_from=pageDriver&amp;vd_source=2b1aa8668a9c97c4d09f9c3e9bd74bd0">整体源码分析</a></a>
-      <ul>
-        <li><a href="#confmustloadconfigfile-c">conf.MustLoad(*configFile, &amp;c)</a></li>
-        <li><a href="#server--restmustnewservercrestconf">server := rest.MustNewServer(c.RestConf)</a></li>
+        <li><a href="#读取configyaml">读取config.yaml</a></li>
+        <li><a href="#根据配置文件生成server对象">根据配置文件生成server对象</a></li>
       </ul>
     </li>
     <li><a href="#api调用rpc">api调用rpc</a>
@@ -167,43 +167,66 @@
       </ul>
     </li>
     <li><a href="#api参数校验集成第三方库">api参数校验集成第三方库</a></li>
-    <li><a href="#go-zero-自带jwt鉴权">go-zero 自带jwt鉴权</a></li>
-    <li><a href="#api的兼容性httpsmpweixinqqcoms__bizmzg2odu1mti0oamid2247485663idx1snae1486f2e5aff30799ead1d6c88b6ebcchksmceabd7e0f9dc5ef6677b37fd783e433cb64f8aa714ee393690d5f10cfadea78f0e94544a67a8cur_album_id1655138838454796294scene189wechat_redirect"><a href="https://mp.weixin.qq.com/s?__biz=Mzg2ODU1MTI0OA==&amp;mid=2247485663&amp;idx=1&amp;sn=ae1486f2e5aff30799ead1d6c88b6ebc&amp;chksm=ceabd7e0f9dc5ef6677b37fd783e433cb64f8aa714ee393690d5f10cfadea78f0e94544a67a8&amp;cur_album_id=1655138838454796294&amp;scene=189#wechat_redirect">api的兼容性</a></a></li>
+    <li><a href="#jwt鉴权">jwt鉴权</a></li>
+    <li><a href="#api的兼容性">api的兼容性</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://go-zero.dev/cn/" target="_blank" rel="noopener noreffer ">go-zero官网</a></p>
 <p><a href="https://legacy.go-zero.dev/cn/" target="_blank" rel="noopener noreffer ">go-zero详细文档</a></p>
 <p>本系列为作者跟着<a href="https://space.bilibili.com/389552232" target="_blank" rel="noopener noreffer ">Mikaelemmmm</a>的b站教学视频学习时做的笔记</p>
 <h2 id="api文件">api文件</h2>
-<p>编写api文件，语法和go差不多，<a href="https://legacy.go-zero.dev/cn/api-grammar.html" target="_blank" rel="noopener noreffer ">api文法官网</a></p>
-<p>type定义api接口参数类型，tag为json表示json体参数，form表示url参数，path表示url变量</p>
+<p>语法和go类似，<a href="https://legacy.go-zero.dev/cn/api-grammar.html" target="_blank" rel="noopener noreffer ">api文法官网</a></p>
+<p>syntax语法声明:<code>syntax=&quot;v1&quot;</code></p>
+<p>import语法块</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> (
-</span></span><span style="display:flex;"><span>	UserInfoReq {
-</span></span><span style="display:flex;"><span>		UserId <span style="color:#0aa">int64</span> <span style="color:#a50">`json:&#34;userId&#34;`</span>
-</span></span><span style="display:flex;"><span>	}
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#a50">&#34;foo.api&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#a50">&#34;foo/bar.api&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	UserInfoResq {
-</span></span><span style="display:flex;"><span>		UserId   <span style="color:#0aa">int64</span>  <span style="color:#a50">`json:&#34;userId&#34;`</span>
-</span></span><span style="display:flex;"><span>		Nickname <span style="color:#0aa">string</span> <span style="color:#a50">`json:&#34;nickname&#34;`</span>
-</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;bar.api&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;foo/bar/foo.api&#34;</span>
 </span></span><span style="display:flex;"><span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>server表示接下来service块的配置，server group将service块里面的api生成的go文件一起放到一个名称为group值的目录，prefix为路由前缀，比如group为user，那么一般设置为user-api/v1等。service表示你的服务，一个api文件的service名称必须一致。handler是处理器，相当于HandleFunc。</p>
+</div><p>info语法块</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#0a0">info</span>(
+</span></span><span style="display:flex;"><span>    foo: <span style="color:#a50">&#34;foo value&#34;</span>
+</span></span><span style="display:flex;"><span>    bar: <span style="color:#a50">&#34;bar value&#34;</span>
+</span></span><span style="display:flex;"><span>    desc: <span style="color:#a50">&#34;long long long long long long text&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>type语法块</p>
+<ul>
+<li>保留了golang内置数据类bool,int,int8,int16,int32,int64,uint,uint8,uint16,uint32,uint64,uintptr,float32,float64,complex64,complex128,string,byte,rune,</li>
+<li>兼容golang struct风格声明</li>
+<li>保留golang关键字</li>
+</ul>
+<p><a href="https://legacy.go-zero.dev/cn/api-grammar.html" target="_blank" rel="noopener noreffer ">tag表和tag修饰符</a>：xxx:&ldquo;yyy,zzz&rdquo;，xxx位tag，yyy为值，zzz为tag修饰符</p>
+<ul>
+<li>json，path，form，header</li>
+<li>optional，options，default，range</li>
+</ul>
+<p>service语法块</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -220,16 +243,34 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f00;background-color:#faa">@</span><span style="color:#0a0">server</span>(
-</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//jwt: Auth
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//atServer
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#f00;background-color:#faa">@</span><span style="color:#0a0">server</span>(
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//声明当前service下所有路由需要jwt鉴权，且会自动生成包含jwt逻辑的代码
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	jwt: Auth
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//声明当前service或者路由文件分组
 </span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	group: user
-</span></span><span style="display:flex;"><span>	prefix : userapi/v1
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//添加路由分组
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	prefix : userapi/v1
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//声明当前service需要开启中间件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	middleware: AuthMiddleware
 </span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>service user-api {
-</span></span><span style="display:flex;"><span>	<span style="color:#f00;background-color:#faa">@</span>doc <span style="color:#a50">&#34;获取用户信息&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f00;background-color:#faa">@</span>handler userInfo
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//对外提供的api接口，service name必须一致，包括import的文件
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>service user-api {
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//doc
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#f00;background-color:#faa">@</span>doc <span style="color:#a50">&#34;获取用户信息&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//handler
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#f00;background-color:#faa">@</span>handler userInfo
 </span></span><span style="display:flex;"><span>	get /users/<span style="color:#0a0">info</span> (UserInfoReq) <span style="color:#0a0">returns</span> (UserInfoResq)
 </span></span><span style="display:flex;"><span>	
 </span></span><span style="display:flex;"><span>	<span style="color:#f00;background-color:#faa">@</span>doc <span style="color:#a50">&#34;修改用户信息&#34;</span>
@@ -247,12 +288,10 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>goctl api go -api user.api -dir ../ -style goZero
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>执行构建命令时对于notedit文件比如types里面的go文件将会重写，其他的文件以api文件里面的@handler为粒度进行新增，以存在的不会进行修改（其实就是忽略已存在文件）。</p>
-<p>api文件可以import，一般type部分太多可以拆到其他文件。</p>
+</div><p><a href="https://legacy.go-zero.dev/cn/dev-specification.html" target="_blank" rel="noopener noreffer ">开发规范</a></p>
 <h2 id="main文件">main文件</h2>
-<p>main文件的名称为group名.go</p>
+<p>main文件的名称和api文件名称一致</p>
 <p>查看该文件main函数上面有一个-f的flag配置项。默认使用etc里面的yaml配置文件，在启动服务的时候使用-f可以使用指定的配置文件</p>
-<p>main语句</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -261,9 +300,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> configFile = flag.<span style="color:#0a0">String</span>(<span style="color:#a50">&#34;f&#34;</span>, <span style="color:#a50">&#34;etc/user-api.yaml&#34;</span>, <span style="color:#a50">&#34;the config file&#34;</span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>后续按照main的逻辑讲其他文件或文件夹</p>
-<h3 id="载入配置文件">载入配置文件</h3>
-<p>main语句</p>
+</div><h3 id="载入配置文件">载入配置文件</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -287,10 +324,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#1e90ff;font-weight:bold">Port</span>:<span style="color:#bbb"> </span><span style="color:#099">8888</span><span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>分别表示服务名跟api文件的service名称匹配，监听地址（0.0.0.0表示设备的所有网卡）和端口号</p>
-<p>zero自带的配置对象可以直接查看config对应的结构体来查看配置项</p>
-<h3 id="生成一个服务对象">生成一个服务对象</h3>
-<p>main</p>
+</div><h3 id="生成一个服务对象">生成一个服务对象</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -302,7 +336,6 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="将依赖配置到ctx">将依赖配置到ctx</h3>
-<p>main</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -311,9 +344,8 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>ctx := svc.<span style="color:#0a0">NewServiceContext</span>(c)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>将配置文件的依赖配置到ctx（svc/serviceContext.go的ServiceContext结构体），后续使用的中间件需要配置到该结构体中，比如kafka，redis以及model命令生成的model对象之类的</p>
+</div><p>配置svc/serviceContext.go的ServiceContext结构体，其实后续传递的ctx变量就是该类型，使其与etc/.yaml文件对应，比如kafka客户端，redis客户端以及model命令生成的model对象</p>
 <h3 id="注册路由">注册路由</h3>
-<p>main</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -322,9 +354,8 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>handler.<span style="color:#0a0">RegisterHandlers</span>(server, ctx)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>该函数在internal/handler/routes.go中，由api文件生成配置路由，前缀也在该函数中声明</p>
+</div><p>internal/handler/routes.go里面是详细路由配置</p>
 <h3 id="启动服务">启动服务</h3>
-<p>main</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -333,11 +364,20 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>server.<span style="color:#0a0">Start</span>()
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="internalhandler目录">internal/handler目录</h2>
-<p>该目录除了routes.go文件，其他的都是按api中定义的@server.group字符串分组</p>
-<h3 id="handler函数">Handler函数</h3>
-<p>相当于java的controller</p>
-<p>首先进行参数解析</p>
+</div><h2 id="internal目录">internal目录</h2>
+<h3 id="internalhandler目录">internal/handler目录</h3>
+<p>该目录除了routes.go文件，其他的文件都按api中定义的@server.group分组</p>
+<h4 id="handler函数">Handler函数</h4>
+<p>相当于java的controller，返回http.HandlerFunc的函数，这里会传入svc里面的那个结构体命名为ctc</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">datacenterHandler</span>(ctx *svc.ServiceContext) http.HandlerFunc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>首先进行参数解析</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -354,22 +394,20 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后生成对应的logic类型，这里同时传递了ctx，所以ctx的依赖在logic里也能够使用</p>
+</div><p>然后生成对应的logic类型实例，调用logic的方法，这里同时传递了ctx，所以ctx的依赖在logic里也能够使用</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>l := user.<span style="color:#0a0">NewUserInfoLogic</span>(r.<span style="color:#0a0">Context</span>(), svcCtx)
+</span></span><span style="display:flex;"><span>resp, err := l.<span style="color:#0a0">UserInfo</span>(req)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="internallogic目录">internal/logic目录</h2>
-<p>这里就是写真正的业务逻辑了，中间件都放svcCtx中，这个会由handler传递进来所以都能访问</p>
-<p>logic函数传入的请求和返回的响应分别对应type里面的类型，可以直接使用Req.xxx来访问传入的数据</p>
-<p>返回值其实为两个值，第一个是api定义并生成的type.go里面的结构体，另一个是标准库errors里的error对象。当出错时可以返回err告诉handler。</p>
-<p>每一个logic都是一个工厂模型，在internal里面可以在任意地方生成一个logic对象，然后通过调用logic的方法来执行logic代码</p>
-<h2 id="middleware">middleware</h2>
-<h3 id="server粒度middleware">server粒度middleware</h3>
+</div><h3 id="internallogic目录">internal/logic目录</h3>
+<p>写真正的业务逻辑，封装为一个结构体，它具有默认的logx，ctx以及svcCtx</p>
+<p>业务逻辑封装成结构体的方法，结构体还有一个工厂函数，可以在其他逻辑里面通过工厂函数新建并执行逻辑函数</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -378,17 +416,22 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f00;background-color:#faa">@</span><span style="color:#0a0">server</span>(
-</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//jwt: Auth
-</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	group: user
-</span></span><span style="display:flex;"><span>	prefix : userapi/v1
-</span></span><span style="display:flex;"><span>	:TmstMiddlewareiddleware
-</span></span><span style="display:flex;"><span>)
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> UserInfoLogic <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	logx.Logger
+</span></span><span style="display:flex;"><span>	ctx    context.Context
+</span></span><span style="display:flex;"><span>	svcCtx *svc.ServiceContext
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (l *UserInfoLogic) <span style="color:#0a0">UserInfo</span>(req *types.UserInfoReq) (resp *types.UserInfoResp, err <span style="color:#0aa">error</span>) 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>goctrl api构建之后会在internal中生成一个middleware文件夹，里面是你定义的middleware函数</p>
+</div><p>logic函数传入的req和返回的resp分别对应type里面的类型，可以直接使用req.xxx来访问传入的数据</p>
+<p>另一个返回值是标准库errors里的error对象，成功返回nil，出错返回err实例。</p>
+<h3 id="internalmiddleware目录">internal/middleware目录</h3>
+<p>存放api文件定义的middleware</p>
 <p>另外internal/handler目录里面的routes.go是这样使用middleware的</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -437,8 +480,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后路由中就不会报错了</p>
-<p>接下来就可以修改middleware的内部逻辑了</p>
+</div><p>接下来就可以修改middleware的内部逻辑了</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -459,8 +501,9 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="全局中间件">全局中间件</h3>
-<p>全局中间件通常放在app/common/middleware目录中，比如jwt全局中间件，一个中间件其实就是一个返回http.HandleFunc对象的函数</p>
+</div><h2 id="全局中间件">全局中间件</h2>
+<p>全局中间件通常放在app/common/middleware目录中，比如jwt全局中间件</p>
+<p>一个中间件其实就是一个接收并返回http.HandleFunc对象的函数，这里将其封装到一个结构体的方法，这样能向里面传参</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -511,28 +554,20 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
 </span></span><span style="display:flex;"><span>	...
-</span></span><span style="display:flex;"><span>	server := rest.<span style="color:#0a0">MustNewServer</span>(c.RestConf)
-</span></span><span style="display:flex;"><span>	<span style="color:#00a">defer</span> server.<span style="color:#0a0">Stop</span>()
-</span></span><span style="display:flex;"><span>  ...
 </span></span><span style="display:flex;"><span>	server.<span style="color:#0a0">Use</span>(middleware.<span style="color:#0a0">NewCommonJwtAuthMiddleware</span>().Handle)
-</span></span><span style="display:flex;"><span>  ...
-</span></span><span style="display:flex;"><span>	server.<span style="color:#0a0">Start</span>()
+</span></span><span style="display:flex;"><span>  	...
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>全局中间件比局部中间件更早执行</p>
-<h2 id="整体源码分析httpswwwbilibilicomvideobv1u94y1f7rtspm_id_frompagedrivervd_source2b1aa8668a9c97c4d09f9c3e9bd74bd0"><a href="https://www.bilibili.com/video/BV1u94y1f7rT/?spm_id_from=pageDriver&amp;vd_source=2b1aa8668a9c97c4d09f9c3e9bd74bd0" target="_blank" rel="noopener noreffer ">整体源码分析</a></h2>
+<h2 id="整体源码分析">整体源码分析</h2>
+<p><a href="https://www.bilibili.com/video/BV1u94y1f7rT/?spm_id_from=pageDriver&amp;vd_source=2b1aa8668a9c97c4d09f9c3e9bd74bd0" target="_blank" rel="noopener noreffer ">整体源码分析</a></p>
 <p>zero里面有很多基于golang &hellip;语法糖的选项模式</p>
-<h3 id="confmustloadconfigfile-c">conf.MustLoad(*configFile, &amp;c)</h3>
-<p>读取config.yaml。</p>
+<h3 id="读取configyaml">读取config.yaml</h3>
 <p>如果在config.yaml中使用环境变量则在main中给该函数配置选项conf.UseEnv()</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -543,8 +578,16 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这样就可以在yaml文件里面使用${envName}格式的变量来绑定环境变量</p>
-<h3 id="server--restmustnewservercrestconf">server := rest.MustNewServer(c.RestConf)</h3>
-<p>Setup()：日志，Prometheus，链路追踪，metrics</p>
+<h3 id="根据配置文件生成server对象">根据配置文件生成server对象</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>server := rest.<span style="color:#0a0">MustNewServer</span>(c.RestConf)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Setup()：日志，Prometheus，链路追踪，metrics</p>
 <h2 id="api调用rpc">api调用rpc</h2>
 <h3 id="配置">配置</h3>
 <h4 id="rpc配置">rpc配置</h4>
@@ -597,30 +640,33 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#1e90ff;font-weight:bold">Key</span>:<span style="color:#bbb"> </span>user.rpc<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后在svcCtx中添加rpc生成的rpc客户端字段，在本例中为usercenter/usercenter.go文件中的Usercenter接口，并且在svcCtx工厂函数中使用rpc中usercenter的工厂函数给该字段赋初值。由于工厂函数需要一个zrpc客户端，所以通过zrpc.MustNewClient(c.UserRpcConf)使用yaml配置生成一个zrpc客户端</p>
+</div><p>svc添加zrpc客户端</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> ServiceContext <span style="color:#00a">struct</span> {
 </span></span><span style="display:flex;"><span>	...
 </span></span><span style="display:flex;"><span>	UserRpcClient        usercenter.Usercenter
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewServiceContext</span>(c config.Config) *ServiceContext {
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据配置c创建rpc客户端，rpc客户端的go文件在rpc那边，如果不是本地开发，需要拷贝过来</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewServiceContext</span>(c config.Config) *ServiceContext {
 </span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> &amp;ServiceContext{
 </span></span><span style="display:flex;"><span>		...
 </span></span><span style="display:flex;"><span>		UserRpcClient:        usercenter.<span style="color:#0a0">NewUsercenter</span>(zrpc.<span style="color:#0a0">MustNewClient</span>(c.UserRpcConf)),
@@ -628,9 +674,8 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>之后就能在api的logic里面调用rpc了</p>
-<h3 id="调用">调用</h3>
-<p>对于pb中定义的service可以直接通过svcCtx的Client直接调用，传入2个参数：ctx和pb生成的Req结构体对象指针。返回的结果为pb定义的Resp结构体对象指针。所以fo-zero的rpc调用非常方便</p>
+</div><h3 id="调用">调用</h3>
+<p>zrpc的Client可以直接调用service，传入2个参数：ctx和pb生成的Req结构体对象指针。返回的结果为pb定义的Resp结构体对象指针。所以go-zero的rpc调用非常方便</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -688,7 +733,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#1e90ff;font-weight:bold">Key</span>:<span style="color:#bbb"> </span>user.rpc<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>这里的UserRpcConf再etc/config.go中使用zrpc.RpcClientConf类型来接收，这个配置字段是作为后面生成rpc客户端实例的时候的配置信息</p>
+</div><p>修改etc/config.go</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -703,7 +748,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>api调用rpc时是需要rpc生成的客户端目录里面的go文件（一个客户端与一个proto里面的service对应，里面有调用service里面rpc方法的方法）来进行调用的，所以在svcCtx中需要添加rpc客户端字段（其实是一个接口）。</p>
+</div><p>api调用rpc时是需要rpc生成的客户端目录里面的go文件</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -729,8 +774,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="直连">直连</h3>
-<p>好处是简单，坏处是不可扩展，开发一般使用直连</p>
-<p>直连rpc不需要配置（如果之前配置的Etcd也会优先走直连，但是如果Etcd服务没起来也无法启动rpc，所以不要同时配置多个模式），直接配置api即可</p>
+<p>直接配置api</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -743,10 +787,10 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#099">0.0.0.0</span>:<span style="color:#099">8080</span><span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>EndPoints对应是一个字符串数组，所以直连也有负载均衡。go-zero都是使用P2C算法来进行负载均衡的。</p>
+</div><p>EndPoints是一个数组，也有负载均衡。go-zero都是使用P2C算法来进行负载均衡的。</p>
 <h3 id="k8s">K8s</h3>
 <p>rpc不需要配置，但是需要写k8s的yaml文件，并将rpc装载到k8s pod中</p>
-<p>api需要配置yaml文件，将rpc设置为Target（k8s连接），值为k8s集群地址，比如下面这个例子，k8s://表示k8s协议，go-zero-looklook表示k8s集群地址，basic-rpc-svc:9001是k8s yaml文件里面写的服务名称和端口号</p>
+<p>api需要配置yaml文件，将rpc设置为Target（k8s连接），值为k8s集群地址，比如下面这个例子，k8s://表示k8s协议</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -786,10 +830,10 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>goctl docker -go .<span style="color:#a50">\s</span>ervice<span style="color:#a50">\u</span>ser<span style="color:#a50">\r</span>pc<span style="color:#a50">\u</span>ser.go
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>其余内容见<a href="https://www.bilibili.com/video/BV1ir4y1W7SY/?spm_id_from=pageDriver&amp;vd_source=2b1aa8668a9c97c4d09f9c3e9bd74bd0" target="_blank" rel="noopener noreffer ">bilibili</a>和<a href="https://github.com/Mikaelemmmm/go-zero-looklook/blob/main/doc/chinese/15-%E5%8F%91%E5%B8%83%E6%9C%8D%E5%8A%A1%E5%88%B0k8s.md" target="_blank" rel="noopener noreffer ">looklook文档</a>。等我熟悉了k8s再来总结相关内容，Mikaelemmmm哥讲到k8s架构图我直接蒙圈。</p>
+</div><p>其余内容见<a href="https://www.bilibili.com/video/BV1ir4y1W7SY/?spm_id_from=pageDriver&amp;vd_source=2b1aa8668a9c97c4d09f9c3e9bd74bd0" target="_blank" rel="noopener noreffer ">bilibili</a>和<a href="https://github.com/Mikaelemmmm/go-zero-looklook/blob/main/doc/chinese/15-%E5%8F%91%E5%B8%83%E6%9C%8D%E5%8A%A1%E5%88%B0k8s.md" target="_blank" rel="noopener noreffer ">looklook文档</a></p>
 <h2 id="api参数校验集成第三方库">api参数校验集成第三方库</h2>
-<p>默认go-zero的参数校验比较简单，可以使用<a href="https://github.com/go-playground/validator" target="_blank" rel="noopener noreffer ">第三方validator库</a></p>
-<p>使用方法也很简单，给结构体添加tag.</p>
+<p>默认go-zero的参数校验不够用时，可以使用<a href="https://github.com/go-playground/validator" target="_blank" rel="noopener noreffer ">第三方validator库</a></p>
+<p>给结构体添加tag</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -808,7 +852,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>校验时候先生成validator对象。</p>
+</div><p>生成validator对象</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -822,16 +866,15 @@
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>err:=v.<span style="color:#0a0">Struct</span>(&amp;user)
-</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>err:=v.<span style="color:#0a0">StructCtx</span>(r.Context,&amp;user)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>与go-zero结合的时候将校验的tag加到api文件里面，不要在生成的文件里面添加，因为下次生成会覆盖之前生成的文件。如果不想每次api构建后自己都得再写一遍validator校验逻辑，可以修改模板。</p>
-<h2 id="go-zero-自带jwt鉴权">go-zero 自带jwt鉴权</h2>
+</div><p>为了防止被覆盖，校验的tag加到api文件</p>
+<p>可以修改模板来复用validator校验逻辑，避免每次生成都得修改文件</p>
+<h2 id="jwt鉴权">jwt鉴权</h2>
 <p>api文件设置jwt：xxx</p>
 <p>yaml配置文件配置xxx的相关配置</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -846,7 +889,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#1e90ff;font-weight:bold">AccessExpire</span>:<span style="color:#bbb"> </span>$AccessExpire<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>后续通过jwt鉴权的请求携带的jwt信息可以在其他地方被访问</p>
+</div><p>后续通过jwt鉴权的请求携带的jwt信息可以在其他地方通过ctx访问</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -856,13 +899,27 @@
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> (l *SearchLogic) <span style="color:#0a0">Search</span>(req types.SearchReq) (*types.SearchReply, <span style="color:#0aa">error</span>) {
-</span></span><span style="display:flex;"><span>    logx.<span style="color:#0a0">Infof</span>(<span style="color:#a50">&#34;userId: %v&#34;</span>,l.ctx.<span style="color:#0a0">Value</span>(<span style="color:#a50">&#34;userId&#34;</span>))<span style="color:#aaa;font-style:italic">// 这里的key和生成jwt token时传入的key一致
-</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">return</span> &amp;types.SearchReply{}, <span style="color:#00a">nil</span>
+</span></span><span style="display:flex;"><span>  logx.<span style="color:#0a0">Infof</span>(<span style="color:#a50">&#34;userId: %v&#34;</span>,l.ctx.<span style="color:#0a0">Value</span>(<span style="color:#a50">&#34;userId&#34;</span>))<span style="color:#aaa;font-style:italic">// 这里的key和生成jwt token时传入的key一致
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">return</span> &amp;types.SearchReply{}, <span style="color:#00a">nil</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
+</div><p>定义jwt验证不通过的响应</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>server := rest.<span style="color:#0a0">MustNewServer</span>(c.RestConf, rest.<span style="color:#0a0">WithUnauthorizedCallback</span>(<span style="color:#00a">func</span>(w http.ResponseWriter, r *http.Request, err <span style="color:#0aa">error</span>) {
+</span></span><span style="display:flex;"><span>  w.<span style="color:#0a0">WriteHeader</span>(<span style="color:#099">200</span>)
+</span></span><span style="display:flex;"><span>}))
+</span></span></code></pre></td></tr></table>
+</div>
 </div><p>详见<a href="/posts/golang/go-zero/%e6%95%99%e7%a8%8b/looklook/#%e8%87%aa%e5%ae%9a%e4%b9%89jwt%e9%aa%8c%e8%af%81%e4%b8%8d%e9%80%9a%e8%bf%87%e5%93%8d%e5%ba%94" rel="">looklook</a></p>
-<h2 id="api的兼容性httpsmpweixinqqcoms__bizmzg2odu1mti0oamid2247485663idx1snae1486f2e5aff30799ead1d6c88b6ebcchksmceabd7e0f9dc5ef6677b37fd783e433cb64f8aa714ee393690d5f10cfadea78f0e94544a67a8cur_album_id1655138838454796294scene189wechat_redirect"><a href="https://mp.weixin.qq.com/s?__biz=Mzg2ODU1MTI0OA==&amp;mid=2247485663&amp;idx=1&amp;sn=ae1486f2e5aff30799ead1d6c88b6ebc&amp;chksm=ceabd7e0f9dc5ef6677b37fd783e433cb64f8aa714ee393690d5f10cfadea78f0e94544a67a8&amp;cur_album_id=1655138838454796294&amp;scene=189#wechat_redirect" target="_blank" rel="noopener noreffer ">api的兼容性</a></h2>
+<h2 id="api的兼容性">api的兼容性</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=Mzg2ODU1MTI0OA==&amp;mid=2247485663&amp;idx=1&amp;sn=ae1486f2e5aff30799ead1d6c88b6ebc&amp;chksm=ceabd7e0f9dc5ef6677b37fd783e433cb64f8aa714ee393690d5f10cfadea78f0e94544a67a8&amp;cur_album_id=1655138838454796294&amp;scene=189#wechat_redirect" target="_blank" rel="noopener noreffer ">api的兼容性</a></p>
 <p>定义或修改API的时候一定要考虑向前兼容：</p>
 <ul>
 <li>增加新的API接口协议</li>

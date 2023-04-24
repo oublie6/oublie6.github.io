@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>go标准库-Encoding - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="go标准库-Encoding" />
-<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc hex子包 常用" />
+<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc hex 常用函数 func DecodedLen(x" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/encoding/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-04-18T15:15:25+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="go标准库-Encoding"/>
-<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc hex子包 常用"/>
+<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc hex 常用函数 func DecodedLen(x"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/encoding/" /><link rel="prev" href="https://oublie6.github.io/posts/p4/p4-learning/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/%E5%BE%AE%E4%BF%A1/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%B9%B3%E5%8F%B0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/encoding\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  237 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  359 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/encoding\/","datePublished": "2023-04-18T15:15:25+08:00","dateModified": "2023-04-18T15:15:25+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Encoding</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-18">2023-04-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;237 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-18">2023-04-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;359 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -111,13 +111,14 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#hex子包">hex子包</a></li>
+    <li><a href="#hex">hex</a></li>
+    <li><a href="#json">json</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
 <p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
 <p>go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc</p>
-<h2 id="hex子包">hex子包</h2>
+<h2 id="hex">hex</h2>
 <p>常用函数</p>
 <ul>
 <li>func DecodedLen(x int) int：长度x的编码数据解码后的明文数据的长度</li>
@@ -168,6 +169,14 @@
 <li>func EncodeToString(src []byte) string：将src编码为字符串s</li>
 <li>func DecodeString(s string) ([]byte, error)：将hex编码的字符串s解码</li>
 </ul>
+<h2 id="json">json</h2>
+<p>函数</p>
+<ul>
+<li>json.Marsheal()方法序列化一个具有channel或func字段的结构体会返回错误</li>
+<li>json.Marsheal()方法不会序列化私有字段</li>
+</ul>
+<p><a href="https://blog.csdn.net/weixin_30507269/article/details/97934462" target="_blank" rel="noopener noreffer ">CSDNweixin_30507269</a></p>
+<p>json转换结构体遇到指针字段时会自动连接到指针对应的结构体。最终生成的字符串会包含连接到的对象。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

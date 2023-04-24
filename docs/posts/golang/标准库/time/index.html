@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/time\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  1586 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  1539 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/time\/","datePublished": "2023-03-11T11:20:47+08:00","dateModified": "2023-03-11T11:20:47+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Time</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1586 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1539 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -111,44 +111,46 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#type-weekday">type Weekday</a></li>
-    <li><a href="#type-month">type Month</a></li>
-    <li><a href="#type-location">type Location</a></li>
-    <li><a href="#type-time">type Time</a>
+    <li><a href="#函数">函数</a></li>
+    <li><a href="#type-weekday-int">type Weekday int</a></li>
+    <li><a href="#type-month-int">type Month int</a></li>
+    <li><a href="#type-location-struct">type Location struct</a></li>
+    <li><a href="#type-time-struct">type Time struct</a>
       <ul>
-        <li><a href="#常用函数">常用函数</a></li>
-        <li><a href="#常用方法">常用方法</a></li>
+        <li><a href="#函数-1">函数</a></li>
+        <li><a href="#方法">方法</a></li>
       </ul>
     </li>
-    <li><a href="#type-duration">type Duration</a></li>
-    <li><a href="#type-timer">type Timer</a></li>
-    <li><a href="#type-ticker">type Ticker</a></li>
-    <li><a href="#常用函数-1">常用函数</a></li>
+    <li><a href="#type-duration-int64">type Duration int64</a></li>
+    <li><a href="#type-timer-struct">type Timer struct</a></li>
+    <li><a href="#type-ticker-struct">type Ticker struct</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
 <p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
 <p>go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc</p>
 <p>time包提供了时间的显示和测量用的函数。日历的计算采用的是公历</p>
-<h2 id="type-weekday">type Weekday</h2>
+<h2 id="函数">函数</h2>
+<ul>
+<li>func Sleep(d Duration): 阻塞当前go程至少d代表的时间段</li>
+<li>func After(d Duration) &lt;-chan Time: 在另一线程经过时间段d后向返回值发送当时的时间</li>
+</ul>
+<h2 id="type-weekday-int">type Weekday int</h2>
+<p>常量</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Weekday <span style="color:#0aa">int</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> (
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">const</span> (
 </span></span><span style="display:flex;"><span>    Sunday Weekday = <span style="color:#00a">iota</span>
 </span></span><span style="display:flex;"><span>    Monday
 </span></span><span style="display:flex;"><span>    Tuesday
@@ -159,11 +161,12 @@
 </span></span><span style="display:flex;"><span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>常用函数</p>
+</div><p>函数</p>
 <ul>
 <li>func (d Weekday) String() string: String返回该日（周几）的英文名</li>
 </ul>
-<h2 id="type-month">type Month</h2>
+<h2 id="type-month-int">type Month int</h2>
+<p>常量</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -180,13 +183,9 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Month <span style="color:#0aa">int</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#00a">const</span> (
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">const</span> (
 </span></span><span style="display:flex;"><span>    January Month = <span style="color:#099">1</span> + <span style="color:#00a">iota</span>
 </span></span><span style="display:flex;"><span>    February
 </span></span><span style="display:flex;"><span>    March
@@ -202,41 +201,27 @@
 </span></span><span style="display:flex;"><span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>常用函数</p>
+</div><p>函数</p>
 <ul>
 <li>func (m Month) String() string: String返回月份的英文名</li>
 </ul>
-<h2 id="type-location">type Location</h2>
+<h2 id="type-location-struct">type Location struct</h2>
 <p>Location代表一个（关联到某个时间点的）地点，以及该地点所在的时区</p>
-<p>常用函数</p>
+<p>函数</p>
 <ul>
 <li>func LoadLocation(name string) (*Location, error): 返回使用给定的地名创建的Location，可用的名字有UTC，Local或者IANA时区数据库里有记录的地点名如<code>&quot;America/New_York&quot;</code></li>
 <li>func FixedZone(name string, offset int) *Location: 使用给定的地点名name和时间偏移量offset（单位秒）创建并返回一个Location</li>
 <li>func (l *Location) String() string: 返回值绑定为LoadLocation或FixedZone函数创建l时的name参数</li>
 </ul>
-<h2 id="type-time">type Time</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Time <span style="color:#00a">struct</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 内含隐藏或非导出字段
-</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    loc *Location
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>纳秒精度的时间点</p>
-<h3 id="常用函数">常用函数</h3>
+<h2 id="type-time-struct">type Time struct</h2>
+<p>纳秒精度的时间点</p>
+<h3 id="函数-1">函数</h3>
 <ul>
 <li>func Date(year int, month Month, day, hour, min, sec, nsec int, loc *Location) Time:返回一个根据参数设置值的Time对象</li>
 <li>func Now() Time:当前本地时间的Time对象</li>
 <li>func Unix(sec int64, nsec int64) Time：使用Unix时间戳创建一个Time对象</li>
 </ul>
-<h3 id="常用方法">常用方法</h3>
+<h3 id="方法">方法</h3>
 <ul>
 <li>func (t Time) Location() *Location: 返回t的Location对象</li>
 <li>func (t Time) Zone() (name string, offset int): 计算t所在的时区，返回该时区的规范名（如&quot;CET&quot;）和该时区相对于UTC的时间偏移量（单位秒）</li>
@@ -274,16 +259,8 @@
 <p>func (t Time) Format(layout string) string: 根据layout指定的格式返回t代表的时间点的格式化文本表示，格式为<code>Mon Jan 2 15:04:05 -0700 MST 2006</code></p>
 </li>
 </ul>
-<h2 id="type-duration">type Duration</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Duration <span style="color:#0aa">int64</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>常量</p>
+<h2 id="type-duration-int64">type Duration int64</h2>
+<p>常量</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -306,17 +283,18 @@
 </span></span><span style="display:flex;"><span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>常用函数</p>
+</div><p>函数</p>
 <ul>
 <li>func Since(t Time) Duration: Since返回从t到现在经过的时间，等价于time.Now().Sub(t)</li>
 </ul>
-<p>常用方法</p>
+<p>方法</p>
 <ul>
 <li>func (d Duration) Hours() float64: 表示为float64类型的小时数</li>
 <li>func (d Duration) Minutes() float64: 表示为float64类型的分钟数</li>
 <li>func (d Duration) Seconds() float64: 表示为int64类型的纳秒数，等价于int64(d)</li>
 </ul>
-<h2 id="type-timer">type Timer</h2>
+<h2 id="type-timer-struct">type Timer struct</h2>
+<p>变量</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -331,17 +309,17 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>常用函数</p>
+</div><p>函数</p>
 <ul>
 <li>func NewTimer(d Duration) *Timer: 创建一个倒计时为d的Timer，时间到后像C发送当前时间</li>
 <li>func AfterFunc(d Duration, f func()) *Timer: 另起一个go程等待时间段d过去，然后调用f，返回Timer对象</li>
 </ul>
-<p>常用方法</p>
+<p>方法</p>
 <ul>
 <li>func (t *Timer) Reset(d Duration) bool: Reset使t重新开始计时，返回真表示调用时t还在倒计时，为假表示t已经停止了</li>
 <li>func (t *Timer) Stop() bool: Stop停止Timer的执行，返回真表示调用时t还在倒计时，为假表示t已经停止了。Stop不会关闭通道t.C</li>
 </ul>
-<h2 id="type-ticker">type Ticker</h2>
+<h2 id="type-ticker-struct">type Ticker struct</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -356,18 +334,13 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>常用函数</p>
+</div><p>函数</p>
 <ul>
 <li>func NewTicker(d Duration) *Ticker: 创建频率为d的Ticker，时间到了会向C发送当前时间</li>
 </ul>
-<p>常用方法</p>
+<p>方法</p>
 <ul>
 <li>func (t *Ticker) Stop(): 关闭一个Ticker，Stop不会关闭通道t.C</li>
-</ul>
-<h2 id="常用函数-1">常用函数</h2>
-<ul>
-<li>func Sleep(d Duration): 阻塞当前go程至少d代表的时间段</li>
-<li>func After(d Duration) &lt;-chan Time: 在另一线程经过时间段d后向返回值发送当时的时间</li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

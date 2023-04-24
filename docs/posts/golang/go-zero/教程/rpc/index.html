@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/rpc\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  2164 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  2113 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E6%95%99%E7%A8%8B\/rpc\/","datePublished": "2023-01-06T21:25:35+08:00","dateModified": "2023-01-06T21:25:35+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-教程-Rpc</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2164 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-06">2023-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2113 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -111,7 +111,7 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#protobuf语法httpsdevelopersgooglecomprotocol-buffersdocsproto3"><a href="https://developers.google.com/protocol-buffers/docs/proto3">protobuf语法</a></a>
+    <li><a href="#protobuf语法">protobuf语法</a>
       <ul>
         <li><a href="#语法版本">语法版本</a></li>
         <li><a href="#proto包名">proto包名</a></li>
@@ -128,6 +128,7 @@
         <li><a href="#internalconfigconfiggo">internal/config/config.go</a></li>
         <li><a href="#internalsvc">internal/svc</a></li>
         <li><a href="#internallogic">internal/logic</a></li>
+        <li><a href="#internalserver">internal/server</a></li>
         <li><a href="#pb目录">pb目录</a></li>
         <li><a href="#客户端目录">客户端目录</a></li>
       </ul>
@@ -156,7 +157,8 @@
 <p>本系列为作者跟着<a href="https://space.bilibili.com/389552232" target="_blank" rel="noopener noreffer ">Mikaelemmmm</a>的b站教学视频学习时做的笔记</p>
 <p>zero基于zrpc，zrpc基于grpc</p>
 <p>rpc没有handler，直接就是logic</p>
-<h2 id="protobuf语法httpsdevelopersgooglecomprotocol-buffersdocsproto3"><a href="https://developers.google.com/protocol-buffers/docs/proto3" target="_blank" rel="noopener noreffer ">protobuf语法</a></h2>
+<h2 id="protobuf语法">protobuf语法</h2>
+<p><a href="https://developers.google.com/protocol-buffers/docs/proto3" target="_blank" rel="noopener noreffer ">protobuf语法</a></p>
 <h3 id="语法版本">语法版本</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -231,6 +233,8 @@
 <p>他也是使用svcCtx来放置依赖</p>
 <h3 id="internallogic">internal/logic</h3>
 <p>业务逻辑，rpc没有handler</p>
+<h3 id="internalserver">internal/server</h3>
+<p>类似handler，但是用类似logic的方法封装为结构体</p>
 <h3 id="pb目录">pb目录</h3>
 <p>.pb.go文件放序列化的结构体</p>
 <p>_gprc.pb.go文件放grpc生成的方法</p>
@@ -241,8 +245,10 @@
 <p>然后在collections里面新建rpc collection 并新建grpc请求，选择你导入的API</p>
 <h2 id="proto编写注意事项">Proto编写注意事项</h2>
 <p>尽量使用原生的proto数据类型，比如int64，string等。</p>
-<p>对于时间戳可以直接使用int64，在后端直接time.Unix(in.xxxtime)就可以直接转化为数据库对应的时间格式time.time。从数据库读出来的时间是time.time可以直接使用xxxtime.Unix()就可以拿到int64的值。</p>
-<p>尽量使用具体的类型，尽量不要去使用any类型。</p>
+<p>时间戳直接使用int64，从数据库读出来的时间是time.Time结构体，可以相互转化</p>
+<p>rpc或api int64&ndash;time.Unix(in.xxxtime)&ndash;&gt;time.Time结构体x
+rpc或api int64&lt;&ndash;x.Unix()&ndash;time.Time结构体x</p>
+<p>尽量使用具体的类型，尽量不要去使用any类型</p>
 <p>文件拆分：可以把message分类放文件夹里面，然后import。import文件之后需要使用<code>包名.类型名</code>来定义类型。拆分的proto文件需要手动使用protoc对每一个proto生成go文件，goctrl最后对有service的proto文件生成代码。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -252,8 +258,8 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>protoc -I ./ --go_out=<span style="color:#a00">paths</span>=source_relative:. --go-grpc_out=<span style="color:#a00">paths</span>=source_relative:. userModel.proto
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>另外相同结构尽量使用组合方式进行复用。</p>
-<p>关于使用grpcui，由于main里面会有</p>
+</div><p>另外相同结构尽量使用组合方式进行复用</p>
+<p>main文件</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -282,7 +288,8 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>而grpcui需要执行reflection.Register(grpcServer)，所以我们需要在yaml中配置服务模式Mode为dev或者test，才能使用grpcui，但是我推荐使用postman进行测试</p>
+</div><p>grpcui需要执行reflection.Register(grpcServer)，在yaml中配置服务模式Mode为dev或者test，才能使用</p>
+<p>我推荐使用postman进行测试</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -325,8 +332,15 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个拦截器方法可以放到一个单独的位置，只要main能够导入即可。</p>
-<p>拦截器的逻辑是：如果直接return则相当于直接丢弃，想要处理请求则需要调用resp，err:=handle(ctx,req)，该函数和api middleware的next(w,r)是一样的，所以可以在拦截器中实现处理后的逻辑。最后需要return resp,err</p>
+</div><p>这个拦截器函数可以放到任意位置，只要格式是这样的就行</p>
+<p>拦截器的逻辑：和api的middleware是一致的，都是洋葱模型，handle(ctx,req)和next(w,r)是一致的</p>
+<ul>
+<li>直接return则相当于直接丢弃</li>
+<li>调用前是处理前逻辑</li>
+<li>调用处理请求</li>
+<li>调用后是处理后逻辑</li>
+<li>最后需要return resp,err 来返回处理结果</li>
+</ul>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -404,8 +418,8 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>该函数也可以放到别的地方，只要svcCtx的工厂函数能够引用到，该函数只返回一个错误参数</p>
-<p>里面需要调用err := invoker(ctx, method, req, reply, cc, opts&hellip;)函数，该函数和中间件的next函数以及rpc拦截器的handle函数功能一样，在该调用之前就是调用前的逻辑，后面的就是拦截后的逻辑</p>
+</div><p>该函数也可以放到任意位置</p>
+<p>invoker(ctx, method, req, reply, cc, opts&hellip;)和api的next以及rpc的handle是一致的</p>
 <h2 id="metadata传值">metadata传值</h2>
 <p>一般在拦截器里面实现，也可以在其他地方实现。这里展示拦截器实现过程</p>
 <h3 id="客户端拦截器添加metadata">客户端拦截器添加metadata</h3>

@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  2879 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  3112 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2022-11-14T12:34:23+08:00","dateModified": "2022-11-14T12:34:23+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-14">2022-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2879 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-14">2022-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3112 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -150,6 +150,7 @@
         </li>
       </ul>
     </li>
+    <li><a href="#stringx包">stringx包</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列为作者跟着<a href="https://space.bilibili.com/389552232" target="_blank" rel="noopener noreffer ">Mikaelemmmm</a>的b站教学视频学习时做的笔记</p>
@@ -521,6 +522,23 @@
         data-sizes="auto"
         alt="https://github.com/Mikaelemmmm/gozerodtm/raw/main/docimage/barrier_tx_model.png"
         title="https://github.com/Mikaelemmmm/gozerodtm/raw/main/docimage/barrier_tx_model.png" /></div>
+<h2 id="stringx包">stringx包</h2>
+<p><a href="https://legacy.go-zero.dev/cn/keywords.html" target="_blank" rel="noopener noreffer ">go zero 博客 高效的关键词替换和敏感词过滤工具</a></p>
+<p>利用高效的Trie树建立关键词树</p>
+<p>函数</p>
+<ul>
+<li>func NewReplacer(mapping map[string]string) Replacer</li>
+<li>func NewTrie(words []string, opts &hellip;TrieOption) Trie：这里的<code>type TrieOption func(trie *trieNode)</code>看了源码只有<code>func WithMask(mask rune) TrieOption</code>，用于后面屏蔽词的替换字符</li>
+</ul>
+<p>Replacer方法</p>
+<ul>
+<li>func (r *replacer) Replace(text string) string：根据mapping替换text</li>
+</ul>
+<p>Trie方法</p>
+<ul>
+<li>func (n *trieNode) Filter(text string) (sentence string, keywords []string, found bool)：返回值第一个是替换屏蔽词后的结果，第二个是找到的屏蔽词，第三个是是否有屏蔽词</li>
+<li>func (n *trieNode) FindKeywords(text string) []string：返回找到的屏蔽词</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

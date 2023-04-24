@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>go标准库-Regexp - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="go标准库-Regexp" />
-<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc 语法 单字符 .:" />
+<meta property="og:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc Syntax 单字符 .:匹" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/regexp/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-31T17:58:44+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="go标准库-Regexp"/>
-<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc 语法 单字符 .:"/>
+<meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc Syntax 单字符 .:匹"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/regexp/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/sqlzoo/" /><link rel="next" href="https://oublie6.github.io/posts/python/%E6%A0%87%E5%87%86%E5%BA%93/ipaddress/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/regexp\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  776 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  777 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/regexp\/","datePublished": "2023-03-31T17:58:44+08:00","dateModified": "2023-03-31T17:58:44+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Regexp</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-31">2023-03-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;776 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-31">2023-03-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;777 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -111,15 +111,15 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#语法">语法</a></li>
+    <li><a href="#syntax">Syntax</a></li>
     <li><a href="#函数">函数</a></li>
-    <li><a href="#regexp">Regexp</a></li>
+    <li><a href="#type-regexp-struct">type Regexp struct</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
 <p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
 <p>go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc</p>
-<h2 id="语法">语法</h2>
+<h2 id="syntax">Syntax</h2>
 <p>单字符</p>
 <ul>
 <li>.:匹配任意字符</li>
@@ -164,7 +164,7 @@
 <li>func Match(pattern string, b []byte) (matched bool, err error)</li>
 <li>func MatchString(pattern string, s string) (matched bool, err error)</li>
 </ul>
-<h2 id="regexp">Regexp</h2>
+<h2 id="type-regexp-struct">type Regexp struct</h2>
 <p>函数</p>
 <ul>
 <li>func Compile(expr string) (*Regexp, error):Compile解析并返回一个正则表达式。</li>

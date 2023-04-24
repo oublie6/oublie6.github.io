@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="golang-学习笔记-Goroutines和Channels"/>
 <meta name="twitter:description" content="go官方文档 go语言参考 在写过很多go代码之后，感觉自己并没有完全掌握go语言，还有很多知识盲区，所以有了这个go学习笔记系列，本系列是作者"/>
 <meta name="application-name" content="LoveIt">
-<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/goroutines%E5%92%8Cchannels/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F%E7%9A%84%E5%B9%B6%E5%8F%91/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/goroutines%E5%92%8Cchannels/" /><link rel="prev" href="https://oublie6.github.io/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" /><link rel="next" href="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  1813 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  3193 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/","datePublished": "2022-12-12T15:34:53+08:00","dateModified": "2022-12-12T15:34:53+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Goroutines和Channels</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1813 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3193 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -124,6 +124,22 @@
     <li><a href="#基于select的多路复用">基于select的多路复用</a></li>
     <li><a href="#并发的退出">并发的退出</a></li>
     <li><a href="#channel底层">channel底层</a></li>
+    <li><a href="#基于共享变量的并发">基于共享变量的并发</a>
+      <ul>
+        <li><a href="#syncmutex互斥锁">sync.Mutex互斥锁</a></li>
+        <li><a href="#syncrwmutex读写锁">sync.RWMutex读写锁</a></li>
+        <li><a href="#synconce惰性初始化">sync.Once惰性初始化</a></li>
+        <li><a href="#竞争条件检测">竞争条件检测</a></li>
+        <li><a href="#goroutines和线程">Goroutines和线程</a>
+          <ul>
+            <li><a href="#动态栈">动态栈</a></li>
+            <li><a href="#goroutine调度">Goroutine调度</a></li>
+            <li><a href="#gomaxprocs">GOMAXPROCS</a></li>
+            <li><a href="#goroutine没有id号">Goroutine没有ID号</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://go.dev/doc/" target="_blank" rel="noopener noreffer ">go官方文档</a>
@@ -213,6 +229,7 @@
 </div>
 </div><p>Go语言的range循环可直接在channels上面迭代。它依次从channel接收数据，当channel被关闭并且没有值可接收时跳出循环。</p>
 <p>并不需要关闭每一个channel。不管一个channel是否被关闭，当它没有被引用时将会被Go语言的垃圾自动回收器回收。</p>
+<p>go 匿名函数可以直接使用上下文中的channel不需要传给它</p>
 <h3 id="单方向的channel">单方向的Channel</h3>
 <ul>
 <li>类型chan&lt;- int表示一个只发送int的channel，只能发送不能接收</li>
@@ -288,12 +305,16 @@
 </div>
 </div><p>select会等待case中有能够执行的case时去执行，当条件满足时，select才会去通信并执行case之后的语句；这时候其它通信是不会执行的</p>
 <p>一个没有任何case的select语句写作select{}，会永远地等待下去</p>
-<p>如果多个case同时就绪时，select会随机地选择一个执行，这样来保证每一个channel都有平等的被select的机会</p>
+<p>第一个case会被优先处理，所以可以将一些重要的判断放第一个，比如context的超时判断</p>
+<p>当第一个case条件不满足且多个case同时就绪时，select会随机地选择一个执行，这样来保证每一个channel都有平等的被select的机会</p>
 <p>default来设置当其它的操作都不能够马上被处理时程序需要执行哪些逻辑，具有default的select不会阻塞</p>
 <p>for循环中的select反复地非阻塞读取channel的操作叫做“轮询channel”</p>
 <p>channel的零值是nil，对一个nil的channel发送和接收操作会永远阻塞</p>
 <h2 id="并发的退出">并发的退出</h2>
 <p>读取被关闭channel可以立即被执行，并且会产生零值。不要向channel发送值，而是用关闭一个channel来进行广播。向关闭的channel发送消息会panic</p>
+<p>不要通过chan的关闭信号来传递消息，一个chan只传递一种信息，要实现关闭管道可以通过额外设置一个chan来专门监听关闭chan的信息，在需要关闭的时候传送该信息</p>
+<p><a href="https://juejin.cn/post/6947985246562287647#heading-2" target="_blank" rel="noopener noreffer ">如何优雅地关闭 Go Channels（译文）</a></p>
+<p>不要关闭接收端的通道，如果通道有多个并发发送方，则不要关闭通道</p>
 <h2 id="channel底层">channel底层</h2>
 <p><a href="https://www.bookstack.cn/read/GoExpertProgramming/chapter01-1.1-chan.md" target="_blank" rel="noopener noreffer ">go专家编程</a></p>
 <p>环形队列，sendx，recvx两个uint来指向读写位置，qcount来记录剩余元素个数，buf和dataqsiz字段记录环形队列指针和环形队列长度，recvq和sendq记录等待读和等待写的goroutine队列，lock字段加锁同一时间只能由一个goroutine访问channel</p>
@@ -305,6 +326,129 @@
 <li>关闭已经被关闭的channel</li>
 <li>向已经关闭的channel写数据</li>
 </ul>
+<h2 id="基于共享变量的并发">基于共享变量的并发</h2>
+<h3 id="syncmutex互斥锁">sync.Mutex互斥锁</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#a50">&#34;sync&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> (
+</span></span><span style="display:flex;"><span>    mu      sync.Mutex <span style="color:#aaa;font-style:italic">// guards balance
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    balance <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Deposit</span>(amount <span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>    mu.<span style="color:#0a0">Lock</span>()
+</span></span><span style="display:flex;"><span>    balance = balance + amount
+</span></span><span style="display:flex;"><span>    mu.<span style="color:#0a0">Unlock</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Balance</span>() <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    mu.<span style="color:#0a0">Lock</span>()
+</span></span><span style="display:flex;"><span>    b := balance
+</span></span><span style="display:flex;"><span>    mu.<span style="color:#0a0">Unlock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> b
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以和defer一起用：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Balance</span>() <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    mu.<span style="color:#0a0">Lock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">defer</span> mu.<span style="color:#0a0">Unlock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> balance
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="syncrwmutex读写锁">sync.RWMutex读写锁</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> mu sync.RWMutex
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> balance <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Balance</span>() <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    mu.<span style="color:#0a0">RLock</span>() <span style="color:#aaa;font-style:italic">// readers lock
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">defer</span> mu.<span style="color:#0a0">RUnlock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> balance
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>它组合了Mutex，Lock()和Unlock()方法会调用Mutex可以看作写锁</p>
+<h3 id="synconce惰性初始化">sync.Once惰性初始化</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> loadIconsOnce sync.Once
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> icons <span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]image.Image
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Concurrency-safe.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">Icon</span>(name <span style="color:#0aa">string</span>) image.Image {
+</span></span><span style="display:flex;"><span>    loadIconsOnce.<span style="color:#0a0">Do</span>(loadIcons)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> icons[name]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="竞争条件检测">竞争条件检测</h3>
+<p>见<a href="https://go.wuhaolin.cn/gopl/ch9/ch9-06.html" target="_blank" rel="noopener noreffer ">原文</a></p>
+<p>Go的runtime和工具链为我们装备了一个复杂但好用的动态分析工具，竞争检查器(the race detector)。</p>
+<h3 id="goroutines和线程">Goroutines和线程</h3>
+<h4 id="动态栈">动态栈</h4>
+<p>每一个OS线程都有一个固定大小的内存块(一般会是2MB)来做栈，这个栈会用来存储当前正在被调用或挂起(指在调用其它函数时)的函数的内部变量。</p>
+<p>一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。栈的大小会根据需要动态地伸缩。</p>
+<h4 id="goroutine调度">Goroutine调度</h4>
+<p>OS线程会被操作系统内核调度。每几毫秒触发硬件中断，调用scheduler内核函数。这个函数会挂起当前执行的线程并将它的寄存器内容保存到内存中，检查线程列表并决定下一次哪个线程可以被运行，并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。</p>
+<p>操作系统线程是被内核所调度，从一个线程向另一个“移动”需要完整的上下文切换，也就是说，保存一个用户线程的状态到内存，恢复另一个线程的到寄存器，然后更新调度器的数据结构。这几步操作很慢，因为其局部性很差需要几次内存访问，并且会增加运行的cpu周期。</p>
+<p>Go的运行时包含了其自己的调度器，这个调度器使用了一些技术手段，比如m:n调度，因为其会在n个操作系统线程上多工(调度)m个goroutine。Go调度器的工作和内核的调度是相似的，但是这个调度器只关注单独的Go程序中的goroutine（译注：按程序独立）。</p>
+<p>和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器，而是被Go语言“建筑”本身进行调度的。这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。</p>
+<h4 id="gomaxprocs">GOMAXPROCS</h4>
+<p>Go的调度器使用了一个叫做GOMAXPROCS的变量来决定会有多少个操作系统的线程同时执行Go的代码。其默认的值是运行机器上的CPU的核心数，所以在一个有8个核心的机器上时，调度器一次会在8个OS线程上去调度GO代码。</p>
+<p>可以用GOMAXPROCS的环境变量来显式地控制这个参数，或者也可以在运行时用runtime.GOMAXPROCS函数来修改它并返回原来的值（-1不会修改仅返回原来的值）。</p>
+<h4 id="goroutine没有id号">Goroutine没有ID号</h4>
+<p>goroutine没有可以被程序员获取到的身份(id)的概念。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -341,7 +485,7 @@
     </div>
 
     <div class="post-nav"><a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95/" class="prev" rel="prev" title="golang-学习笔记-错误处理与测试"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang-学习笔记-错误处理与测试</a>
-            <a href="/posts/golang/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9F%BA%E4%BA%8E%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F%E7%9A%84%E5%B9%B6%E5%8F%91/" class="next" rel="next" title="golang-学习笔记-基于共享变量的并发">golang-学习笔记-基于共享变量的并发<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+            <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/%E5%9F%BA%E7%A1%80%E7%AF%87/" class="next" rel="next" title="计算机网络-小林coding-基础篇">计算机网络-小林coding-基础篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="comments"><div id="gitalk" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.

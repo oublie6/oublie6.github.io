@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/reflect\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  265 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  962 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/reflect\/","datePublished": "2022-12-04T13:53:57+08:00","dateModified": "2022-12-04T13:53:57+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Reflect</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-04">2022-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;265 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-04">2022-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;962 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -112,6 +112,12 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#常用函数">常用函数</a></li>
+    <li><a href="#type-kind-uint">type Kind uint</a></li>
+    <li><a href="#type-structfield-struct">type StructField struct</a></li>
+    <li><a href="#type-structtag-string">type StructTag string</a></li>
+    <li><a href="#type-method-struct">type Method struct</a></li>
+    <li><a href="#type-type-interface">type Type interface</a></li>
+    <li><a href="#type-value-struct">type Value struct</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
@@ -121,6 +127,135 @@
 <h2 id="常用函数">常用函数</h2>
 <ul>
 <li>func DeepEqual(a1, a2 interface{}) bool：用来判断两个值是否深度一致：除了类型相同；在可以时（主要是基本类型）会使用==；但还会比较array、slice的成员，map的键值对，结构体字段进行深入比对。map的键值对，对键只使用==，但值会继续往深层比对。DeepEqual函数可以正确处理循环的类型。函数类型只有都会nil时才相等；空切片不等于nil切片；还会考虑array、slice的长度、map键值对数。</li>
+</ul>
+<h2 id="type-kind-uint">type Kind uint</h2>
+<p>Kind代表Type类型值表示的具体分类。nil表示Invalid Kind。相当于物理结构分类。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>    Invalid Kind = <span style="color:#00a">iota</span>
+</span></span><span style="display:flex;"><span>    Bool
+</span></span><span style="display:flex;"><span>    Int
+</span></span><span style="display:flex;"><span>    Int8
+</span></span><span style="display:flex;"><span>    Int16
+</span></span><span style="display:flex;"><span>    Int32
+</span></span><span style="display:flex;"><span>    Int64
+</span></span><span style="display:flex;"><span>    Uint
+</span></span><span style="display:flex;"><span>    Uint8
+</span></span><span style="display:flex;"><span>    Uint16
+</span></span><span style="display:flex;"><span>    Uint32
+</span></span><span style="display:flex;"><span>    Uint64
+</span></span><span style="display:flex;"><span>    Uintptr
+</span></span><span style="display:flex;"><span>    Float32
+</span></span><span style="display:flex;"><span>    Float64
+</span></span><span style="display:flex;"><span>    Complex64
+</span></span><span style="display:flex;"><span>    Complex128
+</span></span><span style="display:flex;"><span>    Array
+</span></span><span style="display:flex;"><span>    Chan
+</span></span><span style="display:flex;"><span>    Func
+</span></span><span style="display:flex;"><span>    Interface
+</span></span><span style="display:flex;"><span>    Map
+</span></span><span style="display:flex;"><span>    Ptr
+</span></span><span style="display:flex;"><span>    Slice
+</span></span><span style="display:flex;"><span>    String
+</span></span><span style="display:flex;"><span>    Struct
+</span></span><span style="display:flex;"><span>    UnsafePointer
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>方法</p>
+<ul>
+<li>func (k Kind) String() string：返回对应的字符串</li>
+</ul>
+<h2 id="type-structfield-struct">type StructField struct</h2>
+<p>常用变量</p>
+<ul>
+<li>Name    string</li>
+<li>PkgPath string</li>
+<li>Type      Type      // 字段的类型</li>
+<li>Tag       StructTag // 字段的标签</li>
+<li>Anonymous bool      // 是否匿名字段</li>
+</ul>
+<h2 id="type-structtag-string">type StructTag string</h2>
+<p>结构体字段的标签，string类型</p>
+<p>方法</p>
+<ul>
+<li>func (tag StructTag) Get(key string) string：Get方法返回标签字符串中键key对应的值</li>
+</ul>
+<h2 id="type-method-struct">type Method struct</h2>
+<p>Method代表一个方法</p>
+<p>变量</p>
+<ul>
+<li>Name    string</li>
+<li>PkgPath string</li>
+<li>Type  Type  // 方法类型</li>
+<li>Func  Value // 方法的值</li>
+</ul>
+<h2 id="type-type-interface">type Type interface</h2>
+<p>Type类型用来表示一个go类型，它是一个接口</p>
+<p>函数</p>
+<ul>
+<li>func TypeOf(i interface{}) Type：返回接口i对应的Type类型，nil会返回nil</li>
+</ul>
+<p>方法</p>
+<ul>
+<li>Kind() Kind：返回Kind类型</li>
+<li>Name() string：返回包内类型名</li>
+<li>PkgPath() string：返回包路径</li>
+<li>Size() uintptr：返回类型字节数</li>
+<li>FieldByName(name string) (StructField, bool)：返回第一个name字段，非结构体panic</li>
+<li>NumIn() int：返回有几个入参，非func panic</li>
+<li>In(i int) Type：返回第i个入参，非func panic</li>
+<li>MethodByName(string) (Method, bool)：返回方法</li>
+<li>Elem() Type：返回指向的类型，非Array、Chan、Map、Ptr或Slice panic</li>
+<li>Align() int：返回内存对齐字节数</li>
+<li>Len() int：返回array字位数</li>
+<li>Key() Type：返回map的键类型</li>
+</ul>
+<h2 id="type-value-struct">type Value struct</h2>
+<p>函数</p>
+<ul>
+<li>func ValueOf(i interface{}) Value：返回i转化为的Value</li>
+<li>func Zero(typ Type) Value：返回typ的零值Value对象</li>
+</ul>
+<p>方法</p>
+<ul>
+<li>func (v Value) Kind() Kind：返回Kind对象</li>
+<li>func (v Value) Type() Type：返回type对象</li>
+<li>func (v Value) Call(in []Value) []Value：调用该方法，非func panic</li>
+<li>func (v Value) CanSet() bool：是否可修改</li>
+<li>func (v Value) SetXxx：修改Xxx为Kind中可修改的值</li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

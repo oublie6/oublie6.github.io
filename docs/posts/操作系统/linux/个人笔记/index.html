@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "linux","wordcount":  2605 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "linux","wordcount":  2919 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-02-18T13:15:22+08:00","dateModified": "2023-02-18T13:15:22+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-linux-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2605 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2919 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -135,6 +135,7 @@
     <li><a href="#输入法切换快捷键">输入法切换快捷键</a></li>
     <li><a href="#启动主机转发功能">启动主机转发功能</a></li>
     <li><a href="#配置环境变量">配置环境变量</a></li>
+    <li><a href="#job和进程">job和进程</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://help.ubuntu.com/" target="_blank" rel="noopener noreffer ">ubuntu官方文档</a></p>
@@ -520,6 +521,20 @@
 <ul>
 <li>用户级别环境变量定义文件：<code>~/.bashrc</code>、<code>~/.profile</code>（部分系统为：<code>~/.bash_profile</code>）</li>
 <li>系统级别环境变量定义文件：<code>/etc/bashrc</code>、<code>/etc/profile</code> (部分系统为：<code>/etc/bash_profile</code>)、<code>/etc/environment</code></li>
+</ul>
+<h2 id="job和进程">job和进程</h2>
+<p><a href="https://www.bbsmax.com/A/QW5Y8qgMJm/" target="_blank" rel="noopener noreffer ">博客园 jean zhang</a></p>
+<p>job相对于shell，进程相对于操作系统</p>
+<p>shell执行的命令就是job，一个job就是一个进程，但是该进程可能有多个子进程，子进程不属于job且不能被当前shell看见，所以一个job对应一个进程组</p>
+<p>job分为后台作业和前台作业（占用输入输出）</p>
+<p>作业的操作：</p>
+<ul>
+<li>ctl+z:暂停前台(终端窗口中)正在运行job</li>
+<li>ctl+c:终止前台(终端窗口中)正在运行job</li>
+<li>jobs:  显示当前所有的job，包括正在运行的和暂停的</li>
+<li>fg+N : 让暂停的job在前台运行，N=jobs 命令查询的的job号</li>
+<li>bg+N : 让暂停的job在后台运行，N=jobs 命令查询的的job号</li>
+<li>kill %N : 终止job(与kill 进程不一样，这里有%)，N=jobs 命令查询的的job号</li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
