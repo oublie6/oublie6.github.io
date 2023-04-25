@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/leetcode\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  11287 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  13046 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/leetcode\/","datePublished": "2023-03-14T19:22:41+08:00","dateModified": "2023-03-14T19:22:41+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-刷题-Leetcode</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-14">2023-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;11287 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;23 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-14">2023-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;13046 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;27 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -125,6 +125,7 @@
         <li><a href="#146-lru-缓存">146. LRU 缓存</a></li>
         <li><a href="#503-下一个更大元素-ii">503. 下一个更大元素 II</a></li>
         <li><a href="#115-不同的子序列">115. 不同的子序列</a></li>
+        <li><a href="#188-买卖股票的最佳时机-iv">188. 买卖股票的最佳时机 IV</a></li>
       </ul>
     </li>
     <li><a href="#每日一题">每日一题</a>
@@ -192,6 +193,16 @@
         <li><a href="#78-子集">78. 子集</a></li>
         <li><a href="#79-单词搜索">79. 单词搜索</a></li>
         <li><a href="#84-柱状图中最大的矩形">84. 柱状图中最大的矩形</a></li>
+        <li><a href="#85-最大矩形">85. 最大矩形</a></li>
+        <li><a href="#94-二叉树的中序遍历">94. 二叉树的中序遍历</a></li>
+        <li><a href="#101-对称二叉树">101. 对称二叉树</a></li>
+        <li><a href="#104-二叉树的最大深度">104. 二叉树的最大深度</a></li>
+        <li><a href="#105-从前序与中序遍历序列构造二叉树">105. 从前序与中序遍历序列构造二叉树</a></li>
+        <li><a href="#121-买卖股票的最佳时机">121. 买卖股票的最佳时机</a></li>
+        <li><a href="#124-二叉树中的最大路径和">124. 二叉树中的最大路径和</a></li>
+        <li><a href="#128-最长连续序列">128. 最长连续序列</a></li>
+        <li><a href="#136-只出现一次的数字">136. 只出现一次的数字</a></li>
+        <li><a href="#139-单词拆分">139. 单词拆分</a></li>
       </ul>
     </li>
     <li><a href="#sql">sql</a>
@@ -1050,6 +1061,115 @@
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> dp[ls][lt]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="188-买卖股票的最佳时机-iv">188. 买卖股票的最佳时机 IV</h3>
+<p><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/" target="_blank" rel="noopener noreffer ">188. 买卖股票的最佳时机 IV</a></p>
+<p>状态:dp[i][j][k] 前i天，最大交易数为j，当天是否持有k的最大收益值</p>
+<p>状态转移方程</p>
+<p>dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1] + prices[i])
+max( 今天选择 rest,        今天选择 sell       )</p>
+<p>dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i])
+max( 今天选择 rest,         今天选择 buy         )</p>
+<p>basecase：</p>
+<ul>
+<li>dp[-1][&hellip;][0] = dp[&hellip;][0][0] = 0</li>
+<li>dp[-1][&hellip;][1] = dp[&hellip;][0][1] = -infinity</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">maxProfit</span>(max_k <span style="color:#0aa">int</span>, prices []<span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    n := <span style="color:#0aa">len</span>(prices)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> n &lt;= <span style="color:#099">0</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// base case：
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// dp[-1][...][0] = dp[...][0][0] = 0
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// dp[-1][...][1] = dp[...][0][1] = -infinity
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    dp := <span style="color:#0aa">make</span>([][][]<span style="color:#0aa">int</span>, n)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i := <span style="color:#099">0</span>; i &lt; n; i++ {
+</span></span><span style="display:flex;"><span>        dp[i] = <span style="color:#0aa">make</span>([][]<span style="color:#0aa">int</span>, max_k+<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> k := <span style="color:#099">0</span>; k &lt;= max_k; k++ {
+</span></span><span style="display:flex;"><span>            dp[i][k] = <span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>, <span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// k = 0 时的 base case
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">for</span> i := <span style="color:#099">0</span>; i &lt; n; i++ {
+</span></span><span style="display:flex;"><span>        dp[i][<span style="color:#099">0</span>][<span style="color:#099">1</span>] = -<span style="color:#099">1</span> &lt;&lt; <span style="color:#099">31</span>
+</span></span><span style="display:flex;"><span>        dp[i][<span style="color:#099">0</span>][<span style="color:#099">0</span>] = <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i := <span style="color:#099">0</span>; i &lt; n; i++ {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> k := max_k; k &gt;= <span style="color:#099">1</span>; k-- {
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> i-<span style="color:#099">1</span> == -<span style="color:#099">1</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#aaa;font-style:italic">// 处理 i = -1 时的 base case
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>                dp[i][k][<span style="color:#099">0</span>] = <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>                dp[i][k][<span style="color:#099">1</span>] = -prices[i]
+</span></span><span style="display:flex;"><span>                <span style="color:#00a">continue</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#aaa;font-style:italic">// 状态转移方程
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>            dp[i][k][<span style="color:#099">0</span>] = <span style="color:#0a0">max</span>(dp[i-<span style="color:#099">1</span>][k][<span style="color:#099">0</span>], dp[i-<span style="color:#099">1</span>][k][<span style="color:#099">1</span>]+prices[i])
+</span></span><span style="display:flex;"><span>            dp[i][k][<span style="color:#099">1</span>] = <span style="color:#0a0">max</span>(dp[i-<span style="color:#099">1</span>][k][<span style="color:#099">1</span>], dp[i-<span style="color:#099">1</span>][k-<span style="color:#099">1</span>][<span style="color:#099">0</span>]-prices[i])
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> dp[n-<span style="color:#099">1</span>][max_k][<span style="color:#099">0</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">max</span>(a, b <span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> a &gt; b {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> a
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> b
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -4986,6 +5106,613 @@ dp[i][j]=1,i=1</p>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="85-最大矩形">85. 最大矩形</h3>
+<p><a href="https://leetcode.cn/problems/maximal-rectangle/" target="_blank" rel="noopener noreffer ">85. 最大矩形</a></p>
+<p>记录每个元素往右最大能延申多少个1，然后暴力检查每个元素能往上下扩多少个宽度并计算最大矩形</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">maximalRectangle</span>(matrix [][]<span style="color:#0aa">byte</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    m:=<span style="color:#0aa">len</span>(matrix)
+</span></span><span style="display:flex;"><span>    n:=<span style="color:#0aa">len</span>(matrix[<span style="color:#099">0</span>])
+</span></span><span style="display:flex;"><span>    vertical:=<span style="color:#0aa">make</span>([][]<span style="color:#0aa">int</span>,m)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#00a">range</span> vertical{
+</span></span><span style="display:flex;"><span>        vertical[i]=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,n)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// for i,v:=range matrix{
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//     fmt.Println(i,v)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">for</span> i:=<span style="color:#00a">range</span> matrix{
+</span></span><span style="display:flex;"><span>        l,r:=<span style="color:#099">0</span>,<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> r&lt;n{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> matrix[i][r]==<span style="color:#a50">&#39;0&#39;</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#00a">for</span> l&lt;r{
+</span></span><span style="display:flex;"><span>                    vertical[i][l]=r-l
+</span></span><span style="display:flex;"><span>                    l++
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                r=r+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>                l=r
+</span></span><span style="display:flex;"><span>            }<span style="color:#00a">else</span>{
+</span></span><span style="display:flex;"><span>                r++
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> l&lt;r{
+</span></span><span style="display:flex;"><span>            vertical[i][l]=r-l
+</span></span><span style="display:flex;"><span>            l++
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// for i,v:=range vertical{
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//     fmt.Println(i,v)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#00a">range</span> vertical{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> j:=<span style="color:#00a">range</span> vertical[i]{
+</span></span><span style="display:flex;"><span>            width:=<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>            lenth:= vertical[i][j]
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">for</span> k:=i-<span style="color:#099">1</span>;k&gt;=<span style="color:#099">0</span>;k--{
+</span></span><span style="display:flex;"><span>                <span style="color:#00a">if</span> vertical[k][j]&gt;=lenth{
+</span></span><span style="display:flex;"><span>                    width++
+</span></span><span style="display:flex;"><span>                }<span style="color:#00a">else</span>{<span style="color:#00a">break</span>}
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">for</span> k:=i+<span style="color:#099">1</span>;k&lt;m;k++{
+</span></span><span style="display:flex;"><span>                <span style="color:#00a">if</span> vertical[k][j]&gt;=lenth{
+</span></span><span style="display:flex;"><span>                    width++
+</span></span><span style="display:flex;"><span>                }<span style="color:#00a">else</span>{<span style="color:#00a">break</span>}
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            tmp:=width*lenth
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> ans&lt;tmp{ans=tmp}
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另一种方法，单调栈，其实就是将<a href="https://leetcode.cn/problems/largest-rectangle-in-histogram/" target="_blank" rel="noopener noreffer ">84. 柱状图中最大的矩形</a>的方法用于计算面积，比较复杂，详见官网题解</p>
+<h3 id="94-二叉树的中序遍历">94. 二叉树的中序遍历</h3>
+<p><a href="https://leetcode.cn/problems/binary-tree-inorder-traversal/" target="_blank" rel="noopener noreffer ">94. 二叉树的中序遍历</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * Definition for a binary tree node.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * type TreeNode struct {
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Val int
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Left *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Right *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">inorderTraversal</span>(root *TreeNode) []<span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    ans:=[]<span style="color:#0aa">int</span>{}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> dfs <span style="color:#00a">func</span>(root *TreeNode)
+</span></span><span style="display:flex;"><span>    dfs=<span style="color:#00a">func</span>(root *TreeNode){
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> root==<span style="color:#00a">nil</span>{<span style="color:#00a">return</span>}
+</span></span><span style="display:flex;"><span>        <span style="color:#0a0">dfs</span>(root.Left)
+</span></span><span style="display:flex;"><span>        ans=<span style="color:#0aa">append</span>(ans,root.Val)
+</span></span><span style="display:flex;"><span>        <span style="color:#0a0">dfs</span>(root.Right)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">dfs</span>(root)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="101-对称二叉树">101. 对称二叉树</h3>
+<p><a href="https://leetcode.cn/problems/symmetric-tree/" target="_blank" rel="noopener noreffer ">101. 对称二叉树</a></p>
+<p>a和b对称的意思是a和b的值相同，且a的左（右）子树和b的右（左）子树也对称</p>
+<p>所以可以通过这个递归关系写出递归函数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * Definition for a binary tree node.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * type TreeNode struct {
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Val int
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Left *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Right *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">isSymmetric</span>(root *TreeNode) <span style="color:#0aa">bool</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> isok <span style="color:#00a">func</span>(a,b *TreeNode)<span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>    isok=<span style="color:#00a">func</span>(a,b *TreeNode)<span style="color:#0aa">bool</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> a==<span style="color:#00a">nil</span>||b==<span style="color:#00a">nil</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> a==<span style="color:#00a">nil</span>&amp;&amp;b==<span style="color:#00a">nil</span>{<span style="color:#00a">return</span> <span style="color:#00a">true</span>}
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">return</span> <span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> a.Val!=b.Val{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">return</span> <span style="color:#00a">false</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        t1:=<span style="color:#0a0">isok</span>(a.Left,b.Right)
+</span></span><span style="display:flex;"><span>        t2:=<span style="color:#0a0">isok</span>(a.Right,b.Left)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> t1&amp;&amp;t2
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> <span style="color:#0a0">isok</span>(root,root)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="104-二叉树的最大深度">104. 二叉树的最大深度</h3>
+<p><a href="https://leetcode.cn/problems/maximum-depth-of-binary-tree/" target="_blank" rel="noopener noreffer ">104. 二叉树的最大深度</a></p>
+<p>树形DP，左子树和右子树的最大深度为t1和t2，二叉树的最大深度为max(t1,t2)+1</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * Definition for a binary tree node.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * type TreeNode struct {
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Val int
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Left *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Right *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">maxDepth</span>(root *TreeNode) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> root==<span style="color:#00a">nil</span>{<span style="color:#00a">return</span> <span style="color:#099">0</span>}
+</span></span><span style="display:flex;"><span>    t1:=<span style="color:#0a0">maxDepth</span>(root.Left)
+</span></span><span style="display:flex;"><span>    t2:=<span style="color:#0a0">maxDepth</span>(root.Right)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> t1&lt;t2{t1=t2}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> t1+<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="105-从前序与中序遍历序列构造二叉树">105. 从前序与中序遍历序列构造二叉树</h3>
+<p><a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/" target="_blank" rel="noopener noreffer ">105. 从前序与中序遍历序列构造二叉树</a></p>
+<p>递归，先构造跟节点再构造左右子树</p>
+<p>先序遍历：<code>[ 根节点, [左子树的前序遍历结果], [右子树的前序遍历结果] ]</code>
+中序遍历：<code>[ [左子树的中序遍历结果], 根节点, [右子树的中序遍历结果] ]</code></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * Definition for a binary tree node.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * type TreeNode struct {
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Val int
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Left *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Right *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">buildTree</span>(preorder []<span style="color:#0aa">int</span>, inorder []<span style="color:#0aa">int</span>) *TreeNode {
+</span></span><span style="display:flex;"><span>    l:=<span style="color:#0aa">len</span>(preorder)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> l==<span style="color:#099">0</span>{<span style="color:#00a">return</span> <span style="color:#00a">nil</span>}
+</span></span><span style="display:flex;"><span>    root:=&amp;TreeNode{Val:preorder[<span style="color:#099">0</span>]}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> mid <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i,v:=<span style="color:#00a">range</span> inorder{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> v==preorder[<span style="color:#099">0</span>]{
+</span></span><span style="display:flex;"><span>            mid=i
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">break</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    root.Left=<span style="color:#0a0">buildTree</span>(preorder[<span style="color:#099">1</span>:mid+<span style="color:#099">1</span>],inorder[:mid])
+</span></span><span style="display:flex;"><span>    root.Right=<span style="color:#0a0">buildTree</span>(preorder[mid+<span style="color:#099">1</span>:],inorder[mid+<span style="color:#099">1</span>:])
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> root
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="121-买卖股票的最佳时机">121. 买卖股票的最佳时机</h3>
+<p><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener noreffer ">121. 买卖股票的最佳时机</a></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">maxProfit</span>(prices []<span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    li,lj,lk:=<span style="color:#0aa">len</span>(prices),<span style="color:#099">2</span>,<span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>    dp:=<span style="color:#0aa">make</span>([][][]<span style="color:#0aa">int</span>,li)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#00a">range</span> dp{
+</span></span><span style="display:flex;"><span>        dp[i]=<span style="color:#0aa">make</span>([][]<span style="color:#0aa">int</span>,lj)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> j:=<span style="color:#00a">range</span> dp[i]{
+</span></span><span style="display:flex;"><span>            dp[i][j]=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,lk)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#099">0</span>;i&lt;li;i++{
+</span></span><span style="display:flex;"><span>        dp[i][<span style="color:#099">1</span>][lk-<span style="color:#099">1</span>]=-prices[i]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#099">1</span>;i&lt;li;i++{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> k:=lk-<span style="color:#099">1</span>;k&gt;=<span style="color:#099">0</span>;k--{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> k+<span style="color:#099">1</span>&lt;lk{
+</span></span><span style="display:flex;"><span>                dp[i][<span style="color:#099">0</span>][k]=<span style="color:#0a0">Max</span>(dp[i-<span style="color:#099">1</span>][<span style="color:#099">1</span>][k+<span style="color:#099">1</span>]+prices[i],dp[i-<span style="color:#099">1</span>][<span style="color:#099">0</span>][k])
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            dp[i][<span style="color:#099">1</span>][k]=<span style="color:#0a0">Max</span>(dp[i-<span style="color:#099">1</span>][<span style="color:#099">0</span>][k]-prices[i],dp[i-<span style="color:#099">1</span>][<span style="color:#099">1</span>][k])
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> ans&lt;dp[i][<span style="color:#099">0</span>][k]{ans=dp[i][<span style="color:#099">0</span>][k]}
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// for i,v:=range dp{
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//     fmt.Println(i,v)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Max</span>(a,b <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> a&lt;b{<span style="color:#00a">return</span> b}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> a
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="124-二叉树中的最大路径和">124. 二叉树中的最大路径和</h3>
+<p><a href="https://leetcode.cn/problems/binary-tree-maximum-path-sum/" target="_blank" rel="noopener noreffer ">124. 二叉树中的最大路径和</a></p>
+<p>树形DP，记录根节点向下走的最大路径，动态遍历的时候计算最大路径和</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * Definition for a binary tree node.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * type TreeNode struct {
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Val int
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Left *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> *     Right *TreeNode
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> * }
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">maxPathSum</span>(root *TreeNode) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    ans:=math.MinInt
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> dfs <span style="color:#00a">func</span>(root *TreeNode)<span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>    dfs=<span style="color:#00a">func</span>(root *TreeNode)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> root==<span style="color:#00a">nil</span>{<span style="color:#00a">return</span> -<span style="color:#099">1001</span>}
+</span></span><span style="display:flex;"><span>        l,r:=<span style="color:#0a0">dfs</span>(root.Left),<span style="color:#0a0">dfs</span>(root.Right)
+</span></span><span style="display:flex;"><span>        max:=<span style="color:#0a0">Max</span>(root.Val,root.Val+l,root.Val+r)
+</span></span><span style="display:flex;"><span>        maxl:=<span style="color:#0a0">Max</span>(max,l+r+root.Val)
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> ans&lt;maxl{ans=maxl}
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> max
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">dfs</span>(root)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">Max</span>(s ...<span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>    tmp:=math.MinInt
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> _,v:=<span style="color:#00a">range</span> s{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> tmp&lt;v{tmp=v}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> tmp
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="128-最长连续序列">128. 最长连续序列</h3>
+<p><a href="https://leetcode.cn/problems/longest-consecutive-sequence/" target="_blank" rel="noopener noreffer ">128. 最长连续序列</a></p>
+<p>hash表实现O(1)查询数字</p>
+<p>查询只从没有x-1的x元素开始，分摊查询成本为O(N)</p>
+<p>时间复杂度为：hash表构建O(N)，遍历元素O(N)，分摊查询O(N)，所以加起来O(3N)=O(N)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">longestConsecutive</span>(nums []<span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    set := <span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]<span style="color:#0aa">bool</span>{}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> _, num := <span style="color:#00a">range</span> nums {
+</span></span><span style="display:flex;"><span>        set[num] = <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    max := <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> num := <span style="color:#00a">range</span> set {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> !set[num-<span style="color:#099">1</span>] {
+</span></span><span style="display:flex;"><span>            tmp := num
+</span></span><span style="display:flex;"><span>            curmax := <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">for</span> set[tmp+<span style="color:#099">1</span>] {
+</span></span><span style="display:flex;"><span>                tmp++
+</span></span><span style="display:flex;"><span>                curmax++
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> max &lt; curmax {
+</span></span><span style="display:flex;"><span>                max = curmax
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> max
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="136-只出现一次的数字">136. 只出现一次的数字</h3>
+<p><a href="https://leetcode.cn/problems/single-number/" target="_blank" rel="noopener noreffer ">136. 只出现一次的数字</a></p>
+<p>位运算</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">singleNumber</span>(nums []<span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> _,v:=<span style="color:#00a">range</span> nums{
+</span></span><span style="display:flex;"><span>        ans^=v
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="139-单词拆分">139. 单词拆分</h3>
+<p><a href="https://leetcode.cn/problems/word-break/" target="_blank" rel="noopener noreffer ">139. 单词拆分</a></p>
+<p>哈希表m预处理存储字符串实现O(1)查找</p>
+<p>dp[i]表示s[:i]是否能被分解</p>
+<p>dp[i]=OR(m[s[ j:i ]&amp;&amp;dp[j-1]]),j&lt;=i</p>
+<p>basecase:dp[-1]=true，添加条件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">wordBreak</span>(s <span style="color:#0aa">string</span>, wordDict []<span style="color:#0aa">string</span>) <span style="color:#0aa">bool</span> {
+</span></span><span style="display:flex;"><span>    l:=<span style="color:#0aa">len</span>(s)
+</span></span><span style="display:flex;"><span>    m:=<span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#0aa">bool</span>,l)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> _,ss:=<span style="color:#00a">range</span> wordDict{
+</span></span><span style="display:flex;"><span>        m[ss]=<span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//fmt.Println(m)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    dp:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">bool</span>,l)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#00a">range</span> dp{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> j:=<span style="color:#00a">range</span> dp[:i+<span style="color:#099">1</span>]{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> dp[i]{<span style="color:#00a">break</span>}
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> m[s[j:i+<span style="color:#099">1</span>]]{
+</span></span><span style="display:flex;"><span>                <span style="color:#00a">if</span> j==<span style="color:#099">0</span>||dp[j-<span style="color:#099">1</span>]{
+</span></span><span style="display:flex;"><span>                    dp[i]=<span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//fmt.Println(dp)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> dp[l-<span style="color:#099">1</span>]
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>

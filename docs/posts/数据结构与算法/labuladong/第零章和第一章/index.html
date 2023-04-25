@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/labuladong\/%E7%AC%AC%E9%9B%B6%E7%AB%A0%E5%92%8C%E7%AC%AC%E4%B8%80%E7%AB%A0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "labuladong系列","wordcount":  5324 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "labuladong系列","wordcount":  5596 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/labuladong\/%E7%AC%AC%E9%9B%B6%E7%AB%A0%E5%92%8C%E7%AC%AC%E4%B8%80%E7%AB%A0\/","datePublished": "2022-12-29T19:11:57+08:00","dateModified": "2022-12-29T19:11:57+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-labuladong-第零章和第一章</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-29">2022-12-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5324 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-29">2022-12-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5596 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;12 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -516,9 +516,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>对于特定遍历顺序的DP可以进行空间优化，比如状态转移方程每次只需要2个子问题的状态，那么就可以把不需要的状态丢弃，仅保持最新的子问题状态</p>
+<p>将一个维度分为多个状态转移方程时，这些状态转移方程在一轮中执行，且该维度不用进行遍历了</p>
+<p>维度遍历顺序和遍历方向以及初始化值依据等式右边该维度的值：</p>
+<ol>
+<li>都是i-k（i+k），遍历方向为从小到大（从大到小），初始化i=0（i=max）</li>
+<li>都是i-k（i+k）和i，遍历方向为从小到大（从大到小），初始化i=0（i=max）</li>
+<li>有i-k和i+k，遍历方向不限，初始化i的所有取值</li>
+</ol>
+<p>对于边界条件可以在状态转移方程中修改一下逻辑，比如添加一个if判断，是边界值是直接continue或者是其他逻辑</p>
 <h3 id="回溯法">回溯法</h3>
 <p>回溯法解决所有的排列，组合，子集问题</p>
 <p>回溯的关键是选择</p>
+<p>回溯其实就是暴力，有时候可以通过备忘录剪枝，但是一般情况都不存在重叠子问题</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
