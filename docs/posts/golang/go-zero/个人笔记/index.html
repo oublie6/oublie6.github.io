@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  3786 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  4026 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2022-11-14T12:34:23+08:00","dateModified": "2022-11-14T12:34:23+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-14">2022-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3786 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-14">2022-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4026 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -133,6 +133,7 @@
     <li><a href="#sqlx中timestamp的空值问题">sqlx中timestamp的空值问题</a></li>
     <li><a href="#mysql注意事项">mysql注意事项</a></li>
     <li><a href="#关于返回数组">关于返回数组</a></li>
+    <li><a href="#接入pprof">接入pprof</a></li>
     <li><a href="#dtm">dtm</a>
       <ul>
         <li><a href="#基础">基础</a>
@@ -338,6 +339,104 @@
 </span></span><span style="display:flex;"><span>  IsEnd         <span style="color:#0aa">bool</span>       <span style="color:#a50">`json:&#34;is_end&#34;`</span>         <span style="color:#aaa;font-style:italic">// 是否最后一页
 </span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  RecommendTime <span style="color:#0aa">int64</span>      <span style="color:#a50">`json:&#34;recommend_time&#34;`</span> <span style="color:#aaa;font-style:italic">// 商品列表最后一个商品的推荐时间
 </span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="接入pprof">接入pprof</h2>
+<p><a href="https://laomiao.site/go-zero-%E5%A6%82%E4%BD%95%E6%8E%A5%E5%85%A5-pprof" target="_blank" rel="noopener noreffer ">go-zero 如何接入 pprof</a></p>
+<ol>
+<li>内置pprof记录：查询进程id然后发送USR2信号:<code>kill -USR2 [pid]</code>，日志文件中会输出 pprof 的文件的保存路径，对文件进行分析即可</li>
+<li>web pprof：添加pprof服务，并注册到ServiceGroup</li>
+</ol>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	_ <span style="color:#a50">&#34;net/http/pprof&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> configFile = flag.<span style="color:#0a0">String</span>(<span style="color:#a50">&#34;f&#34;</span>, <span style="color:#a50">&#34;etc/bigdataapi-api.yaml&#34;</span>, <span style="color:#a50">&#34;the config file&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>function <span style="color:#0a0">main</span>() {
+</span></span><span style="display:flex;"><span>	flag.<span style="color:#0a0">Parse</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">var</span> c config.Config
+</span></span><span style="display:flex;"><span>	conf.<span style="color:#0a0">MustLoad</span>(*configFile, &amp;c)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	ctx := svc.<span style="color:#0a0">NewServiceContext</span>(c)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	svcGroup := service.<span style="color:#0a0">NewServiceGroup</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">defer</span> svcGroup.<span style="color:#0a0">Stop</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	server := rest.<span style="color:#0a0">MustNewServer</span>(c.RestConf)
+</span></span><span style="display:flex;"><span>	svcGroup.<span style="color:#0a0">Add</span>(server)
+</span></span><span style="display:flex;"><span>	svcGroup.<span style="color:#0a0">Add</span>(pprofServer{})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	handler.<span style="color:#0a0">RegisterHandlers</span>(server, ctx)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;Starting server at %s:%d...\n&#34;</span>, c.Host, c.Port)
+</span></span><span style="display:flex;"><span>	svcGroup.<span style="color:#0a0">Start</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> pprofServer <span style="color:#00a">struct</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (pprofServer) <span style="color:#0a0">Start</span>() {
+</span></span><span style="display:flex;"><span>	addr := <span style="color:#a50">&#34;0.0.0.0:8080&#34;</span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;Start pprof server, listen addr %s\n&#34;</span>, addr)
+</span></span><span style="display:flex;"><span>	err := http.<span style="color:#0a0">ListenAndServe</span>(addr, <span style="color:#00a">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>		log.<span style="color:#0a0">Fatal</span>(err)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (pprofServer) <span style="color:#0a0">Stop</span>() {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;Stop pprof server\n&#34;</span>)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="dtm">dtm</h2>
