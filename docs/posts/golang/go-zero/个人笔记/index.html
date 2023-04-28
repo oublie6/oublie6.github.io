@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  4026 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go-zero","wordcount":  4164 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/go-zero\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2022-11-14T12:34:23+08:00","dateModified": "2022-11-14T12:34:23+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-go-zero-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-14">2022-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4026 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-14">2022-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4164 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -277,6 +277,12 @@
 <p>很多不知道咋写的地方可以直接进入对象源码里面去看看，特别是zero内置的置对象，源码里面有注释，没注释的看看名称也知道是什么</p>
 <h2 id="threading包">threading包</h2>
 <p>使用threading包，不要使用原生goroutine，如果goroutine出现panic是无法recover的。而threading会自动在goroutine启动时使用recover。threading包还有很多安全的api，不要自己使用go原生的，如waitgroup等。</p>
+<p>该库是go-zero开源项目的一个组件，用于协程的并发安全，解决协程运行中panic无法解决的问题。</p>
+<p>常用函数：</p>
+<ul>
+<li>func GoSafe(fn func())：安全启动一个协程执行fn，在协程panic时自动recover</li>
+<li>func RunSafe(fn func())：使用本协程安全运行fn，自动recover fn中产生的panic</li>
+</ul>
 <h2 id="proto文件注意事项">proto文件注意事项</h2>
 <p>微服务时间戳可以直接用int64，使用time.Unix()来转换，没有必要使用第三方库。该什么类型就使用什么类型，把proto文件尽量简化（就像看文档一样）。any也尽量少用，类型尽量是具体的。</p>
 <p>goland中proto文件import标红时选择它默认的解决办法（小灯泡）就行了。多个proto导入时，先将没有service的用protoc语句先自己生成：<code>protoc -I ./ --go_out=paths=source_relative:. --go-grpc_out=paths=source_relative:. userModel.proto</code></p>
