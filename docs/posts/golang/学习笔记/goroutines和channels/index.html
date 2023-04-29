@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  3276 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  3374 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/","datePublished": "2022-12-12T15:34:53+08:00","dateModified": "2022-12-12T15:34:53+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Goroutines和Channels</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3276 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3374 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -131,12 +131,14 @@
         <li><a href="#syncrwmutex读写锁">sync.RWMutex读写锁</a></li>
         <li><a href="#synconce惰性初始化">sync.Once惰性初始化</a></li>
         <li><a href="#竞争条件检测">竞争条件检测</a></li>
-        <li><a href="#goroutines和线程">Goroutines和线程</a>
+        <li><a href="#goroutines线程和进程">Goroutines，线程和进程</a>
           <ul>
             <li><a href="#动态栈">动态栈</a></li>
             <li><a href="#goroutine调度">Goroutine调度</a></li>
             <li><a href="#gomaxprocs">GOMAXPROCS</a></li>
             <li><a href="#goroutine没有id号">Goroutine没有ID号</a></li>
+            <li><a href="#占用内存">占用内存</a></li>
+            <li><a href="#切换成本">切换成本</a></li>
           </ul>
         </li>
       </ul>
@@ -438,7 +440,8 @@
 </div><h3 id="竞争条件检测">竞争条件检测</h3>
 <p>见<a href="https://go.wuhaolin.cn/gopl/ch9/ch9-06.html" target="_blank" rel="noopener noreffer ">原文</a></p>
 <p>Go的runtime和工具链为我们装备了一个复杂但好用的动态分析工具，竞争检查器(the race detector)。</p>
-<h3 id="goroutines和线程">Goroutines和线程</h3>
+<h3 id="goroutines线程和进程">Goroutines，线程和进程</h3>
+<p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmef1pfu03cf" target="_blank" rel="noopener noreffer ">go修养之路 对于操作系统而言进程、线程以及Goroutine协程的区别</a></p>
 <h4 id="动态栈">动态栈</h4>
 <p>每一个OS线程都有一个固定大小的内存块(一般会是2MB)来做栈，这个栈会用来存储当前正在被调用或挂起(指在调用其它函数时)的函数的内部变量。</p>
 <p>一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。栈的大小会根据需要动态地伸缩。</p>
@@ -446,12 +449,18 @@
 <p>OS线程会被操作系统内核调度。每几毫秒触发硬件中断，调用scheduler内核函数。这个函数会挂起当前执行的线程并将它的寄存器内容保存到内存中，检查线程列表并决定下一次哪个线程可以被运行，并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。</p>
 <p>操作系统线程是被内核所调度，从一个线程向另一个“移动”需要完整的上下文切换，也就是说，保存一个用户线程的状态到内存，恢复另一个线程的到寄存器，然后更新调度器的数据结构。这几步操作很慢，因为其局部性很差需要几次内存访问，并且会增加运行的cpu周期。</p>
 <p>Go的运行时包含了其自己的调度器，这个调度器使用了一些技术手段，比如m:n调度，因为其会在n个操作系统线程上多工(调度)m个goroutine。Go调度器的工作和内核的调度是相似的，但是这个调度器只关注单独的Go程序中的goroutine（译注：按程序独立）。</p>
-<p>和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器，而是被Go语言“建筑”本身进行调度的。这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。</p>
+<p>和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器，而是被Go语言“架构”本身进行调度的。这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。</p>
 <h4 id="gomaxprocs">GOMAXPROCS</h4>
 <p>Go的调度器使用了一个叫做GOMAXPROCS的变量来决定会有多少个操作系统的线程同时执行Go的代码。其默认的值是运行机器上的CPU的核心数，所以在一个有8个核心的机器上时，调度器一次会在8个OS线程上去调度GO代码。</p>
 <p>可以用GOMAXPROCS的环境变量来显式地控制这个参数，或者也可以在运行时用runtime.GOMAXPROCS函数来修改它并返回原来的值（-1不会修改仅返回原来的值）。</p>
 <h4 id="goroutine没有id号">Goroutine没有ID号</h4>
 <p>goroutine没有可以被程序员获取到的身份(id)的概念。</p>
+<h4 id="占用内存">占用内存</h4>
+<p>进程占用多少内存：4g（32位）</p>
+<p>线程占用多少内存：4~64Mb</p>
+<p>协程占用多少内存：2.5KB</p>
+<h4 id="切换成本">切换成本</h4>
+<p>协程：几十ns</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
