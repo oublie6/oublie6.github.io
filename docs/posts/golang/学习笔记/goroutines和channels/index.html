@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  3374 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  4132 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/","datePublished": "2022-12-12T15:34:53+08:00","dateModified": "2022-12-12T15:34:53+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Goroutines和Channels</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3374 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4132 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -118,6 +118,7 @@
         <li><a href="#串联的channelspipeline">串联的Channels（Pipeline）</a></li>
         <li><a href="#单方向的channel">单方向的Channel</a></li>
         <li><a href="#带缓存的channels">带缓存的Channels</a></li>
+        <li><a href="#channel读写特性">channel读写特性</a></li>
       </ul>
     </li>
     <li><a href="#不要用channel关闭信号传递信息">不要用channel关闭信号传递信息</a></li>
@@ -131,18 +132,19 @@
         <li><a href="#syncrwmutex读写锁">sync.RWMutex读写锁</a></li>
         <li><a href="#synconce惰性初始化">sync.Once惰性初始化</a></li>
         <li><a href="#竞争条件检测">竞争条件检测</a></li>
-        <li><a href="#goroutines线程和进程">Goroutines，线程和进程</a>
-          <ul>
-            <li><a href="#动态栈">动态栈</a></li>
-            <li><a href="#goroutine调度">Goroutine调度</a></li>
-            <li><a href="#gomaxprocs">GOMAXPROCS</a></li>
-            <li><a href="#goroutine没有id号">Goroutine没有ID号</a></li>
-            <li><a href="#占用内存">占用内存</a></li>
-            <li><a href="#切换成本">切换成本</a></li>
-          </ul>
-        </li>
       </ul>
     </li>
+    <li><a href="#goroutines线程和进程">Goroutines，线程和进程</a>
+      <ul>
+        <li><a href="#动态栈">动态栈</a></li>
+        <li><a href="#goroutine调度">Goroutine调度</a></li>
+        <li><a href="#gomaxprocs">GOMAXPROCS</a></li>
+        <li><a href="#goroutine没有id号">Goroutine没有ID号</a></li>
+        <li><a href="#占用内存">占用内存</a></li>
+        <li><a href="#切换成本">切换成本</a></li>
+      </ul>
+    </li>
+    <li><a href="#限定goroutine数量的简单方法">限定goroutine数量的简单方法</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://go.dev/doc/" target="_blank" rel="noopener noreffer ">go官方文档</a>
@@ -260,7 +262,15 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>fmt.<span style="color:#0a0">Println</span>(<span style="color:#0aa">len</span>(ch)) <span style="color:#aaa;font-style:italic">// &#34;2&#34;
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="不要用channel关闭信号传递信息">不要用channel关闭信号传递信息</h2>
+</div><h3 id="channel读写特性">channel读写特性</h3>
+<p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmeephlfsg97" target="_blank" rel="noopener noreffer ">Golang修养之路</a></p>
+<ul>
+<li>nil channel读写都会永远阻塞</li>
+<li>发送关闭的channel会panic</li>
+<li>读取关闭的channel获取一个nil</li>
+<li>关闭已经关闭的channel会panic</li>
+</ul>
+<h2 id="不要用channel关闭信号传递信息">不要用channel关闭信号传递信息</h2>
 <p>不要通过chan的关闭信号来传递消息，一个chan只传递一种信息，要实现关闭管道可以通过额外设置一个chan来专门监听关闭chan</p>
 <h2 id="并发的循环">并发的循环</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -316,7 +326,7 @@
 <p>for循环中的select反复地非阻塞读取channel的操作叫做“轮询channel”</p>
 <p>channel的零值是nil，对一个nil的channel发送和接收操作会永远阻塞</p>
 <h2 id="并发的退出">并发的退出</h2>
-<p>读取被关闭channel可以立即被执行，并且会产生零值。不要向channel发送值，而是用关闭一个channel来进行广播。向关闭的channel发送消息会panic</p>
+<p>读取被关闭channel可以立即被执行，并且会产生零值。不要向channel发送值，而是用关·闭一个channel来进行广播。向关闭的channel发送消息会panic</p>
 <p>不要通过chan的关闭信号来传递消息，一个chan只传递一种信息，要实现关闭管道可以通过额外设置一个chan来专门监听关闭chan的信息，在需要关闭的时候传送该信息</p>
 <p><a href="https://juejin.cn/post/6947985246562287647#heading-2" target="_blank" rel="noopener noreffer ">如何优雅地关闭 Go Channels（译文）</a></p>
 <p>不要关闭接收端的通道，如果通道有多个并发发送方，则不要关闭通道</p>
@@ -440,28 +450,237 @@
 </div><h3 id="竞争条件检测">竞争条件检测</h3>
 <p>见<a href="https://go.wuhaolin.cn/gopl/ch9/ch9-06.html" target="_blank" rel="noopener noreffer ">原文</a></p>
 <p>Go的runtime和工具链为我们装备了一个复杂但好用的动态分析工具，竞争检查器(the race detector)。</p>
-<h3 id="goroutines线程和进程">Goroutines，线程和进程</h3>
+<h2 id="goroutines线程和进程">Goroutines，线程和进程</h2>
 <p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmef1pfu03cf" target="_blank" rel="noopener noreffer ">go修养之路 对于操作系统而言进程、线程以及Goroutine协程的区别</a></p>
-<h4 id="动态栈">动态栈</h4>
+<h3 id="动态栈">动态栈</h3>
 <p>每一个OS线程都有一个固定大小的内存块(一般会是2MB)来做栈，这个栈会用来存储当前正在被调用或挂起(指在调用其它函数时)的函数的内部变量。</p>
 <p>一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。栈的大小会根据需要动态地伸缩。</p>
-<h4 id="goroutine调度">Goroutine调度</h4>
+<h3 id="goroutine调度">Goroutine调度</h3>
 <p>OS线程会被操作系统内核调度。每几毫秒触发硬件中断，调用scheduler内核函数。这个函数会挂起当前执行的线程并将它的寄存器内容保存到内存中，检查线程列表并决定下一次哪个线程可以被运行，并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。</p>
 <p>操作系统线程是被内核所调度，从一个线程向另一个“移动”需要完整的上下文切换，也就是说，保存一个用户线程的状态到内存，恢复另一个线程的到寄存器，然后更新调度器的数据结构。这几步操作很慢，因为其局部性很差需要几次内存访问，并且会增加运行的cpu周期。</p>
 <p>Go的运行时包含了其自己的调度器，这个调度器使用了一些技术手段，比如m:n调度，因为其会在n个操作系统线程上多工(调度)m个goroutine。Go调度器的工作和内核的调度是相似的，但是这个调度器只关注单独的Go程序中的goroutine（译注：按程序独立）。</p>
 <p>和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器，而是被Go语言“架构”本身进行调度的。这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。</p>
-<h4 id="gomaxprocs">GOMAXPROCS</h4>
+<h3 id="gomaxprocs">GOMAXPROCS</h3>
 <p>Go的调度器使用了一个叫做GOMAXPROCS的变量来决定会有多少个操作系统的线程同时执行Go的代码。其默认的值是运行机器上的CPU的核心数，所以在一个有8个核心的机器上时，调度器一次会在8个OS线程上去调度GO代码。</p>
 <p>可以用GOMAXPROCS的环境变量来显式地控制这个参数，或者也可以在运行时用runtime.GOMAXPROCS函数来修改它并返回原来的值（-1不会修改仅返回原来的值）。</p>
-<h4 id="goroutine没有id号">Goroutine没有ID号</h4>
+<h3 id="goroutine没有id号">Goroutine没有ID号</h3>
 <p>goroutine没有可以被程序员获取到的身份(id)的概念。</p>
-<h4 id="占用内存">占用内存</h4>
+<h3 id="占用内存">占用内存</h3>
 <p>进程占用多少内存：4g（32位）</p>
 <p>线程占用多少内存：4~64Mb</p>
 <p>协程占用多少内存：2.5KB</p>
-<h4 id="切换成本">切换成本</h4>
+<h3 id="切换成本">切换成本</h3>
 <p>协程：几十ns</p>
-</div><div class="post-footer" id="post-footer">
+<h2 id="限定goroutine数量的简单方法">限定goroutine数量的简单方法</h2>
+<p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmef22pluilo" target="_blank" rel="noopener noreffer ">go修养之路</a></p>
+<p>不限制goroutine数量会导致内存占用超出限制主进程崩溃</p>
+<ol>
+<li>有buffer的channel来限制</li>
+</ol>
+<p>新建goroutine处理请求前发送消息给channel，处理完后消费channel，最后n个goroutine未结束main协程就结束了，导致未执行</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;math&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;runtime&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">busi</span>(ch <span style="color:#00a">chan</span> <span style="color:#0aa">bool</span>, i <span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;go func &#34;</span>, i, <span style="color:#a50">&#34; goroutine count = &#34;</span>, runtime.<span style="color:#0a0">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>  &lt;-ch
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//模拟用户需求业务的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  task_cnt := math.MaxInt64
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">//task_cnt := 10
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  ch := <span style="color:#0aa">make</span>(<span style="color:#00a">chan</span> <span style="color:#0aa">bool</span>, <span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> i := <span style="color:#099">0</span>; i &lt; task_cnt; i++ {
+</span></span><span style="display:flex;"><span>    ch &lt;- <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">go</span> <span style="color:#0a0">busi</span>(ch, i)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>channel与sync同步组合方式</li>
+</ol>
+<p>使用sync.WaitGroup{}让main等待所有goroutine执行完毕</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;math&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;sync&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;runtime&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> wg = sync.WaitGroup{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">busi</span>(ch <span style="color:#00a">chan</span> <span style="color:#0aa">bool</span>, i <span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;go func &#34;</span>, i, <span style="color:#a50">&#34; goroutine count = &#34;</span>, runtime.<span style="color:#0a0">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>  &lt;-ch
+</span></span><span style="display:flex;"><span>  wg.<span style="color:#0a0">Done</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//模拟用户需求go业务的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    task_cnt := math.MaxInt64
+</span></span><span style="display:flex;"><span>    ch := <span style="color:#0aa">make</span>(<span style="color:#00a">chan</span> <span style="color:#0aa">bool</span>, <span style="color:#099">3</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i := <span style="color:#099">0</span>; i &lt; task_cnt; i++ {
+</span></span><span style="display:flex;"><span>      wg.<span style="color:#0a0">Add</span>(<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>      ch &lt;- <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#00a">go</span> <span style="color:#0a0">busi</span>(ch, i)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    wg.<span style="color:#0a0">Wait</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>利用无缓冲channel与任务发送/执行分离方式</li>
+</ol>
+<p>复用goroutine，将任务和处理分离，channel不再是限制数量的信号，而是任务，goroutine是固定的</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;math&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;sync&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;runtime&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> wg = sync.WaitGroup{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">busi</span>(ch <span style="color:#00a">chan</span> <span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> t := <span style="color:#00a">range</span> ch {
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;go task = &#34;</span>, t, <span style="color:#a50">&#34;, goroutine count = &#34;</span>, runtime.<span style="color:#0a0">NumGoroutine</span>())
+</span></span><span style="display:flex;"><span>    wg.<span style="color:#0a0">Done</span>()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">sendTask</span>(task <span style="color:#0aa">int</span>, ch <span style="color:#00a">chan</span> <span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>  wg.<span style="color:#0a0">Add</span>(<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>  ch &lt;- task
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
+</span></span><span style="display:flex;"><span>  ch := <span style="color:#0aa">make</span>(<span style="color:#00a">chan</span> <span style="color:#0aa">int</span>)   <span style="color:#aaa;font-style:italic">//无buffer channel
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  goCnt := <span style="color:#099">3</span>              <span style="color:#aaa;font-style:italic">//启动goroutine的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">for</span> i := <span style="color:#099">0</span>; i &lt; goCnt; i++ {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//启动go
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">go</span> <span style="color:#0a0">busi</span>(ch)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  taskCnt := math.MaxInt64 <span style="color:#aaa;font-style:italic">//模拟用户需求业务的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">for</span> t := <span style="color:#099">0</span>; t &lt; taskCnt; t++ {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//发送任务
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#0a0">sendTask</span>(t, ch)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  wg.<span style="color:#0a0">Wait</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

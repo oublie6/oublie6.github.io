@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  2190 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  2300 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E7%BB%93%E6%9E%84struct%E4%B8%8E%E6%96%B9%E6%B3%95method\/","datePublished": "2022-12-11T16:29:04+08:00","dateModified": "2022-12-11T16:29:04+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-结构（struct）与方法（method）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2190 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2300 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -130,6 +130,7 @@
     </li>
     <li><a href="#类型的-string-方法和格式化描述符">类型的 String() 方法和格式化描述符</a></li>
     <li><a href="#垃圾回收和-setfinalizer">垃圾回收和 SetFinalizer</a></li>
+    <li><a href="#结构体比较">结构体比较</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://go.dev/doc/" target="_blank" rel="noopener noreffer ">go官方文档</a>
@@ -236,7 +237,9 @@
 </div>
 </div><h2 id="匿名字段和内嵌结构体">匿名字段和内嵌结构体</h2>
 <p>结构体可以包含一个或多个 匿名（或内嵌）字段，即这些字段没有显式的名字，只有字段的类型是必须的，此时类型就是字段的名字。</p>
-<p>匿名字段本身可以是一个结构体类型，即 结构体可以包含内嵌结构体。go的继承行为</p>
+<p>匿名字段本身可以是一个结构体类型，即 结构体可以包含内嵌结构体</p>
+<p>只有内嵌结构体能继承方法，类型别名也不能继承方法</p>
+<p>go的继承行为</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -280,7 +283,26 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>在一个结构体中对于每一种数据类型只能有一个匿名字段</p>
-<p>命名冲突</p>
+<p>访问其他包的匿名字段时直接通过最后的结构体名访问即可，比如</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> PriorityQueue <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  sort.IntSlice
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a := PriorityQueue{[]<span style="color:#0aa">int</span>{<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>}}
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#0a0">Println</span>(a.IntSlice[<span style="color:#099">0</span>])
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命名冲突</p>
 <p>当两个字段拥有相同的名字（可能是继承来的名字）:</p>
 <ol>
 <li>外层名字会覆盖内层名字（但是两者的内存空间都保留），这提供了一种重载字段或方法的方式；</li>
@@ -381,7 +403,19 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>runtime.<span style="color:#0a0">SetFinalizer</span>(obj, <span style="color:#00a">func</span>(obj *typeObj))
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="结构体比较">结构体比较</h2>
+<p>结构体是否可比较：</p>
+<ul>
+<li>属性类型</li>
+<li>属性个数</li>
+<li>属性名</li>
+<li>属性顺序</li>
+</ul>
+<p>结构体是否相同：</p>
+<ul>
+<li>属性值</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
