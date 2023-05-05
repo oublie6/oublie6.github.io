@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/labuladong\/%E7%AC%AC%E4%B8%89%E7%AB%A0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "labuladong系列","wordcount":  3381 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "labuladong系列","wordcount":  3424 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/labuladong\/%E7%AC%AC%E4%B8%89%E7%AB%A0\/","datePublished": "2022-12-30T16:19:06+08:00","dateModified": "2022-12-30T16:19:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-labuladong-第三章</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-30">2022-12-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3381 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-30">2022-12-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3424 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -169,6 +169,7 @@
     </li>
     <li><a href="#多个关联数组的排序问题">多个关联数组的排序问题</a></li>
     <li><a href="#循环左移和循环右移">循环左移和循环右移</a></li>
+    <li><a href="#定义确定第二维的二维数组的快速方法">定义确定第二维的二维数组的快速方法</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://labuladong.github.io/algo/" target="_blank" rel="noopener noreffer ">labuladong的算法小抄</a>学习的时候结合golang做的笔记。感谢东哥。另外根据东哥对算法的分类法，将自己平时记的笔记也写到这里面。</p>
@@ -600,7 +601,7 @@
 </div><p><a href="https://space.bilibili.com/206214" target="_blank" rel="noopener noreffer ">bilibili 灵茶山艾府</a></p>
 <p>集合和二进制是一一对应的</p>
 <h2 id="要求空间复杂度为o1的数组题">要求空间复杂度为O(1)的数组题</h2>
-<p>通常这种题需要将数组索引到元素进行一个hash映射，比如<a href="https://leetcode.cn/problems/first-missing-positive/" target="_blank" rel="noopener noreffer ">41. 缺失的第一个正数</a>，就是实现一个索引到元素的hash函数<code>hash(i)=i+1</code></p>
+<p>为了不占用新的空间，通常这种题需要将数组索引到元素进行一个hash映射，比如<a href="https://leetcode.cn/problems/first-missing-positive/" target="_blank" rel="noopener noreffer ">41. 缺失的第一个正数</a>，就是实现一个索引到元素的hash函数<code>hash(i)=i+1</code></p>
 <h2 id="枚举子字符串">枚举子字符串</h2>
 <p>通常字串由两个端点确定，可以确定左端点位置枚举右端点或者确定右端点位置枚举左端点</p>
 <h2 id="查询热门的字符串">查询热门的字符串</h2>
@@ -797,6 +798,16 @@
 </div>
 </div><h2 id="循环左移和循环右移">循环左移和循环右移</h2>
 <p>循环左移和循环右移：<code>x = (x &lt;&lt; n) | (x &gt;&gt; (类型位数 - n))</code>和<code>x = (x &gt;&gt; n) | (x &lt;&lt; (类型位数 - n))</code></p>
+<h2 id="定义确定第二维的二维数组的快速方法">定义确定第二维的二维数组的快速方法</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>a:=<span style="color:#0aa">make</span>([][n]<span style="color:#0aa">int</span>,m)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>详见<a href="/posts/golang/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%95%b0%e7%bb%84%e4%b8%8e%e5%88%87%e7%89%87/#%e5%ae%9a%e4%b9%89%e6%95%b0%e7%bb%84%e5%88%87%e7%89%87" rel="">go学习笔记 定义数组切片</a></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
