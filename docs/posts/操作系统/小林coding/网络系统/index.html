@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  1408 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  1424 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F\/","datePublished": "2023-04-05T17:02:18+08:00","dateModified": "2023-04-05T17:02:18+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-小林coding-网络系统</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-05">2023-04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1408 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-05">2023-04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1424 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -116,8 +116,17 @@
       <ul>
         <li><a href="#最基本的-socket-模型">最基本的 Socket 模型</a></li>
         <li><a href="#多进程模型">多进程模型</a></li>
+        <li><a href="#多线程模型">多线程模型</a></li>
+        <li><a href="#io-多路复用">I/O 多路复用</a>
+          <ul>
+            <li><a href="#selectpoll">select/poll</a></li>
+            <li><a href="#epoll">epoll</a></li>
+            <li><a href="#边缘触发和水平触发">边缘触发和水平触发</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
+    <li><a href="#什么是一致性哈希">什么是一致性哈希</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/os/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
@@ -193,7 +202,7 @@
     </a><figcaption class="image-caption">接收数据包</figcaption>
     </figure></div>
 <h3 id="多进程模型">多进程模型</h3>
-<div id="id-8"><p><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E5%A4%9A%E8%BF%9B%E7%A8%8B.png" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E5%A4%9A%E8%BF%9B%E7%A8%8B.png" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E5%A4%9A%E8%BF%9B%E7%A8%8B.png" data-sub-html="<h2>多进程模型</h2>">
+<div id="id-5"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E5%A4%9A%E8%BF%9B%E7%A8%8B.png" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E5%A4%9A%E8%BF%9B%E7%A8%8B.png" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E5%A4%9A%E8%BF%9B%E7%A8%8B.png" data-sub-html="<h2>多进程模型</h2>">
         <img
             class="lazyload"
             src="/svg/loading.min.svg"
@@ -202,9 +211,18 @@
             data-sizes="auto"
             alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E5%A4%9A%E8%BF%9B%E7%A8%8B.png" />
     </a><figcaption class="image-caption">多进程模型</figcaption>
-    </figure></p>
+    </figure></div>
 <h3 id="多线程模型">多线程模型</h3>
-<!-- raw HTML omitted -->
+<div id="id-6"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png" data-sub-html="<h2>多线程模型</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/%E7%BA%BF%E7%A8%8B%E6%B1%A0.png" />
+    </a><figcaption class="image-caption">多线程模型</figcaption>
+    </figure></div>
 <h3 id="io-多路复用">I/O 多路复用</h3>
 <p>select/poll/epoll使得进程可以通过一个系统调用函数从内核中获取多个事件</p>
 <h4 id="selectpoll">select/poll</h4>
@@ -259,10 +277,27 @@
 <p>select/poll 只有水平触发</p>
 <p>epoll 支持边缘触发和水平触发，默认是水平触发</p>
 <h2 id="什么是一致性哈希">什么是一致性哈希</h2>
-<!-- raw HTML omitted -->
+<div id="id-7"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/d528bae6fcec2357ba2eb8f324ad9fd5.png" title="https://cdn.xiaolincoding.com//mysql/other/d528bae6fcec2357ba2eb8f324ad9fd5.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/d528bae6fcec2357ba2eb8f324ad9fd5.png" data-sub-html="<h2>一致性哈希</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/d528bae6fcec2357ba2eb8f324ad9fd5.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/d528bae6fcec2357ba2eb8f324ad9fd5.png, https://cdn.xiaolincoding.com//mysql/other/d528bae6fcec2357ba2eb8f324ad9fd5.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/d528bae6fcec2357ba2eb8f324ad9fd5.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/d528bae6fcec2357ba2eb8f324ad9fd5.png" />
+    </a><figcaption class="image-caption">一致性哈希</figcaption>
+    </figure></div>
 <p>提高均衡度：将虚拟节点映射到哈希环上，并将虚拟节点映射到实际节点，所以这里有「两层」映射关系</p>
-<!-- raw HTML omitted -->
-</div>
+<div id="id-8"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com//mysql/other/dbb57b8d6071d011d05eeadd93269e13.png" title="https://cdn.xiaolincoding.com//mysql/other/dbb57b8d6071d011d05eeadd93269e13.png" data-thumbnail="https://cdn.xiaolincoding.com//mysql/other/dbb57b8d6071d011d05eeadd93269e13.png" data-sub-html="<h2>一致性哈希2</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com//mysql/other/dbb57b8d6071d011d05eeadd93269e13.png"
+            data-srcset="https://cdn.xiaolincoding.com//mysql/other/dbb57b8d6071d011d05eeadd93269e13.png, https://cdn.xiaolincoding.com//mysql/other/dbb57b8d6071d011d05eeadd93269e13.png 1.5x, https://cdn.xiaolincoding.com//mysql/other/dbb57b8d6071d011d05eeadd93269e13.png 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com//mysql/other/dbb57b8d6071d011d05eeadd93269e13.png" />
+    </a><figcaption class="image-caption">一致性哈希2</figcaption>
+    </figure></div>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
