@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="go标准库-Strconv"/>
 <meta name="twitter:description" content="go语言中文网 godoc go语言中文网有很多文档缺少内容比如string.Builder就没有，godoc绝对详尽，推荐阅读godoc strconv"/>
 <meta name="application-name" content="LoveIt">
-<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/strconv/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/strconv/" /><link rel="prev" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/context/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/strconv\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  173 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  449 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/strconv\/","datePublished": "2023-05-09T14:47:11+08:00","dateModified": "2023-05-09T14:47:11+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Strconv</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-09">2023-05-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;173 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-09">2023-05-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;449 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -125,7 +125,22 @@
 </ul>
 <h2 id="函数">函数</h2>
 <ul>
-<li>func ParseBool(str string) (value bool, err error)：</li>
+<li>func ParseBool(str string) (value bool, err error)：接受1、0、t、f、T、F、true、false、True、False、TRUE、FALSE</li>
+<li>func ParseInt(s string, base int, bitSize int) (i int64, err error)：base为0，则会从字符串前置判断，&ldquo;0x&quot;是16进制，&ldquo;0&quot;是8进制，否则是10进制，bitSize指定结果必须能无溢出赋值的整数类型，0、8、16、32、64 分别代表 int、int8、int16、int32、int64</li>
+<li>func ParseUint(s string, base int, bitSize int) (n uint64, err error)</li>
+<li>func ParseFloat(s string, bitSize int) (f float64, err error)：解析一个表示浮点数的字符串并返回其值</li>
+</ul>
+<hr>
+<ul>
+<li>func FormatBool(b bool) string</li>
+<li>func FormatInt(i int64, base int) string</li>
+<li>func FormatUint(i uint64, base int) string</li>
+<li>func FormatFloat(f float64, fmt byte, prec, bitSize int) string</li>
+</ul>
+<hr>
+<ul>
+<li>func Atoi(s string) (i int, err error)</li>
+<li>func Itoa(i int) string</li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -162,7 +177,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="数据库-mysql-个人笔记"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据库-mysql-个人笔记</a></div>
+    <div class="post-nav"><a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="数据库-mysql-个人笔记"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据库-mysql-个人笔记</a>
+            <a href="/posts/golang/%E6%A0%87%E5%87%86%E5%BA%93/context/" class="next" rel="next" title="go标准库-Context">go标准库-Context<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="comments"><div id="gitalk" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
