@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  4132 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  4224 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/","datePublished": "2022-12-12T15:34:53+08:00","dateModified": "2022-12-12T15:34:53+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Goroutines和Channels</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4132 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4224 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -125,7 +125,12 @@
     <li><a href="#并发的循环">并发的循环</a></li>
     <li><a href="#基于select的多路复用">基于select的多路复用</a></li>
     <li><a href="#并发的退出">并发的退出</a></li>
-    <li><a href="#channel底层">channel底层</a></li>
+    <li><a href="#channel底层">channel底层</a>
+      <ul>
+        <li><a href="#type-hchan-struct">type hchan struct</a></li>
+        <li><a href="#读写流程">读写流程</a></li>
+      </ul>
+    </li>
     <li><a href="#基于共享变量的并发">基于共享变量的并发</a>
       <ul>
         <li><a href="#syncmutex互斥锁">sync.Mutex互斥锁</a></li>
@@ -292,6 +297,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="基于select的多路复用">基于select的多路复用</h2>
+<p>select是Golang在语言层面提供的多路IO复用的机制，其可以检测多个channel是否ready(即是否可读或可写)</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -332,7 +338,38 @@
 <p>不要关闭接收端的通道，如果通道有多个并发发送方，则不要关闭通道</p>
 <h2 id="channel底层">channel底层</h2>
 <p><a href="https://www.bookstack.cn/read/GoExpertProgramming/chapter01-1.1-chan.md" target="_blank" rel="noopener noreffer ">go专家编程</a></p>
-<p>环形队列，sendx，recvx两个uint来指向读写位置，qcount来记录剩余元素个数，buf和dataqsiz字段记录环形队列指针和环形队列长度，recvq和sendq记录等待读和等待写的goroutine队列，lock字段加锁同一时间只能由一个goroutine访问channel</p>
+<h3 id="type-hchan-struct">type hchan struct</h3>
+<p>属性</p>
+<ul>
+<li>qcount uint：剩余元素个数</li>
+<li>dataqsiz uint：环形队列长度，最大存放元素个数</li>
+<li>buf unsafe.Pointer：指针指向环形队列</li>
+<li>elemsize uint16：元素大小</li>
+<li>closed uint32：关闭状态</li>
+<li>sendx uint：当前写入的索引</li>
+<li>recvx uint：当前读取的索引</li>
+<li>sendq waitq：等待写消息的goroutine队列</li>
+<li>recvq waitq：等待读消息的goroutine队列</li>
+<li>lock mutex：互斥锁</li>
+</ul>
+<div id="id-1"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-01-circle_queue.png"
+        data-srcset="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-01-circle_queue.png, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-01-circle_queue.png 1.5x, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-01-circle_queue.png 2x"
+        data-sizes="auto"
+        alt="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-01-circle_queue.png"
+        title="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-01-circle_queue.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-02-wait_queue.png"
+        data-srcset="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-02-wait_queue.png, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-02-wait_queue.png 1.5x, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-02-wait_queue.png 2x"
+        data-sizes="auto"
+        alt="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-02-wait_queue.png"
+        title="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/chan-02-wait_queue.png" /></p>
+</div>
+<h3 id="读写流程">读写流程</h3>
 <p>向nil管道读或写数据都会导致goroutine死锁</p>
 <p>关闭channel时会把recvq中的G全部唤醒，并给他们nil数据。把sendq中的G全部唤醒，并让这些G触发panic。</p>
 <p>其他panic场景：</p>
@@ -761,5 +798,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-12T15:34:53+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-学习笔记-Goroutines和Channels"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d8d1a4.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-12T15:34:53+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-学习笔记-Goroutines和Channels"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

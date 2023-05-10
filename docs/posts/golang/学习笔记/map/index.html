@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/map\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  1621 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  1903 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/map\/","datePublished": "2022-12-11T15:47:21+08:00","dateModified": "2022-12-11T15:47:21+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Map</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1621 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1903 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -124,7 +124,13 @@
     <li><a href="#map-的排序">map 的排序</a></li>
     <li><a href="#将-map-的键值对调">将 map 的键值对调</a></li>
     <li><a href="#map有容量限制吗">map有容量限制吗</a></li>
-    <li><a href="#map底层实现">map底层实现</a></li>
+    <li><a href="#map底层实现">map底层实现</a>
+      <ul>
+        <li><a href="#type-hmap-struct">type hmap struct</a></li>
+        <li><a href="#buckets内存块">buckets内存块</a></li>
+        <li><a href="#type-bmap-structbucket">type bmap struct（bucket）</a></li>
+      </ul>
+    </li>
     <li><a href="#哈希冲突">哈希冲突</a>
       <ul>
         <li><a href="#负载因子">负载因子</a></li>
@@ -284,7 +290,23 @@
         data-sizes="auto"
         alt="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-02-struct_sketch.png"
         title="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-02-struct_sketch.png" /></div>
-<p>存放buckets存放hash值的低位</p>
+<h3 id="type-hmap-struct">type hmap struct</h3>
+<p>属性</p>
+<ul>
+<li>count int：当前保存的元素个数</li>
+<li>B uint8：表示buckets数组大小，每个bucket的索引占的位数，数组大小为2^B</li>
+<li>buckets unsafe.Pointer：buckets数组的指针</li>
+</ul>
+<h3 id="buckets内存块">buckets内存块</h3>
+<p>一块连续的内存，类似数组，索引为hash值的低地址，对应B位</p>
+<h3 id="type-bmap-structbucket">type bmap struct（bucket）</h3>
+<p>bucket也称桶，哈希桶</p>
+<p>属性</p>
+<ul>
+<li>tophash [8]unint8：存储哈希值的高8位</li>
+<li>data byte[1]：键值对数据</li>
+<li>overflow *bmap：溢出的bucket地址，链地址处理哈希冲突</li>
+</ul>
 <h2 id="哈希冲突">哈希冲突</h2>
 <div id="id-2"><img
         class="lazyload"
@@ -297,15 +319,24 @@
 <h3 id="负载因子">负载因子</h3>
 <p>负载因子 = 键数量/bucket数量</p>
 <h3 id="渐进式扩容">渐进式扩容</h3>
+<div id="id-3"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-05-struct_sketch.png"
+        data-srcset="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-05-struct_sketch.png, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-05-struct_sketch.png 1.5x, https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-05-struct_sketch.png 2x"
+        data-sizes="auto"
+        alt="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-05-struct_sketch.png"
+        title="https://static.sitestack.cn/projects/GoExpertProgramming/chapter01/images/map-05-struct_sketch.png" /></div>
 <p>触发条件</p>
 <ul>
 <li>负载因子 &gt; 6.5时</li>
 <li>overflow数量 &gt; 2^15</li>
 </ul>
+<p>渐进式rehash都使用了hmap的oldbuckets字段</p>
 <h4 id="增量扩容">增量扩容</h4>
-<p>当负载因子过大时，就新建一个bucket，新的bucket长度是原来的2倍，然后旧bucket数据搬迁到新的bucket。</p>
+<p>当负载因子过大时，就新建一个buckets数组，新的buckets长度是原来的2倍，然后旧buckets数据搬迁到新的buckets</p>
 <h4 id="等量扩容">等量扩容</h4>
-<p>buckets数量不变，重新做一遍类似增量扩容的搬迁动作，把松散的键值对重新排列一次</p>
+<p>buckets不变，重新做一遍类似增量扩容的搬迁动作，把松散的键值对重新排列一次，因为map在删除时会导致某些bucket里面有空值，等量扩容就是为了把这些空值处理掉</p>
 <h3 id="查找过程">查找过程</h3>
 <ol>
 <li>算出查询key的hash值</li>
@@ -439,5 +470,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/86ccfb.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-11T15:47:21+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-学习笔记-Map"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/17cc8c.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-11T15:47:21+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-学习笔记-Map"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
