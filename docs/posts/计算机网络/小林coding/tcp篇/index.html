@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/%E5%B0%8F%E6%9E%97coding\/tcp%E7%AF%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  1896 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  2032 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/%E5%B0%8F%E6%9E%97coding\/tcp%E7%AF%87\/","datePublished": "2022-12-25T18:07:54+08:00","dateModified": "2022-12-25T18:07:54+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">计算机网络-小林coding-TCP篇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机网络</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-25">2022-12-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1896 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-25">2022-12-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2032 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -178,6 +178,8 @@
         </li>
       </ul>
     </li>
+    <li><a href="#服务端挂了客户端的-tcp-连接还在吗">服务端挂了，客户端的 TCP 连接还在吗</a></li>
+    <li><a href="#拔掉网线后-原本的-tcp-连接还存在吗">拔掉网线后， 原本的 TCP 连接还存在吗？</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/network/#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E7%BE%A4%E4%BD%93" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
@@ -475,6 +477,15 @@
         data-sizes="auto"
         alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/%E6%8B%A5%E5%A1%9E%E5%8F%91%E7%94%9F-%E5%BF%AB%E9%80%9F%E9%87%8D%E4%BC%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0"
         title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/%E6%8B%A5%E5%A1%9E%E5%8F%91%E7%94%9F-%E5%BF%AB%E9%80%9F%E9%87%8D%E4%BC%A0.drawio.png?image_process=watermark,text_5YWs5LyX5Y-377ya5bCP5p6XY29kaW5n,type_ZnpsdHpoaw,x_10,y_10,g_se,size_20,color_0000CD,t_70,fill_0" /></div>
+<h2 id="服务端挂了客户端的-tcp-连接还在吗">服务端挂了，客户端的 TCP 连接还在吗</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzUxODAzNDg4NQ==&amp;mid=2247520003&amp;idx=1&amp;sn=3e70c6b54007ffa3130c5956df232bdb&amp;chksm=f98dcba9cefa42bfbf35fd5f867314d8c96c54f5b285db542be42fc0594706d1429eaa069165&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">服务端挂了，客户端的 TCP 连接还在吗</a></p>
+<ul>
+<li>服务端进程挂，发生4次握手</li>
+<li>服务端宕机，超时重传一定次数断开，开启了keepalive则在探测报文检测到服务端宕机并断开</li>
+</ul>
+<h2 id="拔掉网线后-原本的-tcp-连接还存在吗">拔掉网线后， 原本的 TCP 连接还存在吗？</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzUxODAzNDg4NQ==&amp;mid=2247504270&amp;idx=1&amp;sn=bce7d1e81a33c214ed210d12ee3a6b68&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreffer ">拔掉网线后， 原本的 TCP 连接还存在吗？</a></p>
+<p>不会直接影响TCP连接</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

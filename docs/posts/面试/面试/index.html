@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E9%9D%A2%E8%AF%95\/%E9%9D%A2%E8%AF%95\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  1243 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "面试","wordcount":  1684 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E9%9D%A2%E8%AF%95\/%E9%9D%A2%E8%AF%95\/","datePublished": "2023-04-22T15:07:31+08:00","dateModified": "2023-04-22T15:07:31+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">面试-面试</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%9D%A2%E8%AF%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>面试</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-22">2023-04-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1243 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-22">2023-04-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1684 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -120,6 +120,7 @@
     <li><a href="#腾讯后端">腾讯后端</a>
       <ul>
         <li><a href="#电话面57">电话面（5.7）</a></li>
+        <li><a href="#一面511">一面（5.11）</a></li>
       </ul>
     </li>
   </ul>
@@ -322,7 +323,160 @@
 <li>排序二叉树找到最近公共祖先（我以为是二叉树找二叉树的最近公共祖先了ㄒoㄒ）</li>
 <li>topK数据，直接小顶堆，堆的底层数据结构</li>
 </ul>
-</div><div class="post-footer" id="post-footer">
+<h3 id="一面511">一面（5.11）</h3>
+<ul>
+<li>项目介绍</li>
+<li>redis为什么吞吐量高</li>
+<li>数据量大，写操作多，读操作少，需要读取历史数据的场景</li>
+<li>rest风格</li>
+<li>go内存管理（只答了GC）</li>
+<li>性能压测，如果并发不够怎么办</li>
+<li>业务代码瓶颈如何查看（答了链路追踪）</li>
+<li>无状态服务（jwt）</li>
+<li>非对称加密和对称加密，对称加密运用的场景（协商对称密钥）</li>
+<li>算法题，手撕LRU（在自己的ide上写的，差点翻车，之前写了好几次了还是容易出错）</li>
+</ul>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;container/list&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> kv <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	key   <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>	value <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> LRU <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	k   <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>	max <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>	li  list.List
+</span></span><span style="display:flex;"><span>	m   <span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]*list.Element
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (l *LRU) <span style="color:#0a0">put</span>(key, newvalue <span style="color:#0aa">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">if</span> tmp := l.m[key]; tmp != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>		l.li.<span style="color:#0a0">MoveToFront</span>(tmp)
+</span></span><span style="display:flex;"><span>		tmp.Value.(*kv).value = newvalue
+</span></span><span style="display:flex;"><span>	} <span style="color:#00a">else</span> {
+</span></span><span style="display:flex;"><span>		ele := &amp;kv{key, newvalue}
+</span></span><span style="display:flex;"><span>		e := l.li.<span style="color:#0a0">PushFront</span>(ele)
+</span></span><span style="display:flex;"><span>		l.m[key] = e
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">if</span> l.k &lt; l.max {
+</span></span><span style="display:flex;"><span>			l.k++
+</span></span><span style="display:flex;"><span>		} <span style="color:#00a">else</span> {
+</span></span><span style="display:flex;"><span>			b := l.li.<span style="color:#0a0">Back</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#0aa">delete</span>(l.m, b.Value.(*kv).key)
+</span></span><span style="display:flex;"><span>			l.li.<span style="color:#0a0">Remove</span>(b)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (l *LRU) <span style="color:#0a0">get</span>(key <span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>	tmp := l.m[key]
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">if</span> tmp == <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">return</span> -<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	l.li.<span style="color:#0a0">MoveToFront</span>(tmp)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> tmp.Value.(*kv).value
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewLRU</span>(size <span style="color:#0aa">int</span>) *LRU {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> &amp;LRU{
+</span></span><span style="display:flex;"><span>		k:   <span style="color:#099">0</span>,
+</span></span><span style="display:flex;"><span>		max: size,
+</span></span><span style="display:flex;"><span>		li:  list.List{},
+</span></span><span style="display:flex;"><span>		m:   <span style="color:#0aa">make</span>(<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]*list.Element),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
+</span></span><span style="display:flex;"><span>	cache := <span style="color:#0a0">NewLRU</span>(<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>	cache.<span style="color:#0a0">put</span>(<span style="color:#099">1</span>, <span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>	cache.<span style="color:#0a0">put</span>(<span style="color:#099">2</span>, <span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Println</span>(cache.<span style="color:#0a0">get</span>(<span style="color:#099">1</span>)) <span style="color:#aaa;font-style:italic">// 返回 1
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	cache.<span style="color:#0a0">put</span>(<span style="color:#099">3</span>, <span style="color:#099">3</span>)           <span style="color:#aaa;font-style:italic">// 该操作会使得关键字 2 作废
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	fmt.<span style="color:#0a0">Println</span>(cache.<span style="color:#0a0">get</span>(<span style="color:#099">2</span>)) <span style="color:#aaa;font-style:italic">// 返回 -1 (未找到)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	cache.<span style="color:#0a0">put</span>(<span style="color:#099">4</span>, <span style="color:#099">4</span>)           <span style="color:#aaa;font-style:italic">// 该操作会使得关键字 1 作废
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	fmt.<span style="color:#0a0">Println</span>(cache.<span style="color:#0a0">get</span>(<span style="color:#099">1</span>)) <span style="color:#aaa;font-style:italic">// 返回 -1 (未找到)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	fmt.<span style="color:#0a0">Println</span>(cache.<span style="color:#0a0">get</span>(<span style="color:#099">3</span>)) <span style="color:#aaa;font-style:italic">// 返回 3
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	fmt.<span style="color:#0a0">Println</span>(cache.<span style="color:#0a0">get</span>(<span style="color:#099">4</span>)) <span style="color:#aaa;font-style:italic">// 返回 4
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -345,13 +499,13 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-title="面试-面试"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-title="面试-面试"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-title="面试-面试"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-title="面试-面试"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-title="面试-面试" data-hashtags="面试"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-hashtag="面试"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-title="面试-面试"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-title="面试-面试"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95/" data-title="面试-面试"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
