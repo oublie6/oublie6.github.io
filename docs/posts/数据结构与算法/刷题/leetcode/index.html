@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/leetcode\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  19086 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  19531 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/leetcode\/","datePublished": "2023-03-14T19:22:41+08:00","dateModified": "2023-03-14T19:22:41+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-刷题-Leetcode</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-14">2023-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;19086 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-14">2023-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;19531 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;39 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -132,6 +132,9 @@
         <li><a href="#189-轮转数组">189. 轮转数组</a></li>
         <li><a href="#45-跳跃游戏-ii">45. 跳跃游戏 II</a></li>
         <li><a href="#88-合并两个有序数组">88. 合并两个有序数组</a></li>
+        <li><a href="#可被-k-整除的最小整数">可被 K 整除的最小整数</a></li>
+        <li><a href="#1016-子串能表示从-1-到-n-数字的二进制串">1016. 子串能表示从 1 到 N 数字的二进制串</a></li>
+        <li><a href="#16-最接近的三数之和">16. 最接近的三数之和</a></li>
       </ul>
     </li>
     <li><a href="#每日一题">每日一题</a>
@@ -1582,6 +1585,181 @@
 </span></span><span style="display:flex;"><span>        cur--
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> c2&gt;=<span style="color:#099">0</span>{<span style="color:#0aa">copy</span>(nums1,nums2[:c2+<span style="color:#099">1</span>])}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="可被-k-整除的最小整数">可被 K 整除的最小整数</h3>
+<p><a href="https://leetcode.cn/problems/smallest-integer-divisible-by-k/" target="_blank" rel="noopener noreffer ">可被 K 整除的最小整数</a></p>
+<p>数论+哈希表去重</p>
+<p>pn为余数，n为被除数，i=j+1</p>
+<p>pni=(nj* 10+1)%k=((nj%k)* 10+1)%k=(pnj* 10+1)%k</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">smallestRepunitDivByK</span>(k <span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    resid:=<span style="color:#099">1</span>%k
+</span></span><span style="display:flex;"><span>    l:=<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    m:=<span style="color:#00a">map</span>[<span style="color:#0aa">int</span>]<span style="color:#0aa">bool</span>{}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> resid!=<span style="color:#099">0</span>{
+</span></span><span style="display:flex;"><span>        m[resid]=<span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>        l++
+</span></span><span style="display:flex;"><span>        resid=(resid*<span style="color:#099">10</span>+<span style="color:#099">1</span>)%k
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> m[resid]{<span style="color:#00a">return</span> -<span style="color:#099">1</span>}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> l
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>官方题解进行数论优化</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">smallestRepunitDivByK</span>(k <span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> k%<span style="color:#099">2</span> == <span style="color:#099">0</span> || k%<span style="color:#099">5</span> == <span style="color:#099">0</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> -<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    x := <span style="color:#099">1</span> % k
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i := <span style="color:#099">1</span>; ; i++ { <span style="color:#aaa;font-style:italic">// 一定有解
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>        <span style="color:#00a">if</span> x == <span style="color:#099">0</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">return</span> i
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        x = (x*<span style="color:#099">10</span> + <span style="color:#099">1</span>) % k
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="1016-子串能表示从-1-到-n-数字的二进制串">1016. 子串能表示从 1 到 N 数字的二进制串</h3>
+<p><a href="https://leetcode.cn/problems/binary-string-with-substrings-representing-1-to-n/" target="_blank" rel="noopener noreffer ">1016. 子串能表示从 1 到 N 数字的二进制串</a></p>
+<p>暴力搜索优化，二进制n的长度stl，记录长度为stl的s子串，然后取长度l的小于等于n的数（即[1&laquo;stl-1,n]）查看二进制串是不是子串</p>
+<p>因为其他子串都是这些串的子串</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">queryString</span>(s <span style="color:#0aa">string</span>, n <span style="color:#0aa">int</span>) <span style="color:#0aa">bool</span> {
+</span></span><span style="display:flex;"><span>    m:=<span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#0aa">bool</span>{}
+</span></span><span style="display:flex;"><span>    l:=<span style="color:#0aa">len</span>(s)
+</span></span><span style="display:flex;"><span>    st:=strconv.<span style="color:#0a0">FormatInt</span>(<span style="color:#0aa">int64</span>(n),<span style="color:#099">2</span>)
+</span></span><span style="display:flex;"><span>    stl:=<span style="color:#0aa">len</span>(st)
+</span></span><span style="display:flex;"><span>    low:=<span style="color:#099">1</span>&lt;&lt;(stl-<span style="color:#099">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#099">0</span>;i&lt;=l-stl;i++{
+</span></span><span style="display:flex;"><span>        m[s[i:i+stl]]=<span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//fmt.Println(m)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#00a">for</span> i:=low;i&lt;=n;i++{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> !m[strconv.<span style="color:#0a0">FormatInt</span>(<span style="color:#0aa">int64</span>(i),<span style="color:#099">2</span>)]{<span style="color:#00a">return</span> <span style="color:#00a">false</span>}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> <span style="color:#00a">true</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="16-最接近的三数之和">16. 最接近的三数之和</h3>
+<p><a href="https://leetcode.cn/problems/3sum-closest/" target="_blank" rel="noopener noreffer ">16. 最接近的三数之和</a></p>
+<p>排序+双指针，记录最小差值absans以及对应的ans</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">threeSumClosest</span>(nums []<span style="color:#0aa">int</span>, target <span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    sort.<span style="color:#0a0">Ints</span>(nums)
+</span></span><span style="display:flex;"><span>    n:=<span style="color:#0aa">len</span>(nums)
+</span></span><span style="display:flex;"><span>    absans:=math.MaxInt
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">var</span> ans <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i,v:=<span style="color:#00a">range</span> nums{
+</span></span><span style="display:flex;"><span>        l,r:=i+<span style="color:#099">1</span>,n-<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>        t:=target-v
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> l&lt;r{
+</span></span><span style="display:flex;"><span>            tmp:=nums[l]+nums[r]
+</span></span><span style="display:flex;"><span>            cur:=tmp-t
+</span></span><span style="display:flex;"><span>            abscur:=<span style="color:#0a0">abs</span>(cur)
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> absans&gt;abscur{
+</span></span><span style="display:flex;"><span>                absans=abscur
+</span></span><span style="display:flex;"><span>                ans=tmp+v
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> cur&gt;<span style="color:#099">0</span>{
+</span></span><span style="display:flex;"><span>                r--
+</span></span><span style="display:flex;"><span>            }<span style="color:#00a">else</span> <span style="color:#00a">if</span> cur&lt;<span style="color:#099">0</span>{
+</span></span><span style="display:flex;"><span>                l++
+</span></span><span style="display:flex;"><span>            }<span style="color:#00a">else</span>{<span style="color:#00a">return</span> target}
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">abs</span>(i <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> i&lt;<span style="color:#099">0</span>{<span style="color:#00a">return</span> -i}
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> i
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>

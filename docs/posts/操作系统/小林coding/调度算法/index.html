@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>操作系统-小林coding-调度算法 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="操作系统-小林coding-调度算法" />
+<meta property="og:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 进程调度算法 按是否抢占 分为抢占式和非抢占式 按具体策略 先来先服务调度算" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-13T16:28:51+08:00" />
+<meta property="article:modified_time" content="2023-05-13T16:28:51+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="操作系统-小林coding-调度算法"/>
+<meta name="twitter:description" content="本系列笔记为作者在跟随小林coding学习的时候做的笔记。感谢小林大大。 进程调度算法 按是否抢占 分为抢占式和非抢占式 按具体策略 先来先服务调度算"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" /><link rel="prev" href="https://oublie6.github.io/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/rest/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "操作系统-小林coding-调度算法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "小林coding系列","wordcount":  1044 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/%E5%B0%8F%E6%9E%97coding\/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95\/","datePublished": "2023-05-13T16:28:51+08:00","dateModified": "2023-05-13T16:28:51+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-小林coding-调度算法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-13">2023-05-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1044 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#进程调度算法">进程调度算法</a>
+      <ul>
+        <li><a href="#按是否抢占">按是否抢占</a></li>
+        <li><a href="#按具体策略">按具体策略</a>
+          <ul>
+            <li><a href="#先来先服务调度算法first-come-first-severd-fcfs">先来先服务调度算法（First Come First Severd, FCFS）</a></li>
+            <li><a href="#最短作业优先调度算法shortest-job-first-sjf">最短作业优先调度算法（Shortest Job First, SJF）</a></li>
+            <li><a href="#高响应比优先调度算法highest-response-ratio-next-hrrn">高响应比优先调度算法（Highest Response Ratio Next, HRRN）</a></li>
+            <li><a href="#时间片轮转调度算法round-robin-rr">时间片轮转调度算法（Round Robin, RR）</a></li>
+            <li><a href="#最高优先级调度算法highest-priority-firsthpf">最高优先级调度算法（Highest Priority First，HPF）</a></li>
+            <li><a href="#多级反馈队列调度算法multilevel-feedback-queue">多级反馈队列调度算法（Multilevel Feedback Queue）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#内存页面置换算法">内存页面置换算法</a>
+      <ul>
+        <li><a href="#最佳页面置换算法">最佳页面置换算法</a></li>
+        <li><a href="#先进先出置换算法">先进先出置换算法</a></li>
+        <li><a href="#最近最久未使用的置换算法lru">最近最久未使用的置换算法（LRU）</a></li>
+        <li><a href="#时钟页面置换算法clock">时钟页面置换算法（Clock）</a></li>
+        <li><a href="#最不常用算法lfu">最不常用算法（LFU）</a></li>
+      </ul>
+    </li>
+    <li><a href="#磁盘调度算法">磁盘调度算法</a>
+      <ul>
+        <li><a href="#先来先服务first-comefirst-servedfcfs">先来先服务（First-Come，First-Served，FCFS）</a></li>
+        <li><a href="#最短寻道时间优先shortest-seek-firstssf">最短寻道时间优先Shortest Seek First，SSF）</a></li>
+        <li><a href="#扫描算法scan">扫描算法（Scan）</a></li>
+        <li><a href="#循环扫描算法circular-scan-cscan-">循环扫描算法（Circular Scan, CSCAN ）</a></li>
+        <li><a href="#look-与-c-look算法">LOOK 与 C-LOOK算法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本系列笔记为作者在跟随<a href="https://xiaolincoding.com/os/" target="_blank" rel="noopener noreffer ">小林coding</a>学习的时候做的笔记。感谢小林大大。</p>
+<h2 id="进程调度算法">进程调度算法</h2>
+<h3 id="按是否抢占">按是否抢占</h3>
+<p>分为抢占式和非抢占式</p>
+<h3 id="按具体策略">按具体策略</h3>
+<h4 id="先来先服务调度算法first-come-first-severd-fcfs">先来先服务调度算法（First Come First Severd, FCFS）</h4>
+<p>从就绪队列选择队列头的进程运行，当前进程退出或被阻塞再从队列中选择队列头的下一个进程运行</p>
+<h4 id="最短作业优先调度算法shortest-job-first-sjf">最短作业优先调度算法（Shortest Job First, SJF）</h4>
+<p>优先选择运行时间最短的进程来运行</p>
+<h4 id="高响应比优先调度算法highest-response-ratio-next-hrrn">高响应比优先调度算法（Highest Response Ratio Next, HRRN）</h4>
+<p>每次进行进程调度时，先计算「响应比优先级」，然后把「响应比优先级」最高的进程投入运行</p>
+<p>响应比=（等待时间+要求服务时间）/要求服务时间</p>
+<h4 id="时间片轮转调度算法round-robin-rr">时间片轮转调度算法（Round Robin, RR）</h4>
+<p>运行进程被分配一个时间段，称为时间片（Quantum），允许该进程在该时间段中运行</p>
+<h4 id="最高优先级调度算法highest-priority-firsthpf">最高优先级调度算法（Highest Priority First，HPF）</h4>
+<p>从就绪队列中选择最高优先级的进程运行</p>
+<p>静态优先级：不变化</p>
+<p>动态优先级：按时间增加优先级</p>
+<h4 id="多级反馈队列调度算法multilevel-feedback-queue">多级反馈队列调度算法（Multilevel Feedback Queue）</h4>
+<div id="id-1"><figure><a class="lightgallery" href="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/28-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97.jpg" title="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/28-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97.jpg" data-thumbnail="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/28-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97.jpg" data-sub-html="<h2>comment</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/28-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97.jpg"
+            data-srcset="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/28-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97.jpg, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/28-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97.jpg 1.5x, https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/28-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97.jpg 2x"
+            data-sizes="auto"
+            alt="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/28-%E5%A4%9A%E7%BA%A7%E9%98%9F%E5%88%97.jpg" />
+    </a><figcaption class="image-caption">comment</figcaption>
+    </figure></div>
+<p>队列优先级从高到低，优先级越高时间片越短</p>
+<h2 id="内存页面置换算法">内存页面置换算法</h2>
+<p>当出现缺页异常，需调入新页面而内存已满时，选择被置换的物理页面</p>
+<h3 id="最佳页面置换算法">最佳页面置换算法</h3>
+<p>置换在「未来」最长时间不访问的页面，不现实</p>
+<h3 id="先进先出置换算法">先进先出置换算法</h3>
+<p>选择在内存驻留时间很长的页面进行中置换</p>
+<h3 id="最近最久未使用的置换算法lru">最近最久未使用的置换算法（LRU）</h3>
+<p>选择最长时间没有被访问的页面进行置换</p>
+<p>实现使用双向链表和哈希表即可</p>
+<h3 id="时钟页面置换算法clock">时钟页面置换算法（Clock）</h3>
+<p>页面保存在一个类似钟面的「环形链表」，表指针指向最老的页面</p>
+<p>访问页面时将访问位设为1</p>
+<p>淘汰页面时，表指针遇到访问位为0则选择，遇到访问位为1则设置为0，并转到下一个</p>
+<h3 id="最不常用算法lfu">最不常用算法（LFU）</h3>
+<p>选择「访问次数」最少的那个页面，并将其淘汰</p>
+<p>实现在LRU的基础上（双向链表和哈希表）给哈希表的值添加一个访问次数和时间的字段（访问计数器）</p>
+<h2 id="磁盘调度算法">磁盘调度算法</h2>
+<h3 id="先来先服务first-comefirst-servedfcfs">先来先服务（First-Come，First-Served，FCFS）</h3>
+<p>先到来的请求，先被服务</p>
+<h3 id="最短寻道时间优先shortest-seek-firstssf">最短寻道时间优先Shortest Seek First，SSF）</h3>
+<p>优先选择从当前磁头位置所需寻道时间最短的请求</p>
+<p>可能产生饥饿，磁头在一小块区域来回移动</p>
+<h3 id="扫描算法scan">扫描算法（Scan）</h3>
+<p>磁头在一个方向上移动，访问所有未完成的请求，直到磁头到达该方向上的最后的磁道，才调换方向</p>
+<h3 id="循环扫描算法circular-scan-cscan-">循环扫描算法（Circular Scan, CSCAN ）</h3>
+<p>返回中途不处理任何请求，磁道只响应一个方向上的请求</p>
+<h3 id="look-与-c-look算法">LOOK 与 C-LOOK算法</h3>
+<p>LOOK：扫描算法基础上，磁头在移动到「最远的请求」位置，然后立即反向移动</p>
+<p>C-LOOK：循环扫描算法基础上做相同的优化</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-13
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" data-title="操作系统-小林coding-调度算法" data-hashtags="小林coding系列"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" data-hashtag="小林coding系列"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" data-title="操作系统-小林coding-调度算法"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" data-title="操作系统-小林coding-调度算法"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%9E%97coding/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" data-title="操作系统-小林coding-调度算法"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%B0%8F%E6%9E%97coding%E7%B3%BB%E5%88%97/">小林coding系列</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF/rest/" class="prev" rel="prev" title="通用技术-Rest"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>通用技术-Rest</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d8d1a4.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-05-13T16:28:51+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"操作系统-小林coding-调度算法"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
