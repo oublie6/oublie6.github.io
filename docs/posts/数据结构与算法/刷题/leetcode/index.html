@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/leetcode\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  19531 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "刷题","wordcount":  19832 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95\/%E5%88%B7%E9%A2%98\/leetcode\/","datePublished": "2023-03-14T19:22:41+08:00","dateModified": "2023-03-14T19:22:41+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据结构与算法-刷题-Leetcode</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-14">2023-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;19531 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;39 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-14">2023-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;19832 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;40 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -135,6 +135,7 @@
         <li><a href="#可被-k-整除的最小整数">可被 K 整除的最小整数</a></li>
         <li><a href="#1016-子串能表示从-1-到-n-数字的二进制串">1016. 子串能表示从 1 到 N 数字的二进制串</a></li>
         <li><a href="#16-最接近的三数之和">16. 最接近的三数之和</a></li>
+        <li><a href="#2401-最长优雅子数组">2401. 最长优雅子数组</a></li>
       </ul>
     </li>
     <li><a href="#每日一题">每日一题</a>
@@ -1760,6 +1761,102 @@
 </span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">abs</span>(i <span style="color:#0aa">int</span>)<span style="color:#0aa">int</span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> i&lt;<span style="color:#099">0</span>{<span style="color:#00a">return</span> -i}
 </span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> i
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2401-最长优雅子数组">2401. 最长优雅子数组</h3>
+<p><a href="https://leetcode.cn/problems/longest-nice-subarray/" target="_blank" rel="noopener noreffer ">2401. 最长优雅子数组</a></p>
+<p>动态规划</p>
+<p>dp[i]表示以i结尾的最长优雅子数组</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>dp[i]=<span style="color:#0a0">max</span>(i-j),i-<span style="color:#099">1</span>-j&lt;dp[i-<span style="color:#099">1</span>],k<span style="color:#f00;background-color:#faa">∈</span>[j+<span style="color:#099">1</span>,i-<span style="color:#099">1</span>],nums[k]&amp;nums[i]==<span style="color:#099">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">longestNiceSubarray</span>(nums []<span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    n:=<span style="color:#0aa">len</span>(nums)
+</span></span><span style="display:flex;"><span>    dp:=<span style="color:#0aa">make</span>([]<span style="color:#0aa">int</span>,n)
+</span></span><span style="display:flex;"><span>    dp[<span style="color:#099">0</span>]=<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> i:=<span style="color:#099">1</span>;i&lt;n;i++{
+</span></span><span style="display:flex;"><span>        j:=i-<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> ;i-<span style="color:#099">1</span>-j&lt;dp[i-<span style="color:#099">1</span>];j--{
+</span></span><span style="display:flex;"><span>            <span style="color:#00a">if</span> nums[i]&amp;nums[j]!=<span style="color:#099">0</span>{<span style="color:#00a">break</span>}
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        dp[i]=i-j
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> dp[i]&gt;ans{
+</span></span><span style="display:flex;"><span>            ans=dp[i]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>时间复杂度最长为O(N²)</p>
+<p>但是测评结果比O(N)的位运算差不多，应该是实例的问题</p>
+<p>位运算，滑动窗口</p>
+<p>这里涉及一个正确性证明，因为滑动窗口内的数字两两与等于0，所以每个位最多只有一个数该位为1，所以不需要计数该位为1的数字个数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">longestNiceSubarray</span>(nums []<span style="color:#0aa">int</span>) <span style="color:#0aa">int</span> {
+</span></span><span style="display:flex;"><span>    n:=<span style="color:#0aa">len</span>(nums)
+</span></span><span style="display:flex;"><span>    l,r:=<span style="color:#099">0</span>,<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    cur:=<span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>    ans:=<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> r&lt;n{
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">for</span> l&lt;r&amp;&amp;cur&amp;nums[r]!=<span style="color:#099">0</span>{
+</span></span><span style="display:flex;"><span>            cur^=nums[l]
+</span></span><span style="display:flex;"><span>            l++
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        cur|=nums[r]
+</span></span><span style="display:flex;"><span>        r++
+</span></span><span style="display:flex;"><span>        count:=r-l
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">if</span> ans&lt;count{ans=count}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">return</span> ans
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>

@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F\/mit6.824\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  4289 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","wordcount":  4823 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F\/mit6.824\/","datePublished": "2023-05-01T13:55:03+08:00","dateModified": "2023-05-01T13:55:03+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">分布式系统-MIT6.824</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>分布式系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-01">2023-05-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4289 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-01">2023-05-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4823 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -138,6 +138,7 @@
         <li><a href="#leader选举leader-election">Leader选举（Leader Election）</a></li>
         <li><a href="#选举定时器election-timer">选举定时器（Election Timer）</a></li>
         <li><a href="#可能的异常情况">可能的异常情况</a></li>
+        <li><a href="#日志恢复log-backup">日志恢复（Log Backup）</a></li>
       </ul>
     </li>
   </ul>
@@ -285,6 +286,19 @@
 <h3 id="可能的异常情况">可能的异常情况</h3>
 <p>只要Followers还能处理，它们就会全盘接收Leader在AppendEntries中发送给它们的内容，并加到本地的Log中，之后再收到来自Leader的commit消息，在本地执行请求</p>
 <p>举例是，每一列为Log的一个槽位，即一条Log，值为该Log的任期值</p>
+<p>新Leader执行的操作：</p>
+<ul>
+<li>本地未提交Log的可以直接丢弃（这里老师举的例子没有丢弃）</li>
+<li>本地已提交Log必须保留</li>
+<li>保证其他副本Log一致（见日志恢复）</li>
+</ul>
+<h3 id="日志恢复log-backup">日志恢复（Log Backup）</h3>
+<ol>
+<li>新Leader收到客户端请求时发送AppendEntries消息给其他服务器，包含前一个槽位的位置prevLogIndex和前一个槽位的任期号PrevLogTerm两个字段。当这两个值不匹配副本最新的已提交槽位时返回false给Leader。</li>
+<li>新Leader会记录每个副本的nextIndex，且在刚成为Leader时将每个副本的nextIndex初始化为和自己一样，比如自己成为Leader时最新的槽位为12，那么就会把其他副本和自己的nextIndex设置为13。当收到false时将副本的nextIndex减1，然后再发送AppendEntries消息给回自己false的副本，prevLogIndex为该副本nextIndex-1，且该消息带有从nextIndex到最新的槽位的所有Log。</li>
+<li>副本接收到会再次匹配prevLogIndex和PrevLogTerm，如果匹配则将其拷贝到自己的Log里面，否则返回false重复2，3</li>
+</ol>
+<p>如果客户端发送请求之后一段时间没有收到回复，它应该重新发送请求</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
