@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  4300 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  4475 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/","datePublished": "2022-12-12T15:34:53+08:00","dateModified": "2022-12-12T15:34:53+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Goroutines和Channels</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4300 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4475 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -119,6 +119,7 @@
         <li><a href="#单方向的channel">单方向的Channel</a></li>
         <li><a href="#带缓存的channels">带缓存的Channels</a></li>
         <li><a href="#channel读写特性">channel读写特性</a></li>
+        <li><a href="#channel为什么是并发安全的">channel为什么是并发安全的</a></li>
       </ul>
     </li>
     <li><a href="#不要用channel关闭信号传递信息">不要用channel关闭信号传递信息</a></li>
@@ -275,6 +276,13 @@
 <li>发送关闭的channel会panic</li>
 <li>读取关闭的channel获取一个nil</li>
 <li>关闭已经关闭的channel会panic</li>
+</ul>
+<h3 id="channel为什么是并发安全的">channel为什么是并发安全的</h3>
+<p>问的chatgpt</p>
+<ul>
+<li>原子性操作：在Go语言中，对Channel的操作是原子性的</li>
+<li>内置同步机制：Channel内部实现了同步机制，它使用了锁和其他同步原语来保证并发操作的安全性</li>
+<li>顺序访问保证：Channel在发送和接收数据时是按顺序进行的</li>
 </ul>
 <h2 id="不要用channel关闭信号传递信息">不要用channel关闭信号传递信息</h2>
 <p>不要通过chan的关闭信号来传递消息，一个chan只传递一种信息，要实现关闭管道可以通过额外设置一个chan来专门监听关闭chan</p>
@@ -720,10 +728,11 @@
 </div>
 </div><h2 id="golang-中常用的3种并发模型">Golang 中常用的3种并发模型</h2>
 <p><a href="https://zhuanlan.zhihu.com/p/575557333" target="_blank" rel="noopener noreffer ">知乎 疯狂的石头</a></p>
+<p><a href="https://www.bookstack.cn/read/GoExpertProgramming/chapter05-README.md" target="_blank" rel="noopener noreffer ">go专家编程</a></p>
 <ol>
-<li>通过channel通知实现并发控制</li>
-<li>通过sync包中的WaitGroup实现并发控制</li>
-<li>Context上下文，实现并发控制</li>
+<li>通过channel通知实现并发控制：实现简单，清晰易懂</li>
+<li>通过sync包中的WaitGroup实现并发控制：子协程个数动态可调整</li>
+<li>Context上下文，实现并发控制：对子协程派生出来的孙子协程的控制</li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
