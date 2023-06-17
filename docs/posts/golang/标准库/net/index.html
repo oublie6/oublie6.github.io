@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/net\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  2460 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  2867 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/net\/","datePublished": "2023-04-25T10:27:08+08:00","dateModified": "2023-04-25T10:27:08+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Net</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-25">2023-04-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2460 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-25">2023-04-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2867 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -135,6 +135,13 @@
         <li><a href="#type-servemux-struct">type ServeMux struct</a></li>
         <li><a href="#type-handlerfunc-funcresponsewriter-request">type HandlerFunc func(ResponseWriter, *Request)</a></li>
         <li><a href="#pprof">pprof</a></li>
+      </ul>
+    </li>
+    <li><a href="#url">url</a>
+      <ul>
+        <li><a href="#函数">函数</a></li>
+        <li><a href="#type-url-struct">type URL struct</a></li>
+        <li><a href="#type-values-mapstringstring">type Values map[string][]string</a></li>
       </ul>
     </li>
   </ul>
@@ -414,6 +421,36 @@
 <li><code>go tool pprof http://localhost:6060/debug/pprof/block</code></li>
 </ul>
 <p>web pprof：<code>http://localhost:6060/debug/pprof/</code></p>
+<h2 id="url">url</h2>
+<p>url包解析URL并实现了查询的逸码，参见RFC 3986</p>
+<h3 id="函数">函数</h3>
+<ul>
+<li>func Parse(rawURL string) (*URL, error):转换字符串为url结构体</li>
+<li>func QueryEscape(s string) string:对s进行转码</li>
+<li>func QueryUnescape(s string) (string, error):对s进行解码</li>
+</ul>
+<h3 id="type-url-struct">type URL struct</h3>
+<p>变量</p>
+<ul>
+<li>Host     string:host或host:port</li>
+<li>Path     string:路径</li>
+<li>RawQuery string:编码后的查询字符串，没有&rsquo;?&rsquo;，通常通过Value结构体给这个字段赋值：<code>rawUrl.RawQuery = params.Encode()</code>，也可以使用未编码的字符串：<code>rawUrl.RawQuery, err = url.QueryUnescape(params.Encode())</code></li>
+<li>User     *Userinfo:用户名和密码信息</li>
+</ul>
+<p>方法</p>
+<ul>
+<li>func (u *URL) String() string:转换为合法url</li>
+</ul>
+<h3 id="type-values-mapstringstring">type Values map[string][]string</h3>
+<p>Values将建映射到值的列表。它一般用于查询的参数和表单的属性。不同于http.Header这个字典类型，Values的键是大小写敏感的</p>
+<p>方法</p>
+<ul>
+<li>func (v Values) Get(key string) string</li>
+<li>func (v Values) Set(key, value string)</li>
+<li>func (v Values) Add(key, value string)</li>
+<li>func (v Values) Del(key string)</li>
+<li>func (v Values) Encode() string:将值编码后用&amp;将键值对串起来</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
