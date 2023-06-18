@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "linux","wordcount":  3286 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "linux","wordcount":  4053 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-02-18T13:15:22+08:00","dateModified": "2023-02-18T13:15:22+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-linux-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3286 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4053 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -140,6 +140,12 @@
     <li><a href="#procstat">/proc/stat</a></li>
     <li><a href="#将已经运行的程序添加到nohup">将已经运行的程序添加到nohup</a></li>
     <li><a href="#查看进程的信号处理">查看进程的信号处理</a></li>
+    <li><a href="#linux-namespace">linux namespace</a>
+      <ul>
+        <li><a href="#网络命名空间">网络命名空间</a></li>
+        <li><a href="#结论">结论</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://help.ubuntu.com/" target="_blank" rel="noopener noreffer ">ubuntu官方文档</a></p>
@@ -531,7 +537,110 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat /proc/pid/status
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="linux-namespace">linux namespace</h2>
+<p><a href="https://blogs.igalia.com/dpino/2016/04/10/network-namespaces/" target="_blank" rel="noopener noreffer ">Unweaving the Web</a></p>
+<p>命名空间和cgroups是软件容器化（想想 Docker）新趋势所依赖的两种主要内核技术</p>
+<ul>
+<li>cgroups是一种计量和限制机制，它们控制您可以使用多少系统资源（CPU、内存）</li>
+<li>另一方面，命名空间限制了可以看到的内容</li>
+</ul>
+<p>Linux 内核提供了 6 种命名空间：pid、net、mnt、uts、ipc和user。本文只关注网络命名空间。</p>
+<h3 id="网络命名空间">网络命名空间</h3>
+<p>网络命名空间为命名空间内的所有进程提供全新的网络堆栈。这包括网络接口、路由表和iptables 规则。</p>
+<p>创建命名空间：<code>ip netns add ns1</code>，创建命名空间后，ip 命令会在/var/run/netns下为其添加一个绑定挂载点。</p>
+<p>列出系统中可用的命名空间：<code>ls /var/run/netns</code>或<code>ip netns</code></p>
+<p>命名空间中执行命令：<code>ip netns exec ns1 [command]</code></p>
+<p>命名空间中的接口可以启动和关闭：<code>ip link set dev lo up</code>和<code>ip link set dev lo down</code></p>
+<p>通过veth 对将命名空间与根命名空间进行通信。创建一个veth 对。接口v-eth1将保留在根网络命名空间内，而其对等节点v-peer1将移至ns1命名空间</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ip link add v-eth1 <span style="color:#0aa">type</span> veth peer name v-peer1
+</span></span><span style="display:flex;"><span>ip link <span style="color:#0aa">set</span> v-peer1 netns ns1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为两个接口设置 IPv4 地址并启动它们</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Setup IP address of v-eth1.</span>
+</span></span><span style="display:flex;"><span>ip addr add 10.200.1.1/24 dev v-eth1
+</span></span><span style="display:flex;"><span>ip link <span style="color:#0aa">set</span> v-eth1 up
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Setup IP address of v-peer1.</span>
+</span></span><span style="display:flex;"><span>ip netns <span style="color:#0aa">exec</span> ns1 ip addr add 10.200.1.2/24 dev v-peer1
+</span></span><span style="display:flex;"><span>ip netns <span style="color:#0aa">exec</span> ns1 ip link <span style="color:#0aa">set</span> v-peer1 up
+</span></span><span style="display:flex;"><span>ip netns <span style="color:#0aa">exec</span> ns1 ip link <span style="color:#0aa">set</span> lo up
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改路由表，将根命名空间作为默认路由</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ip netns <span style="color:#0aa">exec</span> ns1 ip route add default via 10.200.1.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>主机启动ipv4转发并修改防火墙iptable</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Share internet access between host and NS.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Enable IP-forwarding.</span>
+</span></span><span style="display:flex;"><span><span style="color:#0aa">echo</span> <span style="color:#099">1</span> &gt; /proc/sys/net/ipv4/ip_forward
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Flush forward rules, policy DROP by default.</span>
+</span></span><span style="display:flex;"><span>iptables -P FORWARD DROP
+</span></span><span style="display:flex;"><span>iptables -F FORWARD
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Flush nat rules.</span>
+</span></span><span style="display:flex;"><span>iptables -t nat -F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Enable masquerading of 10.200.1.0.</span>
+</span></span><span style="display:flex;"><span>iptables -t nat -A POSTROUTING -s 10.200.1.0/255.255.255.0 -o eth0 -j MASQUERADE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># Allow forwarding between eth0 and v-eth1.</span>
+</span></span><span style="display:flex;"><span>iptables -A FORWARD -i eth0 -o v-eth1 -j ACCEPT
+</span></span><span style="display:flex;"><span>iptables -A FORWARD -o eth0 -i v-eth1 -j ACCEPT
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后命名空间ns1就可以ping通外网了</p>
+<h3 id="结论">结论</h3>
+<p>网络命名空间以及 Linux 内核提供的其他容器化技术是一种轻量级的资源隔离机制。附加到网络名称空间的进程可以看到自己的网络堆栈，同时不会干扰系统网络堆栈的其余部分。</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
