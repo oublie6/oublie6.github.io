@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>数据库-influxDB-个人笔记 - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="数据库-influxDB-个人笔记" />
-<meta property="og:description" content="官网 官方文档 概念 数据库(database):用户、保留策略、连续查询和时间序列数据的逻辑容器，和mysql的database是一致的 字段键(" />
+<meta property="og:description" content="官网 官方文档 go客户端文档 概念 数据库(database):用户、保留策略、连续查询和时间序列数据的逻辑容器，和mysql的database是" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/influxdb/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-06-15T15:12:29+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
 
 <meta name="twitter:title" content="数据库-influxDB-个人笔记"/>
-<meta name="twitter:description" content="官网 官方文档 概念 数据库(database):用户、保留策略、连续查询和时间序列数据的逻辑容器，和mysql的database是一致的 字段键("/>
+<meta name="twitter:description" content="官网 官方文档 go客户端文档 概念 数据库(database):用户、保留策略、连续查询和时间序列数据的逻辑容器，和mysql的database是"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/influxdb/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://oublie6.github.io/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/prometheus/" /><link rel="next" href="https://oublie6.github.io/posts/python/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/mysql/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/influxdb\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "influxDB","wordcount":  1248 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "influxDB","wordcount":  2067 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/influxdb\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-06-15T15:12:29+08:00","dateModified": "2023-06-15T15:12:29+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-influxDB-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%97%B6%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>时序数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-15">2023-06-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1248 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-15">2023-06-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2067 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -114,15 +114,25 @@
     <li><a href="#概念">概念</a></li>
     <li><a href="#influx-查询语言-influxql">Influx 查询语言 (InfluxQL)</a>
       <ul>
-        <li><a href="#创建数据库">创建数据库</a></li>
         <li><a href="#查询语法">查询语法</a></li>
+        <li><a href="#查询数据库信息">查询数据库信息</a></li>
+        <li><a href="#管理数据库">管理数据库</a></li>
+        <li><a href="#连续查询">连续查询</a></li>
+        <li><a href="#函数">函数</a></li>
+        <li><a href="#运算符">运算符</a></li>
+        <li><a href="#语言参考">语言参考</a></li>
+        <li><a href="#管理数据库信息">管理数据库信息</a></li>
       </ul>
     </li>
     <li><a href="#默认最大时序数">默认最大时序数</a></li>
+    <li><a href="#配置文件">配置文件</a></li>
+    <li><a href="#将一个measurement的点加入另一个measurement">将一个measurement的点加入另一个measurement</a></li>
+    <li><a href="#go客户端">go客户端</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="www.influxdata.com/" rel="">官网</a>
-<a href="https://docs.influxdata.com/" target="_blank" rel="noopener noreffer ">官方文档</a></p>
+<a href="https://docs.influxdata.com/" target="_blank" rel="noopener noreffer ">官方文档</a>
+<a href="https://github.com/influxdata/influxdb-client-go" target="_blank" rel="noopener noreffer ">go客户端文档</a></p>
 <h2 id="概念">概念</h2>
 <ul>
 <li>数据库(database):用户、保留策略、连续查询和时间序列数据的逻辑容器，和mysql的database是一致的</li>
@@ -137,23 +147,14 @@
 <li>标签集(tag set):一个点上的标签键和标签值的集合</li>
 <li>标签值(tag value)</li>
 <li>时间戳(timestamp):与点关联的日期和时间。InfluxDB 中的所有时间都是 UTC</li>
+<li>shard:</li>
 </ul>
 <p><a href="https://docs.influxdata.com/influxdb/v1.8/concepts/glossary/" target="_blank" rel="noopener noreffer ">词汇表</a></p>
 <p>比较 InfluxDB 和 SQL 数据库:InfluxDB 类似于 SQL 数据库，但在许多方面有所不同。InfluxDB 专为时间序列数据而构建。关系数据库可以处理时间序列数据，但并未针对常见的时间序列工作负载进行优化。InfluxDB 旨在存储大量时间序列数据并快速对该数据进行实时分析。</p>
 <h2 id="influx-查询语言-influxql">Influx 查询语言 (InfluxQL)</h2>
 <p>InfluxQL是一种类似于 InfluxDB SQL 的查询语言，用于处理 InfluxDB 数据库中的数据，语法非常类似mysql的语法</p>
-<h3 id="创建数据库">创建数据库</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">CREATE</span><span style="color:#bbb"> </span><span style="color:#00a">DATABASE</span><span style="color:#bbb"> </span>NOAA_water_database<span style="color:#bbb">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>influxDB默认有一个<code>_internal</code>数据库</p>
 <h3 id="查询语法">查询语法</h3>
-<p>基础知识：</p>
+<p>基础语法：</p>
 <ul>
 <li>SELECT statement:<code>SELECT &lt;field_key&gt;[,&lt;field_key&gt;,&lt;tag_key&gt;] FROM &lt;measurement_name&gt;[,&lt;measurement_name&gt;]</code></li>
 <li>WHERE clause:<code>SELECT_clause FROM_clause WHERE &lt;conditional_expression&gt; [(AND|OR) &lt;conditional_expression&gt; [...]]</code></li>
@@ -173,7 +174,7 @@
 <hr>
 <p>查询语法的一般提示：</p>
 <ul>
-<li>GROUP BY time intervals:<code>FROM_clause WHERE &lt;time_range&gt; GROUP BY time(&lt;time_interval&gt;),[tag_key] [fill(&lt;fill_option&gt;)]</code></li>
+<li>GROUP BY time intervals:<code>FROM_clause WHERE &lt;time_range&gt; GROUP BY time(&lt;time_interval&gt;),[tag_key] [fill(&lt;fill_option&gt;)]</code>按时间分点返回结果</li>
 <li>now():当前时间，时间可以加减时间段，比如<code>SELECT &quot;water_level&quot; FROM &quot;h2o_feet&quot; WHERE time &gt; now() - 1h</code></li>
 <li>正则表达式:<code>SELECT /l/ FROM &quot;h2o_feet&quot; LIMIT 1</code>，用<code>/</code>扩起来的字符串，可以用在where里面<code>=~</code> 为匹配<code>!~</code>为不匹配</li>
 <li>数据类型筛选并转换:<code>SELECT_clause &lt;field_key&gt;::&lt;type&gt; FROM_clause</code>， float, integer, string, or boolean</li>
@@ -181,8 +182,62 @@
 <li>一行可以用<code>;</code>启动多个语句，返回一个json对象，该对象只有一个results字段，是一个json对象数组</li>
 <li>子查询:<code>SELECT_clause FROM ( SELECT_statement ) [...]</code></li>
 </ul>
+<h3 id="查询数据库信息">查询数据库信息</h3>
+<ul>
+<li>SHOW DATABASES：查询数据库列表，默认有NOAA_water_database和_internal数据库</li>
+<li><code>SHOW RETENTION POLICIES [ON &lt;database_name&gt;]</code>：查询数据库的策略</li>
+<li><code>SHOW SERIES [ON &lt;database_name&gt;] [FROM_clause] [WHERE &lt;tag_key&gt; &lt;operator&gt; [ '&lt;tag_value&gt;' | &lt;regular_expression&gt;]] [LIMIT_clause] [OFFSET_clause]</code>：查询时间序列信息</li>
+<li><code>SHOW MEASUREMENTS [ON &lt;database_name&gt;] [WITH MEASUREMENT &lt;operator&gt; ['&lt;measurement_name&gt;' | &lt;regular_expression&gt;]] [WHERE &lt;tag_key&gt; &lt;operator&gt; ['&lt;tag_value&gt;' | &lt;regular_expression&gt;]] [LIMIT_clause] [OFFSET_clause]</code>：显示表信息</li>
+<li><code>SHOW TAG KEYS [ON &lt;database_name&gt;] [FROM_clause] [WHERE &lt;tag_key&gt; &lt;operator&gt; ['&lt;tag_value&gt;' | &lt;regular_expression&gt;]] [LIMIT_clause] [OFFSET_clause]</code>：显示tag键信息</li>
+<li><code>SHOW TAG VALUES [ON &lt;database_name&gt;][FROM_clause] WITH KEY [ [&lt;operator&gt; &quot;&lt;tag_key&gt;&quot; | &lt;regular_expression&gt;] | [IN (&quot;&lt;tag_key1&gt;&quot;,&quot;&lt;tag_key2&quot;)]] [WHERE &lt;tag_key&gt; &lt;operator&gt; ['&lt;tag_value&gt;' | &lt;regular_expression&gt;]] [LIMIT_clause] [OFFSET_clause]</code>：显示tag值信息，常用的<code>show tag values with key='xxx'</code></li>
+<li><code>SHOW FIELD KEYS [ON &lt;database_name&gt;] [FROM &lt;measurement_name&gt;]</code>：显示field的键信息</li>
+<li>SHOW CARDINALITY：显示表信息的基数，常用<code>SHOW TAG VALUES CARDINALITY WITH KEY = myTagKey</code></li>
+<li>元信息也能通过where time来查询：<code>SHOW TAG KEYS ON database-name &lt;WHERE time clause&gt;</code></li>
+</ul>
+<h3 id="管理数据库">管理数据库</h3>
+<p>数据管理</p>
+<ul>
+<li><code>CREATE DATABASE &lt;database_name&gt; [WITH [DURATION &lt;duration&gt;] [REPLICATION &lt;n&gt;] [SHARD DURATION &lt;duration&gt;] [NAME &lt;retention-policy-name&gt;]]</code>：创建数据库</li>
+<li><code>DROP DATABASE &lt;database_name&gt;</code>：删除数据库</li>
+<li><code>DROP SERIES FROM &lt;measurement_name[,measurement_name]&gt; WHERE &lt;tag_key&gt;='&lt;tag_value&gt;'</code>：删除时间序列</li>
+<li><code>DELETE FROM &lt;measurement_name&gt; WHERE [&lt;tag_key&gt;='&lt;tag_value&gt;'] | [&lt;time interval&gt;]</code>：删除点</li>
+<li><code>DROP MEASUREMENT &lt;measurement_name&gt;</code>：删除表</li>
+<li><code>DROP SHARD &lt;shard_id_number&gt;</code>：删除分区存储点时间序列</li>
+</ul>
+<p>保留策略管理</p>
+<ul>
+<li><code>CREATE RETENTION POLICY &lt;retention_policy_name&gt; ON &lt;database_name&gt; DURATION &lt;duration&gt; REPLICATION &lt;n&gt; [SHARD DURATION &lt;duration&gt;] [DEFAULT]</code>：创建保留策略</li>
+<li><code>ALTER RETENTION POLICY &lt;retention_policy_name&gt; ON &lt;database_name&gt; [DURATION &lt;duration&gt;] [REPLICATION &lt;n&gt;] [SHARD DURATION &lt;duration&gt;] [DEFAULT]</code>：修改保留策略</li>
+<li><code>DROP RETENTION POLICY &lt;retention_policy_name&gt; ON &lt;database_name&gt;</code>：删除保留策略</li>
+</ul>
+<h3 id="连续查询">连续查询</h3>
+<p>用于降采样</p>
+<p>见<a href="https://docs.influxdata.com/influxdb/v1.8/query_language/continuous_queries/" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h3 id="函数">函数</h3>
+<p>见<a href="https://docs.influxdata.com/influxdb/v1.8/query_language/functions/" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h3 id="运算符">运算符</h3>
+<p>见<a href="https://docs.influxdata.com/influxdb/v1.8/query_language/math_operators/" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h3 id="语言参考">语言参考</h3>
+<p>见<a href="https://docs.influxdata.com/influxdb/v1.8/query_language/spec/" target="_blank" rel="noopener noreffer ">官网</a></p>
+<h3 id="管理数据库信息">管理数据库信息</h3>
 <h2 id="默认最大时序数">默认最大时序数</h2>
 <p>100万</p>
+<h2 id="配置文件">配置文件</h2>
+<p>/etc/influxdb/influxdb.conf</p>
+<h2 id="将一个measurement的点加入另一个measurement">将一个measurement的点加入另一个measurement</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#00a">SELECT</span><span style="color:#bbb"> </span>*<span style="color:#bbb"> </span><span style="color:#00a">INTO</span><span style="color:#bbb"> </span><span style="color:#a50">&#34;destinationDB&#34;</span>.<span style="color:#a50">&#34;autogen&#34;</span>.<span style="color:#a50">&#34;measurement2&#34;</span><span style="color:#bbb"> </span><span style="color:#00a">FROM</span><span style="color:#bbb"> </span><span style="color:#a50">&#34;sourceDB&#34;</span>.<span style="color:#a50">&#34;autogen&#34;</span>.<span style="color:#a50">&#34;measurement1&#34;</span><span style="color:#bbb"> </span><span style="color:#00a">GROUP</span><span style="color:#bbb"> </span><span style="color:#00a">BY</span><span style="color:#bbb"> </span>*<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="go客户端">go客户端</h2>
+<p><a href="https://github.com/influxdata/influxdb1-client" target="_blank" rel="noopener noreffer ">v1 github</a></p>
+<p>v1对应influxQL</p>
+<p><a href="https://github.com/influxdata/influxdb-client-go" target="_blank" rel="noopener noreffer ">v2 github</a></p>
+<p>v2对应flux</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
