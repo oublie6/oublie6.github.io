@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/sync\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  1209 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  1883 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/sync\/","datePublished": "2023-01-28T11:00:27+08:00","dateModified": "2023-01-28T11:00:27+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Sync</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-28">2023-01-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1209 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-28">2023-01-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1883 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -162,13 +162,27 @@
 <p>属性</p>
 <ul>
 <li>state int32：状态，是否被锁定以及是否有等待的goroutine</li>
-<li>sema uint32：表示信号量</li>
+<li>sema uint32：表示信号量，这个信号量是go编译器自己实现的跟内核空间的信号量无关</li>
 </ul>
 <p>方法</p>
 <ul>
 <li>func (m *Mutex) Lock()</li>
 <li>func (m *Mutex) Unlock()</li>
 </ul>
+<p>上锁：判断Locked标志位是否为0，如果是0则把Locked位置1，代表加锁成功。否则Waiter计数器增加1，并被阻塞</p>
+<p>解锁：将Locked位置0，如果Waiter&gt;0，释放一个信号量，唤醒一个阻塞的协程</p>
+<p>自旋过程：尝试加锁的协程并不是马上转入阻塞，而是会持续的探测Locked位是否变为0。自旋时间很短，在自旋过程中发现锁已被释放，那么协程可以立即获取锁。自旋对应于CPU的”PAUSE”指令，CPU对该指令什么都不做，相当于CPU空转，对程序而言相当于sleep了一小段时间，时间非常短，当前实现是30个时钟周期</p>
+<p>自旋条件：</p>
+<ul>
+<li>自旋次数要足够小，通常为4，即自旋最多4次</li>
+<li>CPU核数要大于1，否则自旋没有意义，因为此时不可能有其他协程释放锁</li>
+<li>协程调度机制中的Process数量要大于1，比如使用GOMAXPROCS()将处理器设置为1就不能启用自旋</li>
+<li>协程调度机制中的可运行队列必须为空，否则会延迟协程调度</li>
+</ul>
+<p>starvation模式：饥饿模式下，不会启动自旋过程</p>
+<p>Woken状态：在加锁的协程可能在自旋过程中，此时把Woken标记为1，用于通知解锁协程不必释放信号量了</p>
+<p>使用defer避免死锁：加锁后立即使用defer对其解锁，可以有效的避免死锁</p>
+<p>加锁和解锁应该成对出现：加锁和解锁最好出现在同一个层次的代码块中，比如同一个函数。重复解锁会引起panic，应避免这种操作的可能性</p>
 <h2 id="type-rwmutex-struct">type RWMutex struct</h2>
 <p>读写互斥锁，可以被多个读取者持有或唯一写入者持有</p>
 <p>属性</p>
@@ -330,7 +344,15 @@
 <li>func StoreInt32(addr <em>int64, val int32): 原子性的将val的值保存到</em>addr</li>
 <li>func AddInt32(addr <em>int32, delta int32) (new int32): 原子性的将val的值添加到</em>addr并返回新值</li>
 <li>func SwapInt32(addr <em>int32, new int32) (old int32): 原子性的将val的值添加到</em>addr并返回新值</li>
+<li>func CompareAndSwapInt32(addr <em>int32, old, new int32) (swapped bool)：原子性的比较</em>addr和old，如果相同则将new赋值给*addr并返回真</li>
 </ul>
+<p>其他数据类型还有</p>
+<p>int32
+int64
+uint32
+uint64
+uintptr
+unsafe.Pointer</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

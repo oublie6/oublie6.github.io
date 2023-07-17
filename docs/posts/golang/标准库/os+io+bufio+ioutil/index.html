@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/os\u002bio\u002bbufio\u002bioutil\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  2877 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  4613 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/os\u002bio\u002bbufio\u002bioutil\/","datePublished": "2023-02-18T12:51:55+08:00","dateModified": "2023-02-18T12:51:55+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Os+io+bufio+ioutil</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2877 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4613 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -119,13 +119,29 @@
         <li><a href="#type-fileinfo-interface">type FileInfo interface</a></li>
         <li><a href="#type-file-struct">type File struct</a></li>
         <li><a href="#type-process-struct">type Process struct</a></li>
+        <li><a href="#user">user</a>
+          <ul>
+            <li><a href="#type-user-struct">type User struct</a></li>
+            <li><a href="#type-unknownusererror-string">type UnknownUserError string</a></li>
+            <li><a href="#type-unknownuseriderror-int">type UnknownUserIdError int</a></li>
+          </ul>
+        </li>
+        <li><a href="#exec">exec</a>
+          <ul>
+            <li><a href="#变量-1">变量</a></li>
+            <li><a href="#函数-1">函数</a></li>
+            <li><a href="#type-error-struct">type Error struct</a></li>
+            <li><a href="#type-exiterror-struct">type ExitError struct</a></li>
+            <li><a href="#type-cmd-struct">type Cmd struct</a></li>
+          </ul>
+        </li>
         <li><a href="#signal">signal</a></li>
       </ul>
     </li>
     <li><a href="#io">io</a>
       <ul>
-        <li><a href="#变量-1">变量</a></li>
-        <li><a href="#函数-1">函数</a></li>
+        <li><a href="#变量-2">变量</a></li>
+        <li><a href="#函数-2">函数</a></li>
         <li><a href="#ioioutil">io/ioutil</a></li>
       </ul>
     </li>
@@ -293,6 +309,189 @@
 <li>func (p *Process) Kill() error：让进程立刻退出</li>
 <li>func (p *Process) Wait() (*ProcessState, error)：阻塞执行主进程直到该参数进程退出</li>
 </ul>
+<h3 id="user">user</h3>
+<p>user包允许通过名称或ID查询用户帐户</p>
+<p>函数</p>
+<ul>
+<li>func Current() (*User, error)：返回当前的用户帐户</li>
+<li>func Lookup(username string) (*User, error)：根据用户名查询用户</li>
+<li>func LookupId(uid string) (*User, error):根据用户ID查询用户</li>
+</ul>
+<h4 id="type-user-struct">type User struct</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> User <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    Uid      <span style="color:#0aa">string</span> <span style="color:#aaa;font-style:italic">// 用户ID
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Gid      <span style="color:#0aa">string</span> <span style="color:#aaa;font-style:italic">// 初级组ID
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Username <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    Name     <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    HomeDir  <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="type-unknownusererror-string">type UnknownUserError string</h4>
+<p>当找不到用户时，Lookup会返回UnknownUserError</p>
+<p>方法</p>
+<ul>
+<li>func (e UnknownUserError) Error() string</li>
+</ul>
+<h4 id="type-unknownuseriderror-int">type UnknownUserIdError int</h4>
+<p>当找不到用户时，LookupId会返回UnknownUserIdError</p>
+<p>方法</p>
+<ul>
+<li>func (e UnknownUserIdError) Error() string</li>
+</ul>
+<h3 id="exec">exec</h3>
+<p>exec包执行外部命令。它包装了os.StartProcess函数以便更容易的修正输入和输出，使用管道连接I/O，以及作其它的一些调整</p>
+<h4 id="变量-1">变量</h4>
+<ul>
+<li>var ErrNotFound = errors.New(&ldquo;executable file not found in $PATH&rdquo;)</li>
+</ul>
+<h4 id="函数-1">函数</h4>
+<ul>
+<li>func LookPath(file string) (string, error)：在环境变量PATH指定的目录中搜索可执行文件，如file中有斜杠，则只在当前目录搜索。返回完整路径或者相对于当前目录的一个相对路径</li>
+<li>func Command(name string, arg &hellip;string) <em>Cmd：函数返回一个</em>Cmd，用于使用给出的参数执行name指定的程序。返回值只设定了Path和Args两个参数。如果name不含路径分隔符，将使用LookPath获取完整路径</li>
+</ul>
+<h4 id="type-error-struct">type Error struct</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Error <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    Name <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    Err  <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Error类型记录执行失败的程序名和失败的原因</p>
+<p>方法</p>
+<ul>
+<li>func (e *Error) Error() string</li>
+</ul>
+<h4 id="type-exiterror-struct">type ExitError struct</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> ExitError <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    *os.ProcessState
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ExitError报告某个命令的一次未成功的返回</p>
+<p>方法</p>
+<ul>
+<li>func (e *ExitError) Error() string</li>
+</ul>
+<h4 id="type-cmd-struct">type Cmd struct</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Cmd <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Path是将要执行的命令的路径。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// 该字段不能为空，如为相对路径会相对于Dir字段。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Path <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Args保管命令的参数，包括命令名作为第一个参数；如果为空切片或者nil，相当于无参数命令。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// 典型用法下，Path和Args都应被Command函数设定。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Args []<span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Env指定进程的环境，如为nil，则是在当前进程的环境下执行。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Env []<span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Dir指定命令的工作目录。如为空字符串，会在调用者的进程当前目录下执行。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Dir <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Stdin指定进程的标准输入，如为nil，进程会从空设备读取（os.DevNull）
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Stdin io.Reader
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Stdout和Stderr指定进程的标准输出和标准错误输出。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// 如果任一个为nil，Run方法会将对应的文件描述符关联到空设备（os.DevNull）
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// 如果两个字段相同，同一时间最多有一个线程可以写入。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Stdout io.Writer
+</span></span><span style="display:flex;"><span>    Stderr io.Writer
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// ExtraFiles指定额外被新进程继承的已打开文件流，不包括标准输入、标准输出、标准错误输出。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// 如果本字段非nil，entry i会变成文件描述符3+i。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// BUG: 在OS X 10.6系统中，子进程可能会继承不期望的文件描述符。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// http://golang.org/issue/2603
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    ExtraFiles []*os.File
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// SysProcAttr保管可选的、各操作系统特定的sys执行属性。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// Run方法会将它作为os.ProcAttr的Sys字段传递给os.StartProcess函数。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    SysProcAttr *syscall.SysProcAttr
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Process是底层的，只执行一次的进程。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Process *os.Process
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// ProcessState包含一个已经存在的进程的信息，只有在调用Wait或Run后才可用。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    ProcessState *os.ProcessState
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 内含隐藏或非导出字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Cmd代表一个正在准备或者在执行中的外部命令</p>
+<p>方法</p>
+<ul>
+<li>func (c *Cmd) StdinPipe() (io.WriteCloser, error)：StdinPipe方法返回一个在命令Start后与命令标准输入关联的管道</li>
+<li>func (c *Cmd) StdoutPipe() (io.ReadCloser, error)：StdoutPipe方法返回一个在命令Start后与命令标准输出关联的管道</li>
+<li>func (c *Cmd) StderrPipe() (io.ReadCloser, error)：StderrPipe方法返回一个在命令Start后与命令标准错误输出关联的管道</li>
+<li>func (c <em>Cmd) Run() error：Run执行c包含的命令，并阻塞直到完成。如果命令成功执行，stdin、stdout、stderr的转交没有问题，并且返回状态码为0，方法的返回值为nil；如果命令没有执行或者执行失败，会返回</em>ExitError类型的错误；否则返回的error可能是表示I/O问题</li>
+<li>func (c *Cmd) Start() error：Start开始执行c包含的命令，但并不会等待该命令完成即返回。Wait方法会返回命令的返回状态码并在命令返回后释放相关的资源</li>
+<li>func (c *Cmd) Wait() error：Wait会阻塞直到该命令执行完成，该命令必须是被Start方法开始执行的。Wait方法会在命令返回后释放相关的资源</li>
+<li>func (c *Cmd) Output() ([]byte, error)：执行命令并返回标准输出的切片</li>
+<li>func (c *Cmd) CombinedOutput() ([]byte, error)：执行命令并返回标准输出和错误输出合并的切片</li>
+</ul>
 <h3 id="signal">signal</h3>
 <p>signal包实现了对输入信号的访问</p>
 <p>函数</p>
@@ -302,7 +501,7 @@
 </ul>
 <h2 id="io">io</h2>
 <p>io包提供了对I/O原语的基本接口。本包的基本任务是包装这些原语已有的实现（如os包里的原语），使之成为共享的公共接口，这些公共接口抽象出了泛用的函数并附加了一些相关的原语的操作。</p>
-<h3 id="变量-1">变量</h3>
+<h3 id="变量-2">变量</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -311,7 +510,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">var</span> EOF = errors.<span style="color:#0a0">New</span>(<span style="color:#a50">&#34;EOF&#34;</span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="函数-1">函数</h3>
+</div><h3 id="函数-2">函数</h3>
 <ul>
 <li>func Copy(dst Writer, src Reader) (written int64, err error)：将src的数据拷贝到dst，直到在src上到达EOF或发生错误</li>
 <li>func CopyN(dst Writer, src Reader, n int64) (written int64, err error)：从src拷贝n个字节数据到dst，直到在src上到达EOF或发生错误</li>
