@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/time\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  1748 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  1952 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/time\/","datePublished": "2023-03-11T11:20:47+08:00","dateModified": "2023-03-11T11:20:47+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Time</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1748 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1952 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -258,7 +258,7 @@
 <p>func (t Time) Sub(u Time) Duration: 返回时间段t-u</p>
 </li>
 <li>
-<p>func (t Time) Truncate(d Duration) Time: 按d时间长度截断t</p>
+<p>func (t Time) Truncate(d Duration) Time: 按d时间长度截断t，只能按照UTC截断</p>
 </li>
 <li>
 <p>func (t Time) Format(layout string) string: 根据layout指定的格式返回t代表的时间点的格式化文本表示，格式为<code>Mon Jan 2 15:04:05 -0700 MST 2006</code></p>
@@ -368,6 +368,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="时区转换需求">时区转换需求</h2>
+<p>如果只是转换显示的结果（不需要修改绝对时间）可以直接修改当前时间对应的location</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -399,6 +400,45 @@
 </span></span><span style="display:flex;"><span>	l,_:=time.<span style="color:#0a0">LoadLocation</span>(<span style="color:#a50">&#34;America/New_York&#34;</span>)
 </span></span><span style="display:flex;"><span>	a=a.<span style="color:#0a0">In</span>(l)
 </span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Println</span>(a)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果需要按当前时间对应年月日时分秒转换为某一个时区的年月日时分秒（需要修改绝对时间）建议使用Date函数，包括按本地时间Truncate也可以用这个方式，因为Truncate只能按照UTC四舍五入</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
+</span></span><span style="display:flex;"><span>	loc, _ := time.<span style="color:#0a0">LoadLocation</span>(<span style="color:#a50">&#34;America/New_York&#34;</span>)
+</span></span><span style="display:flex;"><span>	localtime := time.<span style="color:#0a0">Now</span>().<span style="color:#0a0">Truncate</span>(time.Second)
+</span></span><span style="display:flex;"><span>	utctime := localtime.<span style="color:#0a0">In</span>(time.UTC)
+</span></span><span style="display:flex;"><span>	newyorktime := time.<span style="color:#0a0">Date</span>(utctime.<span style="color:#0a0">Year</span>(), utctime.<span style="color:#0a0">Month</span>(), utctime.<span style="color:#0a0">Day</span>(), utctime.<span style="color:#0a0">Hour</span>(), utctime.<span style="color:#0a0">Minute</span>(), utctime.<span style="color:#0a0">Second</span>(), <span style="color:#099">0</span>, loc)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;localtime\t&#34;</span>, localtime)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;utctime:\t&#34;</span>, utctime)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;newyorktime:\t&#34;</span>, newyorktime)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>

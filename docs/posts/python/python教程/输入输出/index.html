@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python教程","wordcount":  2317 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python教程","wordcount":  2378 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/python%E6%95%99%E7%A8%8B\/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA\/","datePublished": "2022-10-12T11:06:02+08:00","dateModified": "2022-10-12T11:06:02+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python教程-输入输出</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2317 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-12">2022-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2378 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -121,7 +121,11 @@
     </li>
     <li><a href="#读写文件">读写文件</a>
       <ul>
-        <li><a href="#文件对象的方法">文件对象的方法</a></li>
+        <li><a href="#文件对象的方法">文件对象的方法</a>
+          <ul>
+            <li><a href="#编码问题">编码问题</a></li>
+          </ul>
+        </li>
         <li><a href="#使用-json-保存结构化数据">使用 json 保存结构化数据</a></li>
       </ul>
     </li>
@@ -407,7 +411,19 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>在文本文件中，只允许相对于文件开头搜索（使用 seek(0, 2) 搜索到文件末尾是个例外）并且唯一有效的 offset 值是那些能从 f.tell() 中返回的或者是零。其他 offset 值都会产生未定义的行为。</p>
-<h3 id="使用-json-保存结构化数据">使用 json 保存结构化数据</h3>
+<h4 id="编码问题">编码问题</h4>
+<p>文件打开时可以设置编码，excel并不能识别utf-8的文件，写csv文件时可以将编码改为gbk文件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">with</span> <span style="color:#0aa">open</span>(<span style="color:#a50">&#34;xxx&#34;</span>,<span style="color:#a50">&#34;w&#34;</span>,encoding=<span style="color:#a50">&#39;gbk&#39;</span>) <span style="color:#00a">as</span> f:
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用-json-保存结构化数据">使用 json 保存结构化数据</h3>
 <p>将对象序列化为json字符串:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">

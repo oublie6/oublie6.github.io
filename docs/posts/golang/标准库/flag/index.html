@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/flag\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  142 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go标准库","wordcount":  865 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%A0%87%E5%87%86%E5%BA%93\/flag\/","datePublished": "2023-06-21T15:38:06+08:00","dateModified": "2023-06-21T15:38:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go标准库-Flag</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-21">2023-06-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;142 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-21">2023-06-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;865 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -112,6 +112,12 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#常见用法">常见用法</a></li>
+    <li><a href="#变量">变量</a></li>
+    <li><a href="#常量">常量</a></li>
+    <li><a href="#函数">函数</a></li>
+    <li><a href="#type-flagset-struct">type FlagSet struct</a></li>
+    <li><a href="#type-value-interface">type Value interface</a></li>
+    <li><a href="#flag默认单例和flagset都有的函数或方法">flag默认单例和flagset都有的函数或方法</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer ">go语言中文网</a></p>
@@ -158,7 +164,96 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>flag.<span style="color:#0a0">Parse</span>()
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="变量">变量</h2>
+<ul>
+<li>var CommandLine = NewFlagSet(os.Args[0], ExitOnError)</li>
+</ul>
+<h2 id="常量">常量</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//调用Parse出错的反应
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">const</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//不退出，返回错误描述
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    ContinueOnError ErrorHandling = <span style="color:#00a">iota</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//调用os.Exit(2)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    ExitOnError
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">//panic抛出错误
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    PanicOnError
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="函数">函数</h2>
+<ul>
+<li>func NewFlagSet(name string, errorHandling ErrorHandling) *FlagSet：新建一个flagset，errorHandling表示在parse时出错的反应：</li>
+</ul>
+<h2 id="type-flagset-struct">type FlagSet struct</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> FlagSet <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// Usage函数在解析flag出现错误时会被调用
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic">// 该字段为一个函数（而非采用方法），以便修改为自定义的错误处理函数
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>    Usage <span style="color:#00a">func</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 内含隐藏或非导出字段
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>FlagSet代表一个已注册的flag的集合，默认采用ContinueOnError</p>
+<p>方法</p>
+<ul>
+<li>func (f *FlagSet) Init(name string, errorHandling ErrorHandling):设置名字和错误处理</li>
+</ul>
+<h2 id="type-value-interface">type Value interface</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> Value <span style="color:#00a">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">String</span>() <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a0">Set</span>(<span style="color:#0aa">string</span>) <span style="color:#0aa">error</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="flag默认单例和flagset都有的函数或方法">flag默认单例和flagset都有的函数或方法</h2>
+<ul>
+<li>func (f *FlagSet) NFlag() int：flag的数量</li>
+<li>func (f *FlagSet) Arg(i int) string：返回剩下的第i个参数，从0开始</li>
+<li>func (f *FlagSet) Lookup(name string) *Flag：返回已经f中已注册flag的Flag结构体指针；如果flag不存在的话，返回nil</li>
+<li>func (f *FlagSet) NArg() int：NArg返回解析flag之后非flag参数的个数</li>
+<li>func (f *FlagSet) Args() []string：返回解析之后剩下的非flag参数，与NArg一致，不过这里是返回值，NArg返回个数</li>
+<li>func (f *FlagSet) Set(name, value string) error：设置已注册的flag的值</li>
+<li>func (f *FlagSet) Parse(arguments []string) error：从arguments中解析注册的flag</li>
+</ul>
+<hr>
+<ul>
+<li>类型():func Bool(name string, value bool, usage string) *bool，返回一个指针</li>
+<li>类型Var():func BoolVar(p *bool, name string, value bool, usage string)</li>
+</ul>
+<p>可用的类型有：Bool,Int,Int64,Uint,Uint64,Float64,String,Duration</p>
+<p>特殊类型有Var:func Var(value Value, name string, usage string),会调用Value接口的Set方法来解析出Var的值</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
