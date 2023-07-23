@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/influxdb\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "influxDB","wordcount":  2212 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "influxDB","wordcount":  2712 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/influxdb\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-06-15T15:12:29+08:00","dateModified": "2023-06-15T15:12:29+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-influxDB-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%97%B6%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>时序数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-15">2023-06-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2212 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-15">2023-06-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2712 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -128,6 +128,7 @@
     <li><a href="#配置文件">配置文件</a></li>
     <li><a href="#将一个measurement的点加入另一个measurement">将一个measurement的点加入另一个measurement</a></li>
     <li><a href="#go客户端">go客户端</a></li>
+    <li><a href="#influxdb性能高的主要原因">InfluxDB性能高的主要原因</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="www.influxdata.com/" rel="">官网</a>
@@ -240,6 +241,16 @@
 <p>v1对应influxQL</p>
 <p><a href="https://github.com/influxdata/influxdb-client-go" target="_blank" rel="noopener noreffer ">v2 github</a></p>
 <p>v2对应flux</p>
+<h2 id="influxdb性能高的主要原因">InfluxDB性能高的主要原因</h2>
+<ul>
+<li>专为时间序列数据设计：InfluxDB是为处理时间序列数据（例如监控系统的指标，物联网设备的数据等）而专门设计的，所以它在存储和查询这种类型的数据时非常高效。</li>
+<li>数据模型优化：InfluxDB的数据模型为时间序列数据的读写提供了优化。每个数据点都有一个时间戳和一系列的值，并且可以有多个可选的标签（tags）。标签被索引，使得基于标签的查询非常快。这个索引是倒排索引。</li>
+<li>列式存储：InfluxDB使用列式存储模型，使得对同一列数据的查询更加高效。列式存储也使得数据压缩更有效，因为相同类型的数据存储在一起。</li>
+<li>索引优化：InfluxDB使用了基于时间和tag的索引，这使得基于时间范围和标签的查询非常高效。</li>
+<li>自动数据清理：InfluxDB可以设置数据的生命周期策略（Retention Policy），当数据达到设定的老化时间后，InfluxDB会自动清理这些数据，保证存储的效率。</li>
+<li>内存和I/O效率：InfluxDB对于内存和I/O操作的管理进行了优化，使得其在读写大量数据时仍能保持高效的性能。</li>
+<li>数据压缩：InfluxDB对存储的数据进行了压缩，这减少了存储需求并提高了I/O效率。</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

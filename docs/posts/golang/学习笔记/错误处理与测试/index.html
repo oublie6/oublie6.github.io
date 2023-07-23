@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  5348 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  5655 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8E%E6%B5%8B%E8%AF%95\/","datePublished": "2022-12-11T19:40:21+08:00","dateModified": "2022-12-11T19:40:21+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-错误处理与测试</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5348 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5655 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;12 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -215,7 +215,9 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#0aa">panic</span>(<span style="color:#a50">&#34;A severe error occurred: stopping the program!&#34;</span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="从-panic-中恢复recover">从 panic 中恢复（Recover）</h2>
+</div><p>当你调用panic函数时，Go运行时会立即停止当前函数的执行，运行任何已经被defer关键字注册的函数，然后向上返回到调用者。这个过程会一直持续，直到整个调用链被返回，导致程序终止</p>
+<p>panic并不是通过操作系统的信号机制来实现的。相反，它是通过Go的运行时系统直接实现的</p>
+<h2 id="从-panic-中恢复recover">从 panic 中恢复（Recover）</h2>
 <p>必须为defer语句或者是defer语句调用的匿名函数，不能在defer块里面调用其他函数来recover</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -233,7 +235,13 @@
 </span></span><span style="display:flex;"><span>}()
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="启动外部命令和程序">启动外部命令和程序</h2>
+</div><p>如果一个Go语言程序中的panic没有被recover捕获，会发生以下几件事情：</p>
+<ul>
+<li>运行时会输出panic的值，以及在panic发生时的堆栈信息。</li>
+<li>运行时会将所有的goroutine关闭。这个过程中，如果在goroutine中使用了defer关键字注册的函数，那么这些函数会被调用。</li>
+<li>最后，程序将以非零的退出码退出。这个退出码通常是1，表明程序异常终止。</li>
+</ul>
+<h2 id="启动外部命令和程序">启动外部命令和程序</h2>
 <p>os 包有一个 StartProcess 函数可以调用或启动外部系统命令和二进制可执行文件；它的第一个参数是要运行的进程，第二个参数用来传递选项或参数，第三个参数是含有系统环境基本信息的结构体。这个在windows里面用不了。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">

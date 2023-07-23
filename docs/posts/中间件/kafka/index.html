@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E4%B8%AD%E9%97%B4%E4%BB%B6\/kafka\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "kafka","wordcount":  1188 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "kafka","wordcount":  1628 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E4%B8%AD%E9%97%B4%E4%BB%B6\/kafka\/","datePublished": "2022-12-23T09:10:47+08:00","dateModified": "2022-12-23T09:10:47+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">中间件-Kafka</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>中间件</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1188 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-23">2022-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1628 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -115,6 +115,8 @@
     <li><a href="#主要概念和术语">主要概念和术语</a></li>
     <li><a href="#docker安装">docker安装</a></li>
     <li><a href="#传递的消息是什么">传递的消息是什么</a></li>
+    <li><a href="#kafka高性能的原因">kafka高性能的原因</a></li>
+    <li><a href="#kafka-offset是如何动的">kafka offset是如何动的</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://kafka.apache.org/documentation/" target="_blank" rel="noopener noreffer ">官方文档</a></p>
@@ -189,7 +191,17 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="kafka高性能的原因">kafka高性能的原因</h2>
+<ul>
+<li>批量发送：Kafka 通过在网络和磁盘 I/O 上批量处理消息来提高吞吐量，这降低了网络传输和磁盘存储的开销。</li>
+<li>零拷贝：Kafka 使用 Linux 的零拷贝（Zero-copy）特性，使数据在从生产者到 broker 到消费者的传输过程中无需通过内核空间到用户空间再到内核空间的复制操作，大大提高了数据传输的性能。</li>
+<li>持久性和性能：Kafka 将所有消息存储在磁盘上，这使得 Kafka 可以存储大量的消息，并允许消费者按需读取，而不是立即将它们删除。此外，Kafka 使用了顺序磁盘 I/O，这使得磁盘读写操作更快。</li>
+<li>分布式系统：Kafka 集群中的主题被划分为多个分区，每个分区可以在多个服务器上进行复制以提供容错能力。这种分布式架构允许 Kafka 在多个服务器上水平扩展，提高性能。</li>
+<li>消费者偏移：Kafka 让消费者跟踪自己已经读到哪个位置，而不是在服务器端跟踪哪些消息已经被送达。这使得消费者可以有更大的灵活性，比如可以重新处理过去的消息。</li>
+</ul>
+<h2 id="kafka-offset是如何动的">kafka offset是如何动的</h2>
+<p>按客户端发送的ack来动的，确定消息被消费了之后移动offset</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
