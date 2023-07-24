@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>go第三方库-github.com.casbin.casbin - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="go第三方库-github.com.casbin.casbin" />
+<meta property="og:description" content="godoc casbin官网 基础知识 Casbin 是一个强大和高效的开放源码访问控制库，它支持各种 访问控制模型 以强制全面执行授权。 开始使用 新建一个Casbin enforcer C" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.casbin.casbin/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-01T17:24:24+08:00" />
+<meta property="article:modified_time" content="2023-01-01T17:24:24+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="go第三方库-github.com.casbin.casbin"/>
+<meta name="twitter:description" content="godoc casbin官网 基础知识 Casbin 是一个强大和高效的开放源码访问控制库，它支持各种 访问控制模型 以强制全面执行授权。 开始使用 新建一个Casbin enforcer C"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.casbin.casbin/" /><link rel="prev" href="https://oublie6.github.io/posts/%E4%BA%91%E5%8E%9F%E7%94%9F/k8s/%E6%95%99%E7%A8%8B/" /><link rel="next" href="https://oublie6.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mongodb/%E7%AE%80%E4%BB%8B/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "go第三方库-github.com.casbin.casbin",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/github.com.casbin.casbin\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go第三方库","wordcount":  1355 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/github.com.casbin.casbin\/","datePublished": "2023-01-01T17:24:24+08:00","dateModified": "2023-01-01T17:24:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go第三方库-github.com.casbin.casbin</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-01">2023-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1355 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基础知识">基础知识</a>
+      <ul>
+        <li><a href="#开始使用">开始使用</a>
+          <ul>
+            <li><a href="#新建一个casbin-enforcer">新建一个Casbin enforcer</a></li>
+            <li><a href="#检查权限">检查权限</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#访问控制模型">访问控制模型</a>
+      <ul>
+        <li><a href="#model-的语法perm">Model 的语法(PERM)</a>
+          <ul>
+            <li><a href="#request定义">Request定义</a></li>
+            <li><a href="#policy定义">Policy定义</a></li>
+            <li><a href="#匹配器">匹配器</a></li>
+            <li><a href="#policy-effect定义">Policy effect定义</a></li>
+          </ul>
+        </li>
+        <li><a href="#函数">函数</a></li>
+        <li><a href="#rbac">RBAC</a></li>
+      </ul>
+    </li>
+    <li><a href="#存储">存储</a>
+      <ul>
+        <li><a href="#model-的存储">Model 的存储</a>
+          <ul>
+            <li><a href="#从-conf-文件中加载-model">从 .CONF 文件中加载 model</a></li>
+            <li><a href="#从代码加载-model">从代码加载 model</a></li>
+            <li><a href="#从字符串加载的-model">从字符串加载的 model</a></li>
+          </ul>
+        </li>
+        <li><a href="#policy的存储">Policy的存储</a>
+          <ul>
+            <li><a href="#从-csv-文件载入策略">从 CSV 文件载入策略</a></li>
+            <li><a href="#适配器-api">适配器 API</a></li>
+            <li><a href="#数据库存储格式">数据库存储格式</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
+<p><a href="https://casbin.org/zh/docs/get-started" target="_blank" rel="noopener noreffer ">casbin官网</a></p>
+<h2 id="基础知识">基础知识</h2>
+<p>Casbin 是一个强大和高效的开放源码访问控制库，它支持各种 访问控制模型 以强制全面执行授权。</p>
+<h3 id="开始使用">开始使用</h3>
+<h4 id="新建一个casbin-enforcer">新建一个Casbin enforcer</h4>
+<p>Casbin使用配置文件来设置访问控制模型（Enforcer）， model.conf 存储了我们的访问模型（ Model），policy.csv 存储的是我们具体的用户权限配置（Adapter）。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 使用MySQL数据库初始化一个Xorm适配器，Adapter
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>a, err := xormadapter.<span style="color:#0a0">NewAdapter</span>(<span style="color:#a50">&#34;mysql&#34;</span>, <span style="color:#a50">&#34;mysql_username:mysql_password@tcp(127.0.0.1:3306)/casbin&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    log.<span style="color:#0a0">Fatalf</span>(<span style="color:#a50">&#34;error: adapter: %s&#34;</span>, err)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//Model
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>m, err := model.<span style="color:#0a0">NewModelFromString</span>(<span style="color:#a50">`
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[request_definition]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">r = sub, obj, act
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[policy_definition]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">p = sub, obj, act
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[policy_effect]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">e = some(where (p.eft == allow))
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[matchers]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">m = r.sub == p.sub &amp;&amp; r.obj == p.obj &amp;&amp; r.act == p.act
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">`</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    log.<span style="color:#0a0">Fatalf</span>(<span style="color:#a50">&#34;error: model: %s&#34;</span>, err)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//Enforcer
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>e, err := casbin.<span style="color:#0a0">NewEnforcer</span>(m, a)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    log.<span style="color:#0a0">Fatalf</span>(<span style="color:#a50">&#34;error: enforcer: %s&#34;</span>, err)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也可以使用文件</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>e, err := casbin.<span style="color:#0a0">NewEnforcer</span>(<span style="color:#a50">&#34;path/to/model.conf&#34;</span>, <span style="color:#a50">&#34;path/to/policy.csv&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="检查权限">检查权限</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>sub := <span style="color:#a50">&#34;alice&#34;</span> <span style="color:#aaa;font-style:italic">// 想要访问资源的用户。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>obj: = <span style="color:#a50">&#34;data1&#34;</span> <span style="color:#aaa;font-style:italic">// 将被访问的资源。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>act := <span style="color:#a50">&#34;read&#34;</span> <span style="color:#aaa;font-style:italic">// 用户对资源执行的操作。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>ok, err := e.<span style="color:#0a0">Enforce</span>(sub, obj, act)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 处理err
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> ok == <span style="color:#00a">true</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 允许alice读取data1
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>} <span style="color:#00a">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#aaa;font-style:italic">// 拒绝请求，抛出异常
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>批量，返回slice</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>results, err := e.<span style="color:#0a0">BatchEnforce</span>([[] []<span style="color:#00a">interface</span>{}{<span style="color:#a50">&#34;alice&#34;</span>, <span style="color:#a50">&#34;data1&#34;</span>, <span style="color:#a50">&#34;read&#34;</span>}, {<span style="color:#a50">&#34;bob&#34;</span>, datata2<span style="color:#a50">&#34;, &#34;</span>write<span style="color:#a50">&#34;}, {&#34;</span>jack<span style="color:#a50">&#34;, &#34;</span>data3<span style="color:#a50">&#34;, &#34;</span>read<span style="color:#f00;background-color:#faa">&#34;</span>}})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>获得分配给一个用户的所有角色</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>roles, err := e.<span style="color:#0a0">GetRolesForUser</span>(<span style="color:#a50">&#34;alice&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="访问控制模型">访问控制模型</h2>
+<h3 id="model-的语法perm">Model 的语法(PERM)</h3>
+<h4 id="request定义">Request定义</h4>
+<p>[request_definition] 定义了 e.Enforce(&hellip;) 函数中的参数</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">[request_definition]
+r = sub, obj, act
+</code></pre><h4 id="policy定义">Policy定义</h4>
+<p>[policy_definition]是策略的定义，与Request的定义没有关系，相当于adapter中的条目的形参</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">[policy_definition]
+p = sub, obj, act
+p2 = sub, act
+</code></pre><p>策略对应的adapter内容，有一个eft字段，该字段省略时默认为allow，在adapter里面只能定义为allow和deny</p>
+<h4 id="匹配器">匹配器</h4>
+<p>[matchers] 是策略匹配器的定义</p>
+<p>将r与policy里面的条目匹配，当一个条目p匹配的时候返回p.eft给effect。</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">[matchers]
+m = r.sub == p.sub &amp;&amp; r.obj == p.obj &amp;&amp; r.act == p.act
+</code></pre><p>匹配器中，可以使用算术运算符如 +, -, * , / ，也可以使用逻辑运算符如：&amp;&amp;，||，！</p>
+<h4 id="policy-effect定义">Policy effect定义</h4>
+<p>[policy_effect]部分是对policy生效范围的定义</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">[policy_effect]
+e = some(where (p.eft == allow))
+</code></pre><p>如果e为真则返回true给enforcer</p>
+<h3 id="函数">函数</h3>
+<p><a href="https://casbin.org/zh/docs/function#matchers%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0" target="_blank" rel="noopener noreffer ">match内置函数</a></p>
+<p>自定义函数签名，接收字符串返回bool</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">KeyMatchFunc</span>(args ...<span style="color:#00a">interface</span>{}) (<span style="color:#00a">interface</span>{}, <span style="color:#0aa">error</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>enforcer中注册函数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>e.<span style="color:#0a0">AddFunction</span>(<span style="color:#a50">&#34;my_func&#34;</span>, KeyMatchFunc)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>match部分使用函数</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">[matchers]
+m = r.sub == p.sub &amp;&amp; my_func(r.obj, p.obj) &amp;&amp; r.act == p.act
+</code></pre><h3 id="rbac">RBAC</h3>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">[role_definition]
+g = _, _ # 角色或资源
+</code></pre><p>在match中使用的函数</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">m = g(r.sub, p.sub) &amp;&amp; r.obj == p.obj &amp;&amp; r.act == p.act
+</code></pre><p>g(r.sub, p.sub)会被翻译为r.sub==p.sub||gg(r.sub)==p.sub其中gg(r.sub)的结果是g条目中的第二个数据</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">[role_definition]
+g = _, _, _ # 多商户
+</code></pre><pre tabindex="0"><code class="language-conf" data-lang="conf">[matchers]
+m = g(r.sub, p.sub, r.dom) &amp;&amp; r.dom == p.dom &amp;&amp; r.obj == p.obj &amp;&amp; r.act == p.act
+</code></pre><p>g(r.sub, p.sub, r.dom)会被翻译为r.sub==p.sub||gg(r.sub，r.dom)==p.sub其中gg(r.sub，r.dom)的结果是g条目中的第二个数据</p>
+<h2 id="存储">存储</h2>
+<h3 id="model-的存储">Model 的存储</h3>
+<p>model 不是动态组件，不应该在运行时进行修改，没有save API</p>
+<h4 id="从-conf-文件中加载-model">从 .CONF 文件中加载 model</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>e := casbin.<span style="color:#0a0">NewEnforcer</span>(<span style="color:#a50">&#34;examples/rbac_model.conf&#34;</span>, <span style="color:#a50">&#34;examples/rbac_policy.csv&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="从代码加载-model">从代码加载 model</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 从Go代码初始化模型
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>m := model.<span style="color:#0a0">NewModel</span>()
+</span></span><span style="display:flex;"><span>m.<span style="color:#0a0">AddDef</span>(<span style="color:#a50">&#34;r&#34;</span>, <span style="color:#a50">&#34;r&#34;</span>, <span style="color:#a50">&#34;sub, obj, act&#34;</span>)
+</span></span><span style="display:flex;"><span>m.<span style="color:#0a0">AddDef</span>(<span style="color:#a50">&#34;p&#34;</span>, <span style="color:#a50">&#34;p&#34;</span>, <span style="color:#a50">&#34;sub, obj, act&#34;</span>)
+</span></span><span style="display:flex;"><span>m.<span style="color:#0a0">AddDef</span>(<span style="color:#a50">&#34;g&#34;</span>, <span style="color:#a50">&#34;g&#34;</span>, <span style="color:#a50">&#34;_, _&#34;</span>)
+</span></span><span style="display:flex;"><span>m.<span style="color:#0a0">AddDef</span>(<span style="color:#a50">&#34;e&#34;</span>, <span style="color:#a50">&#34;e&#34;</span>, <span style="color:#a50">&#34;some(where (p.eft == allow))&#34;</span>)
+</span></span><span style="display:flex;"><span>m.<span style="color:#0a0">AddDef</span>(<span style="color:#a50">&#34;m&#34;</span>, <span style="color:#a50">&#34;m&#34;</span>, <span style="color:#a50">&#34;g(r.sub, p.sub) &amp;&amp; r.obj == p.obj &amp;&amp; r.act == p.act&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="从字符串加载的-model">从字符串加载的 model</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>text :=
+</span></span><span style="display:flex;"><span><span style="color:#a50">`
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[request_definition]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">r = sub, obj, act
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[policy_definition]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">p = sub, obj, act
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[role_definition]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">g = _, _
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[policy_effect]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">e = some(where (p.eft == allow))
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">[matchers]
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">m = g(r.sub, p.sub) &amp;&amp; r.obj == p.obj &amp;&amp; r.act == p.act
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">`</span>
+</span></span><span style="display:flex;"><span>m, _ := model.<span style="color:#0a0">NewModelFromString</span>(text)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="policy的存储">Policy的存储</h3>
+<h4 id="从-csv-文件载入策略">从 CSV 文件载入策略</h4>
+<pre tabindex="0"><code class="language-csv" data-lang="csv">p, alice, data1, read
+p, bob, data2, write
+p, data2_admin, data2, read
+</code></pre><h4 id="适配器-api">适配器 API</h4>
+<p>见<a href="https://casbin.org/zh/docs/policy-storage#%E9%80%82%E9%85%8D%E5%99%A8-api" target="_blank" rel="noopener noreffer ">官网</a></p>
+<ul>
+<li>LoadPolicy()</li>
+<li>SavePolicy()</li>
+<li>AddPolicy()</li>
+<li>RemovePolicy()</li>
+<li>RemoveFilteredPolicy()</li>
+</ul>
+<h4 id="数据库存储格式">数据库存储格式</h4>
+<p>id	ptype	v0	v1	v2	v3	v4	v5</p>
+<p>见<a href="https://casbin.org/zh/docs/policy-storage#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8%E6%A0%BC%E5%BC%8F" target="_blank" rel="noopener noreffer ">官网</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-01-01
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.casbin.casbin/" data-title="go第三方库-github.com.casbin.casbin" data-hashtags="go第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.casbin.casbin/" data-hashtag="go第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.casbin.casbin/" data-title="go第三方库-github.com.casbin.casbin"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.casbin.casbin/" data-title="go第三方库-github.com.casbin.casbin"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.casbin.casbin/" data-title="go第三方库-github.com.casbin.casbin"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">go第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E4%BA%91%E5%8E%9F%E7%94%9F/k8s/%E6%95%99%E7%A8%8B/" class="prev" rel="prev" title="云原生-k8s-教程"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>云原生-k8s-教程</a>
+            <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/mongodb/%E7%AE%80%E4%BB%8B/" class="next" rel="next" title="数据库-MongoDB-简介">数据库-MongoDB-简介<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-01-01T17:24:24+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"go第三方库-github.com.casbin.casbin"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

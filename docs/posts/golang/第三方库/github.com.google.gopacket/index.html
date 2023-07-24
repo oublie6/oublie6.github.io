@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>go第三方库-github.com.google.gopacket - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="go第三方库-github.com.google.gopacket" />
+<meta property="og:description" content="godoc godoc官网 重要子包： layers：包含内置于 gopacket 中的用于解码数据包协议的逻辑。 pcap：C 绑定以使用 libpcap 读取离线数据包。 pfring：C 绑" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.google.gopacket/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-14T13:24:02+08:00" />
+<meta property="article:modified_time" content="2022-12-14T13:24:02+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="go第三方库-github.com.google.gopacket"/>
+<meta name="twitter:description" content="godoc godoc官网 重要子包： layers：包含内置于 gopacket 中的用于解码数据包协议的逻辑。 pcap：C 绑定以使用 libpcap 读取离线数据包。 pfring：C 绑"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.google.gopacket/" /><link rel="prev" href="https://oublie6.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" /><link rel="next" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/1%E5%BC%80%E5%A7%8B/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "go第三方库-github.com.google.gopacket",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/github.com.google.gopacket\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go第三方库","wordcount":  3038 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/github.com.google.gopacket\/","datePublished": "2022-12-14T13:24:02+08:00","dateModified": "2022-12-14T13:24:02+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go第三方库-github.com.google.gopacket</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-14">2022-12-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3038 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本用法">基本用法</a></li>
+    <li><a href="#从源读取数据包">从源读取数据包</a></li>
+    <li><a href="#惰性解码">惰性解码</a></li>
+    <li><a href="#nocopy解码">NoCopy解码</a></li>
+    <li><a href="#指向已知层的指针">指向已知层的指针</a></li>
+    <li><a href="#flow和endpoint">Flow和EndPoint</a></li>
+    <li><a href="#实现你自己的解码器">实现你自己的解码器</a></li>
+    <li><a href="#使用-decodinglayerparser-快速解码">使用 DecodingLayerParser 快速解码</a></li>
+    <li><a href="#使用-decodinglayercontainer-进行更快的自定义解码">使用 DecodingLayerContainer 进行更快的自定义解码</a></li>
+    <li><a href="#创建分组数据">创建分组数据</a></li>
+    <li><a href="#最后">最后</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
+<p><a href="https://pkg.go.dev/github.com/google/gopacket#section-readme" target="_blank" rel="noopener noreffer ">godoc官网</a></p>
+<p>重要子包：</p>
+<ul>
+<li>layers：包含内置于 gopacket 中的用于解码数据包协议的逻辑。</li>
+<li>pcap：C 绑定以使用 libpcap 读取离线数据包。</li>
+<li>pfring：C 绑定使用 PF_RING 从线路上读取数据包。</li>
+<li>afpacket：Linux 的 AF_PACKET 的 C 绑定，用于离线读取数据包。</li>
+<li>tcpassembly：TCP 流重组</li>
+</ul>
+<h2 id="基本用法">基本用法</h2>
+<p>gopacket 将数据包数据作为 []byte 并将其解码。数据包被解码后可以从数据包中获取包的头信息。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 解码数据包
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>packet := gopacket.<span style="color:#0a0">NewPacket</span>(myPacketData, layers.LayerTypeEthernet, gopacket.Default) 
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 从这个数据包中获取 TCP 层
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">if</span> tcpLayer := packet.<span style="color:#0a0">Layer</span>(layers.LayerTypeTCP); tcpLayer != <span style="color:#00a">nil</span> { 
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;This is a TCP packet!&#34;</span>) 
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 从这一层获取实际的 TCP 数据
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  tcp, _ := tcpLayer.(*layers.TCP) 
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Printf</span>(<span style="color:#a50">&#34;From src port %d to dst port %d\n&#34;</span>, tcp.SrcPort, tcp.DstPort) 
+</span></span><span style="display:flex;"><span>} 
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 迭代所有层，打印出每个层类型
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">for</span> _, layer := <span style="color:#00a">range</span> packet.<span style="color:#0a0">Layers</span>() { 
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;PACKET LAYER :&#34;</span>, layer.<span style="color:#0a0">LayerType</span>()) 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以从多个起点解码数据包，允许解码没有完整数据的数据包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 解码以太网数据包
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>ethP := gopacket.<span style="color:#0a0">NewPacket</span>(p1, layers.LayerTypeEthernet, gopacket.Default) 
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 解码 IPv6 标头及其包含的所有内容
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>ipP := gopacket.<span style="color:#0a0">NewPacket</span>(p2, layers.LayerTypeIPv6, gopacket.Default) 
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 解码 TCP 标头及其有效载荷
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>tcpP := gopacket.<span style="color:#0a0">NewPacket</span>(p3, layers.LayerTypeTCP, gopacket.Default)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="从源读取数据包">从源读取数据包</h2>
+<p>构建一个 PacketSource从某处（文件、接口等）读取数据包并处理它们</p>
+<ol>
+<li>构造一个实现 PacketDataSource 接口的对象</li>
+<li>将PacketDataSource与选择的解码器一起传递到 NewPacketSource，以创建一个 PacketSource</li>
+</ol>
+<p>最常用的方法是 Packets 函数，它返回一个channel，然后将新数据包异步写入该channel，如果 packetSource 到达文件末尾则关闭channel</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>packetSource := ... <span style="color:#aaa;font-style:italic">// 使用 pcap 或 pfring 构造
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>packet := <span style="color:#00a">range</span> packetSource.<span style="color:#0a0">Packets</span>() { 
+</span></span><span style="display:flex;"><span>  <span style="color:#0a0">handlePacket</span>(packet) <span style="color:#aaa;font-style:italic">// 对每个数据包做一些事情
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="惰性解码">惰性解码</h2>
+<p>可选择延迟解码数据包数据，这意味着它仅在需要处理函数调用时才解码数据包层</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 创建一个数据包，但实际上还没有解码任何东西
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>packet := gopacket.<span style="color:#0a0">NewPacket</span>(myPacketData, layers.LayerTypeEthernet, gopacket.Lazy)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 将数据包解码到找到的第一个 IPv4 层，但不再进一步。如果没有找到 IPv4 层，整个数据包将被解码以寻找ipv4。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>ip4 := packet.<span style="color:#0a0">Layer</span>(layers.LayerTypeIPv4)
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 解码所有层并返回它们。每层解码一次。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>layers := packet.<span style="color:#0a0">Layers</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>延迟解码的数据包不是并发安全的。</p>
+<h2 id="nocopy解码">NoCopy解码</h2>
+<p>默认解码结果是原数据包的副本，添加这个选项返回的结果不进行拷贝使用原数据包。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>p := gopacket.<span style="color:#0a0">NewPacket</span>(data, layers.LayerTypeEthernet, gopacket.NoCopy)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最快的解码方法是同时使用 Lazy 和 NoCopy，但从上面的许多警告中请注意，对于某些实现，其中一个或两个都可能是危险的。</p>
+<h2 id="指向已知层的指针">指向已知层的指针</h2>
+<p>在解码期间，某些层作为众所周知的层类型存储在数据包中.可以使用 packet.LinkLayer、packet.NetworkLayer、packet.TransportLayer 和 packet.ApplicationLayer 函数。前三层提供了获取该特定层的 src/dst 地址的方法，而最后一层提供了一个 Payload 函数来获取有效负载数据</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 从某个来源获取数据包
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">for</span> packet := <span style="color:#00a">range</span> someSource { 
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> app := packet.<span style="color:#0a0">ApplicationLayer</span>(); app != <span style="color:#00a">nil</span> { 
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> strings.<span style="color:#0a0">Contains</span>(<span style="color:#0aa">string</span>(app.<span style="color:#0a0">Payload</span>()), <span style="color:#a50">&#34;magic string&#34;</span>) { 
+</span></span><span style="display:flex;"><span>      fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;Found magic string in a packet!&#34;</span>) 
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>  } 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一个特别有用的层是 ErrorLayer，它会在数据包的解析部分出现错误时设置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>packet := gopacket.<span style="color:#0a0">NewPacket</span>(myPacketData, layers.LayerTypeEthernet, gopacket.Default)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err := packet.<span style="color:#0a0">ErrorLayer</span>(); err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;Error decoding some part of the packet:&#34;</span>, err)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，我们不会从 NewPacket 返回错误，因为在进入错误层之前，我们可能已经成功解码了多个层。即使您的 TCP 层格式不正确，您仍然可以正确获取以太网和 IPv4 层。</p>
+<h2 id="flow和endpoint">Flow和EndPoint</h2>
+<p>gopacket 有两个有用的对象，Flow 和 Endpoint，用于以独立于协议的方式传达数据包来自 A 和去往 B 的事实。通用层类型 LinkLayer、NetworkLayer 和 TransportLayer 都提供提取其Flow信息的方法，不用担心底层的类型</p>
+<p>Flow 是一个简单的对象，由两个端点组成，一个源和一个目的地。它详细说明了数据包层的发送方和接收方。</p>
+<p>Endpoint是源或目标的可散列表示。例如，对于 LayerTypeIPv4，端点包含  IPv4 数据包的 IP 地址字节。Flow 可以分解为 Endpoints，而 Endpoints 可以组合成 Flows：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>packet := gopacket.<span style="color:#0a0">NewPacket</span>(myPacketData, layers.LayerTypeEthernet, gopacket.Lazy)
+</span></span><span style="display:flex;"><span>netFlow := packet.<span style="color:#0a0">NetworkLayer</span>().<span style="color:#0a0">NetworkFlow</span>()
+</span></span><span style="display:flex;"><span>src, dst := netFlow.<span style="color:#0a0">Endpoints</span>()
+</span></span><span style="display:flex;"><span>reverseFlow := gopacket.<span style="color:#0a0">NewFlow</span>(dst, src)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Endpoint 和 Flow 对象都可以用作map的key，<code>=</code>可以比较它们，因此您可以根据端点标准轻松地将所有数据包组合在一起：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>flows := <span style="color:#00a">map</span>[gopacket.Endpoint]<span style="color:#00a">chan</span> gopacket.Packet 
+</span></span><span style="display:flex;"><span>packet := gopacket.<span style="color:#0a0">NewPacket</span>(myPacketData, layers.LayerTypeEthernet, gopacket.Lazy) 
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 根据目标端口将所有 TCP 数据包发送到通道。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">if</span> tcp := packet.<span style="color:#0a0">Layer</span>(layers.LayerTypeTCP); tcp != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>  flows[tcp.<span style="color:#0a0">TransportFlow</span>().<span style="color:#0a0">Dst</span>()] &lt;- packet
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 查找具有相同源和目标网络地址的所有数据包
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">if</span> net := packet.<span style="color:#0a0">NetworkLayer</span>(); net != <span style="color:#00a">nil</span> { 
+</span></span><span style="display:flex;"><span>  src, dst := net.<span style="color:#0a0">NetworkFlow</span>().<span style="color:#0a0">Endpoints</span>() 
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> src == dst { 
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;Fishy packet has same network source and dst: %s&#34;</span>, src) 
+</span></span><span style="display:flex;"><span>  } 
+</span></span><span style="display:flex;"><span>} 
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// 查找所有从 UDP 端口 1000 到 UDP 端口 500 的数据包
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>interestingFlow := gopacket.<span style="color:#0a0">FlowFromEndpoints</span>(layers.<span style="color:#0a0">NewUDPPortEndpoint</span>(<span style="color:#099">1000</span>), layers.<span style="color:#0a0">NewUDPPortEndpoint</span>(<span style="color:#099">500</span>))
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> t := packet.<span style="color:#0a0">NetworkLayer</span>(); t != <span style="color:#00a">nil</span> &amp;&amp; t.<span style="color:#0a0">TransportFlow</span>() == interestingFlow {
+</span></span><span style="display:flex;"><span>  fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;Found that UDP flow I was looking for!&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>出于负载平衡的目的，Flow 和 Endpoint 都具有 FastHash() 函数，这些函数提供其内容的快速、非加密散列。特别重要的是 Flow FastHash() 是对称的：A-&gt;B 将具有与 B-&gt;A 相同的哈希值。一个示例用法可能是：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>channels := [<span style="color:#099">8</span>]<span style="color:#00a">chan</span> gopacket.Packet
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> i := <span style="color:#099">0</span>; i &lt; <span style="color:#099">8</span>; i++ {
+</span></span><span style="display:flex;"><span>  channels[i] = <span style="color:#0aa">make</span>(<span style="color:#00a">chan</span> gopacket.Packet)
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">go</span> <span style="color:#0a0">packetHandler</span>(channels[i])
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">for</span> packet := <span style="color:#00a">range</span> <span style="color:#0a0">getPackets</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">if</span> net := packet.<span style="color:#0a0">NetworkLayer</span>(); net != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>    channels[<span style="color:#0aa">int</span>(net.<span style="color:#0a0">NetworkFlow</span>().<span style="color:#0a0">FastHash</span>()) &amp; <span style="color:#099">0x7</span>] &lt;- packet
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这使我们能够拆分数据包流，同时仍然确保每个流都能看到流的所有数据包（及其双向相反）。</p>
+<h2 id="实现你自己的解码器">实现你自己的解码器</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//创建一个layer类型，参数1的值唯一且较大避免冲突， 给它一个名字和一个解码器来使用。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">var</span> MyLayerType = gopacket.<span style="color:#0a0">RegisterLayerType</span>(<span style="color:#099">12345</span>, gopacket.LayerTypeMetadata{Name: <span style="color:#a50">&#34;MyLayerType&#34;</span>, Decoder: gopacket.<span style="color:#0a0">DecodeFunc</span>(decodeMyLayer)})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//实现自定义layer
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">type</span> MyLayer <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>  StrangeHeader []<span style="color:#0aa">byte</span>
+</span></span><span style="display:flex;"><span>  payload []<span style="color:#0aa">byte</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (m MyLayer) <span style="color:#0a0">LayerType</span>() gopacket.LayerType { <span style="color:#00a">return</span> MyLayerType }
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (m MyLayer) <span style="color:#0a0">LayerContents</span>() []<span style="color:#0aa">byte</span> { <span style="color:#00a">return</span> m.StrangeHeader }
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (m MyLayer) <span style="color:#0a0">LayerPayload</span>() []<span style="color:#0aa">byte</span> { <span style="color:#00a">return</span> m.payload }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//实现一个解码器。该函数去掉了前4个字节的数据（选择前 4 个字节为包头）。
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">func</span> <span style="color:#0a0">decodeMyLayer</span>(data []<span style="color:#0aa">byte</span>, p gopacket.PacketBuilder) <span style="color:#0aa">error</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 创建mylayer
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  p.<span style="color:#0a0">AddLayer</span>(&amp;MyLayer{data[:<span style="color:#099">4</span>], data[<span style="color:#099">4</span>:]})
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// 确定如何处理数据包的其余部分
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#00a">return</span> p.<span style="color:#0a0">NextDecoder</span>(layers.LayerTypeEthernet)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//最后使用你的解码器
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>p := gopacket.<span style="color:#0a0">NewPacket</span>(data, MyLayerType, gopacket.Lazy)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="使用-decodinglayerparser-快速解码">使用 DecodingLayerParser 快速解码</h2>
+<p>TLDR：DecodingLayerParser 大约需要 NewPacket 的 10% 的时间来解码数据包数据，但仅限于已知的数据包堆栈。</p>
+<p>使用 gopacket.NewPacket 或 PacketSource.Packets 的基本解码有点慢，因为它需要分配一个新的数据包和每个相应的层。它的用途非常广泛，可以处理所有已知的层类型，但有时您实际上只关心一组特定的层而不管，因此浪费了多功能性。</p>
+<p>DecodingLayerParser 通过将数据包层直接解码为预分配的对象来完全避免内存分配，然后您可以引用这些对象来获取数据包的信息。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() { 
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">var</span> eth layers.Ethernet 
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">var</span> ip4 layers.IPv4 
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">var</span> ip6 layers.IPv6 
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">var</span> tcp 
+</span></span><span style="display:flex;"><span>  layers.TCP parser := gopacket.<span style="color:#0a0">NewDecodingLayerParser</span>(layers.LayerTypeEthernet, ð, &amp;ip4, &amp;ip6, &amp;tcp) 
+</span></span><span style="display:flex;"><span>  decoded := []gopacket .LayerType{} 
+</span></span><span style="display:flex;"><span>  <span style="color:#00a">for</span> packetData := <span style="color:#00a">range</span> <span style="color:#0a0">somewhatGetPacketData</span>() { 
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">if</span> err := parser.<span style="color:#0a0">DecodeLayers</span>(packetData, &amp;decoded); err != <span style="color:#00a">nil</span> { 
+</span></span><span style="display:flex;"><span>      fmt.<span style="color:#0a0">Fprintf</span>(os.Stderr, <span style="color:#a50">&#34;Could not decode layers: %v\n&#34;</span>, err) 
+</span></span><span style="display:flex;"><span>      <span style="color:#00a">continue</span> 
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">for</span> _, layerType := <span style="color:#00a">range</span> decoded {
+</span></span><span style="display:flex;"><span>      开关 layerType { 
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">case</span> layers.LayerTypeIPv6: 
+</span></span><span style="display:flex;"><span>          fmt.<span style="color:#0a0">Println</span>( <span style="color:#f00;background-color:#faa">“</span>IP6<span style="color:#f00;background-color:#faa">”、</span>ip6.SrcIP<span style="color:#f00;background-color:#faa">、</span>ip6.DstIP)
+</span></span><span style="display:flex;"><span>        层<span style="color:#f00;background-color:#faa">。</span>
+</span></span><span style="display:flex;"><span>          fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34; IP4 &#34;</span>, ip4.SrcIP, ip4.DstIP) 
+</span></span><span style="display:flex;"><span>      } 
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>  } 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>并不是所有的层都可以被 DecodingLayerParser 使用……只有那些实现了 DecodingLayer 接口的层才可用</p>
+<h2 id="使用-decodinglayercontainer-进行更快的自定义解码">使用 DecodingLayerContainer 进行更快的自定义解码</h2>
+<p>默认情况下，DecodingLayerParser 使用原生地图来存储和搜索要解码的图层。尽管用途广泛，但在某些情况下，此解决方案可能不是最佳选择。例如，如果您只有几层，则可以通过稀疏数组索引或线性数组扫描来提供更快的操作。</p>
+<h2 id="创建分组数据">创建分组数据</h2>
+<p>除了提供解码数据包数据的能力外，gopacket 还允许您从头开始创建数据包。许多 gopacket 层实现了 SerializableLayer 接口；这些层可以按以下方式序列化为 []byte：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>ip := &amp;layers.IPv4{
+</span></span><span style="display:flex;"><span>  SrcIP: net.IP{<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>, <span style="color:#099">4</span>},
+</span></span><span style="display:flex;"><span>  DstIP: net.IP{<span style="color:#099">5</span>, <span style="color:#099">6</span>, <span style="color:#099">7</span>, <span style="color:#099">8</span>},
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic">// etc...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span><span style="display:flex;"><span>buf := gopacket.<span style="color:#0a0">NewSerializeBuffer</span>()
+</span></span><span style="display:flex;"><span>opts := gopacket.SerializeOptions{}  <span style="color:#aaa;font-style:italic">// See SerializeOptions for more details.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := ip.<span style="color:#0a0">SerializeTo</span>(buf, opts)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> { <span style="color:#0aa">panic</span>(err) }
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#0a0">Println</span>(buf.<span style="color:#0a0">Bytes</span>())  <span style="color:#aaa;font-style:italic">// prints out a byte slice containing the serialized IPv4 layer.
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>SerializeTo 将给定layer添加到 SerializeBuffer 上，并将当前缓冲区的 Bytes() 切片视为序列化层的有效负载。因此，您可以通过以相反顺序序列化一组layer来序列化整个数据包（例如，有效负载、然后是 TCP、然后是 IP、然后是以太头）。</p>
+<p>如果不想让手动按逆序序列化，可以使用SerializeLayers函数，你可以在他的参数中按正常顺序写入需要添加的layer</p>
+<p>例如，要生成一个（空的且无用的，因为没有设置任何字段）Ethernet(IPv4(TCP(Payload))) 数据包，您可以运行</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>buf := gopacket.<span style="color:#0a0">NewSerializeBuffer</span>()
+</span></span><span style="display:flex;"><span>opts := gopacket.SerializeOptions{}
+</span></span><span style="display:flex;"><span>gopacket.<span style="color:#0a0">SerializeLayers</span>(buf, opts,
+</span></span><span style="display:flex;"><span>  &amp;layers.Ethernet{},
+</span></span><span style="display:flex;"><span>  &amp;layers.IPv4{},
+</span></span><span style="display:flex;"><span>  &amp;layers.TCP{},
+</span></span><span style="display:flex;"><span>  gopacket.<span style="color:#0a0">Payload</span>([]<span style="color:#0aa">byte</span>{<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>, <span style="color:#099">4</span>}))
+</span></span><span style="display:flex;"><span>packetData := buf.<span style="color:#0a0">Bytes</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="最后">最后</h2>
+<p>如果您使用 gopacket，肯定要确保导入 gopacket/layers，因为在导入时它会设置所有 LayerType 变量并填充许多有趣的变量/地图（DecodersByLayerName 等）。因此，建议即使您不直接使用任何layers 函数，您仍然可以导入：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>  _ <span style="color:#a50">&#34;github.com/google/gopacket/layers&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-12-14
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.google.gopacket/" data-title="go第三方库-github.com.google.gopacket" data-hashtags="go第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.google.gopacket/" data-hashtag="go第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.google.gopacket/" data-title="go第三方库-github.com.google.gopacket"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.google.gopacket/" data-title="go第三方库-github.com.google.gopacket"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.google.gopacket/" data-title="go第三方库-github.com.google.gopacket"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">go第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%B0%8F%E6%9E%97coding/http%E7%AF%87/" class="prev" rel="prev" title="计算机网络-小林coding-HTTP篇"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>计算机网络-小林coding-HTTP篇</a>
+            <a href="/posts/%E5%89%8D%E7%AB%AF/vue/1%E5%BC%80%E5%A7%8B/" class="next" rel="next" title="Vue-1开始">Vue-1开始<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-14T13:24:02+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"go第三方库-github.com.google.gopacket"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

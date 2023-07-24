@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>go第三方库-github.com.spf13.viper - Oublie的Hugo博客</title><meta name="Description" content="Oublie的Hugo博客,hugo,golang,mysql,微服务"><meta property="og:title" content="go第三方库-github.com.spf13.viper" />
+<meta property="og:description" content="godoc 本系列为作者跟着viper官网学习做的笔记 另外相关阅读还可以查看李文周（qimi）的博客 安装 1 go get github.com/spf13/viper 注意： Viper 使用Go Modules来管理依" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.spf13.viper/" /><meta property="og:image" content="https://oublie6.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-21T08:58:51+08:00" />
+<meta property="article:modified_time" content="2022-10-21T08:58:51+08:00" /><meta property="og:site_name" content="我的网站" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://oublie6.github.io/logo.png"/>
+
+<meta name="twitter:title" content="go第三方库-github.com.spf13.viper"/>
+<meta name="twitter:description" content="godoc 本系列为作者跟着viper官网学习做的笔记 另外相关阅读还可以查看李文周（qimi）的博客 安装 1 go get github.com/spf13/viper 注意： Viper 使用Go Modules来管理依"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/%e5%a4%b4%e5%83%8f.jpeg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.spf13.viper/" /><link rel="prev" href="https://oublie6.github.io/posts/%E5%89%8D%E7%AB%AF/vue/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/ref%E5%92%8Creactive/" /><link rel="next" href="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.swaggo.swag/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "go第三方库-github.com.spf13.viper",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/github.com.spf13.viper\/"
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go第三方库","wordcount":  6311 ,
+        "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/github.com.spf13.viper\/","datePublished": "2022-10-21T08:58:51+08:00","dateModified": "2022-10-21T08:58:51+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
+                "@type": "Person",
+                "name": "oublie"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">go第三方库-github.com.spf13.viper</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-21">2022-10-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;6311 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#什么是viper">什么是Viper？</a></li>
+    <li><a href="#为什么是viper">为什么是Viper？</a></li>
+    <li><a href="#将值存入-viper">将值存入 Viper</a>
+      <ul>
+        <li><a href="#建立默认值">建立默认值</a></li>
+        <li><a href="#读取配置文件">读取配置文件</a></li>
+        <li><a href="#编写配置文件">编写配置文件</a></li>
+        <li><a href="#查看和重新读取配置文件">查看和重新读取配置文件</a></li>
+        <li><a href="#从-ioreader-读取配置">从 io.Reader 读取配置</a></li>
+        <li><a href="#设置覆盖">设置覆盖</a></li>
+        <li><a href="#注册和使用别名">注册和使用别名</a></li>
+        <li><a href="#使用环境变量">使用环境变量</a></li>
+        <li><a href="#环境示例">环境示例</a></li>
+        <li><a href="#使用标志">使用标志</a></li>
+        <li><a href="#flag接口">flag接口</a></li>
+        <li><a href="#远程键值存储支持">远程键/值存储支持</a></li>
+        <li><a href="#远程键值存储示例---未加密">远程键/值存储示例 - 未加密</a>
+          <ul>
+            <li><a href="#etcd">etcd</a></li>
+            <li><a href="#etcd3">etcd3</a></li>
+            <li><a href="#consul">Consul</a></li>
+            <li><a href="#firestore">Firestore</a></li>
+          </ul>
+        </li>
+        <li><a href="#远程键值存储示例---加密">远程键/值存储示例 - 加密</a></li>
+        <li><a href="#观察-etcd-中的变化---未加密">观察 etcd 中的变化 - 未加密</a></li>
+      </ul>
+    </li>
+    <li><a href="#从-viper-获取值">从 Viper 获取值</a>
+      <ul>
+        <li><a href="#访问嵌套键">访问嵌套键</a></li>
+        <li><a href="#提取子树">提取子树</a></li>
+        <li><a href="#解组">解组</a></li>
+        <li><a href="#解码自定义格式">解码自定义格式</a></li>
+        <li><a href="#编组到字符串">编组到字符串</a></li>
+      </ul>
+    </li>
+    <li><a href="#viper-or-vipers">Viper or Vipers?</a>
+      <ul>
+        <li><a href="#working-with-multiple-vipers">Working with multiple vipers</a></li>
+      </ul>
+    </li>
+    <li><a href="#问答">问答</a>
+      <ul>
+        <li><a href="#为什么叫viper蝰蛇">为什么叫“Viper”蝰蛇？</a></li>
+        <li><a href="#为什么叫cobra眼镜蛇">为什么叫“cobra”眼镜蛇？</a></li>
+        <li><a href="#viper-是否支持区分大小写的键">Viper 是否支持区分大小写的键？</a></li>
+        <li><a href="#同时读写viper是否安全">同时读写viper是否安全？</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://pkg.go.dev/" target="_blank" rel="noopener noreffer ">godoc</a></p>
+<p>本系列为作者跟着<a href="https://github.com/spf13/viper" target="_blank" rel="noopener noreffer ">viper官网</a>学习做的笔记</p>
+<p>另外相关阅读还可以查看<a href="https://www.liwenzhou.com/posts/Go/viper_tutorial/" target="_blank" rel="noopener noreffer ">李文周（qimi）的博客</a></p>
+<h2 id="安装">安装</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go get github.com/spf13/viper
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意： Viper 使用Go Modules来管理依赖项。</p>
+<h2 id="什么是viper">什么是Viper？</h2>
+<p>Viper 是一个完整的 Go 应用程序配置解决方案，包括 12-Factor 应用程序。它旨在在应用程序中工作，并且可以处理所有类型的配置需求和格式。它支持：</p>
+<ul>
+<li>设置默认值</li>
+<li>从 JSON、TOML、YAML、HCL、envfile 和 Java 属性配置文件读取</li>
+<li>实时观看和重新阅读配置文件（可选）</li>
+<li>从环境变量中读取</li>
+<li>从远程配置系统（etcd 或 Consul）读取，并观察变化</li>
+<li>从命令行标志读取</li>
+<li>从缓冲区读取</li>
+<li>设置显式值</li>
+</ul>
+<p>Viper 可以被认为是满足您所有应用程序配置需求的注册表。</p>
+<h2 id="为什么是viper">为什么是Viper？</h2>
+<p>在构建现代应用程序时，您不必担心配置文件格式；您想专注于构建出色的软件。Viper 是来帮助解决这个问题的。</p>
+<p>Viper 为您执行以下操作：</p>
+<ol>
+<li>查找、加载和解组 JSON、TOML、YAML、HCL、INI、envfile 或 Java 属性格式的配置文件。</li>
+<li>提供一种机制来为您的不同配置选项设置默认值。</li>
+<li>提供一种机制来为通过命令行标志指定的选项设置覆盖值。</li>
+<li>提供别名系统以轻松重命名参数而不会破坏现有代码。</li>
+<li>便于区分用户何时提供了与默认值相同的命令行或配置文件。</li>
+</ol>
+<p>Viper 使用以下优先顺序。每个项目优先于它下面的项目：</p>
+<ul>
+<li>显式调用Set</li>
+<li>flag</li>
+<li>env</li>
+<li>config</li>
+<li>键/值存储</li>
+<li>default</li>
+</ul>
+<p>重要提示： Viper 配置键不区分大小写。正在进行关于将其设为可选的讨论。</p>
+<h2 id="将值存入-viper">将值存入 Viper</h2>
+<h3 id="建立默认值">建立默认值</h3>
+<p>一个好的配置系统将支持默认值。密钥不需要默认值，但在尚未通过配置文件、环境变量、远程配置或flag设置密钥的情况下很有用。</p>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">SetDefault</span>(<span style="color:#a50">&#34;ContentDir&#34;</span>, <span style="color:#a50">&#34;content&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">SetDefault</span>(<span style="color:#a50">&#34;LayoutDir&#34;</span>, <span style="color:#a50">&#34;layouts&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">SetDefault</span>(<span style="color:#a50">&#34;Taxonomies&#34;</span>, <span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#0aa">string</span>{<span style="color:#a50">&#34;tag&#34;</span>: <span style="color:#a50">&#34;tags&#34;</span>, <span style="color:#a50">&#34;category&#34;</span>: <span style="color:#a50">&#34;categories&#34;</span>})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="读取配置文件">读取配置文件</h3>
+<p>Viper 需要最少的配置，因此它知道在哪里查找配置文件。Viper 支持 JSON、TOML、YAML、HCL、INI、envfile 和 Java 属性文件。Viper 可以搜索多个路径，但目前单个 Viper 实例仅支持单个配置文件。Viper 不默认任何配置搜索路径，将默认决定留给应用程序。</p>
+<p>下面是一个如何使用 Viper 搜索和读取配置文件的示例。不需要任何特定路径，但应至少提供一个路径，其中需要配置文件。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">SetConfigName</span>(<span style="color:#a50">&#34;config&#34;</span>) <span style="color:#aaa;font-style:italic">// name of config file (without extension)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>viper.<span style="color:#0a0">SetConfigType</span>(<span style="color:#a50">&#34;yaml&#34;</span>) <span style="color:#aaa;font-style:italic">// REQUIRED if the config file does not have the extension in the name
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>viper.<span style="color:#0a0">AddConfigPath</span>(<span style="color:#a50">&#34;/etc/appname/&#34;</span>)   <span style="color:#aaa;font-style:italic">// path to look for the config file in
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>viper.<span style="color:#0a0">AddConfigPath</span>(<span style="color:#a50">&#34;$HOME/.appname&#34;</span>)  <span style="color:#aaa;font-style:italic">// call multiple times to add many search paths
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>viper.<span style="color:#0a0">AddConfigPath</span>(<span style="color:#a50">&#34;.&#34;</span>)               <span style="color:#aaa;font-style:italic">// optionally look for config in the working directory
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := viper.<span style="color:#0a0">ReadInConfig</span>() <span style="color:#aaa;font-style:italic">// Find and read the config file
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> { <span style="color:#aaa;font-style:italic">// Handle errors reading the config file
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0aa">panic</span>(fmt.<span style="color:#0a0">Errorf</span>(<span style="color:#a50">&#34;fatal error config file: %w&#34;</span>, err))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>您可以处理找不到配置文件的特定情况，如下所示：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">if</span> err := viper.<span style="color:#0a0">ReadInConfig</span>(); err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">if</span> _, ok := err.(viper.ConfigFileNotFoundError); ok {
+</span></span><span style="display:flex;"><span>		<span style="color:#aaa;font-style:italic">// Config file not found; ignore error if desired
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	} <span style="color:#00a">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#aaa;font-style:italic">// Config file was found but another error was produced
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Config file found and successfully parsed
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意 [从 1.6 开始]：您也可以有一个没有扩展名的文件，并以编程方式指定格式。对于那些位于用户Home中没有任何扩展名的配置文件.bashrc</p>
+<h3 id="编写配置文件">编写配置文件</h3>
+<p>从配置文件中读取很有用，但有时您希望存储在运行时所做的所有修改。为此，可以使用一堆命令，每个命令都有自己的用途：</p>
+<ul>
+<li>WriteConfig - 将当前 viper 配置写入预定义路径（如果存在）。如果没有预定义的路径，则会出错。如果存在，将覆盖当前配置文件。</li>
+<li>SafeWriteConfig - 将当前 viper 配置写入预定义路径。如果没有预定义的路径，则会出错。如果存在，则不会覆盖当前配置文件。</li>
+<li>WriteConfigAs - 将当前的 viper 配置写入给定的文件路径。将覆盖给定文件（如果存在）。</li>
+<li>SafeWriteConfigAs - 将当前的 viper 配置写入给定的文件路径。不会覆盖给定文件（如果存在）。</li>
+</ul>
+<p>根据经验，标有安全的所有文件都不会覆盖任何文件，如果不存在则创建，而默认行为是创建或截断。</p>
+<p>一个小例子部分：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">WriteConfig</span>() <span style="color:#aaa;font-style:italic">// writes current config to predefined path set by &#39;viper.AddConfigPath()&#39; and &#39;viper.SetConfigName&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>viper.<span style="color:#0a0">SafeWriteConfig</span>()
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">WriteConfigAs</span>(<span style="color:#a50">&#34;/path/to/my/.config&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">SafeWriteConfigAs</span>(<span style="color:#a50">&#34;/path/to/my/.config&#34;</span>) <span style="color:#aaa;font-style:italic">// will error since it has already been written
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>viper.<span style="color:#0a0">SafeWriteConfigAs</span>(<span style="color:#a50">&#34;/path/to/my/.other_config&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="查看和重新读取配置文件">查看和重新读取配置文件</h3>
+<p>Viper 支持让您的应用程序在运行时实时读取配置文件的能力。</p>
+<p>需要重新启动服务器才能使配置生效的日子已经一去不复返了，viper 驱动的应用程序可以在运行时读取配置文件的更新而不会错过任何一个节拍。</p>
+<p>只需告诉 viper 实例 watchConfig。或者，您可以为 Viper 提供一个函数，以便在每次发生更改时运行。</p>
+<p>确保在调用WatchConfig()之前添加所有 configPaths</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">OnConfigChange</span>(<span style="color:#00a">func</span>(e fsnotify.Event) {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;Config file changed:&#34;</span>, e.Name)
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">WatchConfig</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="从-ioreader-读取配置">从 io.Reader 读取配置</h3>
+<p>Viper 预定义了许多配置源，例如文件、环境变量、标志和远程 K/V 存储，但您不受它们的约束。您还可以实现自己所需的配置源并将其提供给 viper。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">SetConfigType</span>(<span style="color:#a50">&#34;yaml&#34;</span>) <span style="color:#aaa;font-style:italic">// or viper.SetConfigType(&#34;YAML&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// any approach to require this configuration into your program.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">var</span> yamlExample = []<span style="color:#0aa">byte</span>(<span style="color:#a50">`
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">Hacker: true
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">name: steve
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">hobbies:
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">- skateboarding
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">- snowboarding
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">- go
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">clothing:
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">  jacket: leather
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">  trousers: denim
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">age: 35
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">eyes : brown
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">beard: true
+</span></span></span><span style="display:flex;"><span><span style="color:#a50">`</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">ReadConfig</span>(bytes.<span style="color:#0a0">NewBuffer</span>(yamlExample))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">Get</span>(<span style="color:#a50">&#34;name&#34;</span>) <span style="color:#aaa;font-style:italic">// this would be &#34;steve&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="设置覆盖">设置覆盖</h3>
+<p>这些可能来自命令行flag，也可能来自您自己的应用程序逻辑。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;Verbose&#34;</span>, <span style="color:#00a">true</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;LogFile&#34;</span>, LogFile)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="注册和使用别名">注册和使用别名</h3>
+<p>别名允许多个键引用单个值</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">RegisterAlias</span>(<span style="color:#a50">&#34;loud&#34;</span>, <span style="color:#a50">&#34;Verbose&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;verbose&#34;</span>, <span style="color:#00a">true</span>) <span style="color:#aaa;font-style:italic">// same result as next line
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>viper.<span style="color:#0a0">Set</span>(<span style="color:#a50">&#34;loud&#34;</span>, <span style="color:#00a">true</span>)   <span style="color:#aaa;font-style:italic">// same result as prior line
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">GetBool</span>(<span style="color:#a50">&#34;loud&#34;</span>) <span style="color:#aaa;font-style:italic">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>viper.<span style="color:#0a0">GetBool</span>(<span style="color:#a50">&#34;verbose&#34;</span>) <span style="color:#aaa;font-style:italic">// true
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用环境变量">使用环境变量</h3>
+<p>Viper 完全支持环境变量。这使开箱即用的 12 因子应用成为可能。有五种方法可以帮助使用 ENV：</p>
+<ul>
+<li>AutomaticEnv()</li>
+<li>BindEnv(string&hellip;) : error</li>
+<li>SetEnvPrefix(string)</li>
+<li>SetEnvKeyReplacer(string&hellip;) *strings.Replacer</li>
+<li>AllowEmptyEnv(bool)</li>
+</ul>
+<p>使用 ENV 变量时，重要的是要认识到 Viper 将 ENV 变量视为区分大小写。</p>
+<p>Viper 提供了一种机制来尝试确保 ENV 变量是唯一的。通过使用SetEnvPrefix，您可以告诉 Viper 在读取环境变量时使用前缀。BindEnv和AutomaticEnv两者都将使用此前缀。</p>
+<p>BindEnv接受一个或多个参数。第一个参数是键名，其余的是要绑定到该键的环境变量的名称。如果提供了多个，它们将按照指定的顺序优先。环境变量的名称区分大小写。如果未提供 ENV 变量名称，那么 Viper 将自动假定 ENV 变量与以下格式匹配：前缀 + &ldquo;_&rdquo; + 全部大写的键名。当您显式提供 ENV 变量名称（第二个参数）时，它不会自动添加前缀。例如，如果第二个参数是“id”，Viper 将查找 ENV 变量“ID”。</p>
+<p>使用 ENV 变量时要认识到的一件重要事情是每次访问时都会读取该值。BindEnv调用时，Viper 不固定该值。</p>
+<p>AutomaticEnv是一个强大的帮手，尤其是与 SetEnvPrefix一起使用时。 在任何时候viper.Get调用时，Viper 将发出请求时检查环境变量。它将应用以下规则。它将检查名称与键的大写形式匹配环境变量，如果设置了EnvPrefix还会匹配是否有该前缀。</p>
+<p>SetEnvKeyReplacer允许您使用strings.Replacer对象在一定程度上重写 Env 键。-如果您想在Get()调用中使用<code>-</code>或某些东西 ，但希望您的环境变量使用<code>_</code>分隔符，这很有用。可以在viper_test.go中找到使用它的示例。</p>
+<p>或者，您可以工厂函数NewWithOptions使用EnvKeyReplacer。与SetEnvKeyReplacer不同，它接受一个StringReplacer允许您编写自定义字符串替换逻辑的接口。</p>
+<p>默认情况下，空环境变量被视为未设置，并将回退到下一个配置源。要将空环境变量视为已设置，请使用该AllowEmptyEnv方法。</p>
+<h3 id="环境示例">环境示例</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#0a0">SetEnvPrefix</span>(<span style="color:#a50">&#34;spf&#34;</span>) <span style="color:#aaa;font-style:italic">// will be uppercased automatically
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#0a0">BindEnv</span>(<span style="color:#a50">&#34;id&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>os.<span style="color:#0a0">Setenv</span>(<span style="color:#a50">&#34;SPF_ID&#34;</span>, <span style="color:#a50">&#34;13&#34;</span>) <span style="color:#aaa;font-style:italic">// typically done outside of the app
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>id := <span style="color:#0a0">Get</span>(<span style="color:#a50">&#34;id&#34;</span>) <span style="color:#aaa;font-style:italic">// 13
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用标志">使用标志</h3>
+<p>Viper 具有绑定flag的能力。具体来说，Viper 支持Pflags 在Cobra库中使用。</p>
+<p>像BindEnv，在调用绑定方法时不会设置该值，而是在访问它时设置该值。这意味着您可以尽可能早地绑定，即使在 init()函数中也是如此。</p>
+<p>对于单个flag，该BindPFlag()方法提供此功能。</p>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>serverCmd.<span style="color:#0a0">Flags</span>().<span style="color:#0a0">Int</span>(<span style="color:#a50">&#34;port&#34;</span>, <span style="color:#099">1138</span>, <span style="color:#a50">&#34;Port to run Application server on&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">BindPFlag</span>(<span style="color:#a50">&#34;port&#34;</span>, serverCmd.<span style="color:#0a0">Flags</span>().<span style="color:#0a0">Lookup</span>(<span style="color:#a50">&#34;port&#34;</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>您还可以绑定现有的一组 pflags (pflag.FlagSet)：</p>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>pflag.<span style="color:#0a0">Int</span>(<span style="color:#a50">&#34;flagname&#34;</span>, <span style="color:#099">1234</span>, <span style="color:#a50">&#34;help message for flagname&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pflag.<span style="color:#0a0">Parse</span>()
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">BindPFlags</span>(pflag.CommandLine)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>i := viper.<span style="color:#0a0">GetInt</span>(<span style="color:#a50">&#34;flagname&#34;</span>) <span style="color:#aaa;font-style:italic">// retrieve values from viper instead of pflag
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 Viper 中使用pflag并不排除使用 标准库中使用flag包的其他包。pflag 包可以通过导入这些标志来处理为标志包定义的标志。这是通过调用一个名为 AddGoFlagSet() 的 pflag 包提供的便利函数来完成的。</p>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;flag&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;github.com/spf13/pflag&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// using standard library &#34;flag&#34; package
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	flag.<span style="color:#0a0">Int</span>(<span style="color:#a50">&#34;flagname&#34;</span>, <span style="color:#099">1234</span>, <span style="color:#a50">&#34;help message for flagname&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	pflag.CommandLine.<span style="color:#0a0">AddGoFlagSet</span>(flag.CommandLine)
+</span></span><span style="display:flex;"><span>	pflag.<span style="color:#0a0">Parse</span>()
+</span></span><span style="display:flex;"><span>	viper.<span style="color:#0a0">BindPFlags</span>(pflag.CommandLine)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	i := viper.<span style="color:#0a0">GetInt</span>(<span style="color:#a50">&#34;flagname&#34;</span>) <span style="color:#aaa;font-style:italic">// retrieve value from viper
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="flag接口">flag接口</h3>
+<p>Viper 提供了两个 Go 接口来绑定其他flag系统，如果你不使用Pflags.</p>
+<p>FlagValue表示单个flag。这是一个关于如何实现此接口的非常简单的示例：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> myFlag <span style="color:#00a">struct</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (f myFlag) <span style="color:#0a0">HasChanged</span>() <span style="color:#0aa">bool</span> { <span style="color:#00a">return</span> <span style="color:#00a">false</span> }
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (f myFlag) <span style="color:#0a0">Name</span>() <span style="color:#0aa">string</span> { <span style="color:#00a">return</span> <span style="color:#a50">&#34;my-flag-name&#34;</span> }
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (f myFlag) <span style="color:#0a0">ValueString</span>() <span style="color:#0aa">string</span> { <span style="color:#00a">return</span> <span style="color:#a50">&#34;my-flag-value&#34;</span> }
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (f myFlag) <span style="color:#0a0">ValueType</span>() <span style="color:#0aa">string</span> { <span style="color:#00a">return</span> <span style="color:#a50">&#34;string&#34;</span> }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一旦你的标志实现了这个接口，你可以简单地告诉 Viper 绑定它：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">BindFlagValue</span>(<span style="color:#a50">&#34;my-flag-name&#34;</span>, myFlag{})
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>FlagValueSet代表一组标志。这是一个关于如何实现此接口的非常简单的示例：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> myFlagSet <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	flags []myFlag
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> (f myFlagSet) <span style="color:#0a0">VisitAll</span>(fn <span style="color:#00a">func</span>(FlagValue)) {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">for</span> _, flag := <span style="color:#00a">range</span> flags {
+</span></span><span style="display:flex;"><span>		<span style="color:#0a0">fn</span>(flag)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一旦你的标志集实现了这个接口，你可以简单地告诉 Viper 绑定它：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>fSet := myFlagSet{
+</span></span><span style="display:flex;"><span>	flags: []myFlag{myFlag{}, myFlag{}},
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">BindFlagValues</span>(<span style="color:#a50">&#34;my-flags&#34;</span>, fSet)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="远程键值存储支持">远程键/值存储支持</h3>
+<p>要在 Viper 中启用远程支持，请对包进行空白导入viper/remote ：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> _ <span style="color:#a50">&#34;github.com/spf13/viper/remote&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Viper 将读取从 Key/Value 存储（如 etcd 或 Consul）中的路径检索到的配置字符串（如 JSON、TOML、YAML、HCL 或 envfile）。这些值优先于默认值，但会被从磁盘、标志或环境变量中检索到的配置值覆盖。</p>
+<p>Viper 使用crypt从 K/V 存储中检索配置，这意味着您可以加密存储配置值，如果您拥有正确的 gpg 密钥环，则可以自动解密它们。加密是可选的。</p>
+<p>您可以将远程配置与本地配置结合使用，也可以独立使用。</p>
+<p>crypt有一个命令行助手，您可以使用它来将配置放入您的 K/V 存储中。crypt默认为http://127.0.0.1:4001上的 etcd 。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ go get github.com/bketelsen/crypt/bin/crypt
+</span></span><span style="display:flex;"><span>$ crypt <span style="color:#0aa">set</span> -plaintext /config/hugo.json /Users/hugo/settings/config.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>确认您的值已设置：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ crypt get -plaintext /config/hugo.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>crypt有关如何设置加密值或如何使用 Consul 的示例，请参阅文档。</p>
+<h3 id="远程键值存储示例---未加密">远程键/值存储示例 - 未加密</h3>
+<h4 id="etcd">etcd</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">AddRemoteProvider</span>(<span style="color:#a50">&#34;etcd&#34;</span>, <span style="color:#a50">&#34;http://127.0.0.1:4001&#34;</span>,<span style="color:#a50">&#34;/config/hugo.json&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">SetConfigType</span>(<span style="color:#a50">&#34;json&#34;</span>) <span style="color:#aaa;font-style:italic">// because there is no file extension in a stream of bytes, supported extensions are &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;, &#34;properties&#34;, &#34;props&#34;, &#34;prop&#34;, &#34;env&#34;, &#34;dotenv&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := viper.<span style="color:#0a0">ReadRemoteConfig</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="etcd3">etcd3</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">AddRemoteProvider</span>(<span style="color:#a50">&#34;etcd3&#34;</span>, <span style="color:#a50">&#34;http://127.0.0.1:4001&#34;</span>,<span style="color:#a50">&#34;/config/hugo.json&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">SetConfigType</span>(<span style="color:#a50">&#34;json&#34;</span>) <span style="color:#aaa;font-style:italic">// because there is no file extension in a stream of bytes, supported extensions are &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;, &#34;properties&#34;, &#34;props&#34;, &#34;prop&#34;, &#34;env&#34;, &#34;dotenv&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := viper.<span style="color:#0a0">ReadRemoteConfig</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="consul">Consul</h4>
+<p>您需要使用包含所需配置的 JSON 值将密钥设置为 Consul 键/值存储。例如，创建一个带有值的Consul键/值存储键MY_CONSUL_KEY：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;port&#34;</span>: <span style="color:#099">8080</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a50">&#34;hostname&#34;</span>: <span style="color:#a50">&#34;myhostname.com&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">AddRemoteProvider</span>(<span style="color:#a50">&#34;consul&#34;</span>, <span style="color:#a50">&#34;localhost:8500&#34;</span>, <span style="color:#a50">&#34;MY_CONSUL_KEY&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">SetConfigType</span>(<span style="color:#a50">&#34;json&#34;</span>) <span style="color:#aaa;font-style:italic">// Need to explicitly set this to json
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := viper.<span style="color:#0a0">ReadRemoteConfig</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#0a0">Println</span>(viper.<span style="color:#0a0">Get</span>(<span style="color:#a50">&#34;port&#34;</span>)) <span style="color:#aaa;font-style:italic">// 8080
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>fmt.<span style="color:#0a0">Println</span>(viper.<span style="color:#0a0">Get</span>(<span style="color:#a50">&#34;hostname&#34;</span>)) <span style="color:#aaa;font-style:italic">// myhostname.com
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="firestore">Firestore</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">AddRemoteProvider</span>(<span style="color:#a50">&#34;firestore&#34;</span>, <span style="color:#a50">&#34;google-cloud-project-id&#34;</span>, <span style="color:#a50">&#34;collection/document&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">SetConfigType</span>(<span style="color:#a50">&#34;json&#34;</span>) <span style="color:#aaa;font-style:italic">// Config&#39;s format: &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := viper.<span style="color:#0a0">ReadRemoteConfig</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然，您也可以使用SecureRemoteProvider</p>
+<h3 id="远程键值存储示例---加密">远程键/值存储示例 - 加密</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">AddSecureRemoteProvider</span>(<span style="color:#a50">&#34;etcd&#34;</span>,<span style="color:#a50">&#34;http://127.0.0.1:4001&#34;</span>,<span style="color:#a50">&#34;/config/hugo.json&#34;</span>,<span style="color:#a50">&#34;/etc/secrets/mykeyring.gpg&#34;</span>)
+</span></span><span style="display:flex;"><span>viper.<span style="color:#0a0">SetConfigType</span>(<span style="color:#a50">&#34;json&#34;</span>) <span style="color:#aaa;font-style:italic">// because there is no file extension in a stream of bytes,  supported extensions are &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;, &#34;properties&#34;, &#34;props&#34;, &#34;prop&#34;, &#34;env&#34;, &#34;dotenv&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := viper.<span style="color:#0a0">ReadRemoteConfig</span>()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="观察-etcd-中的变化---未加密">观察 etcd 中的变化 - 未加密</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// alternatively, you can create a new viper instance.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">var</span> runtime_viper = viper.<span style="color:#0a0">New</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>runtime_viper.<span style="color:#0a0">AddRemoteProvider</span>(<span style="color:#a50">&#34;etcd&#34;</span>, <span style="color:#a50">&#34;http://127.0.0.1:4001&#34;</span>, <span style="color:#a50">&#34;/config/hugo.yml&#34;</span>)
+</span></span><span style="display:flex;"><span>runtime_viper.<span style="color:#0a0">SetConfigType</span>(<span style="color:#a50">&#34;yaml&#34;</span>) <span style="color:#aaa;font-style:italic">// because there is no file extension in a stream of bytes, supported extensions are &#34;json&#34;, &#34;toml&#34;, &#34;yaml&#34;, &#34;yml&#34;, &#34;properties&#34;, &#34;props&#34;, &#34;prop&#34;, &#34;env&#34;, &#34;dotenv&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// read from remote config the first time.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>err := runtime_viper.<span style="color:#0a0">ReadRemoteConfig</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// unmarshal config
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>runtime_viper.<span style="color:#0a0">Unmarshal</span>(&amp;runtime_conf)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// open a goroutine to watch remote changes forever
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">go</span> <span style="color:#00a">func</span>(){
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">for</span> {
+</span></span><span style="display:flex;"><span>		time.<span style="color:#0a0">Sleep</span>(time.Second * <span style="color:#099">5</span>) <span style="color:#aaa;font-style:italic">// delay after each request
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>		<span style="color:#aaa;font-style:italic">// currently, only tested with etcd support
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>		err := runtime_viper.<span style="color:#0a0">WatchRemoteConfig</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>			log.<span style="color:#0a0">Errorf</span>(<span style="color:#a50">&#34;unable to read remote config: %v&#34;</span>, err)
+</span></span><span style="display:flex;"><span>			<span style="color:#00a">continue</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#aaa;font-style:italic">// unmarshal new config into our runtime config struct. you can also use channel
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>		<span style="color:#aaa;font-style:italic">// to implement a signal to notify the system of the changes
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>		runtime_viper.<span style="color:#0a0">Unmarshal</span>(&amp;runtime_conf)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="从-viper-获取值">从 Viper 获取值</h2>
+<p>在 Viper 中，有几种方法可以根据值的类型获取值。存在以下功能和方法：</p>
+<ul>
+<li>Get(key string) : interface{}</li>
+<li>GetBool(key string) : bool</li>
+<li>GetFloat64(key string) : float64</li>
+<li>GetInt(key string) : int</li>
+<li>GetIntSlice(key string) : []int</li>
+<li>GetString(key string) : string</li>
+<li>GetStringMap(key string) : map[string]interface{}</li>
+<li>GetStringMapString(key string) : map[string]string</li>
+<li>GetStringSlice(key string) : []string</li>
+<li>GetTime(key string) : time.Time</li>
+<li>GetDuration(key string) : time.Duration</li>
+<li>IsSet(key string) : bool</li>
+<li>AllSettings() : map[string]interface{}</li>
+</ul>
+<p>要认识到的一件重要的事情是，如果没有找到每个 Get 函数，它将返回一个零值。为了检查给定的密钥是否存在，提供了该IsSet()方法。</p>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>viper.<span style="color:#0a0">GetString</span>(<span style="color:#a50">&#34;logfile&#34;</span>) <span style="color:#aaa;font-style:italic">// case-insensitive Setting &amp; Getting
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">if</span> viper.<span style="color:#0a0">GetBool</span>(<span style="color:#a50">&#34;verbose&#34;</span>) {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#0a0">Println</span>(<span style="color:#a50">&#34;verbose enabled&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="访问嵌套键">访问嵌套键</h3>
+<p>访问器方法还接受深度嵌套键的格式化路径。例如，如果加载了以下 JSON 文件：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;address&#34;</span>: <span style="color:#a50">&#34;localhost&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;port&#34;</span>: <span style="color:#099">5799</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#1e90ff;font-weight:bold">&#34;datastore&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;metric&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: <span style="color:#a50">&#34;127.0.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;port&#34;</span>: <span style="color:#099">3099</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;warehouse&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: <span style="color:#a50">&#34;198.0.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;port&#34;</span>: <span style="color:#099">2112</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Viper 可以通过传递键的.分隔路径来访问嵌套字段：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#0a0">GetString</span>(<span style="color:#a50">&#34;datastore.metric.host&#34;</span>) <span style="color:#aaa;font-style:italic">// (returns &#34;127.0.0.1&#34;)
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这符合上面建立的优先规则；对路径的搜索将通过剩余的配置注册表进行级联，直到找到为止。</p>
+<p>例如，给定这个配置文件，datastore.metric.host和 datastore.metric.port都已经定义（并且可能被覆盖）。如果另外 datastore.metric.protocol在默认值中定义，Viper 也会找到它。</p>
+<p>但是，如果datastore.metric被立即值覆盖（通过标志、环境变量、Set()方法……），则所有datastore.metric的子键都变为未定义，它们被更高优先级的配置级别“遮蔽”。</p>
+<p>Viper 可以通过在路径中使用数字来访问数组索引。例如：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;address&#34;</span>: <span style="color:#a50">&#34;localhost&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;ports&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#099">5799</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#099">6029</span>
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#1e90ff;font-weight:bold">&#34;datastore&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;metric&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: <span style="color:#a50">&#34;127.0.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;port&#34;</span>: <span style="color:#099">3099</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;warehouse&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: <span style="color:#a50">&#34;198.0.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;port&#34;</span>: <span style="color:#099">2112</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#0a0">GetInt</span>(<span style="color:#a50">&#34;host.ports.1&#34;</span>) <span style="color:#aaa;font-style:italic">// returns 6029
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后，如果存在与分隔键路径匹配的键，则将返回其值。例如</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#1e90ff;font-weight:bold">&#34;datastore.metric.host&#34;</span>: <span style="color:#a50">&#34;0.0.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;address&#34;</span>: <span style="color:#a50">&#34;localhost&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;port&#34;</span>: <span style="color:#099">5799</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#1e90ff;font-weight:bold">&#34;datastore&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;metric&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: <span style="color:#a50">&#34;127.0.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;port&#34;</span>: <span style="color:#099">3099</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#1e90ff;font-weight:bold">&#34;warehouse&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;host&#34;</span>: <span style="color:#a50">&#34;198.0.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#1e90ff;font-weight:bold">&#34;port&#34;</span>: <span style="color:#099">2112</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#0a0">GetString</span>(<span style="color:#a50">&#34;datastore.metric.host&#34;</span>) <span style="color:#aaa;font-style:italic">// returns &#34;0.0.0.0&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="提取子树">提取子树</h3>
+<p>在开发可重用模块时，提取配置的子集并将其传递给模块通常很有用。这样，可以使用不同的配置多次实例化模块。</p>
+<p>例如，一个应用程序可能会出于不同目的使用多个不同的缓存存储：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>cache<span style="color:#f00;background-color:#faa">:</span>
+</span></span><span style="display:flex;"><span>  cache1<span style="color:#f00;background-color:#faa">:</span>
+</span></span><span style="display:flex;"><span>    max-items<span style="color:#f00;background-color:#faa">:</span> <span style="color:#099">100</span>
+</span></span><span style="display:flex;"><span>    item-size<span style="color:#f00;background-color:#faa">:</span> <span style="color:#099">64</span>
+</span></span><span style="display:flex;"><span>  cache2<span style="color:#f00;background-color:#faa">:</span>
+</span></span><span style="display:flex;"><span>    max-items<span style="color:#f00;background-color:#faa">:</span> <span style="color:#099">200</span>
+</span></span><span style="display:flex;"><span>    item-size<span style="color:#f00;background-color:#faa">:</span> <span style="color:#099">80</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以将缓存名称传递给模块（例如NewCache(&ldquo;cache1&rdquo;)），但它需要奇怪的连接来访问配置键，并且与全局配置的分离度较低。</p>
+<p>因此，让我们将 Viper 实例传递给代表配置子集的构造函数，而不是这样做：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>cache1Config := viper.<span style="color:#0a0">Sub</span>(<span style="color:#a50">&#34;cache.cache1&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> cache1Config == <span style="color:#00a">nil</span> { <span style="color:#aaa;font-style:italic">// Sub returns nil if the key cannot be found
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>	<span style="color:#0aa">panic</span>(<span style="color:#a50">&#34;cache configuration not found&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cache1 := <span style="color:#0a0">NewCache</span>(cache1Config)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：始终检查Sub的返回值。如果找不到密钥，会返回nil。</p>
+<p>在内部，该NewCache函数可以直接寻址max-items和item-size键：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">NewCache</span>(v *Viper) *Cache {
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> &amp;Cache{
+</span></span><span style="display:flex;"><span>		MaxItems: v.<span style="color:#0a0">GetInt</span>(<span style="color:#a50">&#34;max-items&#34;</span>),
+</span></span><span style="display:flex;"><span>		ItemSize: v.<span style="color:#0a0">GetInt</span>(<span style="color:#a50">&#34;item-size&#34;</span>),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>生成的代码很容易测试，因为它与主配置结构分离，并且更容易重用（出于同样的原因）。</p>
+<h3 id="解组">解组</h3>
+<p>您还可以选择将所有或特定值解组到结构、map等。</p>
+<p>有两种方法可以做到这一点：</p>
+<ul>
+<li>Unmarshal(rawVal interface{}) : error</li>
+<li>UnmarshalKey(key string, rawVal interface{}) : error</li>
+</ul>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">type</span> config <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	Port <span style="color:#0aa">int</span>
+</span></span><span style="display:flex;"><span>	Name <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>	PathMap <span style="color:#0aa">string</span> <span style="color:#a50">`mapstructure:&#34;path_map&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> C config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>err := viper.<span style="color:#0a0">Unmarshal</span>(&amp;C)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>	t.<span style="color:#0a0">Fatalf</span>(<span style="color:#a50">&#34;unable to decode into struct, %v&#34;</span>, err)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果要解组键本身包含点（默认键分隔符）的配置，则必须更改分隔符：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>v := viper.<span style="color:#0a0">NewWithOptions</span>(viper.<span style="color:#0a0">KeyDelimiter</span>(<span style="color:#a50">&#34;::&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>v.<span style="color:#0a0">SetDefault</span>(<span style="color:#a50">&#34;chart::values&#34;</span>, <span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{}{
+</span></span><span style="display:flex;"><span>	<span style="color:#a50">&#34;ingress&#34;</span>: <span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{}{
+</span></span><span style="display:flex;"><span>		<span style="color:#a50">&#34;annotations&#34;</span>: <span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{}{
+</span></span><span style="display:flex;"><span>			<span style="color:#a50">&#34;traefik.frontend.rule.type&#34;</span>:                 <span style="color:#a50">&#34;PathPrefix&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a50">&#34;traefik.ingress.kubernetes.io/ssl-redirect&#34;</span>: <span style="color:#a50">&#34;true&#34;</span>,
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>	},
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> config <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	Chart <span style="color:#00a">struct</span>{
+</span></span><span style="display:flex;"><span>		Values <span style="color:#00a">map</span>[<span style="color:#0aa">string</span>]<span style="color:#00a">interface</span>{}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> C config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>v.<span style="color:#0a0">Unmarshal</span>(&amp;C)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Viper 还支持解组到嵌入式结构：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">Example config:
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">module:
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">    enabled: true
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">    token: 89h3f98hbwf987h3f98wenf89ehf
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">type</span> config <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	Module <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>		Enabled <span style="color:#0aa">bool</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		moduleConfig <span style="color:#a50">`mapstructure:&#34;,squash&#34;`</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// moduleConfig could be in a module specific package
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span><span style="color:#00a">type</span> moduleConfig <span style="color:#00a">struct</span> {
+</span></span><span style="display:flex;"><span>	Token <span style="color:#0aa">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">var</span> C config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>err := viper.<span style="color:#0a0">Unmarshal</span>(&amp;C)
+</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>	t.<span style="color:#0a0">Fatalf</span>(<span style="color:#a50">&#34;unable to decode into struct, %v&#34;</span>, err)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Viper 在后台使用github.com/mitchellh/mapstructure来解组默认使用mapstructure标签的值。</p>
+<h3 id="解码自定义格式">解码自定义格式</h3>
+<p>Viper 经常要求的一个功能是添加更多的值格式和解码器。例如，解析字符（点、逗号、分号等）将字符串分隔为切片。</p>
+<p>这已经在 Viper 中使用 mapstructure decode hooks 提供了。</p>
+<h3 id="编组到字符串">编组到字符串</h3>
+<p>您可能需要将 viper 中保存的所有设置编组为字符串，而不是将它们写入文件。您可以通过调用AllSettings()返回您最喜欢的格式的编组器.</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> (
+</span></span><span style="display:flex;"><span>	yaml <span style="color:#a50">&#34;gopkg.in/yaml.v2&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#aaa;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">func</span> <span style="color:#0a0">yamlStringSettings</span>() <span style="color:#0aa">string</span> {
+</span></span><span style="display:flex;"><span>	c := viper.<span style="color:#0a0">AllSettings</span>()
+</span></span><span style="display:flex;"><span>	bs, err := yaml.<span style="color:#0a0">Marshal</span>(c)
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">if</span> err != <span style="color:#00a">nil</span> {
+</span></span><span style="display:flex;"><span>		log.<span style="color:#0a0">Fatalf</span>(<span style="color:#a50">&#34;unable to marshal config to YAML: %v&#34;</span>, err)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> <span style="color:#0aa">string</span>(bs)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="viper-or-vipers">Viper or Vipers?</h2>
+<p>Viper 开箱即用。开始使用 Viper 无需配置或初始化。由于大多数应用程序都希望使用单个中央存储库进行配置，因此 viper 包提供了这一点。它类似于单例。</p>
+<p>在上面的所有示例中，他们都演示了在其单例样式方法中使用 viper。</p>
+<h3 id="working-with-multiple-vipers">Working with multiple vipers</h3>
+<p>您还可以创建许多不同的 viper 以在您的应用程序中使用。每个都有自己独特的一组配置和值。每个都可以从不同的配置文件、键值存储等中读取。viper 包支持的所有功能都被镜像为 viper 上的方法。</p>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>x := viper.<span style="color:#0a0">New</span>()
+</span></span><span style="display:flex;"><span>y := viper.<span style="color:#0a0">New</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x.<span style="color:#0a0">SetDefault</span>(<span style="color:#a50">&#34;ContentDir&#34;</span>, <span style="color:#a50">&#34;content&#34;</span>)
+</span></span><span style="display:flex;"><span>y.<span style="color:#0a0">SetDefault</span>(<span style="color:#a50">&#34;ContentDir&#34;</span>, <span style="color:#a50">&#34;foobar&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">//...
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>当使用多个Viper时，由用户负责跟踪不同的Viper。</p>
+<h2 id="问答">问答</h2>
+<h3 id="为什么叫viper蝰蛇">为什么叫“Viper”蝰蛇？</h3>
+<p>答：Viper 旨在成为 Cobra的伴侣。虽然两者都可以完全独立运行，但它们共同构成了强大的组合，可以满足您的大部分应用程序基础需求。</p>
+<h3 id="为什么叫cobra眼镜蛇">为什么叫“cobra”眼镜蛇？</h3>
+<p>指挥官有更好的名字吗？</p>
+<h3 id="viper-是否支持区分大小写的键">Viper 是否支持区分大小写的键？</h3>
+<p>tl;博士：不。</p>
+<p>Viper 合并了来自各种来源的配置，其中许多要么不区分大小写，要么使用与其他来源不同的大小写（例如 env vars）。为了在使用多个来源时提供最佳体验，已决定使所有键不区分大小写。</p>
+<p>已经有几次尝试实现区分大小写，但不幸的是，这并不是那么微不足道。我们可能会尝试在Viper v2中实现它，但尽管有最初的噪音，但似乎并没有太多要求。</p>
+<p>您可以通过填写此反馈表来投票支持区分大小写：https ://forms.gle/R6faU74qPRPAzchZ9</p>
+<h3 id="同时读写viper是否安全">同时读写viper是否安全？</h3>
+<p>不，您需要自己同步对 viper 的访问（例如通过使用sync包）。并发读取和写入可能会导致恐慌。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-21
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;views</span>
+        
+    
+
+</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.spf13.viper/" data-title="go第三方库-github.com.spf13.viper" data-hashtags="go第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.spf13.viper/" data-hashtag="go第三方库"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.spf13.viper/" data-title="go第三方库-github.com.spf13.viper"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.spf13.viper/" data-title="go第三方库-github.com.spf13.viper"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://oublie6.github.io/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.spf13.viper/" data-title="go第三方库-github.com.spf13.viper"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">go第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%89%8D%E7%AB%AF/vue/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/ref%E5%92%8Creactive/" class="prev" rel="prev" title="Vue-个人笔记-Ref和reactive"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vue-个人笔记-Ref和reactive</a>
+            <a href="/posts/golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/github.com.swaggo.swag/" class="next" rel="next" title="go第三方库-github.com.swaggo.swag">go第三方库-github.com.swaggo.swag<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+
+</div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-10-21T08:58:51+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"go第三方库-github.com.spf13.viper"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
