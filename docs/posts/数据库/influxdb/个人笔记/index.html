@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/influxdb\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "influxDB","wordcount":  2721 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "influxDB","wordcount":  2793 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/influxdb\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-06-15T15:12:29+08:00","dateModified": "2023-06-15T15:12:29+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-influxDB-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%97%B6%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>时序数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-15">2023-06-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2721 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-15">2023-06-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2793 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -184,7 +184,7 @@
 <li>子查询:<code>SELECT_clause FROM ( SELECT_statement ) [...]</code></li>
 </ul>
 <h3 id="查询数据库信息">查询数据库信息</h3>
-<p>show 和 select 无法一起使用</p>
+<p>show 和 select 无法一起使用，但是我们可以通过select count(*)和group by子句来计算tag的不同值:<code>select count(*) from (select sum(peak)  from xflow_peak  where time = '2023-07-21 16:00:00' group by idc_name)</code></p>
 <ul>
 <li>SHOW DATABASES：查询数据库列表，默认有NOAA_water_database和_internal数据库</li>
 <li><code>SHOW RETENTION POLICIES [ON &lt;database_name&gt;]</code>：查询数据库的策略</li>
@@ -194,8 +194,8 @@
 <li><code>SHOW TAG VALUES [ON &lt;database_name&gt;][FROM_clause] WITH KEY [ [&lt;operator&gt; &quot;&lt;tag_key&gt;&quot; | &lt;regular_expression&gt;] | [IN (&quot;&lt;tag_key1&gt;&quot;,&quot;&lt;tag_key2&quot;)]] [WHERE &lt;tag_key&gt; &lt;operator&gt; ['&lt;tag_value&gt;' | &lt;regular_expression&gt;]] [LIMIT_clause] [OFFSET_clause]</code>：显示tag值信息，常用的<code>show tag values with key='xxx'</code></li>
 <li><code>SHOW FIELD KEYS [ON &lt;database_name&gt;] [FROM &lt;measurement_name&gt;]</code>：显示field的键信息</li>
 <li>SHOW CARDINALITY：显示表信息的基数，常用<code>SHOW TAG VALUES CARDINALITY WITH KEY = myTagKey</code></li>
-<li>元信息也能通过where time来查询：<code>SHOW TAG KEYS ON database-name &lt;WHERE time clause&gt;</code></li>
 </ul>
+<p>元数据并不能和where time 一起使用，show得到的结果始终是以整个数据库为准的</p>
 <h3 id="管理数据库">管理数据库</h3>
 <p>数据管理</p>
 <ul>
