@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/scapy\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python第三方库","wordcount":  5114 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "Python第三方库","wordcount":  7231 ,
         "url": "https:\/\/oublie6.github.io\/posts\/python\/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93\/scapy\/","datePublished": "2023-02-20T15:43:28+08:00","dateModified": "2023-02-20T15:43:28+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python-第三方库-Scapy</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-20">2023-02-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5114 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-20">2023-02-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;7231 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;15 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -156,6 +156,21 @@
     </li>
     <li><a href="#scapyconfigconf">Scapy.Config.Conf</a></li>
     <li><a href="#scapyas_resolversas_resolver">Scapy.as_resolvers.AS_resolver</a></li>
+    <li><a href="#高级用法">高级用法</a>
+      <ul>
+        <li><a href="#asn1-和-snmp">ASN.1 和 SNMP</a></li>
+        <li><a href="#scapy-和-asn1">Scapy 和 ASN.1</a>
+          <ul>
+            <li><a href="#asn1-engine">ASN.1 engine</a></li>
+            <li><a href="#encoding-engines">Encoding engines</a></li>
+            <li><a href="#asn1-layers">ASN.1 layers</a></li>
+            <li><a href="#asn1-fields">ASN.1 fields</a></li>
+            <li><a href="#asn1-packets">ASN.1 packets</a></li>
+          </ul>
+        </li>
+        <li><a href="#一个完整的示例-snmp">一个完整的示例: SNMP</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://pypi.org/" target="_blank" rel="noopener noreffer ">PYPI官网</a></p>
@@ -575,7 +590,364 @@
 </ul>
 <h2 id="scapyas_resolversas_resolver">Scapy.as_resolvers.AS_resolver</h2>
 <p><a href="https://scapy.readthedocs.io/en/latest/api/scapy.as_resolvers.html#scapy.as_resolvers.AS_resolver" target="_blank" rel="noopener noreffer ">classscapy.as_resolvers.AS_resolver(server: str | None = None, port: int = 43, options: str | None = None)[source]</a></p>
-</div><div class="post-footer" id="post-footer">
+<h2 id="高级用法">高级用法</h2>
+<h3 id="asn1-和-snmp">ASN.1 和 SNMP</h3>
+<p>ASN.1 指定数据交换的格式，与数据编码方式无关。数据编码在<strong>编码规则</strong>中指定，最常用的编码规则是 BER（Basic Encoding Rules基本编码规则）和 DER（Distinguished Encoding Rules区分编码规则），后者保证编码的唯一性</p>
+<p>ASN.1 提供了基本对象：整数、多种字符串、浮点数、布尔值、容器等。它们放到 Universal 类中。给定的协议可以把其他对象放在 Context 类中。例如，SNMP 定义了 PDU_GET 或 PDU_SET 对象，还有 Application和Private类对象</p>
+<p>每个对象都有一个标记，编码规则将使用这个标记。Universal类中：1是布尔值，2是整数，3是位字符串，6是 OID，48是序列。Context 类(继承Universal类)中的标记从0xa0开始，我们需要知道上下文才能解码。例如，在 SNMP 上下文中，0xa0是 PDU_GET 对象，而在 X509上下文中，0xa0是证书版本的容器</p>
+<p>其他对象是通过组装所有这些基本的砖对象来创建的。组合是使用先前定义或现有对象的序列和数组(集合)完成的。最后一个对象(X509证书、 SNMP 包)是一棵树，其非叶节点是序列并设置对象(或派生的上下文对象) ,其叶节点是整数、字符串、 OID 等。</p>
+<h3 id="scapy-和-asn1">Scapy 和 ASN.1</h3>
+<p>Scapy 提供了一种方便地对 ASN.1进行编码或解码的方法，还可以对这些编码器/解码器进行编程。它比 ASN.1解析器要宽松得多，而且有点忽略了约束。它既不会替换 ASN.1解析器，也不会替换 ASN.1编译器。事实上，它被写成能够编码和解码破碎的 ASN.1。它可以处理已损坏的编码字符串，也可以创建这些字符串。</p>
+<h4 id="asn1-engine">ASN.1 engine</h4>
+<p>注意: 这里提供的许多类定义都使用元类。如果你没有精确地看源代码，而你只依赖于我的捕捉，你可能会认为他们有时表现出一种神奇的行为。ScapyASN.1引擎提供了链接对象及其标记的类。它们继承自 ASN1_Class。第一个是 ASN1_Class_UNIVERSAL，它为大多数 Universal 对象提供标记。每个新上下文(SNMP，X509)将从它继承并添加自己的对象。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_Class_UNIVERSAL</span>(ASN1_Class):
+</span></span><span style="display:flex;"><span>    name = <span style="color:#a50">&#34;UNIVERSAL&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>    BOOLEAN = <span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>    INTEGER = <span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span>    BIT_STRING = <span style="color:#099">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_Class_SNMP</span>(ASN1_Class_UNIVERSAL):
+</span></span><span style="display:flex;"><span>    name=<span style="color:#a50">&#34;SNMP&#34;</span>
+</span></span><span style="display:flex;"><span>    PDU_GET = <span style="color:#099">0xa0</span>
+</span></span><span style="display:flex;"><span>    PDU_NEXT = <span style="color:#099">0xa1</span>
+</span></span><span style="display:flex;"><span>    PDU_RESPONSE = <span style="color:#099">0xa2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_Class_X509</span>(ASN1_Class_UNIVERSAL):
+</span></span><span style="display:flex;"><span>    name=<span style="color:#a50">&#34;X509&#34;</span>
+</span></span><span style="display:flex;"><span>    CONT0 = <span style="color:#099">0xa0</span>
+</span></span><span style="display:flex;"><span>    CONT1 = <span style="color:#099">0xa1</span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># [...]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所有 ASN.1对象都由简单的 Python 实例表示，这些实例充当原始值的简单外壳。简单的逻辑由 ASN1_Object 处理，因此它们非常简单:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_INTEGER</span>(ASN1_Object):
+</span></span><span style="display:flex;"><span>    tag = ASN1_Class_UNIVERSAL.INTEGER
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_STRING</span>(ASN1_Object):
+</span></span><span style="display:flex;"><span>    tag = ASN1_Class_UNIVERSAL.STRING
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_BIT_STRING</span>(ASN1_STRING):
+</span></span><span style="display:flex;"><span>    tag = ASN1_Class_UNIVERSAL.BIT_STRING
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这些实例可以组装成 ASN.1树:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>x=ASN1_SEQUENCE([ASN1_INTEGER(<span style="color:#099">7</span>),ASN1_STRING(<span style="color:#a50">&#34;egg&#34;</span>),ASN1_SEQUENCE([ASN1_BOOLEAN(<span style="color:#00a">False</span>)])])
+</span></span><span style="display:flex;"><span>x
+</span></span><span style="display:flex;"><span>&lt;ASN1_SEQUENCE[[&lt;ASN1_INTEGER[<span style="color:#099">7</span>]&gt;, &lt;ASN1_STRING[<span style="color:#a50">&#39;egg&#39;</span>]&gt;, &lt;ASN1_SEQUENCE[[&lt;ASN1_BOOLEAN[<span style="color:#00a">False</span>]&gt;]]&gt;]]&gt;
+</span></span><span style="display:flex;"><span>x.show()
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># ASN1_SEQUENCE:</span>
+</span></span><span style="display:flex;"><span>  &lt;ASN1_INTEGER[<span style="color:#099">7</span>]&gt;
+</span></span><span style="display:flex;"><span>  &lt;ASN1_STRING[<span style="color:#a50">&#39;egg&#39;</span>]&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#aaa;font-style:italic"># ASN1_SEQUENCE:</span>
+</span></span><span style="display:flex;"><span>    &lt;ASN1_BOOLEAN[<span style="color:#00a">False</span>]&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="encoding-engines">Encoding engines</h4>
+<p>与标准一样，ASN.1和编码是独立的。我们刚刚看到了如何创建复合 ASN.1对象。要对其进行编码或解码，我们需要选择一个编码规则。Scapy 目前只提供 BER (实际上，可能是 DER。DER 和 BER相比只有最小的编码被授权)，这称为ASN.1编解码器</p>
+<p>编码和解码是使用编解码器提供的类方法完成的。例如，BERcodec_INTEGER 类提供了 Enc ()和 Dec ()类方法，可以在编码的字符串和其类型的值之间进行转换。它们都继承自 BERcodec_Object，它能够从任何类型解码对象:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>BERcodec_INTEGER.enc(<span style="color:#099">7</span>)
+</span></span><span style="display:flex;"><span>BERcodec_BIT_STRING.enc(<span style="color:#a50">&#34;egg&#34;</span>)
+</span></span><span style="display:flex;"><span>BERcodec_STRING.enc(<span style="color:#a50">&#34;egg&#34;</span>)
+</span></span><span style="display:flex;"><span>BERcodec_STRING.dec(<span style="color:#a50">&#39;</span><span style="color:#a50">\x04\x03</span><span style="color:#a50">egg&#39;</span>)
+</span></span><span style="display:flex;"><span>BERcodec_Object.dec(<span style="color:#a50">&#39;</span><span style="color:#a50">\x03\x03</span><span style="color:#a50">egg&#39;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ASN.1对象使用它们的 enc ()方法进行编码。必须使用我们想要使用的编解码器调用此方法。在 ASN1_Codecs 对象中引用所有 codecs。Raw ()也可以使用。在这种情况下，将使用缺省的 codec (config.ASN1_default_codec)。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>x.enc(ASN1_Codecs.BER)
+</span></span><span style="display:flex;"><span>raw(x)
+</span></span><span style="display:flex;"><span>xx,remain = BERcodec_Object.dec(_)
+</span></span><span style="display:flex;"><span>xx.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认情况下，解码使用 Universal 类，这意味着在 Context 类中定义的对象将不会被解码。这里有一个很好的理由: 解码取决于上下文！</p>
+<p>必须指定 Context 类:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>(dcert,remain) = BERcodec_Object.dec(cert, context=ASN1_Class_X509)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="asn1-layers">ASN.1 layers</h4>
+<h4 id="asn1-fields">ASN.1 fields</h4>
+<p>Scapy 提供 ASN.1字段。它们将包装 ASN.1对象，并提供必要的逻辑来将字段名绑定到值。ASN.1数据包将被描述为 ASN.1字段的树。然后，每个字段名将作为一个普通的 Packet 对象提供，并且是flat flavor平面的(例如: 要访问 SNMP 数据包的 version 字段，您不需要知道包装它的容器数量)</p>
+<p>每个 ASN.1字段通过其标记链接到一个 ASN.1对象。</p>
+<h4 id="asn1-packets">ASN.1 packets</h4>
+<p>ASN.1数据包从 Packet 类继承。不是字段的 fields_desc 列表,它们定义 ASN1_codec 和 ASN1_root 属性。第一个是编解码器(例如: ASN1_Codecs. BER) ,第二个是与 ASN.1字段复合的树。</p>
+<h3 id="一个完整的示例-snmp">一个完整的示例: SNMP</h3>
+<p>SNMP 定义了新的 ASN.1对象。我们需要定义它们:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_Class_SNMP</span>(ASN1_Class_UNIVERSAL):
+</span></span><span style="display:flex;"><span>    name=<span style="color:#a50">&#34;SNMP&#34;</span>
+</span></span><span style="display:flex;"><span>    PDU_GET = <span style="color:#099">0xa0</span>
+</span></span><span style="display:flex;"><span>    PDU_NEXT = <span style="color:#099">0xa1</span>
+</span></span><span style="display:flex;"><span>    PDU_RESPONSE = <span style="color:#099">0xa2</span>
+</span></span><span style="display:flex;"><span>    PDU_SET = <span style="color:#099">0xa3</span>
+</span></span><span style="display:flex;"><span>    PDU_TRAPv1 = <span style="color:#099">0xa4</span>
+</span></span><span style="display:flex;"><span>    PDU_BULK = <span style="color:#099">0xa5</span>
+</span></span><span style="display:flex;"><span>    PDU_INFORM = <span style="color:#099">0xa6</span>
+</span></span><span style="display:flex;"><span>    PDU_TRAPv2 = <span style="color:#099">0xa7</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这些对象是 PDU，实际上是 Vector 的新名称(上下文对象通常是这种情况: 它们是具有新名称的旧容器)。这意味着创建相应的 ASN.1对象和 BER 编解码器非常简单:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_SNMP_PDU_GET</span>(ASN1_SEQUENCE):
+</span></span><span style="display:flex;"><span>    tag = ASN1_Class_SNMP.PDU_GET
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1_SNMP_PDU_NEXT</span>(ASN1_SEQUENCE):
+</span></span><span style="display:flex;"><span>    tag = ASN1_Class_SNMP.PDU_NEXT
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">BERcodec_SNMP_PDU_GET</span>(BERcodec_SEQUENCE):
+</span></span><span style="display:flex;"><span>    tag = ASN1_Class_SNMP.PDU_GET
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">BERcodec_SNMP_PDU_NEXT</span>(BERcodec_SEQUENCE):
+</span></span><span style="display:flex;"><span>    tag = ASN1_Class_SNMP.PDU_NEXT
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>元类提供了这样一个神奇的事实: 所有东西都是自动注册的，ASN.1对象和 BER 编解码器可以找到彼此。</p>
+<p>ASN.1字段也是一样的:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1F_SNMP_PDU_GET</span>(ASN1F_SEQUENCE):
+</span></span><span style="display:flex;"><span>    ASN1_tag = ASN1_Class_SNMP.PDU_GET
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">ASN1F_SNMP_PDU_NEXT</span>(ASN1F_SEQUENCE):
+</span></span><span style="display:flex;"><span>    ASN1_tag = ASN1_Class_SNMP.PDU_NEXT
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在，最难的部分，ASN.1数据包:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>SNMP_error = { <span style="color:#099">0</span>: <span style="color:#a50">&#34;no_error&#34;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#099">1</span>: <span style="color:#a50">&#34;too_big&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>             }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SNMP_trap_types = { <span style="color:#099">0</span>: <span style="color:#a50">&#34;cold_start&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#099">1</span>: <span style="color:#a50">&#34;warm_start&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>                  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">SNMPvarbind</span>(ASN1_Packet):
+</span></span><span style="display:flex;"><span>    ASN1_codec = ASN1_Codecs.BER
+</span></span><span style="display:flex;"><span>    ASN1_root = ASN1F_SEQUENCE( ASN1F_OID(<span style="color:#a50">&#34;oid&#34;</span>,<span style="color:#a50">&#34;1.3&#34;</span>),
+</span></span><span style="display:flex;"><span>                                ASN1F_field(<span style="color:#a50">&#34;value&#34;</span>,ASN1_NULL(<span style="color:#099">0</span>))
+</span></span><span style="display:flex;"><span>                                )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">SNMPget</span>(ASN1_Packet):
+</span></span><span style="display:flex;"><span>    ASN1_codec = ASN1_Codecs.BER
+</span></span><span style="display:flex;"><span>    ASN1_root = ASN1F_SNMP_PDU_GET( ASN1F_INTEGER(<span style="color:#a50">&#34;id&#34;</span>,<span style="color:#099">0</span>),
+</span></span><span style="display:flex;"><span>                                    ASN1F_enum_INTEGER(<span style="color:#a50">&#34;error&#34;</span>,<span style="color:#099">0</span>, SNMP_error),
+</span></span><span style="display:flex;"><span>                                    ASN1F_INTEGER(<span style="color:#a50">&#34;error_index&#34;</span>,<span style="color:#099">0</span>),
+</span></span><span style="display:flex;"><span>                                    ASN1F_SEQUENCE_OF(<span style="color:#a50">&#34;varbindlist&#34;</span>, [], SNMPvarbind)
+</span></span><span style="display:flex;"><span>                                    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">SNMPnext</span>(ASN1_Packet):
+</span></span><span style="display:flex;"><span>    ASN1_codec = ASN1_Codecs.BER
+</span></span><span style="display:flex;"><span>    ASN1_root = ASN1F_SNMP_PDU_NEXT( ASN1F_INTEGER(<span style="color:#a50">&#34;id&#34;</span>,<span style="color:#099">0</span>),
+</span></span><span style="display:flex;"><span>                                     ASN1F_enum_INTEGER(<span style="color:#a50">&#34;error&#34;</span>,<span style="color:#099">0</span>, SNMP_error),
+</span></span><span style="display:flex;"><span>                                     ASN1F_INTEGER(<span style="color:#a50">&#34;error_index&#34;</span>,<span style="color:#099">0</span>),
+</span></span><span style="display:flex;"><span>                                     ASN1F_SEQUENCE_OF(<span style="color:#a50">&#34;varbindlist&#34;</span>, [], SNMPvarbind)
+</span></span><span style="display:flex;"><span>                                     )
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#00a">class</span> <span style="color:#0a0;text-decoration:underline">SNMP</span>(ASN1_Packet):
+</span></span><span style="display:flex;"><span>    ASN1_codec = ASN1_Codecs.BER
+</span></span><span style="display:flex;"><span>    ASN1_root = ASN1F_SEQUENCE(
+</span></span><span style="display:flex;"><span>        ASN1F_enum_INTEGER(<span style="color:#a50">&#34;version&#34;</span>, <span style="color:#099">1</span>, {<span style="color:#099">0</span>:<span style="color:#a50">&#34;v1&#34;</span>, <span style="color:#099">1</span>:<span style="color:#a50">&#34;v2c&#34;</span>, <span style="color:#099">2</span>:<span style="color:#a50">&#34;v2&#34;</span>, <span style="color:#099">3</span>:<span style="color:#a50">&#34;v3&#34;</span>}),
+</span></span><span style="display:flex;"><span>        ASN1F_STRING(<span style="color:#a50">&#34;community&#34;</span>,<span style="color:#a50">&#34;public&#34;</span>),
+</span></span><span style="display:flex;"><span>        ASN1F_CHOICE(<span style="color:#a50">&#34;PDU&#34;</span>, SNMPget(),
+</span></span><span style="display:flex;"><span>                     SNMPget, SNMPnext, SNMPresponse, SNMPset,
+</span></span><span style="display:flex;"><span>                     SNMPtrapv1, SNMPbulk, SNMPinform, SNMPtrapv2)
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    <span style="color:#00a">def</span> <span style="color:#0a0">answers</span>(self, other):
+</span></span><span style="display:flex;"><span>        <span style="color:#00a">return</span> ( <span style="color:#0aa">isinstance</span>(self.PDU, SNMPresponse)    <span style="color:#00a">and</span>
+</span></span><span style="display:flex;"><span>                 ( <span style="color:#0aa">isinstance</span>(other.PDU, SNMPget) <span style="color:#00a">or</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#0aa">isinstance</span>(other.PDU, SNMPnext) <span style="color:#00a">or</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#0aa">isinstance</span>(other.PDU, SNMPset)    ) <span style="color:#00a">and</span>
+</span></span><span style="display:flex;"><span>                 self.PDU.id == other.PDU.id )
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>bind_layers( UDP, SNMP, sport=<span style="color:#099">161</span>)
+</span></span><span style="display:flex;"><span>bind_layers( UDP, SNMP, dport=<span style="color:#099">161</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在，如何使用它? 像往常一样:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>a=SNMP(version=<span style="color:#099">3</span>, PDU=SNMPget(varbindlist=[SNMPvarbind(oid=<span style="color:#a50">&#34;1.2.3&#34;</span>,value=<span style="color:#099">5</span>),SNMPvarbind(oid=<span style="color:#a50">&#34;3.2.1&#34;</span>,value=<span style="color:#a50">&#34;hello&#34;</span>)]))
+</span></span><span style="display:flex;"><span>a.show()
+</span></span><span style="display:flex;"><span>hexdump(a)
+</span></span><span style="display:flex;"><span>SNMP(raw(a)).show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

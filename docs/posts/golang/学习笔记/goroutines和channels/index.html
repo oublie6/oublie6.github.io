@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  4469 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  5039 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/","datePublished": "2022-12-12T15:34:53+08:00","dateModified": "2022-12-12T15:34:53+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Goroutines和Channels</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;4469 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5039 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -153,6 +153,15 @@
     <li><a href="#限定goroutine数量的简单方法">限定goroutine数量的简单方法</a></li>
     <li><a href="#golang-中常用的3种并发模型">Golang 中常用的3种并发模型</a></li>
     <li><a href="#go中如何监听一组channels">go中如何监听一组channels</a></li>
+    <li><a href="#gmp模型">GMP模型</a>
+      <ul>
+        <li><a href="#有关p和m的个数问题">有关P和M的个数问题</a></li>
+        <li><a href="#p和m何时会被创建">P和M何时会被创建</a></li>
+        <li><a href="#设计策略">设计策略</a></li>
+        <li><a href="#go-func流程">go func()流程</a></li>
+        <li><a href="#调度器g0生命周期">调度器G0生命周期</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://go.dev/doc/" target="_blank" rel="noopener noreffer ">go官方文档</a>
@@ -741,6 +750,49 @@
 <li>“aggregate” channel</li>
 <li>select</li>
 </ol>
+<h2 id="gmp模型">GMP模型</h2>
+<p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmeduvk27bo0" target="_blank" rel="noopener noreffer ">go修养之路 GMP</a></p>
+<h3 id="有关p和m的个数问题">有关P和M的个数问题</h3>
+<p>P的数量由启动时环境变量$GOMAXPROCS或者是由runtime的方法GOMAXPROCS()决定</p>
+<p>M的数量默认10000但是内核一般很难支持这么多线程数，另外runtime/debug中的SetMaxThreads函数可以设置M的最大数量</p>
+<p>M与P的数量没有绝对关系，一个M阻塞，P就会去创建或者切换另一个M，所以，即使P的默认数量是1，也有可能会创建很多个M出来。</p>
+<h3 id="p和m何时会被创建">P和M何时会被创建</h3>
+<p>P何时创建：在确定了P的最大数量n后，运行时系统会根据这个数量创建n个P</p>
+<p>M何时创建：没有足够的M来关联P并运行其中的可运行的G。比如所有的M此时都阻塞住了，而P中还有很多就绪任务，就会去寻找空闲的M，而没有空闲的，就会去创建新的M</p>
+<h3 id="设计策略">设计策略</h3>
+<ul>
+<li>复用线程：避免频繁的创建、销毁线程，而是对线程的复用
+<ul>
+<li>work stealing机制：本线程无可运行的G时，尝试从其他线程绑定的P偷取G，而不是销毁线程</li>
+<li>hand off机制：本线程因为G进行系统调用阻塞时，线程释放绑定的P，把P转移给其他空闲的线程执行</li>
+</ul>
+</li>
+<li>利用并行：最多有GOMAXPROCS个线程分布在多个CPU上同时运行</li>
+<li>抢占：一个goroutine最多占用CPU 10ms</li>
+<li>全局G队列：当M执行work stealing从其他P偷不到G时，它可以从全局G队列获取G</li>
+</ul>
+<h3 id="go-func流程">go func()流程</h3>
+<div id="id-2"><figure><a class="lightgallery" href="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" title="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" data-thumbnail="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" data-sub-html="<h2>comment</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg"
+            data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg 2x"
+            data-sizes="auto"
+            alt="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" />
+    </a><figcaption class="image-caption">comment</figcaption>
+    </figure></div>
+<h3 id="调度器g0生命周期">调度器G0生命周期</h3>
+<div id="id-3"><figure><a class="lightgallery" href="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" title="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" data-thumbnail="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" data-sub-html="<h2>comment</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png"
+            data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png, https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png 2x"
+            data-sizes="auto"
+            alt="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" />
+    </a><figcaption class="image-caption">comment</figcaption>
+    </figure></div>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -822,5 +874,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/d8d1a4.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-12T15:34:53+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-学习笔记-Goroutines和Channels"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/17cc8c.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2022-12-12T15:34:53+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-学习笔记-Goroutines和Channels"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

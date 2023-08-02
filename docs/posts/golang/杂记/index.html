@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%9D%82%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  3429 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  1722 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E6%9D%82%E8%AE%B0\/","datePublished": "2023-03-11T09:50:34+08:00","dateModified": "2023-03-11T09:50:34+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-杂记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3429 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-11">2023-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1722 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -143,22 +143,6 @@
       </ul>
     </li>
     <li><a href="#geth区块链">Geth区块链</a></li>
-    <li><a href="#go性能调优pprof">Go性能调优pprof</a>
-      <ul>
-        <li><a href="#工具型应用">工具型应用</a>
-          <ul>
-            <li><a href="#cpu性能分析">CPU性能分析</a></li>
-            <li><a href="#内存性能优化">内存性能优化</a></li>
-          </ul>
-        </li>
-        <li><a href="#服务型应用">服务型应用</a></li>
-        <li><a href="#go-tool-pprof命令">go tool pprof命令</a></li>
-        <li><a href="#go-torch和火焰图">go-torch和火焰图</a></li>
-        <li><a href="#压测工具wrk">压测工具wrk</a></li>
-        <li><a href="#使用go-torch">使用go-torch</a></li>
-        <li><a href="#pprof与性能测试结合">pprof与性能测试结合</a></li>
-      </ul>
-    </li>
     <li><a href="#gogc">GoGC</a>
       <ul>
         <li><a href="#go-v13之前的标记-清除mark-and-sweep算法">Go V1.3之前的标记-清除(mark and sweep)算法</a></li>
@@ -166,15 +150,6 @@
         <li><a href="#屏障机制">屏障机制</a></li>
         <li><a href="#go-v18的混合写屏障hybrid-write-barrier机制">Go V1.8的混合写屏障(hybrid write barrier)机制</a></li>
         <li><a href="#设置gc频率">设置GC频率</a></li>
-      </ul>
-    </li>
-    <li><a href="#gmp模型">GMP模型</a>
-      <ul>
-        <li><a href="#有关p和m的个数问题">有关P和M的个数问题</a></li>
-        <li><a href="#p和m何时会被创建">P和M何时会被创建</a></li>
-        <li><a href="#设计策略">设计策略</a></li>
-        <li><a href="#go-func流程">go func()流程</a></li>
-        <li><a href="#调度器g0生命周期">调度器G0生命周期</a></li>
       </ul>
     </li>
     <li><a href="#如何优雅的让主函数阻塞">如何优雅的让主函数阻塞</a></li>
@@ -416,218 +391,6 @@
 </div><h2 id="geth区块链">Geth区块链</h2>
 <p><a href="https://www.cnblogs.com/wkfvawl/p/11211600.html" target="_blank" rel="noopener noreffer ">博客园 王陸</a></p>
 <p>搭建自己的以太坊私链</p>
-<h2 id="go性能调优pprof">Go性能调优pprof</h2>
-<p><a href="https://www.liwenzhou.com/posts/Go/pprof/" target="_blank" rel="noopener noreffer ">李文周博客</a></p>
-<p><a href="https://blog.csdn.net/raoxiaoya/article/details/118493465" target="_blank" rel="noopener noreffer ">CSDN raoxiaoya</a></p>
-<ul>
-<li>CPU profile：报告程序的 CPU 使用情况，按照一定频率去采集应用程序在 CPU 和寄存器上面的数据</li>
-<li>Memory Profile（Heap Profile）：报告程序的内存使用情况</li>
-<li>Block Profiling：报告 goroutines 不在运行状态的情况，可以用来分析和查找死锁等性能瓶颈</li>
-<li>Goroutine Profiling：报告 goroutines 的使用情况，有哪些 goroutine，它们的调用关系是怎样的</li>
-</ul>
-<p>内置标准库：</p>
-<ul>
-<li>runtime/pprof：采集 工具型应用运行数据 进行分析</li>
-<li>net/http/pprof：采集 服务型应用运行时数据 进行分析</li>
-</ul>
-<h3 id="工具型应用">工具型应用</h3>
-<p>在应用退出的时候把 profiling 的报告保存到文件中，进行分析</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> <span style="color:#a50">&#34;runtime/pprof&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="cpu性能分析">CPU性能分析</h4>
-<p>开始记录</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>pprof.<span style="color:#0a0">StartCPUProfile</span>(w io.Writer)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>停止记录</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>pprof.<span style="color:#0a0">StopCPUProfile</span>()
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="内存性能优化">内存性能优化</h4>
-<p>记录堆栈信息</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>pprof.<span style="color:#0a0">WriteHeapProfile</span>(w io.Writer)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>go tool pprof进行内存分析，默认-inuse_space选项，-inuse-objects选项查看分配对象数量</p>
-<h3 id="服务型应用">服务型应用</h3>
-<p>使用默认的http.DefaultServeMux：直接导入net/http/pprof自动帮你注册pprof路由</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#00a">import</span> _ <span style="color:#a50">&#34;net/http/pprof&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>自己的处理器Mux需要自己注册pprof路由</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>r.<span style="color:#0a0">HandleFunc</span>(<span style="color:#a50">&#34;/debug/pprof/&#34;</span>, pprof.Index)
-</span></span><span style="display:flex;"><span>r.<span style="color:#0a0">HandleFunc</span>(<span style="color:#a50">&#34;/debug/pprof/cmdline&#34;</span>, pprof.Cmdline)
-</span></span><span style="display:flex;"><span>r.<span style="color:#0a0">HandleFunc</span>(<span style="color:#a50">&#34;/debug/pprof/profile&#34;</span>, pprof.Profile)
-</span></span><span style="display:flex;"><span>r.<span style="color:#0a0">HandleFunc</span>(<span style="color:#a50">&#34;/debug/pprof/symbol&#34;</span>, pprof.Symbol)
-</span></span><span style="display:flex;"><span>r.<span style="color:#0a0">HandleFunc</span>(<span style="color:#a50">&#34;/debug/pprof/trace&#34;</span>, pprof.Trace)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>gin框架注册pprof路由：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>pprof.<span style="color:#0a0">Register</span>(router)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>运行应用后可以打开这些路由查看机器情况</p>
-<ul>
-<li>/debug/pprof/profile：访问这个链接会自动进行 CPU profiling，持续 30s，并生成一个文件供下载</li>
-<li>/debug/pprof/heap： Memory Profiling 的路径，访问这个链接会得到一个内存 Profiling 结果的文件</li>
-<li>/debug/pprof/block：block Profiling 的路径</li>
-<li>/debug/pprof/goroutines：运行的 goroutines 列表，以及调用关系</li>
-</ul>
-<h3 id="go-tool-pprof命令">go tool pprof命令</h3>
-<p>读取pprof文件，出现命令行交互界面</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go tool pprof [binary] [source]
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>topN 命令查看程序中占用CPU前3的函数</p>
-<p>list 函数名 命令查看具体的函数分析</p>
-<p>web 命令调用 graphviz 生成svg图片，需要安装graphviz，</p>
-<p>pdf 命令可以生成可视化的pdf文件</p>
-<p>help 命令可以提供所有pprof支持的命令说明</p>
-<h3 id="go-torch和火焰图">go-torch和火焰图</h3>
-<p>下载go-torch：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go get -v github.com/uber/go-torch
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>自行下载<a href="https://www.perl.org/get.html" target="_blank" rel="noopener noreffer ">perl</a></p>
-<p>下载FlameGraph，并将目录添加到PATH：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git clone https://github.com/brendangregg/FlameGraph.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>windows需要修改go-torch/render/flamegraph.go的enerateFlameGraph</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// GenerateFlameGraph runs the flamegraph script to generate a flame graph SVG. func GenerateFlameGraph(graphInput []byte, args ...string) ([]byte, error) {
-</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>flameGraph := <span style="color:#0a0">findInPath</span>(flameGraphScripts)
-</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> flameGraph == <span style="color:#a50">&#34;&#34;</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> <span style="color:#00a">nil</span>, errNoPerlScript
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#00a">if</span> runtime.GOOS == <span style="color:#a50">&#34;windows&#34;</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#00a">return</span> <span style="color:#0a0">runScript</span>(<span style="color:#a50">&#34;perl&#34;</span>, <span style="color:#0aa">append</span>([]<span style="color:#0aa">string</span>{flameGraph}, args...), graphInput)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>  <span style="color:#00a">return</span> <span style="color:#0a0">runScript</span>(flameGraph, args, graphInput)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>然后安装</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go install github.com/uber/go-torch
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="压测工具wrk">压测工具wrk</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go install github.com/adjust/go-wrk
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="使用go-torch">使用go-torch</h3>
-<p>压测</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go-wrk -n <span style="color:#099">50000</span> http://127.0.0.1:8080/book/list
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>生成火焰图</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go-torch -u http://127.0.0.1:8080 -t <span style="color:#099">30</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>火焰图的y轴表示cpu调用方法的先后，x轴表示方法调用时间</p>
-<p>火焰图分析内存性能数据</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>go-torch -inuse_space http://127.0.0.1:8080/debug/pprof/heap
-</span></span><span style="display:flex;"><span>go-torch -inuse_objects http://127.0.0.1:8080/debug/pprof/heap
-</span></span><span style="display:flex;"><span>go-torch -alloc_space http://127.0.0.1:8080/debug/pprof/heap
-</span></span><span style="display:flex;"><span>go-torch -alloc_objects http://127.0.0.1:8080/debug/pprof/heap
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="pprof与性能测试结合">pprof与性能测试结合</h3>
-<p>go test 的-cpuprofile和-memprofile选项也会生成pprof文件</p>
 <h2 id="gogc">GoGC</h2>
 <p><a href="https://blog.csdn.net/weixin_45919793/article/details/123278744" target="_blank" rel="noopener noreffer ">CSDN smartaconf</a></p>
 <p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmee076rjgk7" target="_blank" rel="noopener noreffer ">golang修养之路</a></p>
@@ -668,50 +431,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>os.<span style="color:#0a0">Setenv</span>(<span style="color:#a50">&#34;GOGC&#34;</span>, <span style="color:#a50">&#34;50&#34;</span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="gmp模型">GMP模型</h2>
-<p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmeduvk27bo0" target="_blank" rel="noopener noreffer ">go修养之路 GMP</a></p>
-<h3 id="有关p和m的个数问题">有关P和M的个数问题</h3>
-<p>P的数量由启动时环境变量$GOMAXPROCS或者是由runtime的方法GOMAXPROCS()决定</p>
-<p>M的数量默认10000但是内核一般很难支持这么多线程数，另外runtime/debug中的SetMaxThreads函数可以设置M的最大数量</p>
-<p>M与P的数量没有绝对关系，一个M阻塞，P就会去创建或者切换另一个M，所以，即使P的默认数量是1，也有可能会创建很多个M出来。</p>
-<h3 id="p和m何时会被创建">P和M何时会被创建</h3>
-<p>P何时创建：在确定了P的最大数量n后，运行时系统会根据这个数量创建n个P</p>
-<p>M何时创建：没有足够的M来关联P并运行其中的可运行的G。比如所有的M此时都阻塞住了，而P中还有很多就绪任务，就会去寻找空闲的M，而没有空闲的，就会去创建新的M</p>
-<h3 id="设计策略">设计策略</h3>
-<ul>
-<li>复用线程：避免频繁的创建、销毁线程，而是对线程的复用
-<ul>
-<li>work stealing机制：本线程无可运行的G时，尝试从其他线程绑定的P偷取G，而不是销毁线程</li>
-<li>hand off机制：本线程因为G进行系统调用阻塞时，线程释放绑定的P，把P转移给其他空闲的线程执行</li>
-</ul>
-</li>
-<li>利用并行：最多有GOMAXPROCS个线程分布在多个CPU上同时运行</li>
-<li>抢占：一个goroutine最多占用CPU 10ms</li>
-<li>全局G队列：当M执行work stealing从其他P偷不到G时，它可以从全局G队列获取G</li>
-</ul>
-<h3 id="go-func流程">go func()流程</h3>
-<div id="id-3"><figure><a class="lightgallery" href="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" title="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" data-thumbnail="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" data-sub-html="<h2>comment</h2>">
-        <img
-            class="lazyload"
-            src="/svg/loading.min.svg"
-            data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg"
-            data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg, https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg 2x"
-            data-sizes="auto"
-            alt="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" />
-    </a><figcaption class="image-caption">comment</figcaption>
-    </figure></div>
-<h3 id="调度器g0生命周期">调度器G0生命周期</h3>
-<div id="id-4"><figure><a class="lightgallery" href="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" title="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" data-thumbnail="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" data-sub-html="<h2>comment</h2>">
-        <img
-            class="lazyload"
-            src="/svg/loading.min.svg"
-            data-src="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png"
-            data-srcset="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png, https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png 1.5x, https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png 2x"
-            data-sizes="auto"
-            alt="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" />
-    </a><figcaption class="image-caption">comment</figcaption>
-    </figure></div>
-<h2 id="如何优雅的让主函数阻塞">如何优雅的让主函数阻塞</h2>
+</div><h2 id="如何优雅的让主函数阻塞">如何优雅的让主函数阻塞</h2>
 <ol>
 <li>使用通道（Channel）：</li>
 </ol>
@@ -875,5 +595,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/adb004.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-03-11T09:50:34+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-杂记"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/css/86ccfb.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["oublie6"],"clientID":"161f711b5310ee2521fa","clientSecret":"0bbbc4a0ed58220489334176a48a3c0898c1538a","id":"2023-03-11T09:50:34+08:00","owner":"oublie6","repo":"oublie6.github.io","title":"golang-杂记"}},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

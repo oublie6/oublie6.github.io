@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E6%95%B0%E7%BB%84%E4%B8%8E%E5%88%87%E7%89%87\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  2731 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  3237 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E6%95%B0%E7%BB%84%E4%B8%8E%E5%88%87%E7%89%87\/","datePublished": "2022-12-11T14:48:33+08:00","dateModified": "2022-12-11T14:48:33+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-数组与切片</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2731 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3237 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -130,7 +130,11 @@
         <li><a href="#切片底层-type-slice-struct">切片底层 type slice struct</a></li>
       </ul>
     </li>
-    <li><a href="#for-range-结构">For-range 结构</a></li>
+    <li><a href="#for-range-结构">For-range 结构</a>
+      <ul>
+        <li><a href="#切片的最大长度远大于数组">切片的最大长度远大于数组</a></li>
+      </ul>
+    </li>
     <li><a href="#切片重组reslice">切片重组（reslice）</a></li>
     <li><a href="#切片的复制与追加">切片的复制与追加</a></li>
     <li><a href="#字符串数组和切片的应用">字符串、数组和切片的应用</a>
@@ -156,7 +160,14 @@
 <h2 id="数组">数组</h2>
 <h3 id="概念">概念</h3>
 <p>注意事项 如果我们想让数组元素类型为任意类型的话可以使用空接口作为类型。当使用值时我们必须先做一个类型判断。</p>
-<p>数组元素可以通过 索引（位置）来读取（或者修改），索引从 0 开始。数组长度最大为 2Gb。对于数组的指针也可以进行索引，go会自动解引用，但是对于切片的指针是不允许的</p>
+<p>数组元素可以通过 索引（位置）来读取（或者修改），索引从 0 开始。数组长度最大为 2Gb。</p>
+<p>数组的最大长度主要受两个因素影响：</p>
+<ul>
+<li>可用内存：如果你的系统只有1GB的内存，你无法创建一个2GB的数组。因此，实际可用内存是限制数组长度的关键因素之一</li>
+<li>Go语言规范：Go语言规范中规定，数组的长度是一个非负整数，其上限是编译器实现定义的，但必须至少为2GB</li>
+</ul>
+<p>最后，值得注意的是，Go在内部实际上使用int表示数组长度和索引，对于32位系统，这意味着最大值是2GB。这可能是Go限制数组长度为2GB的原因</p>
+<p>对于数组的指针也可以进行索引，go会自动解引用，但是对于切片的指针是不允许的</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -361,7 +372,12 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="切片重组reslice">切片重组（reslice）</h2>
+</div><h3 id="切片的最大长度远大于数组">切片的最大长度远大于数组</h3>
+<p>对于Go来说，切片和数组是两种不同的数据类型，尽管切片底层基于数组实现，但是它们在长度上有不同的限制。</p>
+<p>数组的长度是固定的，且在声明时就需要确定，其长度最大为2GB。而切片的长度是可以动态变化的，因此它的长度可以在运行时增加或减小。Go语言通过int类型来存储切片的长度和容量，所以切片的最大长度理论上应该是int类型的最大值，这个值远大于数组的长度限制。</p>
+<p>但是在实际应用中，切片的最大长度往往受到可用内存的限制，因为当你尝试分配大量内存来扩大切片时，如果系统没有足够的可用内存，那么内存分配就会失败。</p>
+<p>总的来说，尽管切片底层基于数组实现，但是由于它们的机制不同，所以在长度上，切片的限制更大且灵活</p>
+<h2 id="切片重组reslice">切片重组（reslice）</h2>
 <p>改变切片长度的过程称之为切片重组 reslicing。</p>
 <p>简单版重切片 a[low:high]</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
