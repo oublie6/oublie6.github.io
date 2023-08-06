@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/hugo\/hugo%E5%BB%BA%E7%AB%99%E6%95%99%E7%A8%8B\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "hugo","wordcount":  1345 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "hugo","wordcount":  1351 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/hugo\/hugo%E5%BB%BA%E7%AB%99%E6%95%99%E7%A8%8B\/","datePublished": "2022-09-26T17:52:54+08:00","dateModified": "2022-09-26T17:52:54+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo-建站教程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-26">2022-09-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1345 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-26">2022-09-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1351 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -111,21 +111,25 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#1-hugo安装">1 hugo安装</a></li>
-    <li><a href="#2-新建本地hugo站点">2 新建本地hugo站点</a></li>
-    <li><a href="#3-将本地站点部署到github-pages">3 将本地站点部署到Github Pages</a></li>
+    <li><a href="#使用hugo--github-pages搭建自己的博客">使用Hugo + Github Pages搭建自己的博客</a>
+      <ul>
+        <li><a href="#1-hugo安装">1 hugo安装</a></li>
+        <li><a href="#2-新建本地hugo站点">2 新建本地hugo站点</a></li>
+        <li><a href="#3-将本地站点部署到github-pages">3 将本地站点部署到Github Pages</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h1 id="使用hugo--github-pages搭建自己的博客">使用Hugo + Github Pages搭建自己的博客</h1>
+            </div><div class="content" id="content"><h2 id="使用hugo--github-pages搭建自己的博客">使用Hugo + Github Pages搭建自己的博客</h2>
 <hr>
 <p><a href="https://gohugo.io/getting-started/" target="_blank" rel="noopener noreffer ">hugo官网</a>,<a href="https://hugoloveit.com/zh-cn/" target="_blank" rel="noopener noreffer ">LoveIt官网</a></p>
-<h2 id="1-hugo安装">1 hugo安装</h2>
+<h3 id="1-hugo安装">1 hugo安装</h3>
 <p>windows使用chocolatey安装</p>
 <pre tabindex="0"><code>choco install hugo-extended -confirm
 </code></pre><blockquote>
 <p>这里需要注意前置条件，要求先安装git，chocolatey和golang</p>
 </blockquote>
-<h2 id="2-新建本地hugo站点">2 新建本地hugo站点</h2>
+<h3 id="2-新建本地hugo站点">2 新建本地hugo站点</h3>
 <p>GitHub 页面有两种类型：</p>
 <ul>
 <li>用户/组织页面 ( https://&lt;USERNAME|ORGANIZATION&gt;.github.io/)</li>
@@ -133,27 +137,69 @@
 </ul>
 <p>一般情况我们都是创建<code>用户/组织页面 ( https://&lt;USERNAME|ORGANIZATION&gt;.github.io/)</code>即在你的github上使用该格式命名新建一个仓库。</p>
 <p>然后克隆到本地。在该仓库中使用如下代码初始化本地站点：</p>
-<pre tabindex="0"><code>hugo new site . --force
-</code></pre><p>之后安装主题，首先到<a href="https://themes.gohugo.io/" target="_blank" rel="noopener noreffer ">hugo主题官网</a>上去选择一个漂亮的主题，打开主题文档页面，根据提示将主题安装到本地站点中，这里以LoveIt为例子：</p>
-<pre tabindex="0"><code>git submodule add https://github.com/dillonzq/LoveIt.git themes/LoveIt
-</code></pre><p>这样就能把主题下载到themes文件夹下了。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>hugo new site . --force
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后安装主题，首先到<a href="https://themes.gohugo.io/" target="_blank" rel="noopener noreffer ">hugo主题官网</a>上去选择一个漂亮的主题，打开主题文档页面，根据提示将主题安装到本地站点中，这里以LoveIt为例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git submodule add https://github.com/dillonzq/LoveIt.git themes/LoveIt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样就能把主题下载到themes文件夹下了。</p>
 <p>一般情况下，我们只需要配置config.toml，主题文档或者git仓库里面通常有默认config.toml，可以直接粘贴到你本地站点的config.toml。默认配置里面有详细的注释，你可以按需配置。</p>
 <p>下一步就是更新你的博客内容了，使用如下命令添加一个新的文章：</p>
-<pre tabindex="0"><code>hugo new posts/first.md
-</code></pre><p>这个命令会在你的content文件夹下的posts文件夹里创建一个first.md，这样你就成功创建了一个文章，你需要配置文章的属性，包括题目<code>title</code>，作者<code>author</code>，tag标签<code>tags</code>以及类别<code>categories</code>等。这些配置相关的内容你可以在主题文档里面找到示例，直接复制到你的文章下面，按需配置即可。
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>hugo new posts/first.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个命令会在你的content文件夹下的posts文件夹里创建一个first.md，这样你就成功创建了一个文章，你需要配置文章的属性，包括题目<code>title</code>，作者<code>author</code>，tag标签<code>tags</code>以及类别<code>categories</code>等。这些配置相关的内容你可以在主题文档里面找到示例，直接复制到你的文章下面，按需配置即可。
 我们需要在本地启动服务运行一下站点，看看效果，使用如下命令：</p>
-<pre tabindex="0"><code>hugo server
-</code></pre><blockquote>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>hugo server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>该命令对于 <code>draft=true</code> 的文章并不会渲染，如果使用 <code>hugo server -D</code> 则将 <code>draft=true</code> 的文章也进行渲染，所以你需要将要渲染的文章的 <code>draft</code> 属性改为 <code>false</code> 或者直接使用后面一个命令。启动的服务能够进行热重载，每一次对文件的保存都会重启服务，所以你可以一边运行服务一边修改自己的内容或配置。</p>
 </blockquote>
-<h2 id="3-将本地站点部署到github-pages">3 将本地站点部署到Github Pages</h2>
+<h3 id="3-将本地站点部署到github-pages">3 将本地站点部署到Github Pages</h3>
 <p>本地服务运行站点修改好后，在config.toml里面添加一个属性 <code>publishDir = &quot;docs&quot;</code> ，将输出的静态页面放置到docs文件夹里面，原因是Github Pages里面设置静态页面位置只能是仓库main分支本身或者main分支里面的docs文件夹，仓库本身存储我们的hugo站点，所以我们需要将输出的静态页面输出到docs文件夹。</p>
 <p>还有一个需要修改的属性是 <code>baseurl = &quot;https://xxx.github.io/&quot;</code> ，将baseurl设置为自己的github页面url。</p>
 <p>然后就可以使用命令输出静态页面：</p>
-<pre tabindex="0"><code>hugo
-</code></pre><p>完成后，直接使用git推送到远程仓库：</p>
-<pre tabindex="0"><code>git push origin main
-</code></pre><blockquote>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>完成后，直接使用git推送到远程仓库：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git push origin main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>这里需要注意有一个坑，我们需要在本地站点根目录里面添加一个文件 <code>.nojekyll</code> 否则github将把这个仓库识别为一个jekyll驱动的页面，从而无法解析成功，最后的结果就是你打开你的github页面url展示的是你的readme.md的内容。加入这个空文件后可以避免这个情况。</p>
 </blockquote>
 <p>然后打开git仓库的set页面，选择page选项将 <code>Build and deployment</code> 里 <code>Branch</code> 设置为main分支的docs文件夹。设置完后等一段时间就可以看到github以及帮我们把站点部署好了，你打开你的github页面url就可以看到你的博客。</p>
