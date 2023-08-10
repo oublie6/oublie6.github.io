@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/hugo\/hugo%E8%A1%A5%E5%85%85\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "hugo","wordcount":  2062 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "hugo","wordcount":  2064 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/hugo\/hugo%E8%A1%A5%E5%85%85\/","datePublished": "2022-10-05T11:19:59+08:00","dateModified": "2022-10-05T11:19:59+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo-Hugo补充</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-05">2022-10-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2062 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-05">2022-10-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2064 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -113,25 +113,25 @@
   <ul>
     <li><a href="#1-关于使用内联html元素被忽略">1. 关于使用内联Html元素被忽略</a></li>
     <li><a href="#2-关于使用原型archetypes">2. 关于使用原型archetypes</a></li>
-    <li><a href="#扩展shortcodes">扩展Shortcodes</a>
+    <li><a href="#3-扩展shortcodes">3. 扩展Shortcodes</a>
       <ul>
-        <li><a href="#1-style">1 style</a></li>
+        <li><a href="#style">style</a></li>
       </ul>
     </li>
-    <li><a href="#3-目录显示级数设置">3. 目录显示级数设置</a></li>
-    <li><a href="#4-代码高亮显示">4. 代码高亮显示</a></li>
-    <li><a href="#5搜索引擎检索">5.搜索引擎检索</a></li>
-    <li><a href="#6代码块设置">6.代码块设置</a></li>
-    <li><a href="#7博文里面引用static中的图片">7.博文里面引用static中的图片</a>
+    <li><a href="#4-目录显示级数设置">4. 目录显示级数设置</a></li>
+    <li><a href="#5-代码高亮显示">5. 代码高亮显示</a></li>
+    <li><a href="#6搜索引擎检索">6.搜索引擎检索</a></li>
+    <li><a href="#7代码块设置">7.代码块设置</a></li>
+    <li><a href="#8博文里面引用static中的图片">8.博文里面引用static中的图片</a>
       <ul>
-        <li><a href="#71-图片放大功能">7.1 图片放大功能</a></li>
+        <li><a href="#图片放大功能">图片放大功能</a></li>
       </ul>
     </li>
-    <li><a href="#8引用站内文章">8.引用站内文章</a></li>
-    <li><a href="#9评论系统">9.评论系统</a></li>
-    <li><a href="#10-添加busuanzi访问计数插件">10. 添加busuanzi访问计数插件</a></li>
-    <li><a href="#超链接注意事项">超链接注意事项</a></li>
-    <li><a href="#markdown语法">markdown语法</a>
+    <li><a href="#9引用站内文章">9.引用站内文章</a></li>
+    <li><a href="#10评论系统">10.评论系统</a></li>
+    <li><a href="#11-添加busuanzi访问计数插件">11. 添加busuanzi访问计数插件</a></li>
+    <li><a href="#12-超链接注意事项">12 超链接注意事项</a></li>
+    <li><a href="#13-markdown语法">13 markdown语法</a>
       <ul>
         <li><a href="#代码块中显示反引号">代码块中显示反引号</a></li>
       </ul>
@@ -169,9 +169,9 @@
 <p>对于第一种情况，举个例子你在archetypes里面添加posts.md，然后content目录下的posts目录中的所有文章在使用<code>hugo new posts/xxx</code>都会应用该模板</p>
 <p>对于第二种用法，你可以<code>hugo new xxx --kind yyy</code> 其中xxx是你要在content种新建的目录或者新建的文章，yyy是你要使用的模板格式是archetypes目录中的相对路径，对于文章的模板不需要加.md后缀，比如我要用JavaScript.md的模板，我们只需要使用JavaScript作为模板文件名就行了。对于目录，可以直接使用目录模板，比如我要把&quot;前端&quot;模板目录里面的所有文件应用到新建的目录中，我们需要使用&quot;前端&quot;作为模板目录。</p>
 <p>其他详见<a href="https://gohugo.io/content-management/archetypes/" target="_blank" rel="noopener noreffer ">hugo官网</a>的说明</p>
-<h2 id="扩展shortcodes">扩展Shortcodes</h2>
+<h2 id="3-扩展shortcodes">3. 扩展Shortcodes</h2>
 <p><a href="https://hugoloveit.com/zh-cn/theme-documentation-extended-shortcodes/" target="_blank" rel="noopener noreffer ">扩展Shortcodes</a></p>
-<h3 id="1-style">1 style</h3>
+<h3 id="style">style</h3>
 <p>style shortcode 用来在你的文章中插入自定义样式.</p>
 <p>style shortcode 有两个位置参数.</p>
 <p>第一个参数是自定义样式的内容. 它支持  SASS 中的嵌套语法, 并且 &amp; 指代这个父元素.</p>
@@ -202,7 +202,7 @@
     </figure></div>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="3-目录显示级数设置">3. 目录显示级数设置</h2>
+</div><h2 id="4-目录显示级数设置">4. 目录显示级数设置</h2>
 <p><a href="https://gohugo.io/getting-started/configuration-markup/" target="_blank" rel="noopener noreffer ">markup配置</a></p>
 <p><a href="https://github.com/dillonzq/LoveIt/issues/610" target="_blank" rel="noopener noreffer ">loveit issue</a></p>
 <p>添加网站设置</p>
@@ -210,7 +210,7 @@
   [markup.tableOfContents]
     startLevel = 2
     endLevel = 6
-</code></pre><h2 id="4-代码高亮显示">4. 代码高亮显示</h2>
+</code></pre><h2 id="5-代码高亮显示">5. 代码高亮显示</h2>
 <p><a href="https://hugoloveit.com/zh-cn/basic-markdown-syntax/#%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE" target="_blank" rel="noopener noreffer ">loveit文档</a></p>
 <p>在代码块```后面填写你需要显示的高亮语言类型</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -255,7 +255,7 @@
 </span></span><span style="display:flex;"><span>};
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="5搜索引擎检索">5.搜索引擎检索</h2>
+</div><h2 id="6搜索引擎检索">6.搜索引擎检索</h2>
 <p><a href="https://www.sulvblog.cn/posts/blog/hugo_seo/" target="_blank" rel="noopener noreffer ">Sulv&rsquo;s Blog Hugo博客seo优化</a></p>
 <ol>
 <li>每篇博客文章设置标题、关键词、描述</li>
@@ -263,7 +263,7 @@
 <li>去各个搜索引擎平台进行站点搜索优化，即先添加站点，推荐使用文件添加将文件放到static即可，然后添加sitemap.xml</li>
 </ol>
 <p><a href="https://search.google.com/search-console" target="_blank" rel="noopener noreffer ">谷歌搜索</a>，<a href="https://ziyuan.baidu.com/" target="_blank" rel="noopener noreffer ">百度搜索</a>，<a href="https://www.bing.com/webmasters" target="_blank" rel="noopener noreffer ">bing搜索</a>可以直接导入谷歌账号</p>
-<h2 id="6代码块设置">6.代码块设置</h2>
+<h2 id="7代码块设置">7.代码块设置</h2>
 <p><a href="https://gohugo.io/getting-started/configuration-markup/#highlight" target="_blank" rel="noopener noreffer ">hugo官网</a></p>
 <p>代码行号显示+代码拖动条</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -302,7 +302,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>tabWidth = 4<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="7博文里面引用static中的图片">7.博文里面引用static中的图片</h2>
+</div><h2 id="8博文里面引用static中的图片">8.博文里面引用static中的图片</h2>
 <p>将图片放到static目录里面，比如<code>image/1.png</code>，hugo会将static最终放到docs目录下，即直接放到静态文件的根目录下，所以我们引用的时候只需在md中写下：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -322,7 +322,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意最开始有一个<code>/</code></p>
-<h3 id="71-图片放大功能">7.1 图片放大功能</h3>
+<h3 id="图片放大功能">图片放大功能</h3>
 <p><a href="https://hugoloveit.com/zh-cn/basic-markdown-syntax/#13-%E5%9B%BE%E7%89%87" target="_blank" rel="noopener noreffer ">loveit 文档</a></p>
 <p>可以通过给图片加图注使得图片可以放大。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -334,12 +334,12 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>上面的<code>&quot;The Stormtroopocat&quot;</code>就是图注</p>
-<h2 id="8引用站内文章">8.引用站内文章</h2>
+<h2 id="9引用站内文章">9.引用站内文章</h2>
 <p>使用超链接，以根目录相对路径的形式写出目标url，比如文章<code>posts/golang/go-zero/教程/looklook.md</code>，我们的超链接地址写作<code>/posts/golang/go-zero/教程/looklook/</code>，甚至可以在后面添加锚点定位，比如加上<code>#项目架构图和业务架构图</code>。（当一个网页有多个重名锚点时会自动添加<code>-n</code>后缀，n表示第几个重复的锚点）</p>
 <p>能这么做的原因是hugo的文章生成静态文件后content文件夹的内容直接生成到根目录。</p>
 <p>另外static文件夹直接放到根目录，所以static的文件也可以通过相对路径直接引用在md中。</p>
 <p>锚点强制使用小写，且空格使用<code>-</code>代替</p>
-<h2 id="9评论系统">9.评论系统</h2>
+<h2 id="10评论系统">10.评论系统</h2>
 <p><a href="https://zhuanlan.zhihu.com/p/567587480" target="_blank" rel="noopener noreffer ">知乎 后端开发技术 Hugo添加Github评论踩坑指南</a></p>
 <p>这里使用的是gitalk，它使用github issue进行评论存储，使用loveit主题，如果不是用的这个主题你需要按照知乎大佬说的配置</p>
 <p>在github个人设置页面中，选择开发者设置</p>
@@ -389,7 +389,7 @@
 </div>
 <p>如果你用的loveit主题那么到这里就结束了，不过需要你用自己的github账户打开博文才能开启issue，否则别人不能评论。</p>
 <p>这里有一个大佬写了一个python脚本来实现自动化添加issue，<a href="https://www.xiaobinqt.cn/gitalk-init-issue" target="_blank" rel="noopener noreffer ">个人博客 萧十一郎 Gitalk 初始化 issue</a></p>
-<h2 id="10-添加busuanzi访问计数插件">10. 添加busuanzi访问计数插件</h2>
+<h2 id="11-添加busuanzi访问计数插件">11. 添加busuanzi访问计数插件</h2>
 <p><a href="https://blog.xwi88.com/hugo-plugin-busuanzi/" target="_blank" rel="noopener noreffer ">xwi88 博客</a></p>
 <p>非常简单，分3步：</p>
 <ul>
@@ -397,9 +397,9 @@
 <li>修改config.toml使用busuanzi插件</li>
 <li>在single.html或者footer.html添加你要放置访问计数的位置</li>
 </ul>
-<h2 id="超链接注意事项">超链接注意事项</h2>
+<h2 id="12-超链接注意事项">12 超链接注意事项</h2>
 <p>不要在标题里面使用超链接，这样生成的目录会直接带着超链接，点击目录会直接跳转到超链接无法通过目录定位标题</p>
-<h2 id="markdown语法">markdown语法</h2>
+<h2 id="13-markdown语法">13 markdown语法</h2>
 <p><a href="https://hugoloveit.com/zh-cn/basic-markdown-syntax/" target="_blank" rel="noopener noreffer ">loveit官网</a></p>
 <p><a href="https://markdown.com.cn/" target="_blank" rel="noopener noreffer ">markdown官网</a></p>
 <h3 id="代码块中显示反引号">代码块中显示反引号</h3>
