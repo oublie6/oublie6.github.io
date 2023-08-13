@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  5039 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  5511 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/goroutines%E5%92%8Cchannels\/","datePublished": "2022-12-12T15:34:53+08:00","dateModified": "2022-12-12T15:34:53+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-Goroutines和Channels</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5039 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5511 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -160,6 +160,7 @@
         <li><a href="#设计策略">设计策略</a></li>
         <li><a href="#go-func流程">go func()流程</a></li>
         <li><a href="#调度器g0生命周期">调度器G0生命周期</a></li>
+        <li><a href="#调度下一个协程">调度下一个协程</a></li>
       </ul>
     </li>
   </ul>
@@ -316,6 +317,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="基于select的多路复用">基于select的多路复用</h2>
+<p>对于chan的select不是基于事件触发而是基于轮询</p>
 <p>select是Golang在语言层面提供的多路IO复用的机制，其可以检测多个channel是否ready(即是否可读或可写)</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -752,7 +754,42 @@
 </ol>
 <h2 id="gmp模型">GMP模型</h2>
 <p><a href="https://www.topgoer.cn/docs/golangxiuyang/golangxiuyang-1cmeduvk27bo0" target="_blank" rel="noopener noreffer ">go修养之路 GMP</a></p>
-<h3 id="有关p和m的个数问题">有关P和M的个数问题</h3>
+<p>p的结构体片段：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// Queue of runnable goroutines. Accessed without lock.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>runqhead <span style="color:#0aa">uint32</span>
+</span></span><span style="display:flex;"><span>runqtail <span style="color:#0aa">uint32</span>
+</span></span><span style="display:flex;"><span>runq     [<span style="color:#099">256</span>]guintptr
+</span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// runnext, if non-nil, is a runnable G that was ready&#39;d by
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// the current G and should be run next instead of what&#39;s in
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// runq if there&#39;s time remaining in the running G&#39;s time
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// slice. It will inherit the time left in the current time
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// slice. If a set of goroutines is locked in a
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// communicate-and-wait pattern, this schedules that set as a
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// unit and eliminates the (potentially large) scheduling
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// latency that otherwise arises from adding the ready&#39;d
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic">// goroutines to the end of the run queue.
+</span></span></span><span style="display:flex;"><span><span style="color:#aaa;font-style:italic"></span>runnext guintptr
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="有关p和m的个数问题">有关P和M的个数问题</h3>
 <p>P的数量由启动时环境变量$GOMAXPROCS或者是由runtime的方法GOMAXPROCS()决定</p>
 <p>M的数量默认10000但是内核一般很难支持这么多线程数，另外runtime/debug中的SetMaxThreads函数可以设置M的最大数量</p>
 <p>M与P的数量没有绝对关系，一个M阻塞，P就会去创建或者切换另一个M，所以，即使P的默认数量是1，也有可能会创建很多个M出来。</p>
@@ -782,6 +819,7 @@
             alt="https://www.topgoer.cn/uploads/golangxiuyang/images/18-go-func%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F.jpeg" />
     </a><figcaption class="image-caption">comment</figcaption>
     </figure></div>
+<p>当本地队列满的时候新的G在放入全局队列的同时会把本地队列的一般G也放到全局队列里面</p>
 <h3 id="调度器g0生命周期">调度器G0生命周期</h3>
 <div id="id-3"><figure><a class="lightgallery" href="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" title="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" data-thumbnail="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" data-sub-html="<h2>comment</h2>">
         <img
@@ -793,6 +831,15 @@
             alt="https://www.topgoer.cn/uploads/golangxiuyang/images/17-pic-go%E8%B0%83%E5%BA%A6%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" />
     </a><figcaption class="image-caption">comment</figcaption>
     </figure></div>
+<h3 id="调度下一个协程">调度下一个协程</h3>
+<ol>
+<li>每调度61次，从GRQ尝试获取队头的G，执行</li>
+<li>检查runnext，如果存在且上一个协程运行不超过10ms，则执行runnext对应的协程</li>
+<li>尝试从P的队列中按照G的加入顺序获取，获取成功则切换</li>
+<li>从GRQ中获取，从队头开始获取G作为下一个执行的队列，同时从GRQ中获取协程继续执行，最多获取128。<code>n := sched.runqsize/gomaxprocs + 1</code></li>
+<li>检查网络阻塞的netpoller，获取摆脱网络阻塞状态的协程列表(相当于调用epoll_wait 获取就绪状态的套接字)，获取第一个协程继续执行，将其余摆脱网络阻塞状态的协程放回GRQ的队尾</li>
+<li>从其余的P上获取协程执行(stealing)</li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
