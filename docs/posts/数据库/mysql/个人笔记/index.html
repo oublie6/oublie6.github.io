@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql","wordcount":  1493 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "mysql","wordcount":  1685 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%95%B0%E6%8D%AE%E5%BA%93\/mysql\/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0\/","datePublished": "2023-05-05T22:55:15+08:00","dateModified": "2023-05-05T22:55:15+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">数据库-mysql-个人笔记</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据库</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-05">2023-05-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1493 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-05">2023-05-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1685 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -121,6 +121,9 @@
     <li><a href="#show-create-xxx">show create xxx</a></li>
     <li><a href="#字符串是可以比较大小的">字符串是可以比较大小的</a></li>
     <li><a href="#设置auto_increment">设置auto_increment</a></li>
+    <li><a href="#with子句80新特性">with子句8.0新特性</a></li>
+    <li><a href="#按行显示记录">按行显示记录</a></li>
+    <li><a href="#空值null和空字符串的区别">空值（null）和空字符串（‘‘）的区别</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="mysql用什么进行错误分析与定位">mysql用什么进行错误分析与定位</h2>
@@ -228,7 +231,36 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>)ENGINE=InnoDB<span style="color:#bbb">  </span>AUTO_INCREMENT=<span style="color:#099">1000</span><span style="color:#bbb"> </span>AUTO_INCREMENT_INCREMENT=<span style="color:#099">10</span><span style="color:#bbb"> </span><span style="color:#00a">DEFAULT</span><span style="color:#bbb"> </span>CHARSET=utf8;<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="with子句80新特性">with子句8.0新特性</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/440669000" target="_blank" rel="noopener noreffer ">MySQL 8.0 新特性之通用表表达式 不剪发的Tony老师</a></p>
+<p>通用表表达式（CTE）是一个在语句级别定义的临时结果集，内存中</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span>with_clause:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#00a">WITH</span><span style="color:#bbb"> </span>[<span style="color:#00a">RECURSIVE</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>cte_name<span style="color:#bbb"> </span>[(col_name<span style="color:#bbb"> </span>[,<span style="color:#bbb"> </span>col_name]<span style="color:#bbb"> </span>...)]<span style="color:#bbb"> </span><span style="color:#00a">AS</span><span style="color:#bbb"> </span>(subquery)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>[,<span style="color:#bbb"> </span>cte_name<span style="color:#bbb"> </span>[(col_name<span style="color:#bbb"> </span>[,<span style="color:#bbb"> </span>col_name]<span style="color:#bbb"> </span>...)]<span style="color:#bbb"> </span><span style="color:#00a">AS</span><span style="color:#bbb"> </span>(subquery)]<span style="color:#bbb"> </span>...<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="按行显示记录">按行显示记录</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#00a">select</span><span style="color:#bbb"> </span>...<span style="color:#bbb"> </span><span style="color:#f00;background-color:#faa">\</span><span style="color:#00a">G</span>;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="空值null和空字符串的区别">空值（null）和空字符串（‘‘）的区别</h2>
+<p><a href="https://blog.csdn.net/weixin_46460843/article/details/118652015" target="_blank" rel="noopener noreffer ">空值（null）和空字符串（‘‘）的区别</a></p>
+<p>NULL值查询使用is null/is not null查询，而空字符串(’’)可以使用=或者!=、&lt;、&gt;等算术运算符</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

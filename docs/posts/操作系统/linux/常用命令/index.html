@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "linux","wordcount":  10312 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "linux","wordcount":  10710 ,
         "url": "https:\/\/oublie6.github.io\/posts\/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/linux\/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/","datePublished": "2023-01-29T10:15:30+08:00","dateModified": "2023-01-29T10:15:30+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,8 +102,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">操作系统-linux-常用命令</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>操作系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-29">2023-01-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10312 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;21 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-29">2023-01-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;10710 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;22 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -206,6 +206,7 @@
     <li><a href="#nsenter">nsenter</a></li>
     <li><a href="#dd和hexdump">dd和hexdump</a></li>
     <li><a href="#mkdir">mkdir</a></li>
+    <li><a href="#chmod">chmod</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><a href="https://help.ubuntu.com/" target="_blank" rel="noopener noreffer ">ubuntu官方文档</a></p>
@@ -1316,7 +1317,75 @@ $ awk &#39;$1==2 {print $1,$3}&#39; log.txt    #命令
 </span></span><span style="display:flex;"><span>mkdir -p xxx/yyy
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><h2 id="chmod">chmod</h2>
+<p>在Linux中，可以使用chmod命令为文件或目录添加文件操作权限标记，这些标记通常由字母组成，表示不同的用户或用户组的权限。以下是一些常见的文件操作权限标记及其含义：</p>
+<ol>
+<li><code>u</code>：代表文件的所有者（用户）。</li>
+<li><code>g</code>：代表文件的所属组。</li>
+<li><code>o</code>：代表其他用户。</li>
+<li><code>a</code>：代表所有用户，即所有者、所属组和其他用户。</li>
+</ol>
+<p>这些权限标记可以与操作符结合使用，操作符包括：</p>
+<ul>
+<li><code>+</code>：添加权限。</li>
+<li><code>-</code>：移除权限。</li>
+<li><code>=</code>：设置权限（用指定的权限完全替代原有权限）。</li>
+</ul>
+<p>然后，您可以为每个权限标记分配不同的权限：</p>
+<ul>
+<li><code>r</code>：读权限。</li>
+<li><code>w</code>：写权限。</li>
+<li><code>x</code>：执行权限。</li>
+</ul>
+<p>以下是一些示例，说明如何使用这些权限标记为文件添加权限：</p>
+<ol>
+<li>
+<p>为文件 <code>example.txt</code> 的所有者添加读权限：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod u+r example.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>为文件 <code>example.txt</code> 的所属组添加写权限：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod g+w example.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>为文件 <code>example.txt</code> 的其他用户添加执行权限：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod o+x example.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>为文件 <code>example.txt</code> 的所有用户同时添加读、写、执行权限：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod a+rwx example.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>请根据需要选择适当的权限标记和操作符，以及要分配的权限，以确保文件的访问权限满足您的需求。</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
