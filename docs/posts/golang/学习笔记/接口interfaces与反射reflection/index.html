@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E6%8E%A5%E5%8F%A3interfaces%E4%B8%8E%E5%8F%8D%E5%B0%84reflection\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  983 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "go学习笔记","wordcount":  930 ,
         "url": "https:\/\/oublie6.github.io\/posts\/golang\/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/%E6%8E%A5%E5%8F%A3interfaces%E4%B8%8E%E5%8F%8D%E5%B0%84reflection\/","datePublished": "2022-12-11T17:33:21+08:00","dateModified": "2022-12-11T17:33:21+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang-学习笔记-接口（Interfaces）与反射（reflection）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;983 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-11">2022-12-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;930 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -226,8 +226,8 @@
 <p>记住3点即可</p>
 <ol>
 <li>go语言里面只有值传递，包括方法接收者</li>
-<li>方法接收对象不管是指针类型还是实例都能调用方法，并且被interface认为是实现了相关方法，当接收者是指针类型时自动将接收对象取地址，当接收者是值类型时自动将接收对象转换为原实例</li>
-<li>go语言有隐式解引用，即<code>.</code>运算符可以直接作用于指针，编译器会自动转换为<code>*p.xxx</code></li>
+<li>T类型的方法集为T的方法，*T类型的方法集为T和 *T的方法</li>
+<li>go语言有隐式取解引用，即<code>.</code>运算符可以直接作用于指针，编译器会自动转换为<code>*p.xxx</code>或者<code>p.xxx</code></li>
 </ol>
 <h2 id="第一个例子使用-sorter-接口排序">第一个例子：使用 Sorter 接口排序</h2>
 <p>实现Len()，Less(i, j)和Swap(i, j)可以直接调用sort.Sort(data Interface)</p>
