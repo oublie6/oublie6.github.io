@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/oublie6.github.io\/posts\/p4\/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99\/"
-        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "P4","wordcount":  7917 ,
+        },"image": ["https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"],"genre": "posts","keywords": "P4","wordcount":  7936 ,
         "url": "https:\/\/oublie6.github.io\/posts\/p4\/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99\/","datePublished": "2022-12-01T11:41:09+08:00","dateModified": "2022-12-01T11:41:09+08:00","publisher": {
             "@type": "Organization",
             "name": "Oublie的Hugo博客","logo": "https:\/\/oublie6.github.io\/images\/%E5%A4%B4%E5%83%8F.jpeg"},"author": {
@@ -45,7 +45,7 @@
             <a href="/" title="Oublie的Hugo博客">Oublie的Hugo博客</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/love.html"> 一封情书 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
                             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
@@ -87,7 +87,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/love.html" title="">一封情书</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a></div>
     </div>
@@ -102,7 +102,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">P4-学习资料</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://oublie6.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>oublie</a></span>&nbsp;<span class="post-category">included in <a href="/categories/p4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>P4</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-01">2022-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;7917 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-01">2022-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;7936 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;16 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -290,44 +290,74 @@
 <h3 id="externs">Externs</h3>
 <p>v1model.p4架构文件描述中定义的外部类型、函数和对象。</p>
 <ul>
-<li>counter(bit&lt;32&gt; size, CounterType type)：计数器数组。
+<li>
+<p>counter(bit&lt;32&gt; size, CounterType type)：计数器数组。</p>
 <ul>
 <li>void count(in bit&lt;32&gt; index): 将索引为index的计数器增加1或数据包中的字节数。</li>
 </ul>
 </li>
-<li>direct_counter(CounterType type)：直接计数器，用表引用它。每次匹配表时，匹配项条目位置的计数器都会增加1或者数据包字节数。
+<li>
+<p>direct_counter(CounterType type)：直接计数器，用表引用它。每次匹配表时，匹配项条目位置的计数器都会增加1或者数据包字节数。</p>
 <ul>
 <li>void count()：在给定引用表的匹配操作期间自动调用。</li>
 </ul>
 </li>
-<li>meter(bit&lt;32&gt; size, MeterType type)：间接meter仪表数组，跟踪数据包或字节速率。
+<li>
+<p>meter(bit&lt;32&gt; size, MeterType type)：间接meter仪表数组，跟踪数据包或字节速率。</p>
 <ul>
-<li>void execute_meter<!-- raw HTML omitted -->(in bit&lt;32&gt; index, out T result)：给定index并返回meter的颜色状态。</li>
+<li>void execute_meter<T>(in bit&lt;32&gt; index, out T result)：给定index并返回meter的颜色状态。</li>
 </ul>
 </li>
-<li>direct_meter(MeterType Type)：直接仪表，用表引用。每次匹配表时，匹配项的条目位置的计量器就会增加1或者数据包字节数。
+<li>
+<p>direct_meter(MeterType Type)：直接仪表，用表引用。每次匹配表时，匹配项的条目位置的计量器就会增加1或者数据包字节数。
+<a href="https://github.com/p4lang/behavioral-model/blob/main/docs/runtime_CLI.md#meter_set_rates" target="_blank" rel="noopener noreffer ">参数配置单位</a>为字节/微秒和数据包/微秒</p>
 <ul>
 <li>void read(out T result)：返回最后执行的条目的颜色。</li>
 </ul>
 </li>
-<li>register(bit<!-- raw HTML omitted --> size)：数组或寄存器，大小为size，元素位数为T（例如bit&lt;8&gt;）。
+<li>
+<p>register(bit<T> size)：数组或寄存器，大小为size，元素位数为T（例如bit&lt;8&gt;）。</p>
 <ul>
 <li>void read(out T result, in bit&lt;32&gt; index): 读取index元素的内容。将输出（位数一致）存储在变量 result 中。</li>
 <li>void write(in bit&lt;32&gt; index, in T value)value: 在index元素写入T（位数一致）。</li>
 </ul>
 </li>
-<li>void random<!-- raw HTML omitted -->(out T result, in T lo, in T hi): 在lo和hi之间生成一个随机值并将其存储在result，三个变量位数相同。</li>
-<li>void digest<!-- raw HTML omitted -->(in bit&lt;32&gt; receiver, in T data): 摘要小块信息并将它们发送到控制器。用于发送摘要消息的通道取决于交换机架构。在Simple Switch中，摘要是使用nanomsg套接字库实现的。与simple_switch一起使用时，可以将接收方字段始终设置为1。摘要是变量、标头或元数据的一个结构体。</li>
-<li>void mark_to_drop(inout standard_metadata_t standard_metadata)：将standard_metadata.egress_spec设置为一个特殊值指示丢弃数据包。如果程序在离开ingress或egress管道之前更改egress_spec数据包将不会被丢弃。</li>
-<li>void hash&lt;O, T, D, M&gt;(out O result, in HashAlgorithm algo, in T base, in D data, in M max): 对data执行algo哈希算法并将输出存储在result. 输出值将介于base和max之间。v1model.p4描述了不同的算法。</li>
-<li>void verify_checksum&lt;T, O&gt;(in bool condition, in T data, in O checksum, HashAlgorithm algo): condition为时对data结构体执行algo哈希算法并将值与checksum进行比较。然后将输出存储在standard_metadata.checksum_error（0 有效，1 无效）中。</li>
-<li>void update_checksum&lt;T, O&gt;(in bool condition, in T data, inout O checksum, HashAlgorithm algo): condition为真，则使用algo算法对data结构体进行哈希处理并存储在您选择的checksum字段中。比如ipv4.checksum字段。</li>
-<li>void verify_checksum_with_payload&lt;T, O&gt;(in bool condition, in T data, in O checksum, HashAlgorithm algo): 与verify_checksum相同，输入是data和有效载荷。</li>
-<li>void resubmit<!-- raw HTML omitted -->(in T data): 将（未修改的）original数据包重新提交给parser。只能在入口处调用。在入口结束时，original数据包将再次提交给解析器，data中的所有字段将被保留入口结束时的值。对一个数据包执行多个重新提交操作，仅使用最后一次重新提交操作的字段列表，仅重新提交一个数据包。</li>
-<li>void recirculate<!-- raw HTML omitted -->(in T data)：将修改后的数据包重新循环到ingress。只能在出口处调用。在deparser后重新循环数据包，对数据包所做的所有更改都将保留在重新循环的数据包中。可以使用data参数保留一些元数据字段。</li>
-<li>void clone(in CloneType type, in bit&lt;32&gt; session)：创建数据包克隆，后文详细介绍。</li>
-<li>void clone3<!-- raw HTML omitted -->(in CloneType type, in bit&lt;32&gt; session, in T data)：将一些元数据字段复制到克隆的数据包。</li>
-<li>void truncate(in bit&lt;32&gt; length)：截断数据包，只保留length指定的字节数。可以在入口或出口处执行，但只会在deparser生效。</li>
+<li>
+<p>void random<T>(out T result, in T lo, in T hi): 在lo和hi之间生成一个随机值并将其存储在result，三个变量位数相同。</p>
+</li>
+<li>
+<p>void digest<T>(in bit&lt;32&gt; receiver, in T data): 摘要小块信息并将它们发送到控制器。用于发送摘要消息的通道取决于交换机架构。在Simple Switch中，摘要是使用nanomsg套接字库实现的。与simple_switch一起使用时，可以将接收方字段始终设置为1。摘要是变量、标头或元数据的一个结构体。</p>
+</li>
+<li>
+<p>void mark_to_drop(inout standard_metadata_t standard_metadata)：将standard_metadata.egress_spec设置为一个特殊值指示丢弃数据包。如果程序在离开ingress或egress管道之前更改egress_spec数据包将不会被丢弃。</p>
+</li>
+<li>
+<p>void hash&lt;O, T, D, M&gt;(out O result, in HashAlgorithm algo, in T base, in D data, in M max): 对data执行algo哈希算法并将输出存储在result. 输出值将介于base和max之间。v1model.p4描述了不同的算法。</p>
+</li>
+<li>
+<p>void verify_checksum&lt;T, O&gt;(in bool condition, in T data, in O checksum, HashAlgorithm algo): condition为时对data结构体执行algo哈希算法并将值与checksum进行比较。然后将输出存储在standard_metadata.checksum_error（0 有效，1 无效）中。</p>
+</li>
+<li>
+<p>void update_checksum&lt;T, O&gt;(in bool condition, in T data, inout O checksum, HashAlgorithm algo): condition为真，则使用algo算法对data结构体进行哈希处理并存储在您选择的checksum字段中。比如ipv4.checksum字段。</p>
+</li>
+<li>
+<p>void verify_checksum_with_payload&lt;T, O&gt;(in bool condition, in T data, in O checksum, HashAlgorithm algo): 与verify_checksum相同，输入是data和有效载荷。</p>
+</li>
+<li>
+<p>void resubmit<T>(in T data): 将（未修改的）original数据包重新提交给parser。只能在入口处调用。在入口结束时，original数据包将再次提交给解析器，data中的所有字段将被保留入口结束时的值。对一个数据包执行多个重新提交操作，仅使用最后一次重新提交操作的字段列表，仅重新提交一个数据包。</p>
+</li>
+<li>
+<p>void recirculate<T>(in T data)：将修改后的数据包重新循环到ingress。只能在出口处调用。在deparser后重新循环数据包，对数据包所做的所有更改都将保留在重新循环的数据包中。可以使用data参数保留一些元数据字段。</p>
+</li>
+<li>
+<p>void clone(in CloneType type, in bit&lt;32&gt; session)：创建数据包克隆，后文详细介绍。</p>
+</li>
+<li>
+<p>void clone3<T>(in CloneType type, in bit&lt;32&gt; session, in T data)：将一些元数据字段复制到克隆的数据包。</p>
+</li>
+<li>
+<p>void truncate(in bit&lt;32&gt; length)：截断数据包，只保留length指定的字节数。可以在入口或出口处执行，但只会在deparser生效。</p>
+</li>
 </ul>
 <h3 id="高级功能示例">高级功能示例</h3>
 <h4 id="创建组播组">创建组播组</h4>
@@ -392,7 +422,7 @@
 <p>simple Switch提供了两个可用于克隆数据包的extern函数：</p>
 <ul>
 <li>clone(in CloneType type, in bit&lt;32&gt; session)</li>
-<li>clone3<!-- raw HTML omitted -->(in CloneType type, in bit&lt;32&gt; session, in T data)</li>
+<li>clone3<T>(in CloneType type, in bit&lt;32&gt; session, in T data)</li>
 </ul>
 <ol>
 <li>第一个参数是类型，CloneType.I2E将orignal数据包的副本发送到出口管道，CloneType.E2E将出口数据包的副本发送到缓冲区机制。</li>
@@ -724,7 +754,7 @@
 <h3 id="如果以上没有解决你的问题">如果以上没有解决你的问题</h3>
 <ol>
 <li>首先，检查P4-16 规范对此的说明。</li>
-<li>检查p4-org邮件列表。可能您不是第一个遇到此问题的人，并且已经有人在邮件列表中询问您需要什么。谷歌搜索：site:http://lists.p4.org/ <!-- raw HTML omitted -->。</li>
+<li>检查p4-org邮件列表。可能您不是第一个遇到此问题的人，并且已经有人在邮件列表中询问您需要什么。谷歌搜索：site:http://lists.p4.org/ <query>。</li>
 <li>检查BMv2和P4C存储库的GitHub issue部分。</li>
 <li>如果你在任何地方都找不到解决方案，你可以自己写邮件，或者在 GitHub 中打开一个问题。</li>
 </ol>
@@ -810,6 +840,7 @@
         
     
 
+<script src="/js/xxx.js"></script>
 </div>
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
